@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+/CRM4telecom/nbproject/private/
+/CRM4telecom/CRM4telecom-war/nbproject/private/
+/CRM4telecom/CRM4telecom-ejb/nbproject/private/
+/CRM4telecom/CRM4telecom-ejb/build/
+/CRM4telecom/CRM4telecom-ejb/dist/
+/CRM4telecom/CRM4telecom-war/build/
+/CRM4telecom/build/
+/CRM4telecom/CRM4telecom-war/dist/
+/CRM4telecom/dist/
