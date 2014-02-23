@@ -4,6 +4,9 @@ CREATE TABLE customer
      first_name VARCHAR(30) NOT NULL,
      last_name VARCHAR(30) NOT NULL,
      email VARCHAR(30) NOT NULL,
+     street VARCHAR(30) NOT NULL,
+     house VARCHAR(30) NOT NULL,
+     apartment VARCHAR(30) NOT NULL,
      card_number VARCHAR(20),
      card_exp_data TIMESTAMP,
      balance INT
