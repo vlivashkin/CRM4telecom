@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -55,8 +54,6 @@ public class CustomerProducts implements Serializable {
     private Date endDate;
     @Column(name = "PRICE")
     private BigInteger price;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customerProducts")
-    private Customer customer;
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
@@ -98,14 +95,6 @@ public class CustomerProducts implements Serializable {
 
     public void setPrice(BigInteger price) {
         this.price = price;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public Product getProductId() {

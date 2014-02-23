@@ -8,7 +8,10 @@
     <h:body>
         Hello from Facelets
         <h:form>
-            <h:commandButton value="submit" type="submit" action="#{userBean.go}" />
+            <h:commandButton value="Add customer" type="submit" action="#{userBean.add}" />
+            <h:commandButton value="Alter customer" type="submit" action="#{userBean.alter}" />
+            <h:inputText value="#{userBean.customer}"></h:inputText>
+            <h:inputTextarea value="#{userBean.customersList}"></h:inputTextarea>
         </h:form>
     </h:body>
 </html>

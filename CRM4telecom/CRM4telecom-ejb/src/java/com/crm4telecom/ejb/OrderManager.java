@@ -3,8 +3,6 @@ package com.crm4telecom.ejb;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.jpa.Product;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,13 +17,13 @@ public class OrderManager implements OrderManagerLocal {
     private EntityManager em;
     
     @Override
-    public Orders getOrger(BigDecimal orderId) {
+    public Orders getOrger(Long orderId) {
         Orders order = em.find(Orders.class, orderId);
         return order;
     }
 
     @Override
-    public void alterOrder(BigDecimal orderId, Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, BigInteger managerId, String technicalSupportFlag, Product productId) {
+    public void alterOrder(Long orderId, Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, Long managerId, String technicalSupportFlag, Product productId) {
         Orders order = em.find(Orders.class, orderId);
         if (order == null)
             throw new NoSuchElementException();
@@ -43,7 +41,7 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public void addOrder(Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, BigInteger managerId, String technicalSupportFlag, Product productId) {
+    public void addOrder(Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, Long managerId, String technicalSupportFlag, Product productId) {
         Orders order = new Orders();
         
         order.setOrderDate(orderDate);

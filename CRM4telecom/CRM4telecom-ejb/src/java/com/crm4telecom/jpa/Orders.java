@@ -7,13 +7,12 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,17 +22,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
 @Entity
 @Table(name = "ORDERS")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
@@ -48,57 +40,68 @@ public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "ORDER_ID")
-    private BigDecimal orderId;
+    private Long orderId;
+    
     @Column(name = "ORDER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
+    
     @Size(max = 30)
     @Column(name = "ORDER_TYPE")
     private String orderType;
+    
     @Size(max = 30)
     @Column(name = "TYPE_COMMENT")
     private String typeComment;
+    
     @Size(max = 30)
     @Column(name = "STATUS")
     private String status;
+    
     @Size(max = 30)
     @Column(name = "PRIORITY")
     private String priority;
+    
     @Column(name = "MANAGER_ID")
-    private BigInteger managerId;
+    private Long managerId;
+    
     @Size(max = 30)
     @Column(name = "TECHNICAL_SUPPORT_FLAG")
     private String technicalSupportFlag;
+    
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
+    
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private OrderProcessing orderProcessing;
+    
     @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
     @ManyToOne
     private Employee employeeId;
+    
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne
     private Customer customerId;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders1")
     private OrderProcessing orderProcessing1;
 
     public Orders() {
     }
 
-    public Orders(BigDecimal orderId) {
+    public Orders(Long orderId) {
         this.orderId = orderId;
     }
 
-    public BigDecimal getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(BigDecimal orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -142,11 +145,11 @@ public class Orders implements Serializable {
         this.priority = priority;
     }
 
-    public BigInteger getManagerId() {
+    public Long getManagerId() {
         return managerId;
     }
 
-    public void setManagerId(BigInteger managerId) {
+    public void setManagerId(Long managerId) {
         this.managerId = managerId;
     }
 
