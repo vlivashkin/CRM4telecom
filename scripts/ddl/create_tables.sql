@@ -72,6 +72,7 @@ CREATE TABLE orders
      status VARCHAR(30),
      priority VARCHAR(30),
      customer_id INT,
+     employee_id INT,
      manager_id INT,
      technical_support_flag VARCHAR(30),
      product_id INTEGER
@@ -117,6 +118,7 @@ CREATE TABLE equipment_history
      equipment_comment VARCHAR(30),
      status VARCHAR(30)
   );
+  
 
 ALTER TABLE phone_number 
   ADD CONSTRAINT order_cust_id  FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
@@ -124,8 +126,6 @@ ALTER TABLE phone_number
 ALTER TABLE markets_customers
   ADD CONSTRAINT markets_customers_market_id FOREIGN KEY (market_id) REFERENCES market (market_id);
 
-ALTER TABLE market
-  ADD CONSTRAINT market_market_id FOREIGN KEY (market_id) REFERENCES markets_customers (market_id);
 
 ALTER TABLE markets_customers
   ADD CONSTRAINT market_customer_cust_id FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
@@ -140,22 +140,13 @@ ALTER TABLE customer_products
   ADD CONSTRAINT customer_product_product_id FOREIGN KEY (product_id) REFERENCES product (product_id);
 
 ALTER TABLE orders
-  ADD employee_id INT;
-
-ALTER TABLE orders
   ADD CONSTRAINT orders_product_id FOREIGN KEY (product_id) REFERENCES product(product_id);
 
 ALTER TABLE orders
   ADD CONSTRAINT orders_cust_id FOREIGN KEY (customer_id) REFERENCES customer(customer_id);
 
-ALTER TABLE orders
-  ADD CONSTRAINT orders_order_id FOREIGN KEY (order_id) REFERENCES order_processing(order_id);
-
 ALTER TABLE order_processing
   ADD CONSTRAINT orderd_processing_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id);
-
-ALTER TABLE orders
-  ADD CONSTRAINT orders_employee_id FOREIGN KEY (employee_id) REFERENCES employee(employee_id);
 
 ALTER TABLE order_processing
   ADD CONSTRAINT orders_processing_empl_id FOREIGN KEY (employee_id) REFERENCES employee(employee_id);

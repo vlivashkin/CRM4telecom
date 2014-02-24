@@ -1,47 +1,4 @@
-ALTER TABLE phone_number 
-  drop CONSTRAINT order_cust_id  ;
 
-ALTER TABLE markets_customers
-  drop CONSTRAINT markets_customers_market_id ;
-
-ALTER TABLE market
-  drop CONSTRAINT market_market_id; 
-  
-ALTER TABLE markets_customers
-  drop CONSTRAINT market_customer_cust_id ;
-
-ALTER TABLE market_products
-  drop CONSTRAINT market_product_market_id ;
-
-ALTER TABLE market_products
-  drop CONSTRAINT market_product_product_id; 
-
-ALTER TABLE customer_products
-  drop CONSTRAINT customer_product_product_id;
-
-ALTER TABLE orders
-  drop CONSTRAINT orders_product_id;
-  
-ALTER TABLE orders
-  drop CONSTRAINT orders_cust_id;
-
-ALTER TABLE orders
-  drop CONSTRAINT orders_order_id;
-
-ALTER TABLE order_processing
-  drop CONSTRAINT orderd_processing_order_id;
-
-ALTER TABLE orders
-  drop CONSTRAINT orders_employee_id;
-
-ALTER TABLE order_processing
-  drop CONSTRAINT orders_processing_empl_id; 
-
-ALTER TABLE order_processing
-  drop CONSTRAINT order_processing_equipment_id;
-
-ALTER TABLE equipment_history
-  drop CONSTRAINT equipment_history_equipment_id;
   
 MERGE INTO Customer C
 Using (select 1 as customer_id from dual d)
@@ -52,11 +9,15 @@ WHEN MATCHED THEN
                 C.email = 'ivanovivan@gmail.com',
                 C.card_number = '23356542143',
                 C.card_exp_data = '25/11/2014 0:50:01' ,
-                C.balance = 2451
+                C.balance = 2451,
+                C.STREET = 'sss',
+                C.APARTMENT = 's1s',
+                C.HOUSE = '1sds'
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance)  Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143','25/11/2014 0:50:01' ,2451);
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.apartment,c.house)  
+    Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143','25/11/2014 0:50:01' ,2451,'sss','s1s','1sds');
 
 MERGE INTO Customer C
 Using (select 1 as customer_id from dual d)
@@ -67,11 +28,15 @@ WHEN MATCHED THEN
                 C.email = 'petrov1232@mail.ru',
                 C.card_number = '24356524545',
                 C.card_exp_data = '15/7/2015 11:25:51' ,
-                C.balance = 5000
+                C.balance = 5000,
+                C.STREET = 'sss',
+                C.APARTMENT = 's1s',
+                C.HOUSE = '1sds'
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance)  Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000);
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.apartment,c.house)  
+    Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000,'sss','s1s','1sds');
 
 delete from Customer where customer_id> 2 ;    
 
@@ -99,7 +64,27 @@ WHEN MATCHED THEN
 WHEN NOT MATCHED THEN
     INSERT (P.PHONE_NUMBER,P.START_DATE,P.END_DATE,P.CUSTOMER_ID,P.COMMENT_STRING) values ('923-22-55-76','12/1/2012 4:24:22','14/5/2015 3:11:15',2, 'active customer');              
     
-delete from phone_number where phone_number != '923-22-55-76'  and phone_number !='915-12-45-76';              
+delete from phone_number where phone_number != '923-22-55-76'  and phone_number !='915-12-45-76';  
+
+MERGE INTO MARKET m
+USING (select 1 from dual)
+ON ( M.MARKET_ID = (Select 1 from dual))
+WHEN MATCHED THEN 
+    UPDATE SET M.DESCRIPTION='bla bla',
+               M.NAME = 'new market'
+WHEN NOT MATCHED THEN          
+      INSERT (M.MARKET_ID,M.NAME,M.DESCRIPTION) values (1,'bla bla','new market');
+
+MERGE INTO MARKET m
+USING (select 1 from dual)
+ON ( M.MARKET_ID = (Select 2 from dual))
+WHEN MATCHED THEN 
+    UPDATE SET M.DESCRIPTION='aaa bbb',
+               M.NAME = 'market'
+WHEN NOT MATCHED THEN          
+      INSERT (M.MARKET_ID,M.NAME,M.DESCRIPTION) values (2,'aaa bbb','market');
+
+delete from market where market_id > 2;               
     
 MERGE INTO MARKETS_CUSTOMERS c
 Using (select 1 from dual)
@@ -120,27 +105,31 @@ WHEN MATCHED THEN
                C.END_DATE = '14/5/2015 4:5:1'
 WHEN NOT MATCHED THEN
     INSERT (C.MARKET_ID,C.START_DATE,C.END_DATE,C.CUSTOMER_ID) values (2,'13/4/2011 2:1:1','14/5/2015 4:5:1',2);              
-delete from markets_customers where market_id > 2;
+delete from markets_customers where market_id > 2;  
 
-MERGE INTO MARKET m
-USING (select 1 from dual)
-ON ( M.MARKET_ID = (Select 1 from dual))
-WHEN MATCHED THEN 
-    UPDATE SET M.DESCRIPTION='bla bla',
-               M.NAME = 'new market'
-WHEN NOT MATCHED THEN          
-      INSERT (M.MARKET_ID,M.NAME,M.DESCRIPTION) values (1,'bla bla','new market');
-
-MERGE INTO MARKET m
-USING (select 1 from dual)
-ON ( M.MARKET_ID = (Select 2 from dual))
-WHEN MATCHED THEN 
-    UPDATE SET M.DESCRIPTION='aaa bbb',
-               M.NAME = 'market'
-WHEN NOT MATCHED THEN          
-      INSERT (M.MARKET_ID,M.NAME,M.DESCRIPTION) values (2,'aaa bbb','market');
-
-delete from market where market_id > 2;     
+MERGE INTO Product p
+USING (select 11 from dual)
+ON ( P.PRODUCT_ID = (select 1 from dual))
+WHEN MATCHED THEN
+    UPDATE SET P.BASELINE_PRICE = 1245,
+               P.SALES_PERIOD = '1/2/2012 3:4:5',
+               P.DESCRIPTION = 'new product',
+               P.NAME ='product one'
+WHEN NOT MATCHED THEN
+    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(1,1245,'1/2/2012 3:4:5','new product','product one');
+   
+MERGE INTO Product p
+USING (select 11 from dual)
+ON ( P.PRODUCT_ID = (select 2 from dual))
+WHEN MATCHED THEN
+    UPDATE SET P.BASELINE_PRICE = 55,
+               P.SALES_PERIOD = '1/2/2012 3:4:5',
+               P.DESCRIPTION = 'new product',
+               P.NAME ='product tow'
+WHEN NOT MATCHED THEN
+    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(2,55,'1/2/2012 3:4:5','new product','product two');
+    
+delete from product where product_id > 2;
 
 MERGE INTO market_products m
 USING (select 1 from dual)
@@ -166,29 +155,7 @@ WHEN NOT MATCHED THEN
 
 delete from market_products where market_id > 2;    
     
-MERGE INTO Product p
-USING (select 11 from dual)
-ON ( P.PRODUCT_ID = (select 1 from dual))
-WHEN MATCHED THEN
-    UPDATE SET P.BASELINE_PRICE = 1245,
-               P.SALES_PERIOD = '1/2/2012 3:4:5',
-               P.DESCRIPTION = 'new product',
-               P.NAME ='product one'
-WHEN NOT MATCHED THEN
-    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(1,1245,'1/2/2012 3:4:5','new product','product one');
-   
-MERGE INTO Product p
-USING (select 11 from dual)
-ON ( P.PRODUCT_ID = (select 2 from dual))
-WHEN MATCHED THEN
-    UPDATE SET P.BASELINE_PRICE = 55,
-               P.SALES_PERIOD = '1/2/2012 3:4:5',
-               P.DESCRIPTION = 'new product',
-               P.NAME ='product tow'
-WHEN NOT MATCHED THEN
-    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(2,55,'1/2/2012 3:4:5','new product','product two');
-    
-delete from product where product_id > 2;
+
 
 MERGE INTO customer_products c
 USING (select 1 from dual)
@@ -275,38 +242,6 @@ WHEN NOT MATCHED THEN
             
 delete from employee where employee_id > 2;
 
-MERGE INTO ORDER_processing o
-USING(select 1 from dual)
-ON ( O.ORDER_ID = (select 1 from dual))
-WHEN MATCHED THEN 
-    UPDATE SET O.DESCRIPTION = 'new order',
-               O.EMPLOYEE_ID = 1,
-               O.END_DATE= '4/5/2015 2:2:2',
-               O.END_DATE_HARD = '5/5/2015 2:22:22',
-               O.EQUIPMENT_ID = 1,
-               O.START_DATE = '2/4/2015 2:1:1',
-               O.STEP_NAME = 'active'
-WHEN NOT MATCHED THEN
-    INSERT (O.ORDER_ID,O.DESCRIPTION,O.EMPLOYEE_ID,O.END_DATE,O.END_DATE_HARD,O.EQUIPMENT_ID,O.START_DATE,O.STEP_NAME) 
-        values(1,'new orderd',1,'4/5/2015 2:2:2' ,'5/5/2015 2:22:22',1,'2/4/2015 2:1:1','active');
-        
-MERGE INTO ORDER_processing o
-USING(select 1 from dual)
-ON ( O.ORDER_ID = (select 2 from dual))
-WHEN MATCHED THEN 
-    UPDATE SET O.DESCRIPTION = 'new order',
-               O.EMPLOYEE_ID = 2,
-               O.END_DATE= '4/5/2015 2:2:2',
-               O.END_DATE_HARD = '5/5/2015 2:22:22',
-               O.EQUIPMENT_ID = 2,
-               O.START_DATE = '2/4/2015 2:1:1',
-               O.STEP_NAME = 'active'
-WHEN NOT MATCHED THEN
-    INSERT (O.ORDER_ID,O.DESCRIPTION,O.EMPLOYEE_ID,O.END_DATE,O.END_DATE_HARD,O.EQUIPMENT_ID,O.START_DATE,O.STEP_NAME) 
-        values(2,'new orderd',2,'4/5/2015 2:2:2' ,'5/5/2015 2:22:22',2,'2/4/2015 2:1:1','active');
-     
-delete from order_processing where order_id> 2;
-
 MERGE into equipment e
 USING (select 1 from dual)
 ON  (E.EQUIPMENT_ID = (select 1 from dual))
@@ -361,49 +296,34 @@ WHEN NOT MATCHED THEN
                    
 delete equipment_history where equipment_id > 2;
 
-ALTER TABLE phone_number 
-  ADD CONSTRAINT order_cust_id  FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
-
-ALTER TABLE markets_customers
-  ADD CONSTRAINT markets_customers_market_id FOREIGN KEY (market_id) REFERENCES market (market_id);
-
-ALTER TABLE market
-  ADD CONSTRAINT market_market_id FOREIGN KEY (market_id) REFERENCES markets_customers (market_id);
-
-ALTER TABLE markets_customers
-  ADD CONSTRAINT market_customer_cust_id FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
-
-ALTER TABLE market_products
-  ADD CONSTRAINT market_product_market_id FOREIGN KEY (market_id) REFERENCES market (market_id);
-
-ALTER TABLE market_products
-  ADD CONSTRAINT market_product_product_id FOREIGN KEY (product_id) REFERENCES product (product_id);
-
-ALTER TABLE customer_products
-  ADD CONSTRAINT customer_product_product_id FOREIGN KEY (product_id) REFERENCES product (product_id);
-
-
-ALTER TABLE orders
-  ADD CONSTRAINT orders_product_id FOREIGN KEY (product_id) REFERENCES product(product_id);
-
-ALTER TABLE orders
-  ADD CONSTRAINT orders_cust_id FOREIGN KEY (customer_id) REFERENCES customer(customer_id);
-
-ALTER TABLE orders
-  ADD CONSTRAINT orders_order_id FOREIGN KEY (order_id) REFERENCES order_processing(order_id);
-
-ALTER TABLE order_processing
-  ADD CONSTRAINT orderd_processing_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id);
-
-ALTER TABLE orders
-  ADD CONSTRAINT orders_employee_id FOREIGN KEY (employee_id) REFERENCES employee(employee_id);
-
-ALTER TABLE order_processing
-  ADD CONSTRAINT orders_processing_empl_id FOREIGN KEY (employee_id) REFERENCES employee(employee_id);
-
-ALTER TABLE order_processing
-  ADD CONSTRAINT order_processing_equipment_id FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id);
-
-
-ALTER TABLE equipment_history
-  ADD CONSTRAINT equipment_history_equipment_id FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id);
+MERGE INTO ORDER_processing o
+USING(select 1 from dual)
+ON ( O.ORDER_ID = (select 1 from dual))
+WHEN MATCHED THEN 
+    UPDATE SET O.DESCRIPTION = 'new order',
+               O.EMPLOYEE_ID = 1,
+               O.END_DATE= '4/5/2015 2:2:2',
+               O.END_DATE_HARD = '5/5/2015 2:22:22',
+               O.EQUIPMENT_ID = 1,
+               O.START_DATE = '2/4/2015 2:1:1',
+               O.STEP_NAME = 'active'
+WHEN NOT MATCHED THEN
+    INSERT (O.ORDER_ID,O.DESCRIPTION,O.EMPLOYEE_ID,O.END_DATE,O.END_DATE_HARD,O.EQUIPMENT_ID,O.START_DATE,O.STEP_NAME) 
+        values(1,'new orderd',1,'4/5/2015 2:2:2' ,'5/5/2015 2:22:22',1,'2/4/2015 2:1:1','active'); 
+        
+MERGE INTO ORDER_processing o
+USING(select 1 from dual)
+ON ( O.ORDER_ID = (select 2 from dual))
+WHEN MATCHED THEN 
+    UPDATE SET O.DESCRIPTION = 'new order',
+               O.EMPLOYEE_ID = 2,
+               O.END_DATE= '4/5/2015 2:2:2',
+               O.END_DATE_HARD = '5/5/2015 2:22:22',
+               O.EQUIPMENT_ID = 2,
+               O.START_DATE = '2/4/2015 2:1:1',
+               O.STEP_NAME = 'active'
+WHEN NOT MATCHED THEN
+    INSERT (O.ORDER_ID,O.DESCRIPTION,O.EMPLOYEE_ID,O.END_DATE,O.END_DATE_HARD,O.EQUIPMENT_ID,O.START_DATE,O.STEP_NAME) 
+        values(2,'new orderd',2,'4/5/2015 2:2:2' ,'5/5/2015 2:22:22',2,'2/4/2015 2:1:1','active');
+     
+delete from order_processing where order_id> 2;
