@@ -1,12 +1,11 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -15,14 +14,25 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-@Entity @Table
+@Entity
+@Table(catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e")})
+    @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e"),
+    @NamedQuery(name = "Equipment.findByEquipmentId", query = "SELECT e FROM Equipment e WHERE e.equipmentId = :equipmentId"),
+    @NamedQuery(name = "Equipment.findByCustomerId", query = "SELECT e FROM Equipment e WHERE e.customerId = :customerId"),
+    @NamedQuery(name = "Equipment.findByName", query = "SELECT e FROM Equipment e WHERE e.name = :name"),
+    @NamedQuery(name = "Equipment.findBySerialNumber", query = "SELECT e FROM Equipment e WHERE e.serialNumber = :serialNumber"),
+    @NamedQuery(name = "Equipment.findByDescription", query = "SELECT e FROM Equipment e WHERE e.description = :description"),
+    @NamedQuery(name = "Equipment.findByStatus", query = "SELECT e FROM Equipment e WHERE e.status = :status")})
 public class Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    
     @NotNull
     @Column(name = "EQUIPMENT_ID", nullable = false, precision = 38, scale = 0)
     private Long equipmentId;
@@ -46,7 +56,7 @@ public class Equipment implements Serializable {
     private String status;
     
     @OneToMany(mappedBy = "equipmentId")
-    private Collection<OrderProcessing> orderProcessingCollection;
+    private List<OrderProcessing> orderProcessingList;
     
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "equipment")
     private EquipmentHistory equipmentHistory;
@@ -60,6 +70,10 @@ public class Equipment implements Serializable {
 
     public Long getEquipmentId() {
         return equipmentId;
+    }
+
+    public void setEquipmentId(Long equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
     public Long getCustomerId() {
@@ -102,12 +116,13 @@ public class Equipment implements Serializable {
         this.status = status;
     }
 
-    public Collection<OrderProcessing> getOrderProcessingCollection() {
-        return orderProcessingCollection;
+    @XmlTransient
+    public List<OrderProcessing> getOrderProcessingList() {
+        return orderProcessingList;
     }
 
-    public void setOrderProcessingCollection(Collection<OrderProcessing> orderProcessingCollection) {
-        this.orderProcessingCollection = orderProcessingCollection;
+    public void setOrderProcessingList(List<OrderProcessing> orderProcessingList) {
+        this.orderProcessingList = orderProcessingList;
     }
 
     public EquipmentHistory getEquipmentHistory() {

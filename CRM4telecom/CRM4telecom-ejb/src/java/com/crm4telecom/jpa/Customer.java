@@ -1,8 +1,9 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,20 +13,40 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-@Entity @Table
+@Entity
+@Table(catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName"),
+    @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName"),
+    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
+    @NamedQuery(name = "Customer.findByStreet", query = "SELECT c FROM Customer c WHERE c.street = :street"),
+    @NamedQuery(name = "Customer.findByBuilding", query = "SELECT c FROM Customer c WHERE c.building = :building"),
+    @NamedQuery(name = "Customer.findByFlat", query = "SELECT c FROM Customer c WHERE c.flat = :flat"),
+    @NamedQuery(name = "Customer.findByCardNumber", query = "SELECT c FROM Customer c WHERE c.cardNumber = :cardNumber"),
+    @NamedQuery(name = "Customer.findByConnectionDate", query = "SELECT c FROM Customer c WHERE c.connectionDate = :connectionDate"),
+    @NamedQuery(name = "Customer.findByStatus", query = "SELECT c FROM Customer c WHERE c.status = :status"),
+    @NamedQuery(name = "Customer.findByStatusUpdateDate", query = "SELECT c FROM Customer c WHERE c.statusUpdateDate = :statusUpdateDate"),
+    @NamedQuery(name = "Customer.findByCardExpData", query = "SELECT c FROM Customer c WHERE c.cardExpData = :cardExpData"),
+    @NamedQuery(name = "Customer.findByBalance", query = "SELECT c FROM Customer c WHERE c.balance = :balance")})
 public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @Id
+    @GeneratedValue(generator = "SEC_CUSTOMER", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEC_CUSTOMER", sequenceName = "SEC_CUSTOMER", allocationSize=1)
     @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
     private Long customerId;
     
@@ -38,7 +59,7 @@ public class Customer implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "LAST_NAME", nullable = false, length = 30)
     private String lastName;
-    
+   
     @NotNull
     @Size(min = 1, max = 30)
     @Column(nullable = false, length = 30)
@@ -50,18 +71,28 @@ public class Customer implements Serializable {
     private String street;
     
     @NotNull
-    @Size(min = 1, max = 30)
-    @Column(nullable = false, length = 30)
-    private String house;
+    @Column(nullable = false)
+    private Long building;
     
     @NotNull
-    @Size(min = 1, max = 30)
-    @Column(nullable = false, length = 30)
-    private String apartment;
+    @Column(nullable = false)
+    private Long flat;
     
     @Size(max = 20)
     @Column(name = "CARD_NUMBER", length = 20)
     private String cardNumber;
+    
+    @Column(name = "CONNECTION_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date connectionDate;
+    
+    @Size(max = 30)
+    @Column(length = 30)
+    private String status;
+    
+    @Column(name = "STATUS_UPDATE_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date statusUpdateDate;
     
     @Column(name = "CARD_EXP_DATA")
     @Temporal(TemporalType.TIMESTAMP)
@@ -70,10 +101,19 @@ public class Customer implements Serializable {
     private Long balance;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Collection<PhoneNumber> phoneNumberCollection;
+    private List<PhoneNumber> phoneNumberList;
     
     @OneToMany(mappedBy = "customerId")
-    private Collection<MarketsCustomers> marketsCustomersCollection;
+    private List<StaticIp> staticIpList;
+    
+    @OneToMany(mappedBy = "customerId")
+    private List<Orders> ordersList;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
+    private BalanceHistory balanceHistory;
+    
+    @OneToMany(mappedBy = "customerId")
+    private List<MarketsCustomers> marketsCustomersList;
 
     public Customer() {
     }
@@ -82,14 +122,14 @@ public class Customer implements Serializable {
         this.customerId = customerId;
     }
 
-    public Customer(Long customerId, String firstName, String lastName, String email, String street, String house, String apartment) {
+    public Customer(Long customerId, String firstName, String lastName, String email, String street, Long building, Long flat) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.street = street;
-        this.house = house;
-        this.apartment = apartment;
+        this.building = building;
+        this.flat = flat;
     }
 
     public Long getCustomerId() {
@@ -132,20 +172,20 @@ public class Customer implements Serializable {
         this.street = street;
     }
 
-    public String getHouse() {
-        return house;
+    public Long getBuilding() {
+        return building;
     }
 
-    public void setHouse(String house) {
-        this.house = house;
+    public void setBuilding(Long building) {
+        this.building = building;
     }
 
-    public String getApartment() {
-        return apartment;
+    public Long getFlat() {
+        return flat;
     }
 
-    public void setApartment(String apartment) {
-        this.apartment = apartment;
+    public void setFlat(Long flat) {
+        this.flat = flat;
     }
 
     public String getCardNumber() {
@@ -154,6 +194,30 @@ public class Customer implements Serializable {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public Date getConnectionDate() {
+        return connectionDate;
+    }
+
+    public void setConnectionDate(Date connectionDate) {
+        this.connectionDate = connectionDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getStatusUpdateDate() {
+        return statusUpdateDate;
+    }
+
+    public void setStatusUpdateDate(Date statusUpdateDate) {
+        this.statusUpdateDate = statusUpdateDate;
     }
 
     public Date getCardExpData() {
@@ -172,20 +236,48 @@ public class Customer implements Serializable {
         this.balance = balance;
     }
 
-    public Collection<PhoneNumber> getPhoneNumberCollection() {
-        return phoneNumberCollection;
+    @XmlTransient
+    public List<PhoneNumber> getPhoneNumberList() {
+        return phoneNumberList;
     }
 
-    public void setPhoneNumberCollection(Collection<PhoneNumber> phoneNumberCollection) {
-        this.phoneNumberCollection = phoneNumberCollection;
+    public void setPhoneNumberList(List<PhoneNumber> phoneNumberList) {
+        this.phoneNumberList = phoneNumberList;
     }
 
-    public Collection<MarketsCustomers> getMarketsCustomersCollection() {
-        return marketsCustomersCollection;
+    @XmlTransient
+    public List<StaticIp> getStaticIpList() {
+        return staticIpList;
     }
 
-    public void setMarketsCustomersCollection(Collection<MarketsCustomers> marketsCustomersCollection) {
-        this.marketsCustomersCollection = marketsCustomersCollection;
+    public void setStaticIpList(List<StaticIp> staticIpList) {
+        this.staticIpList = staticIpList;
+    }
+
+    @XmlTransient
+    public List<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
+    }
+
+    public BalanceHistory getBalanceHistory() {
+        return balanceHistory;
+    }
+
+    public void setBalanceHistory(BalanceHistory balanceHistory) {
+        this.balanceHistory = balanceHistory;
+    }
+
+    @XmlTransient
+    public List<MarketsCustomers> getMarketsCustomersList() {
+        return marketsCustomersList;
+    }
+
+    public void setMarketsCustomersList(List<MarketsCustomers> marketsCustomersList) {
+        this.marketsCustomersList = marketsCustomersList;
     }
 
     @Override

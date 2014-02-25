@@ -2,6 +2,8 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,20 +13,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity @Table
+@Entity
+@Table(catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")})
+    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
+    @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
+    @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
+    @NamedQuery(name = "Orders.findByOrderType", query = "SELECT o FROM Orders o WHERE o.orderType = :orderType"),
+    @NamedQuery(name = "Orders.findByTypeComment", query = "SELECT o FROM Orders o WHERE o.typeComment = :typeComment"),
+    @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status"),
+    @NamedQuery(name = "Orders.findByPriority", query = "SELECT o FROM Orders o WHERE o.priority = :priority"),
+    @NamedQuery(name = "Orders.findByEmployeeId", query = "SELECT o FROM Orders o WHERE o.employeeId = :employeeId"),
+    @NamedQuery(name = "Orders.findByManagerId", query = "SELECT o FROM Orders o WHERE o.managerId = :managerId"),
+    @NamedQuery(name = "Orders.findByTechnicalSupportFlag", query = "SELECT o FROM Orders o WHERE o.technicalSupportFlag = :technicalSupportFlag")})
 public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @Id
+    @GeneratedValue(generator = "SEC_ORDER", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEC_ORDER", sequenceName = "SEC_ORDER", allocationSize=1)
     @Column(name = "ORDER_ID", nullable = false, precision = 38, scale = 0)
     private Long orderId;
     
@@ -48,9 +65,6 @@ public class Orders implements Serializable {
     @Column(length = 30)
     private String priority;
     
-    @Column(name = "CUSTOMER_ID")
-    private Long customerId;
-    
     @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
     
@@ -64,12 +78,27 @@ public class Orders implements Serializable {
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
+    
+    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
+    @ManyToOne
+    private Customer customerId;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
+    private OrderProcessing orderProcessing;
 
     public Orders() {
     }
 
+    public Orders(Long orderId) {
+        this.orderId = orderId;
+    }
+
     public Long getOrderId() {
         return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Date getOrderDate() {
@@ -112,14 +141,6 @@ public class Orders implements Serializable {
         this.priority = priority;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -150,6 +171,22 @@ public class Orders implements Serializable {
 
     public void setProductId(Product productId) {
         this.productId = productId;
+    }
+
+    public Customer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
+    }
+
+    public OrderProcessing getOrderProcessing() {
+        return orderProcessing;
+    }
+
+    public void setOrderProcessing(OrderProcessing orderProcessing) {
+        this.orderProcessing = orderProcessing;
     }
 
     @Override

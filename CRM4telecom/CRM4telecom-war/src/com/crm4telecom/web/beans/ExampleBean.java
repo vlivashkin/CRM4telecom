@@ -20,11 +20,11 @@ public class ExampleBean{
         private OrderManagerLocal om;
         
 	public void addCustomer() {
-            cm.createCustomer("myname", "myfamily", "myemail", "mystreet", "myhome", "myappartaments", "mycardnumber", new Date(), new Long(3));
+            cm.createCustomer("myname", "myfamily", "myemail", "mystreet", 1L, 1L, "mycardnumber", new Date(), new Long(3));
 	}
         
         public void alterCustomer() {
-            cm.modifyCustomer(1L, "changed", "rrr", "kkk", "mystreet", "myhome", "myappartaments", "ede", new Date(), new Long(1));
+            cm.modifyCustomer(1L, "changed", "myfamily", "myemail", "mystreet", 1L, 1L, "mycardnumber", new Date(), new Long(3));
 	}
         
 	public String getCustomer() {
@@ -55,7 +55,7 @@ public class ExampleBean{
 	}
         
         public void alterOrder(){
-            om.modifyOrder(null, null, 1L, new Date(), "changed", "rrr", "kkk", "ede", 1L, "ede");
+            om.modifyOrder(3L, null, null, new Date(), "changed", "rrr", "kkk", "ede", 1L, "ede");
 	}
         
 	public String getOrder() {

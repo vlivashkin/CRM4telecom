@@ -1,12 +1,11 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -16,14 +15,23 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-@Entity @Table
+@Entity
+@Table(catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")})
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
+    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
+    @NamedQuery(name = "Product.findBySalesPeriod", query = "SELECT p FROM Product p WHERE p.salesPeriod = :salesPeriod"),
+    @NamedQuery(name = "Product.findByBaselinePrice", query = "SELECT p FROM Product p WHERE p.baselinePrice = :baselinePrice")})
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     @NotNull
     @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
     private Long productId;
@@ -44,19 +52,27 @@ public class Product implements Serializable {
     private Long baselinePrice;
     
     @OneToMany(mappedBy = "productId")
-    private Collection<MarketProducts> marketProductsCollection;
+    private List<MarketProducts> marketProductsList;
     
     @OneToMany(mappedBy = "productId")
-    private Collection<Orders> ordersCollection;
+    private List<Orders> ordersList;
     
     @OneToMany(mappedBy = "productId")
-    private Collection<CustomerProducts> customerProductsCollection;
+    private List<CustomerProducts> customerProductsList;
 
     public Product() {
     }
 
+    public Product(Long productId) {
+        this.productId = productId;
+    }
+
     public Long getProductId() {
         return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -91,28 +107,31 @@ public class Product implements Serializable {
         this.baselinePrice = baselinePrice;
     }
 
-    public Collection<MarketProducts> getMarketProductsCollection() {
-        return marketProductsCollection;
+    @XmlTransient
+    public List<MarketProducts> getMarketProductsList() {
+        return marketProductsList;
     }
 
-    public void setMarketProductsCollection(Collection<MarketProducts> marketProductsCollection) {
-        this.marketProductsCollection = marketProductsCollection;
+    public void setMarketProductsList(List<MarketProducts> marketProductsList) {
+        this.marketProductsList = marketProductsList;
     }
 
-    public Collection<Orders> getOrdersCollection() {
-        return ordersCollection;
+    @XmlTransient
+    public List<Orders> getOrdersList() {
+        return ordersList;
     }
 
-    public void setOrdersCollection(Collection<Orders> ordersCollection) {
-        this.ordersCollection = ordersCollection;
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
     }
 
-    public Collection<CustomerProducts> getCustomerProductsCollection() {
-        return customerProductsCollection;
+    @XmlTransient
+    public List<CustomerProducts> getCustomerProductsList() {
+        return customerProductsList;
     }
 
-    public void setCustomerProductsCollection(Collection<CustomerProducts> customerProductsCollection) {
-        this.customerProductsCollection = customerProductsCollection;
+    public void setCustomerProductsList(List<CustomerProducts> customerProductsList) {
+        this.customerProductsList = customerProductsList;
     }
 
     @Override

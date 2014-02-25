@@ -51,7 +51,7 @@ public class OrderManager implements OrderManagerLocal {
         if (customer == null)
             throw new NoSuchElementException();
         
-        order.setCustomerId(customer.getCustomerId());
+        order.setCustomerId(customer);
         em.persist(order);
     }
     
@@ -71,12 +71,12 @@ public class OrderManager implements OrderManagerLocal {
         return em.createQuery("SELECT o FROM Orders o ORDER BY " + order, Orders.class).getResultList();
     }
     
-    private Orders fillOrder(Orders order, Date orderDate, String orderType, String typeComment, String status, String priority, Long customerId, Long managerId, String technicalSupportFlag, Long productId) {
+    private Orders fillOrder(Orders order, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, Long customerId, String technicalSupportFlag, Long productId) {
         if (customerId != null) {
             Customer customer = em.find(Customer.class, customerId); 
             if (customer == null)
                 throw new NoSuchElementException();
-            order.setCustomerId(customer.getCustomerId());
+            order.setCustomerId(customer);
         }
         
         if (productId != null) {

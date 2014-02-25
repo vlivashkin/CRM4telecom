@@ -2,10 +2,9 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,14 +15,21 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity @Table
+@Entity
+@Table(name = "MARKETS_CUSTOMERS", catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MarketsCustomers.findAll", query = "SELECT m FROM MarketsCustomers m")})
+    @NamedQuery(name = "MarketsCustomers.findAll", query = "SELECT m FROM MarketsCustomers m"),
+    @NamedQuery(name = "MarketsCustomers.findByMarketId", query = "SELECT m FROM MarketsCustomers m WHERE m.marketId = :marketId"),
+    @NamedQuery(name = "MarketsCustomers.findByStartDate", query = "SELECT m FROM MarketsCustomers m WHERE m.startDate = :startDate"),
+    @NamedQuery(name = "MarketsCustomers.findByEndDate", query = "SELECT m FROM MarketsCustomers m WHERE m.endDate = :endDate")})
 public class MarketsCustomers implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    
     @NotNull
     @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
     private Long marketId;

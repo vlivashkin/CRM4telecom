@@ -2,10 +2,9 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,14 +14,22 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity @Table
+@Entity
+@Table(name = "CUSTOMER_PRODUCTS", catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CustomerProducts.findAll", query = "SELECT c FROM CustomerProducts c")})
+    @NamedQuery(name = "CustomerProducts.findAll", query = "SELECT c FROM CustomerProducts c"),
+    @NamedQuery(name = "CustomerProducts.findByCustomerId", query = "SELECT c FROM CustomerProducts c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "CustomerProducts.findByStartDate", query = "SELECT c FROM CustomerProducts c WHERE c.startDate = :startDate"),
+    @NamedQuery(name = "CustomerProducts.findByEndDate", query = "SELECT c FROM CustomerProducts c WHERE c.endDate = :endDate"),
+    @NamedQuery(name = "CustomerProducts.findByPrice", query = "SELECT c FROM CustomerProducts c WHERE c.price = :price")})
 public class CustomerProducts implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    
     @NotNull
     @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
     private Long customerId;
@@ -50,6 +57,10 @@ public class CustomerProducts implements Serializable {
 
     public Long getCustomerId() {
         return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Date getStartDate() {

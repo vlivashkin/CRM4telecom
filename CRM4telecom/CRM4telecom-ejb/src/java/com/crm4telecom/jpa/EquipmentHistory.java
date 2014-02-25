@@ -2,10 +2,9 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -16,14 +15,24 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity @Table
+@Entity
+@Table(name = "EQUIPMENT_HISTORY", catalog = "", schema = "CRM4TELECOM")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EquipmentHistory.findAll", query = "SELECT e FROM EquipmentHistory e")})
+    @NamedQuery(name = "EquipmentHistory.findAll", query = "SELECT e FROM EquipmentHistory e"),
+    @NamedQuery(name = "EquipmentHistory.findByEquipmentId", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentId = :equipmentId"),
+    @NamedQuery(name = "EquipmentHistory.findByCustomerId", query = "SELECT e FROM EquipmentHistory e WHERE e.customerId = :customerId"),
+    @NamedQuery(name = "EquipmentHistory.findByStartDate", query = "SELECT e FROM EquipmentHistory e WHERE e.startDate = :startDate"),
+    @NamedQuery(name = "EquipmentHistory.findByEndDate", query = "SELECT e FROM EquipmentHistory e WHERE e.endDate = :endDate"),
+    @NamedQuery(name = "EquipmentHistory.findByEquipmentComment", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentComment = :equipmentComment"),
+    @NamedQuery(name = "EquipmentHistory.findByStatus", query = "SELECT e FROM EquipmentHistory e WHERE e.status = :status")})
 public class EquipmentHistory implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    
     @NotNull
     @Column(name = "EQUIPMENT_ID", nullable = false, precision = 38, scale = 0)
     private Long equipmentId;
