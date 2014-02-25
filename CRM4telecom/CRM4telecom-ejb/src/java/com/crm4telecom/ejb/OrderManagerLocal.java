@@ -1,21 +1,23 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
-import com.crm4telecom.jpa.Product;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
 public interface OrderManagerLocal {
+    public Orders createOrder(Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag);
 
-    Orders getOrger(Long orderId);
-
-    void alterOrder(Long orderId, Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, Long managerId, String technicalSupportFlag, Product productId);
-
-    void addOrder(Date orderDate, String orderType, String typeComment, String status, String priority, Customer customerId, Long managerId, String technicalSupportFlag, Product productId);
+    public void modifyOrder(Orders order);
+    
+    public Orders modifyOrder(Long orderId, Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag);
+    
+    void setCustomer(Long orderId, Long customerId);
+    
+    Orders getOrder(Long orderId);
 
     List<Orders> getOrdersList();
-   
+    
+    List<Orders> getOrdersList(String order);
 }

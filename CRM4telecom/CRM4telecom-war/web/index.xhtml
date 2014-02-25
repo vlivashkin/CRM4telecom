@@ -3,16 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Example of ejb entity beans</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h1>CustomerManager</h1>
         <h:form>
-            <h:commandButton value="Add customer" type="submit" action="#{userBean.add}" />
-            <h:commandButton value="Alter customer" type="submit" action="#{userBean.alter}" />
-            <h:inputText value="#{userBean.customer}"></h:inputText>
-            <h:inputTextarea value="#{userBean.customersList}"></h:inputTextarea>
+            <h:commandButton value="Add customer" type="submit" action="#{exampleBean.addCustomer}" />
+            <h:commandButton value="Alter customer 1" type="submit" action="#{exampleBean.alterCustomer}" />
+        </h:form>
+        <h:form>
+            <h:inputText value="#{exampleBean.customer}"></h:inputText>
+        </h:form>
+        <h:form>
+            <h:inputTextarea value="#{exampleBean.customersList}"></h:inputTextarea>
+        </h:form>
+        <h1>OrderManager</h1>
+        <h:form>
+            <h:commandButton value="Add order" type="submit" action="#{exampleBean.addOrder}" />
+            <h:commandButton value="Alter order 1" type="submit" action="#{exampleBean.alterOrder}" />
+        </h:form>
+        <h:form>
+            <h:inputText value="#{exampleBean.order}"></h:inputText>
+        </h:form>
+        <h:form>
+            <h:inputTextarea value="#{exampleBean.ordersList}"></h:inputTextarea>
         </h:form>
     </h:body>
 </html>
-

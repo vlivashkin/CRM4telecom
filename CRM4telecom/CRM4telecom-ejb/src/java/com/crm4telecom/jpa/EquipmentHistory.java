@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -24,71 +16,61 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "EQUIPMENT_HISTORY")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "EquipmentHistory.findAll", query = "SELECT e FROM EquipmentHistory e"),
-    @NamedQuery(name = "EquipmentHistory.findByEquipmentId", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentId = :equipmentId"),
-    @NamedQuery(name = "EquipmentHistory.findByCustomerId", query = "SELECT e FROM EquipmentHistory e WHERE e.customerId = :customerId"),
-    @NamedQuery(name = "EquipmentHistory.findByStartDate", query = "SELECT e FROM EquipmentHistory e WHERE e.startDate = :startDate"),
-    @NamedQuery(name = "EquipmentHistory.findByEndDate", query = "SELECT e FROM EquipmentHistory e WHERE e.endDate = :endDate"),
-    @NamedQuery(name = "EquipmentHistory.findByEquipmentComment", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentComment = :equipmentComment"),
-    @NamedQuery(name = "EquipmentHistory.findByStatus", query = "SELECT e FROM EquipmentHistory e WHERE e.status = :status")})
+    @NamedQuery(name = "EquipmentHistory.findAll", query = "SELECT e FROM EquipmentHistory e")})
 public class EquipmentHistory implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "EQUIPMENT_ID")
-    private BigDecimal equipmentId;
+    @Column(name = "EQUIPMENT_ID", nullable = false, precision = 38, scale = 0)
+    private Long equipmentId;
+    
     @Column(name = "CUSTOMER_ID")
-    private BigInteger customerId;
+    private Long customerId;
+    
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    
     @Size(max = 30)
-    @Column(name = "EQUIPMENT_COMMENT")
+    @Column(name = "EQUIPMENT_COMMENT", length = 30)
     private String equipmentComment;
+    
     @Size(max = 30)
-    @Column(name = "STATUS")
+    @Column(length = 30)
     private String status;
-    @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID", insertable = false, updatable = false)
+    
+    @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Equipment equipment;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "equipmentHistory1")
-    private Equipment equipment1;
 
     public EquipmentHistory() {
     }
 
-    public EquipmentHistory(BigDecimal equipmentId) {
+    public EquipmentHistory(Long equipmentId) {
         this.equipmentId = equipmentId;
     }
 
-    public BigDecimal getEquipmentId() {
+    public Long getEquipmentId() {
         return equipmentId;
     }
 
-    public void setEquipmentId(BigDecimal equipmentId) {
+    public void setEquipmentId(Long equipmentId) {
         this.equipmentId = equipmentId;
     }
 
-    public BigInteger getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(BigInteger customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
@@ -132,14 +114,6 @@ public class EquipmentHistory implements Serializable {
         this.equipment = equipment;
     }
 
-    public Equipment getEquipment1() {
-        return equipment1;
-    }
-
-    public void setEquipment1(Equipment equipment1) {
-        this.equipment1 = equipment1;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,7 +136,7 @@ public class EquipmentHistory implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.EquipmentHistory[ equipmentId=" + equipmentId + " ]";
+        return "com.crm4telecom.jpa.EquipmentHistory[ equipmentId=" + equipmentId + " ]";
     }
     
 }

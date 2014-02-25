@@ -7,11 +7,15 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerManagerLocal {
+    Customer createCustomer(String firstName, String lastName, String email, String street, String house, String apartment, String cardNumber, Date cardExpData, Long balance);
+    
+    void modifyCustomer(Customer customer);
+    
+    Customer modifyCustomer(Long customerId, String firstName, String lastName, String email, String street, String house, String apartment, String cardNumber, Date cardExpData, Long balance);
+
     Customer getCustomer(Long customerId);
 
-    List<Customer> getCustomersList();
+    List<Customer> getCustomerList();
     
-   void addCustomer(String firstName, String lastName, String email, String cardNumber, Date cardExpData, Long balance);
-
-   void alterCustomer(Long customerId, String firstName, String lastName, String email, String cardNumber, Date cardExpData, Long balance);
+    List<Customer> getCustomerList(String order);
 }

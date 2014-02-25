@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,62 +16,47 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "PRODUCT")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-    @NamedQuery(name = "Product.findBySalesPeriod", query = "SELECT p FROM Product p WHERE p.salesPeriod = :salesPeriod"),
-    @NamedQuery(name = "Product.findByBaselinePrice", query = "SELECT p FROM Product p WHERE p.baselinePrice = :baselinePrice")})
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")})
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "PRODUCT_ID")
-    private BigDecimal productId;
+    @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
+    private Long productId;
+    
     @Size(max = 30)
-    @Column(name = "NAME")
+    @Column(length = 30)
     private String name;
+    
     @Size(max = 30)
-    @Column(name = "DESCRIPTION")
+    @Column(length = 30)
     private String description;
+    
     @Column(name = "SALES_PERIOD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriod;
+    
     @Column(name = "BASELINE_PRICE")
-    private BigInteger baselinePrice;
-    @OneToMany(mappedBy = "productId")
-    private Collection<Orders> ordersCollection;
-    @OneToMany(mappedBy = "productId")
-    private Collection<CustomerProducts> customerProductsCollection;
+    private Long baselinePrice;
+    
     @OneToMany(mappedBy = "productId")
     private Collection<MarketProducts> marketProductsCollection;
+    
+    @OneToMany(mappedBy = "productId")
+    private Collection<Orders> ordersCollection;
+    
+    @OneToMany(mappedBy = "productId")
+    private Collection<CustomerProducts> customerProductsCollection;
 
     public Product() {
     }
 
-    public Product(BigDecimal productId) {
-        this.productId = productId;
-    }
-
-    public BigDecimal getProductId() {
+    public Long getProductId() {
         return productId;
-    }
-
-    public void setProductId(BigDecimal productId) {
-        this.productId = productId;
     }
 
     public String getName() {
@@ -105,15 +83,22 @@ public class Product implements Serializable {
         this.salesPeriod = salesPeriod;
     }
 
-    public BigInteger getBaselinePrice() {
+    public Long getBaselinePrice() {
         return baselinePrice;
     }
 
-    public void setBaselinePrice(BigInteger baselinePrice) {
+    public void setBaselinePrice(Long baselinePrice) {
         this.baselinePrice = baselinePrice;
     }
 
-    @XmlTransient
+    public Collection<MarketProducts> getMarketProductsCollection() {
+        return marketProductsCollection;
+    }
+
+    public void setMarketProductsCollection(Collection<MarketProducts> marketProductsCollection) {
+        this.marketProductsCollection = marketProductsCollection;
+    }
+
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
     }
@@ -122,22 +107,12 @@ public class Product implements Serializable {
         this.ordersCollection = ordersCollection;
     }
 
-    @XmlTransient
     public Collection<CustomerProducts> getCustomerProductsCollection() {
         return customerProductsCollection;
     }
 
     public void setCustomerProductsCollection(Collection<CustomerProducts> customerProductsCollection) {
         this.customerProductsCollection = customerProductsCollection;
-    }
-
-    @XmlTransient
-    public Collection<MarketProducts> getMarketProductsCollection() {
-        return marketProductsCollection;
-    }
-
-    public void setMarketProductsCollection(Collection<MarketProducts> marketProductsCollection) {
-        this.marketProductsCollection = marketProductsCollection;
     }
 
     @Override
@@ -162,7 +137,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.Product[ productId=" + productId + " ]";
+        return "com.crm4telecom.jpa.Product[ productId=" + productId + " ]";
     }
     
 }

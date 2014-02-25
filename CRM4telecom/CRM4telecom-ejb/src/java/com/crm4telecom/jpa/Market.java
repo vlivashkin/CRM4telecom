@@ -1,74 +1,53 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "MARKET")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "Market.findAll", query = "SELECT m FROM Market m"),
-    @NamedQuery(name = "Market.findByMarketId", query = "SELECT m FROM Market m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "Market.findByName", query = "SELECT m FROM Market m WHERE m.name = :name"),
-    @NamedQuery(name = "Market.findByDescription", query = "SELECT m FROM Market m WHERE m.description = :description")})
+    @NamedQuery(name = "Market.findAll", query = "SELECT m FROM Market m")})
 public class Market implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "MARKET_ID")
-    private BigDecimal marketId;
+    @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
+    private Long marketId;
+    
     @Size(max = 30)
-    @Column(name = "NAME")
+    @Column(length = 30)
     private String name;
+    
     @Size(max = 30)
-    @Column(name = "DESCRIPTION")
+    @Column(length = 30)
     private String description;
-    @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private MarketsCustomers marketsCustomers;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "market1")
-    private MarketsCustomers marketsCustomers1;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
     private MarketProducts marketProducts;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
+    private MarketsCustomers marketsCustomers;
 
     public Market() {
     }
 
-    public Market(BigDecimal marketId) {
+    public Market(Long marketId) {
         this.marketId = marketId;
     }
 
-    public BigDecimal getMarketId() {
+    public Long getMarketId() {
         return marketId;
-    }
-
-    public void setMarketId(BigDecimal marketId) {
-        this.marketId = marketId;
     }
 
     public String getName() {
@@ -87,28 +66,20 @@ public class Market implements Serializable {
         this.description = description;
     }
 
-    public MarketsCustomers getMarketsCustomers() {
-        return marketsCustomers;
-    }
-
-    public void setMarketsCustomers(MarketsCustomers marketsCustomers) {
-        this.marketsCustomers = marketsCustomers;
-    }
-
-    public MarketsCustomers getMarketsCustomers1() {
-        return marketsCustomers1;
-    }
-
-    public void setMarketsCustomers1(MarketsCustomers marketsCustomers1) {
-        this.marketsCustomers1 = marketsCustomers1;
-    }
-
     public MarketProducts getMarketProducts() {
         return marketProducts;
     }
 
     public void setMarketProducts(MarketProducts marketProducts) {
         this.marketProducts = marketProducts;
+    }
+
+    public MarketsCustomers getMarketsCustomers() {
+        return marketsCustomers;
+    }
+
+    public void setMarketsCustomers(MarketsCustomers marketsCustomers) {
+        this.marketsCustomers = marketsCustomers;
     }
 
     @Override
@@ -133,7 +104,7 @@ public class Market implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.Market[ marketId=" + marketId + " ]";
+        return "com.crm4telecom.jpa.Market[ marketId=" + marketId + " ]";
     }
     
 }

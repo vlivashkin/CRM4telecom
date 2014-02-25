@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,39 +16,30 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "MARKETS_CUSTOMERS")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "MarketsCustomers.findAll", query = "SELECT m FROM MarketsCustomers m"),
-    @NamedQuery(name = "MarketsCustomers.findByMarketId", query = "SELECT m FROM MarketsCustomers m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "MarketsCustomers.findByStartDate", query = "SELECT m FROM MarketsCustomers m WHERE m.startDate = :startDate"),
-    @NamedQuery(name = "MarketsCustomers.findByEndDate", query = "SELECT m FROM MarketsCustomers m WHERE m.endDate = :endDate")})
+    @NamedQuery(name = "MarketsCustomers.findAll", query = "SELECT m FROM MarketsCustomers m")})
 public class MarketsCustomers implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "MARKET_ID")
-    private BigDecimal marketId;
+    @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
+    private Long marketId;
+    
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "marketsCustomers")
-    private Market market;
-    @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", insertable = false, updatable = false)
+    
+    @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Market market1;
+    private Market market;
+    
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne
     private Customer customerId;
@@ -63,15 +47,15 @@ public class MarketsCustomers implements Serializable {
     public MarketsCustomers() {
     }
 
-    public MarketsCustomers(BigDecimal marketId) {
+    public MarketsCustomers(Long marketId) {
         this.marketId = marketId;
     }
 
-    public BigDecimal getMarketId() {
+    public Long getMarketId() {
         return marketId;
     }
 
-    public void setMarketId(BigDecimal marketId) {
+    public void setMarketId(Long marketId) {
         this.marketId = marketId;
     }
 
@@ -97,14 +81,6 @@ public class MarketsCustomers implements Serializable {
 
     public void setMarket(Market market) {
         this.market = market;
-    }
-
-    public Market getMarket1() {
-        return market1;
-    }
-
-    public void setMarket1(Market market1) {
-        this.market1 = market1;
     }
 
     public Customer getCustomerId() {
@@ -137,7 +113,7 @@ public class MarketsCustomers implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.MarketsCustomers[ marketId=" + marketId + " ]";
+        return "com.crm4telecom.jpa.MarketsCustomers[ marketId=" + marketId + " ]";
     }
     
 }

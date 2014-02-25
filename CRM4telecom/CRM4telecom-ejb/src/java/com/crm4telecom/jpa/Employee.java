@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,61 +16,45 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "EMPLOYEE")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
-    @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId"),
-    @NamedQuery(name = "Employee.findByJobDescription", query = "SELECT e FROM Employee e WHERE e.jobDescription = :jobDescription"),
-    @NamedQuery(name = "Employee.findByFirstName", query = "SELECT e FROM Employee e WHERE e.firstName = :firstName"),
-    @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName"),
-    @NamedQuery(name = "Employee.findBySchedule", query = "SELECT e FROM Employee e WHERE e.schedule = :schedule")})
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "EMPLOYEE_ID")
-    private BigDecimal employeeId;
+    @Column(name = "EMPLOYEE_ID", nullable = false, precision = 38, scale = 0)
+    private Long employeeId;
+    
     @Size(max = 30)
-    @Column(name = "JOB_DESCRIPTION")
+    @Column(name = "JOB_DESCRIPTION", length = 30)
     private String jobDescription;
+    
     @Size(max = 30)
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", length = 30)
     private String firstName;
+    
     @Size(max = 30)
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", length = 30)
     private String lastName;
-    @Column(name = "SCHEDULE")
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date schedule;
-    @OneToMany(mappedBy = "employeeId")
-    private Collection<Orders> ordersCollection;
+    
     @OneToMany(mappedBy = "employeeId")
     private Collection<OrderProcessing> orderProcessingCollection;
 
     public Employee() {
     }
 
-    public Employee(BigDecimal employeeId) {
+    public Employee(Long employeeId) {
         this.employeeId = employeeId;
     }
 
-    public BigDecimal getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
-    }
-
-    public void setEmployeeId(BigDecimal employeeId) {
-        this.employeeId = employeeId;
     }
 
     public String getJobDescription() {
@@ -111,16 +89,6 @@ public class Employee implements Serializable {
         this.schedule = schedule;
     }
 
-    @XmlTransient
-    public Collection<Orders> getOrdersCollection() {
-        return ordersCollection;
-    }
-
-    public void setOrdersCollection(Collection<Orders> ordersCollection) {
-        this.ordersCollection = ordersCollection;
-    }
-
-    @XmlTransient
     public Collection<OrderProcessing> getOrderProcessingCollection() {
         return orderProcessingCollection;
     }
@@ -151,7 +119,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.Employee[ employeeId=" + employeeId + " ]";
+        return "com.crm4telecom.jpa.Employee[ employeeId=" + employeeId + " ]";
     }
     
 }

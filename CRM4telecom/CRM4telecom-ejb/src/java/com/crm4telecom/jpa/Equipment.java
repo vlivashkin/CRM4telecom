@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,73 +15,58 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "EQUIPMENT")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e"),
-    @NamedQuery(name = "Equipment.findByEquipmentId", query = "SELECT e FROM Equipment e WHERE e.equipmentId = :equipmentId"),
-    @NamedQuery(name = "Equipment.findByCustomerId", query = "SELECT e FROM Equipment e WHERE e.customerId = :customerId"),
-    @NamedQuery(name = "Equipment.findByName", query = "SELECT e FROM Equipment e WHERE e.name = :name"),
-    @NamedQuery(name = "Equipment.findBySerialNumber", query = "SELECT e FROM Equipment e WHERE e.serialNumber = :serialNumber"),
-    @NamedQuery(name = "Equipment.findByDescription", query = "SELECT e FROM Equipment e WHERE e.description = :description"),
-    @NamedQuery(name = "Equipment.findByStatus", query = "SELECT e FROM Equipment e WHERE e.status = :status")})
+    @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e")})
 public class Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "EQUIPMENT_ID")
-    private BigDecimal equipmentId;
+    @Column(name = "EQUIPMENT_ID", nullable = false, precision = 38, scale = 0)
+    private Long equipmentId;
+    
     @Column(name = "CUSTOMER_ID")
-    private BigInteger customerId;
+    private Long customerId;
+    
     @Size(max = 30)
-    @Column(name = "NAME")
+    @Column(length = 30)
     private String name;
+    
     @Column(name = "SERIAL_NUMBER")
-    private BigInteger serialNumber;
+    private Long serialNumber;
+    
     @Size(max = 30)
-    @Column(name = "DESCRIPTION")
+    @Column(length = 30)
     private String description;
+    
     @Size(max = 30)
-    @Column(name = "STATUS")
+    @Column(length = 30)
     private String status;
+    
     @OneToMany(mappedBy = "equipmentId")
     private Collection<OrderProcessing> orderProcessingCollection;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "equipment")
     private EquipmentHistory equipmentHistory;
-    @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private EquipmentHistory equipmentHistory1;
 
     public Equipment() {
     }
 
-    public Equipment(BigDecimal equipmentId) {
+    public Equipment(Long equipmentId) {
         this.equipmentId = equipmentId;
     }
 
-    public BigDecimal getEquipmentId() {
+    public Long getEquipmentId() {
         return equipmentId;
     }
 
-    public void setEquipmentId(BigDecimal equipmentId) {
-        this.equipmentId = equipmentId;
-    }
-
-    public BigInteger getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(BigInteger customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
@@ -101,11 +78,11 @@ public class Equipment implements Serializable {
         this.name = name;
     }
 
-    public BigInteger getSerialNumber() {
+    public Long getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(BigInteger serialNumber) {
+    public void setSerialNumber(Long serialNumber) {
         this.serialNumber = serialNumber;
     }
 
@@ -125,7 +102,6 @@ public class Equipment implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
     public Collection<OrderProcessing> getOrderProcessingCollection() {
         return orderProcessingCollection;
     }
@@ -140,14 +116,6 @@ public class Equipment implements Serializable {
 
     public void setEquipmentHistory(EquipmentHistory equipmentHistory) {
         this.equipmentHistory = equipmentHistory;
-    }
-
-    public EquipmentHistory getEquipmentHistory1() {
-        return equipmentHistory1;
-    }
-
-    public void setEquipmentHistory1(EquipmentHistory equipmentHistory1) {
-        this.equipmentHistory1 = equipmentHistory1;
     }
 
     @Override
@@ -172,7 +140,7 @@ public class Equipment implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.Equipment[ equipmentId=" + equipmentId + " ]";
+        return "com.crm4telecom.jpa.Equipment[ equipmentId=" + equipmentId + " ]";
     }
     
 }

@@ -9,55 +9,65 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity @Table
+@NamedQueries({
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
 public class Customer implements Serializable {
-    @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
-    @Column(name = "CUSTOMER_ID")
+    private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
     private Long customerId;
-
+    
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", nullable = false, length = 30)
     private String firstName;
-
+    
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", nullable = false, length = 30)
     private String lastName;
     
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "EMAIL")
+    @Column(nullable = false, length = 30)
     private String email;
     
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(nullable = false, length = 30)
+    private String street;
+    
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(nullable = false, length = 30)
+    private String house;
+    
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(nullable = false, length = 30)
+    private String apartment;
+    
     @Size(max = 20)
-    @Column(name = "CARD_NUMBER")
+    @Column(name = "CARD_NUMBER", length = 20)
     private String cardNumber;
     
     @Column(name = "CARD_EXP_DATA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cardExpData;
     
-    @Column(name = "BALANCE")
     private Long balance;
-    
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private CustomerProducts customerProducts;
-    
-    @OneToMany(mappedBy = "customerId")
-    private Collection<Orders> ordersCollection;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private Collection<PhoneNumber> phoneNumberCollection;
@@ -68,17 +78,26 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String email, String cardNumber, Date cardExpData, Long balance) {
+    public Customer(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Customer(Long customerId, String firstName, String lastName, String email, String street, String house, String apartment) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.cardNumber = cardNumber;
-        this.cardExpData = cardExpData;
-        this.balance = balance;
+        this.street = street;
+        this.house = house;
+        this.apartment = apartment;
     }
 
     public Long getCustomerId() {
         return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -105,6 +124,30 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
     public String getCardNumber() {
         return cardNumber;
     }
@@ -129,24 +172,6 @@ public class Customer implements Serializable {
         this.balance = balance;
     }
 
-    public CustomerProducts getCustomerProducts() {
-        return customerProducts;
-    }
-
-    public void setCustomerProducts(CustomerProducts customerProducts) {
-        this.customerProducts = customerProducts;
-    }
-
-    @XmlTransient
-    public Collection<Orders> getOrdersCollection() {
-        return ordersCollection;
-    }
-
-    public void setOrdersCollection(Collection<Orders> ordersCollection) {
-        this.ordersCollection = ordersCollection;
-    }
-
-    @XmlTransient
     public Collection<PhoneNumber> getPhoneNumberCollection() {
         return phoneNumberCollection;
     }
@@ -155,7 +180,6 @@ public class Customer implements Serializable {
         this.phoneNumberCollection = phoneNumberCollection;
     }
 
-    @XmlTransient
     public Collection<MarketsCustomers> getMarketsCustomersCollection() {
         return marketsCustomersCollection;
     }
@@ -186,7 +210,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "[customerId=" + customerId + "], " + firstName + " " + lastName;
+        return "com.crm4telecom.jpa.Customer[ customerId=" + customerId + " ]";
     }
     
 }

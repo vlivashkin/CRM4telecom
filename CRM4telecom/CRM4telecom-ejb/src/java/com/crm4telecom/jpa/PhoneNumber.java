@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,39 +16,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
-@Entity
-@Table(name = "PHONE_NUMBER")
-@XmlRootElement
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "PhoneNumber.findAll", query = "SELECT p FROM PhoneNumber p"),
-    @NamedQuery(name = "PhoneNumber.findByPhoneNumber", query = "SELECT p FROM PhoneNumber p WHERE p.phoneNumber = :phoneNumber"),
-    @NamedQuery(name = "PhoneNumber.findByStartDate", query = "SELECT p FROM PhoneNumber p WHERE p.startDate = :startDate"),
-    @NamedQuery(name = "PhoneNumber.findByEndDate", query = "SELECT p FROM PhoneNumber p WHERE p.endDate = :endDate"),
-    @NamedQuery(name = "PhoneNumber.findByCommentString", query = "SELECT p FROM PhoneNumber p WHERE p.commentString = :commentString")})
+    @NamedQuery(name = "PhoneNumber.findAll", query = "SELECT p FROM PhoneNumber p")})
 public class PhoneNumber implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "PHONE_NUMBER", nullable = false, length = 20)
     private String phoneNumber;
+    
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    
     @Size(max = 100)
-    @Column(name = "COMMENT_STRING")
+    @Column(name = "COMMENT_STRING", length = 100)
     private String commentString;
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
+    
+    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID", nullable = false)
     @ManyToOne(optional = false)
     private Customer customerId;
 
@@ -126,7 +114,7 @@ public class PhoneNumber implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.PhoneNumber[ phoneNumber=" + phoneNumber + " ]";
+        return "com.crm4telecom.jpa.PhoneNumber[ phoneNumber=" + phoneNumber + " ]";
     }
     
 }

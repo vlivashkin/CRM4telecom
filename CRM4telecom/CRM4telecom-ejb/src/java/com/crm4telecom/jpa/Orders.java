@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,30 +11,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "ORDERS")
+@Entity @Table
 @NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
-    @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
-    @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
-    @NamedQuery(name = "Orders.findByOrderType", query = "SELECT o FROM Orders o WHERE o.orderType = :orderType"),
-    @NamedQuery(name = "Orders.findByTypeComment", query = "SELECT o FROM Orders o WHERE o.typeComment = :typeComment"),
-    @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status"),
-    @NamedQuery(name = "Orders.findByPriority", query = "SELECT o FROM Orders o WHERE o.priority = :priority"),
-    @NamedQuery(name = "Orders.findByManagerId", query = "SELECT o FROM Orders o WHERE o.managerId = :managerId"),
-    @NamedQuery(name = "Orders.findByTechnicalSupportFlag", query = "SELECT o FROM Orders o WHERE o.technicalSupportFlag = :technicalSupportFlag")})
+    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")})
 public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
-    @Column(name = "ORDER_ID")
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @Column(name = "ORDER_ID", nullable = false, precision = 38, scale = 0)
     private Long orderId;
     
     @Column(name = "ORDER_DATE")
@@ -49,60 +33,43 @@ public class Orders implements Serializable {
     private Date orderDate;
     
     @Size(max = 30)
-    @Column(name = "ORDER_TYPE")
+    @Column(name = "ORDER_TYPE", length = 30)
     private String orderType;
     
     @Size(max = 30)
-    @Column(name = "TYPE_COMMENT")
+    @Column(name = "TYPE_COMMENT", length = 30)
     private String typeComment;
     
     @Size(max = 30)
-    @Column(name = "STATUS")
+    @Column(length = 30)
     private String status;
     
     @Size(max = 30)
-    @Column(name = "PRIORITY")
+    @Column(length = 30)
     private String priority;
+    
+    @Column(name = "CUSTOMER_ID")
+    private Long customerId;
+    
+    @Column(name = "EMPLOYEE_ID")
+    private Long employeeId;
     
     @Column(name = "MANAGER_ID")
     private Long managerId;
     
     @Size(max = 30)
-    @Column(name = "TECHNICAL_SUPPORT_FLAG")
+    @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
     private String technicalSupportFlag;
     
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
-    
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private OrderProcessing orderProcessing;
-    
-    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
-    @ManyToOne
-    private Employee employeeId;
-    
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
-    @ManyToOne
-    private Customer customerId;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders1")
-    private OrderProcessing orderProcessing1;
 
     public Orders() {
     }
 
-    public Orders(Long orderId) {
-        this.orderId = orderId;
-    }
-
     public Long getOrderId() {
         return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
     }
 
     public Date getOrderDate() {
@@ -145,6 +112,22 @@ public class Orders implements Serializable {
         this.priority = priority;
     }
 
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public Long getManagerId() {
         return managerId;
     }
@@ -169,38 +152,6 @@ public class Orders implements Serializable {
         this.productId = productId;
     }
 
-    public OrderProcessing getOrderProcessing() {
-        return orderProcessing;
-    }
-
-    public void setOrderProcessing(OrderProcessing orderProcessing) {
-        this.orderProcessing = orderProcessing;
-    }
-
-    public Employee getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
-    }
-
-    public OrderProcessing getOrderProcessing1() {
-        return orderProcessing1;
-    }
-
-    public void setOrderProcessing1(OrderProcessing orderProcessing1) {
-        this.orderProcessing1 = orderProcessing1;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -223,7 +174,7 @@ public class Orders implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.entities.Orders[ orderId=" + orderId + " ]";
+        return "com.crm4telecom.jpa.Orders[ orderId=" + orderId + " ]";
     }
     
 }
