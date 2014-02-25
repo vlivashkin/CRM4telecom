@@ -5,21 +5,57 @@ CREATE TABLE customer
      last_name VARCHAR(30) NOT NULL,
      email VARCHAR(30) NOT NULL,
      street VARCHAR(30) NOT NULL,
-     house VARCHAR(30) NOT NULL,
-     apartment VARCHAR(30) NOT NULL,
+     building INT NOT NULL,
+     flat INT NOT NULL,
      card_number VARCHAR(20),
+     Connection_date TIMESTAMP(9),
+     Status VARCHAR(30),
+     Status_update_date TIMESTAMP(9),
      card_exp_data TIMESTAMP,
      balance INT
   );
+
+  
+CREATE TABLE static_ip 
+  (
+     ip varchar(30) Primary key,
+     status varchar(30),
+     status_comment varchar(30),
+     customer_id int 
+  );  
+  
+CREATE TABLE Static_ip_history 
+  (
+    ip varchar (30) Primary key,
+    customer_id int,
+    start_date timestamp(9),
+    end_date timestamp(9),
+    ip_comment varchar(30)
+  );
+      
+CREATE TABLE Balance_history
+  (
+    customer_id int Primary key,
+    balance_date  timestamp(9),
+    amount int );      
+  
+
 
 CREATE TABLE phone_number
   (
      phone_number VARCHAR(20) PRIMARY KEY,
      customer_id INT NOT NULL,
-     start_date TIMESTAMP,
-     end_date TIMESTAMP,
-     comment_string VARCHAR(100)
+     status varchar(30),
+     status_comment varchar(30)
   );
+  
+CREATE TABLE phone_numbers_history(
+    phone_number VARCHAR(20) PRIMARY KEY,
+    customer_id int,
+    start_date timestamp(9),
+    end_date timestamp(9),
+    history_comment VARCHAR(30)
+    );  
 
 CREATE TABLE markets_customers
   (
@@ -71,8 +107,8 @@ CREATE TABLE orders
      type_comment VARCHAR(30),
      status VARCHAR(30),
      priority VARCHAR(30),
-     customer_id INT,
-     employee_id INT,
+     customer_id INT NULL,
+     employee_id INT NULL,
      manager_id INT,
      technical_support_flag VARCHAR(30),
      product_id INTEGER
@@ -92,12 +128,20 @@ CREATE TABLE order_processing
 
 CREATE TABLE employee
   (
-     employee_id INT PRIMARY KEY,
+     employee_id INT  PRIMARY KEY,
      job_description VARCHAR(30),
      first_name VARCHAR(30),
      last_name VARCHAR(30),
      schedule TIMESTAMP
   );
+  
+CREATE TABLE USERS 
+  (
+     Login VARCHAR(30) PRIMARY KEY,
+     Password VARCHAR(30),
+     type VARCHAR(30),
+     employee_id int null
+  );  
 
 CREATE TABLE equipment
   (
@@ -118,10 +162,24 @@ CREATE TABLE equipment_history
      equipment_comment VARCHAR(30),
      status VARCHAR(30)
   );
+
+ALTER TABLE   balance_history 
+    ADD CONSTRAINT balance FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
   
+ALTER TABLE Static_ip 
+    ADD CONSTRAINT static_ip_customer FOREIGN KEY (customer_id) REFERENCES customer (customer_id); 
+    
+ALTER TABLE static_ip_history
+    ADD CONSTRAINT static_ip_history FOREIGN KEY (ip) REFERENCES static_ip(ip);
+ 
+ALTER TABLE Users 
+    ADD CONSTRAINT user_empl_id FOREIGN KEY (employee_id) REFERENCES employee(employee_id); 
 
 ALTER TABLE phone_number 
-  ADD CONSTRAINT order_cust_id  FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
+    ADD CONSTRAINT order_cust_id  FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
+
+ALTER TABLE phone_numbers_history 
+    ADD CONSTRAINT phone_numbers_history FOREIGN KEY (phone_number) REFERENCES phone_number (phone_number);
 
 ALTER TABLE markets_customers
   ADD CONSTRAINT markets_customers_market_id FOREIGN KEY (market_id) REFERENCES market (market_id);
@@ -156,5 +214,3 @@ ALTER TABLE order_processing
 
 ALTER TABLE equipment_history
   ADD CONSTRAINT equipment_history_equipment_id FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id); 
-  
-  

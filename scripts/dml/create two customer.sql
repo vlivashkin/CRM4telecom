@@ -10,14 +10,17 @@ WHEN MATCHED THEN
                 C.card_number = '23356542143',
                 C.card_exp_data = '25/11/2014 0:50:01' ,
                 C.balance = 2451,
-                C.STREET = 'sss',
-                C.APARTMENT = 's1s',
-                C.HOUSE = '1sds'
+                C.STREET = 'Lenina',
+                C.building = 21,
+                C.flat = 5,
+                C.status = 'in proccess',
+                C.Connection_date = '23/9/2013 0:1:2',
+                C.Status_update_date = '25/10/2016 1:43:12'
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.apartment,c.house)  
-    Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143','25/11/2014 0:50:01' ,2451,'sss','s1s','1sds');
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.building,c.flat,c.status,C.Connection_date,C.Status_update_date)  
+    Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143','25/11/2014 0:50:01' ,2451,'Lenina',21,5,'in process','23/9/2013 0:1:2','25/10/2016 1:43:12');
 
 MERGE INTO Customer C
 Using (select 1 as customer_id from dual d)
@@ -29,14 +32,18 @@ WHEN MATCHED THEN
                 C.card_number = '24356524545',
                 C.card_exp_data = '15/7/2015 11:25:51' ,
                 C.balance = 5000,
-                C.STREET = 'sss',
-                C.APARTMENT = 's1s',
-                C.HOUSE = '1sds'
+                C.STREET = 'Jukova',
+                C.building = 1,
+                C.flat = 24,
+                C.status = 'in proccess',
+                C.Connection_date = '23/9/2013 0:1:2',
+                C.Status_update_date = '25/10/2016 1:43:12'
+                
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.apartment,c.house)  
-    Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000,'sss','s1s','1sds');
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.building,c.flat,c.status,c.connection_date,c.status_update_date)  
+    Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000,'Jukova',1,24,'in process','23/9/2013 0:1:2','25/10/2016 1:43:12');
 
 delete from Customer where customer_id> 2 ;    
 
@@ -45,27 +52,48 @@ USING (select 1 from dual )
 ON ( p.phone_number = (select '915-12-45-76' from dual))
 WHEN MATCHED THEN 
     UPDATE SET 
-               p.comment_string = 'active customer',
-               p.start_date = '12/1/2004 14:24:22',
-               p.end_date = '14/5/2022 13:11:15',
+               P.STATUS_COMMENT = 'active customer',
+               P.STATUS = 'active',
                p.customer_id = 1
 WHEN NOT MATCHED THEN
-    INSERT (P.PHONE_NUMBER,P.START_DATE,P.END_DATE,P.CUSTOMER_ID,P.COMMENT_STRING) values ('915-12-45-76','12/1/2004 14:24:22','14/5/2022 13:11:15',1, 'active customer');              
+    INSERT (P.PHONE_NUMBER,P.STATUS,P.CUSTOMER_ID,P.status_comment) values ('915-12-45-76','active',1,'active customer');              
      
 MERGE INTO phone_number p
 USING (select 1 from dual ) 
 ON ( p.phone_number = (select '923-22-55-76' from dual))
 WHEN MATCHED THEN 
     UPDATE SET 
-               p.comment_string = 'active customer',
-               p.start_date = '12/1/2012 4:24:22',
-               p.end_date = '14/5/2015 3:11:15',
+               P.STATUS = 'active',
+               P.STATUS_COMMENT = 'active',
                p.customer_id = 2
 WHEN NOT MATCHED THEN
-    INSERT (P.PHONE_NUMBER,P.START_DATE,P.END_DATE,P.CUSTOMER_ID,P.COMMENT_STRING) values ('923-22-55-76','12/1/2012 4:24:22','14/5/2015 3:11:15',2, 'active customer');              
+    INSERT (P.PHONE_NUMBER,P.STATUS,P.CUSTOMER_ID,P.STATUS_COMMENT) values ('923-22-55-76','active',2, 'active');              
     
-delete from phone_number where phone_number != '923-22-55-76'  and phone_number !='915-12-45-76';  
+delete from phone_number where phone_number != '923-22-55-76'  and phone_number !='915-12-45-76';
 
+MERGE INTO phone_numbers_history p
+USING (select 1 from dual ) 
+ON ( p.phone_number = (select '915-12-45-76' from dual))
+WHEN MATCHED THEN 
+    UPDATE SET 
+               P.history_COMMENT = 'active customer',
+               P.start_date = '24/11/1999 12:43:13',
+               p.customer_id = 1
+WHEN NOT MATCHED THEN
+    INSERT (P.PHONE_NUMBER,P.history_comment,P.CUSTOMER_ID,P.start_date) values ('915-12-45-76','active customer',1,'24/11/1999 12:43:13');    
+
+MERGE INTO phone_numbers_history p
+USING (select 1 from dual ) 
+ON ( p.phone_number = (select '923-22-55-76' from dual))
+WHEN MATCHED THEN 
+    UPDATE SET 
+               P.history_COMMENT = 'active customer',
+               P.start_date = '24/11/1999 12:43:13',
+               p.customer_id = 2
+WHEN NOT MATCHED THEN
+    INSERT (P.PHONE_NUMBER,P.history_comment,P.CUSTOMER_ID,P.start_date) values ('923-22-55-76','active customer',2,'24/11/1999 12:43:13');    
+
+delete from phone_numbers_history where phone_number != '923-22-55-76'  and phone_number !='915-12-45-76';
 MERGE INTO MARKET m
 USING (select 1 from dual)
 ON ( M.MARKET_ID = (Select 1 from dual))
@@ -229,6 +257,7 @@ WHEN MATCHED THEN
                E.SCHEDULE = '1/4/2014 2:1:1'
 WHEN NOT MATCHED THEN 
     INSERT (E.EMPLOYEE_ID,E.FIRST_NAME,E.LAST_NAME,E.JOB_DESCRIPTION,E.SCHEDULE) values(1,'Alex','Petrov','wk','1/4/2014 2:1:1');
+
 MERGE INTO Employee e
 USING (select 11 from dual)
 ON (E.EMPLOYEE_ID  = (select 2 from dual) )
@@ -241,6 +270,28 @@ WHEN NOT MATCHED THEN
     INSERT (E.EMPLOYEE_ID,E.FIRST_NAME,E.LAST_NAME,E.JOB_DESCRIPTION,E.SCHEDULE) values(2,'Gosha','Osipov','bg','1/4/2012 2:1:1');
             
 delete from employee where employee_id > 2;
+
+MERGE INTO users u
+USING (select 1 from dual)
+ON ( u.login = 'empl1')
+WHEN MATCHED THEN 
+    UPDATE SET U.password = 'empl1',
+               U.type = 'worker',
+               U.employee_id = 1
+WHEN NOT MATCHED THEN 
+    INSERT (u.login,u.password,u.type,u.employee_id)  values('empl1','empl1','worker',1);
+
+MERGE INTO users u
+USING (select 1 from dual)
+ON ( u.login = 'empl2')
+WHEN MATCHED THEN 
+    UPDATE SET U.password = 'empl2',
+               U.type = 'worker',
+               U.employee_id = 2
+WHEN NOT MATCHED THEN 
+    INSERT (u.login,u.password,u.type,u.employee_id)  values('empl2','empl2','worker',2);  
+
+delete from users where login !='empl1' and login !='empl2';    
 
 MERGE into equipment e
 USING (select 1 from dual)
