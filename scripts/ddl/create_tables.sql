@@ -8,10 +8,10 @@ CREATE TABLE customer
      building INT NOT NULL,
      flat INT NOT NULL,
      card_number VARCHAR(20),
-     Connection_date TIMESTAMP(9),
+     Connection_date timestamp(9),
      Status VARCHAR(30),
-     Status_update_date TIMESTAMP(9),
-     card_exp_data TIMESTAMP,
+     Status_update_date timestamp(9),
+     card_exp_data timestamp(9),
      balance INT
   );
 
@@ -61,8 +61,8 @@ CREATE TABLE markets_customers
   (
      market_id INT PRIMARY KEY,
      customer_id INT,
-     start_date TIMESTAMP,
-     end_date TIMESTAMP
+     start_date timestamp(9),
+     end_date timestamp(9)
   );
 
 CREATE TABLE market
@@ -77,16 +77,17 @@ CREATE TABLE market_products
      market_id INT PRIMARY KEY,
      product_id INT,
      price INT,
-     start_date TIMESTAMP,
-     end_date TIMESTAMP
+     start_date timestamp(9),
+     end_date timestamp(9)
   );
 
 CREATE TABLE product
   (
      product_id INT PRIMARY KEY,
      name VARCHAR (30),
-     description VARCHAR(30),
-     sales_period TIMESTAMP,
+     description VARCHAR(300),
+     sales_period_start timestamp(9),
+     sales_period_end timestamp(9),   
      baseline_price INT
   );
 
@@ -94,15 +95,15 @@ CREATE TABLE customer_products
   (
      customer_id INTEGER PRIMARY KEY,
      product_id INTEGER,
-     start_date TIMESTAMP,
-     end_date TIMESTAMP,
+     start_date timestamp(9),
+     end_date timestamp(9),
      price INTEGER
   );
 
 CREATE TABLE orders
   (
      order_id INTEGER PRIMARY KEY,
-     order_date TIMESTAMP,
+     order_date timestamp(9),
      order_type VARCHAR(30),
      type_comment VARCHAR(30),
      status VARCHAR(30),
@@ -119,9 +120,9 @@ CREATE TABLE order_processing
      order_id INT PRIMARY KEY,
      step_name VARCHAR(30),
      description VARCHAR(30),
-     start_date TIMESTAMP,
-     end_date TIMESTAMP,
-     end_date_hard TIMESTAMP,
+     start_date timestamp(9),
+     end_date timestamp(9),
+     end_date_hard timestamp(9),
      employee_id INT,
      equipment_id INT
   );
@@ -132,7 +133,7 @@ CREATE TABLE employee
      job_description VARCHAR(30),
      first_name VARCHAR(30),
      last_name VARCHAR(30),
-     schedule TIMESTAMP
+     schedule timestamp(9)
   );
   
 CREATE TABLE USERS 
@@ -157,8 +158,8 @@ CREATE TABLE equipment_history
   (
      equipment_id INT PRIMARY KEY,
      customer_id INT,
-     start_date TIMESTAMP,
-     end_date TIMESTAMP,
+     start_date timestamp(9),
+     end_date timestamp(9),
      equipment_comment VARCHAR(30),
      status VARCHAR(30)
   );

@@ -209,22 +209,24 @@ USING (select 11 from dual)
 ON ( P.PRODUCT_ID = (select 1 from dual))
 WHEN MATCHED THEN
     UPDATE SET P.BASELINE_PRICE = 1245,
-               P.SALES_PERIOD = '1/2/2012 3:4:5',
+               P.SALES_PERIOD_START = '1/2/2012 3:4:5',
                P.DESCRIPTION = 'new product',
+               P.SALES_PERIOD_END = '1/2/2015 12:2:4',
                P.NAME ='product one'
 WHEN NOT MATCHED THEN
-    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(1,1245,'1/2/2012 3:4:5','new product','product one');
+    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD_START,P.DESCRIPTION,P.SALES_PERIOD_END,P.NAME) values(1,1245,'1/2/2012 3:4:5','new product','1/2/2015 12:2:4','product one');
    
 MERGE INTO Product p
 USING (select 11 from dual)
 ON ( P.PRODUCT_ID = (select 2 from dual))
 WHEN MATCHED THEN
     UPDATE SET P.BASELINE_PRICE = 55,
-               P.SALES_PERIOD = '1/2/2012 3:4:5',
+               P.SALES_PERIOD_START = '1/2/2012 3:4:5',
                P.DESCRIPTION = 'new product',
-               P.NAME ='product tow'
+               P.NAME ='product two',
+               P.SALES_PERIOD_END = '1/2/2019 2:2:2'
 WHEN NOT MATCHED THEN
-    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD,P.DESCRIPTION,P.NAME) values(2,55,'1/2/2012 3:4:5','new product','product two');
+    INSERT (P.PRODUCT_ID,P.BASELINE_PRICE, P.SALES_PERIOD_START,P.DESCRIPTION,P.SALES_PERIOD_END,P.NAME) values(2,55,'1/2/2012 3:4:5','new product','1/2/2019 2:2:2','product two');
     
 delete from product where product_id > 2;
 
@@ -252,8 +254,6 @@ WHEN NOT MATCHED THEN
 
 delete from market_products where market_id > 2;    
     
-
-
 MERGE INTO customer_products c
 USING (select 1 from dual)
 ON (C.CUSTOMER_ID = (select 1 from dual) )
