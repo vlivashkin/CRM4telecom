@@ -2,6 +2,8 @@ package com.crm4telecom.web.beans;
  
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
+import com.crm4telecom.ejb.OrderPriority;
+import com.crm4telecom.ejb.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import java.util.Date;
@@ -51,11 +53,12 @@ public class ExampleBean{
         
         
         public void addOrder(){
-            om.createOrder(null, null, new Date(), "rr", "rrr", "kkk", "ede", 1L, "ede");
+            Orders current = om.createOrder(OrderType.TYPE1, "mytypecomment", null, OrderPriority.HIGH, null, true);
+            om.setCustomer(current, 6l);
 	}
         
         public void alterOrder(){
-            om.modifyOrder(3L, null, null, new Date(), "changed", "rrr", "kkk", "ede", 1L, "ede");
+            om.modifyOrder(3L, OrderType.TYPE2, "mytypecomment", null, OrderPriority.NORMAL, null);
 	}
         
 	public String getOrder() {

@@ -7,13 +7,15 @@ import javax.ejb.Local;
 
 @Local
 public interface OrderManagerLocal {
-    public Orders createOrder(Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag);
+    Orders createOrder(OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId, Boolean technicalSupportFlag);
 
-    public void modifyOrder(Orders order);
+    void modifyOrder(Orders order);
     
-    public Orders modifyOrder(Long orderId, Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag);
+    Orders modifyOrder(Long orderId, OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId);
     
-    void setCustomer(Long orderId, Long customerId);
+    Orders setCustomer(Long orderId, Long customerId);
+    
+    Orders setCustomer(Orders order, Long customerId);
     
     Orders getOrder(Long orderId);
 

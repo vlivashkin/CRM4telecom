@@ -26,18 +26,21 @@ public class Market implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    
     @NotNull
     @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
     private Long marketId;
+    
     @Size(max = 30)
     @Column(length = 30)
     private String name;
+    
     @Size(max = 30)
     @Column(length = 30)
     private String description;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
     private MarketProducts marketProducts;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
     private MarketsCustomers marketsCustomers;
 

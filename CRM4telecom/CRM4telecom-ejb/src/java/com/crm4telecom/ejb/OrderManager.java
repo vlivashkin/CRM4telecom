@@ -6,6 +6,7 @@ import com.crm4telecom.jpa.Product;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,43 +17,66 @@ public class OrderManager implements OrderManagerLocal {
     @PersistenceContext
     private EntityManager em;
     
+    @EJB
+    private LifeCycleManagerLocal lcm;
+    
     @Override
-    public Orders createOrder(Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag) {
+    public Orders createOrder(OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId, Boolean technicalSupportFlag) {
         Orders order = new Orders();
-        fillOrder(order, orderDate, orderType, typeComment, status, priority, managerId, customerId, technicalSupportFlag, productId);
+        fillOrder(order, type, typeComment, productId, priority, managerId);
+        order.setOrderDate(new Date());
+        order.setStatus(OrderState.NONE.name());
+        order.setTechnicalSupportFlag(technicalSupportFlag.toString());
         em.persist(order);
+        lcm.changeOrderState(order, OrderEvent.CREATED);
+        if (technicalSupportFlag) {
+            lcm.changeOrderState(order, OrderEvent.SENT_TO_TECH_SUPPORT);
+        } else {
+            lcm.changeOrderState(order, OrderEvent.ENGINEER_APPOINTED);
+        }
         
         return order;
     }
     
     @Override
     public void modifyOrder(Orders order) {
-        em.persist(order);
+        Long orderId = order.getOrderId();
+        Orders oldOrder = em.find(Orders.class, orderId);
+        if (order.getStatus().equals(oldOrder.getStatus()))
+            em.merge(order);
     }
     
     @Override
-    public Orders modifyOrder(Long orderId, Long customerId, Long productId, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, String technicalSupportFlag) {
+    public Orders modifyOrder(Long orderId, OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId) {
         Orders order = em.find(Orders.class, orderId);
         if (order == null)
             throw new NoSuchElementException();
-        fillOrder(order, orderDate, orderType, typeComment, status, priority, managerId, customerId, technicalSupportFlag, productId);
-        em.persist(order);
+        fillOrder(order, type, typeComment, productId, priority, managerId);
+        em.merge(order);
         
         return order;
     }
     
     @Override
-    public void setCustomer(Long orderId, Long customerId) {
+    public Orders setCustomer(Long orderId, Long customerId) {
         Orders order = em.find(Orders.class, orderId);
         if (order == null)
             throw new NoSuchElementException();
         
-        Customer customer = em.find(Customer.class, customerId); 
-        if (customer == null)
-            throw new NoSuchElementException();
+        return setCustomer(order, customerId);
+    }
+    
+    @Override
+    public Orders setCustomer(Orders order, Long customerId) {
+        if (customerId != null) {
+            Customer customer = em.find(Customer.class, customerId); 
+            if (customer == null)
+                throw new NoSuchElementException();
+            order.setCustomerId(customer);
+            em.merge(order);
+        }
         
-        order.setCustomerId(customer);
-        em.persist(order);
+        return order;
     }
     
     @Override
@@ -71,14 +95,7 @@ public class OrderManager implements OrderManagerLocal {
         return em.createQuery("SELECT o FROM Orders o ORDER BY " + order, Orders.class).getResultList();
     }
     
-    private Orders fillOrder(Orders order, Date orderDate, String orderType, String typeComment, String status, String priority, Long managerId, Long customerId, String technicalSupportFlag, Long productId) {
-        if (customerId != null) {
-            Customer customer = em.find(Customer.class, customerId); 
-            if (customer == null)
-                throw new NoSuchElementException();
-            order.setCustomerId(customer);
-        }
-        
+    private Orders fillOrder(Orders order, OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId) {
         if (productId != null) {
             Product product = em.find(Product.class, productId); 
             if (product == null)
@@ -86,13 +103,10 @@ public class OrderManager implements OrderManagerLocal {
             order.setProductId(product);
         }
         
-        order.setOrderDate(orderDate);
-        order.setOrderType(orderType);
+        order.setOrderType(type.name());
         order.setTypeComment(typeComment);
-        order.setStatus(status);
-        order.setPriority(priority);
+        order.setPriority(priority.name());
         order.setManagerId(managerId);
-        order.setTechnicalSupportFlag(technicalSupportFlag);
         
         return order;
     }

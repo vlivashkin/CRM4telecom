@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.jpa.Orders;
 import javax.ejb.Local;
 
-/**
- *
- * @author wawilon
- */
 @Local
 public interface LifeCycleManagerLocal {
+    Orders changeOrderState(Long orderId, OrderEvent event);
     
+    void changeOrderState(Orders order, OrderEvent event);
+    
+    OrderState getOrderState(Long orderId);
 }
