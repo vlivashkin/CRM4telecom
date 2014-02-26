@@ -45,7 +45,76 @@ WHEN NOT MATCHED THEN
     Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.building,c.flat,c.status,c.connection_date,c.status_update_date)  
     Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000,'Jukova',1,24,'in process','23/9/2013 0:1:2','25/10/2016 1:43:12');
 
-delete from Customer where customer_id> 2 ;    
+delete from Customer where customer_id> 2;
+
+MERGE INTO balance_history b
+USING ( select 1 from dual)
+ON  ( B.CUSTOMER_ID = 1)
+WHEN MATCHED THEN
+    UPDATE SET
+                B.BALANCE_DATE = '8/3/2010 23:11:45',
+                B.AMOUNT = 322
+WHEN NOT MATCHED THEN
+    INSERT (B.CUSTOMER_ID,B.BALANCE_DATE,B.AMOUNT) values (1,'8/3/2010 23:11:45',322);
+    
+MERGE INTO balance_history b
+USING ( select 1 from dual)
+ON  ( B.CUSTOMER_ID = 2)
+WHEN MATCHED THEN
+    UPDATE SET
+                B.BALANCE_DATE = '8/5/2015 23:11:45',
+                B.AMOUNT = 21123
+WHEN NOT MATCHED THEN
+    INSERT (B.CUSTOMER_ID,B.BALANCE_DATE,B.AMOUNT) values (2,'8/5/2015 23:11:45',21123);
+MERGE INTO static_ip s
+USING (select 1 from dual)
+ON ( S.IP = '10.0.0.1')
+WHEN MATCHED THEN
+    UPDATE SET
+                S.CUSTOMER_ID = 1,
+                S.STATUS = 'static',
+                S.STATUS_COMMENT = 'all time'
+WHEN NOT MATCHED THEN
+    INSERT (S.IP,S.CUSTOMER_ID,S.STATUS,S.STATUS_COMMENT) values ('10.0.0.1',1,'static','all time'); 
+
+MERGE INTO static_ip s
+USING (select 1 from dual)
+ON ( S.IP = '10.0.0.2')
+WHEN MATCHED THEN
+    UPDATE SET
+                S.CUSTOMER_ID = 2,
+                S.STATUS = 'static',
+                S.STATUS_COMMENT = 'all time'
+WHEN NOT MATCHED THEN
+    INSERT (S.IP,S.CUSTOMER_ID,S.STATUS,S.STATUS_COMMENT) values ('10.0.0.2',2,'static','all time');
+    
+delete from static_ip where ip !='10.0.0.1' and ip != '10.0.0.2';
+
+MERGE INTO static_ip_history s
+USING (select 1 from dual)
+ON ( s.ip = '10.0.0.1')
+WHEN MATCHED THEN
+    UPDATE SET
+                S.CUSTOMER_ID =1,
+                S.IP_COMMENT ='static',
+                S.START_DATE = '11/7/2005 12:14:54',
+                S.END_DATE = '11/2/2020 21:11:45'
+WHEN NOT MATCHED THEN 
+    insert (s.ip,S.CUSTOMER_ID,S.IP_COMMENT,S.START_DATE,S.END_DATE) values ( '10.0.0.1',1,'static','11/7/2005 12:14:54','11/2/2020 21:11:45');
+                              
+MERGE INTO static_ip_history s
+USING (select 1 from dual)
+ON ( s.ip = '10.0.0.2')
+WHEN MATCHED THEN
+    UPDATE SET
+                S.CUSTOMER_ID =2,
+                S.IP_COMMENT ='static',
+                S.START_DATE = '12/8/2006 12:14:54',
+                S.END_DATE = '12/3/2021 21:11:45'
+WHEN NOT MATCHED THEN 
+    insert (s.ip,S.CUSTOMER_ID,S.IP_COMMENT,S.START_DATE,S.END_DATE) values ( '10.0.0.2',2,'static','12/8/2006 12:14:54','12/3/2021 21:11:45');
+   
+delete from static_ip_history where ip !='10.0.0.1' and ip != '10.0.0.2';   
 
 MERGE INTO phone_number p
 USING (select 1 from dual ) 

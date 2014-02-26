@@ -212,5 +212,8 @@ ALTER TABLE order_processing
 ALTER TABLE order_processing
   ADD CONSTRAINT order_processing_equipment_id FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id);
 
+ALTER TABLE equipment   
+  ADD CONSTRAINT equip_cust_id FOREIGN KEY (customer_id) REFERENCES customer (customer_id);   
+
 ALTER TABLE equipment_history
   ADD CONSTRAINT equipment_history_equipment_id FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id); 
