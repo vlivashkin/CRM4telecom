@@ -5,6 +5,16 @@
     <managed-bean>
         <managed-bean-name>exampleBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.ExampleBean</managed-bean-class>
-    
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>navigationBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.NavigationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>requestBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.RequestBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

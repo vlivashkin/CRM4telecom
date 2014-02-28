@@ -8,9 +8,9 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *

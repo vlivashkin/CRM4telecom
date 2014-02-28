@@ -9,10 +9,12 @@
         <title>Telecom | Order #{navigationBean.order.orderId.toString()}</title>
     </h:head>
     <h:body>
+        <h:form>
             <p:breadCrumb style="width: 300px">
-                <p:menuitem value="Main page" url="/faces/index.xhtml" style="width: 150px"/>
-                <p:menuitem value="Order List" url="/faces/order_list.xhtml" style="width: 150px"/>
+                <p:menuitem value="Main page" url="index.xhtml" style="width: 150px"/>
+                <p:menuitem value="Order List" url="order_list.xhtml" style="width: 150px"/>
             </p:breadCrumb>
+        </h:form>
         <h:form>
             <p:tabView style="width: 700px">
                 <p:tab title="Info">
@@ -33,7 +35,7 @@
                         <h:column>
                             <b><h:outputText value="Клиент №: "/></b><br/>
                             <b><h:outputText value="Менеджер №: "/></b><br/>
-                            <b><h:outputText value="Оператор №"</b>
+                            <b><h:outputText value="Оператор №" /></b>
                             <b><h:outputText value="Услуга №: "/></b><br/>
                             <b><h:outputText value="Тех. подержка: "/></b><br/>
                         </h:column>
@@ -90,7 +92,7 @@
                         <h:column>
                             <b><h:outputText value="Клиент №: "/></b><br/>
                             <b><h:outputText value="Менеджер №: "/></b><br/>
-                            <b><h:outputText value="Оператор №"</b>
+                            <b><h:outputText value="Оператор №" /></b>
                             <b><h:outputText value="Услуга №: "/></b><br/>
                             <b><h:outputText value="Тех. подержка: "/></b><br/>
                         </h:column>
@@ -106,8 +108,7 @@
                         </h:column>
                     </h:dataTable>
                     </h:form>
-                    </p:tab>        
-                </p:tab>
+                </p:tab>        
             </p:tabView>
         </h:form>
     </h:body>

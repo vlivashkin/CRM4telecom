@@ -4,9 +4,9 @@ import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
@@ -43,12 +43,12 @@ public class NavigationBean {
     
     public String toCustomerInfo(Customer customer){
         this.customer = customer;
-        return "/faces/client_info.xhtml";
+        return "client_info";
     }
     
     public String toOrderInfo(Orders order){
         this.order = order;
-        return "/faces/order_info.xhtml";
+        return "order_info";
     }
     
 }

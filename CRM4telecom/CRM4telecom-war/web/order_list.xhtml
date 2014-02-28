@@ -11,13 +11,13 @@
     <h:body>
         <h:form>
             <p:breadCrumb style="width: 150px">
-                <p:menuitem value="Main page" url="/faces/index.xhtml"/>
+                <p:menuitem value="Main page" url="index.xhtml"/>
             </p:breadCrumb><br/><br/>
-            <p:commandButton value="Новая заявка" action="/faces/new_order.xhtml"/><br/>
+            <p:commandButton value="Новая заявка" action="new_order"/><br/>
             <p:dataTable value="#{requestBean.ordersList}" var="order">
                 <p:column>
                     <f:facet name="header">ID</f:facet>
-                    <p:commandLink value="#{order.orderId}" action="#{navigationBean.toOrderInfo(order)}"
+                    <p:commandLink value="#{order.orderId}" action="#{navigationBean.toOrderInfo(order)}" />
                 </p:column>
                 <p:column>
                     <f:facet name="header">Клиент</f:facet>

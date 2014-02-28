@@ -9,142 +9,164 @@
         <title>Telecom | Client #{navigationBean.customer.customerId}</title>
     </h:head>
     <h:body>
+        <h:form>
             <p:breadCrumb style="width: 300px">
-                <p:menuitem value="Main page" url="/faces/index.xhtml" style="width: 150px"/>
-                <p:menuitem value="Client List" url="/faces/client_list.xhtml" style="width: 150px"/>
+                <p:menuitem value="Main page" url="index.xhtml" style="width: 150px"/>
+                <p:menuitem value="Client List" url="client_list.xhtml" style="width: 150px"/>
             </p:breadCrumb>
+        </h:form>
         <h:form>
             <p:tabView style="width: 700px">
                 <p:tab title="Info">
-                    <h:dataTable>
-                        <f:facet name="header">Client #{navigationBean.customer.customerId.toString()} info</f:facet>
-                        <h:column>
-                            <b><h:outputText value="Фамилия: "/></b><br/>
-                            <b><h:outputText value="Имя: "/></b><br/>
-                            <b><h:outputText value="E-mail: "/></b><br/>
-                            <b><h:outputText value="Адрес: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{navigationBean.customer.lastName}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.firstName}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.email}"/><br/>
-                            <h:outputText value="ул. #{navigationBean.customer.street}, д. #{navigationBean.customer.building}, кв. #{navigationBean.customer.flat}"/><br/>
-                        </h:column>
-                        <h:column>
-                            <b><h:outputText value="Подключен с: "/></b><br/>
-                            <b><h:outputText value="Баланс: "/></b><br/>
-                            <b><h:outputText value="Карта №: "/></b><br/>
-                            <b><h:outputText value="Дата истечения: "/></b><br/>
-                            <b><h:outputText value="Статус: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{navigationBean.customer.connectionDate.toString}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.balance}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.cardNumber}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.cardExpData.toString}"/><br/>
-                            <h:outputText value="#{navigationBean.customer.status}"/><br/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:dataTable value="#{navigationBean.customer.phoneNumberList}" var="phone">
-                        <f:facet name="header">Номера телефонов:</f:facet>
-                        <h:column>
-                            <h:outputText value="#{phone.toString}"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:dataTable value="#{navigationBean.customer.staticIpList}" var="ip">
-                        <f:facet name="header">Статические IP-адреса</f:facet>
-                        <h:column>
-                            <h:outputText value="#{ip.toString}"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:dataTable value="#{navigationBean.customer.ordersList}" var="order">
-                        <f:facet name="header">Заявки</f:facet>
-                        <h:column>
-                            <p:commandLink value="#{order.orderId}" action="#{navigationBean.toOrderInfo(order)}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Статус</f:facet>
-                            <h:outputText value="#{order.status}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Приоритет</f:facet>
-                            <h:outputText value="#{order.priority}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Тип</f:facet>
-                            <h:outputText value="#{order.orderType}"/>
-                        </h:column>
-                    </h:dataTable>
+                    <h:form>
+                        Client #{navigationBean.customer.customerId.toString()} info
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Фамилия:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.lastName}"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Имя:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.firstName}"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="E-mail:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.email}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Адрес:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="ул. #{navigationBean.customer.street}, д. #{navigationBean.customer.building}, кв. #{navigationBean.customer.flat}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Подключен с:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.connectionDate.toString}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Баланс:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.balance}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Карта №:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.cardNumber}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Дата истечения:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.cardExpData}"/>
+                        </h:panelGrid>    
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Статус:" style="font-weight:bold"/>
+                            
+                            <h:outputText value="#{navigationBean.customer.status}"/>
+                        </h:panelGrid>       
+                        
+                        <p:dataTable value="#{navigationBean.customer.phoneNumberList}" var="phone">
+                            <f:facet name="header">Номера телефонов:</f:facet>
+                            <p:column>
+                                <h:outputText value="#{phone.toString}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dataTable value="#{navigationBean.customer.staticIpList}" var="ip">
+                            <f:facet name="header">Статические IP-адреса</f:facet>
+                            <h:column>
+                                <h:outputText value="#{ip.toString}"/>
+                            </h:column>
+                        </p:dataTable>
+                        <p:dataTable value="#{navigationBean.customer.ordersList}" var="order">
+                            <f:facet name="header">Заявки</f:facet>
+                            <p:column>
+                                <p:commandLink value="#{order.orderId}" action="#{navigationBean.toOrderInfo(order)}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Статус</f:facet>
+                                <h:outputText value="#{order.status}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Приоритет</f:facet>
+                                <h:outputText value="#{order.priority}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Тип</f:facet>
+                                <h:outputText value="#{order.orderType}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
                 </p:tab>
                 <p:tab title="Edit">
                     <p:commandButton value="Сохранить" update="editform"/>
                     <h:form id="editform">
-                    <h:dataTable>
-                        <f:facet name="header">Client #{navigationBean.customer.customerId} info</f:facet>
-                        <h:column>
-                            <b><h:outputText value="Фамилия: "/></b><br/>
-                            <b><h:outputText value="Имя: "/></b><br/>
-                            <b><h:outputText value="E-mail: "/></b><br/>
-                            <b><h:outputText value="Адрес: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <p:inputText value="#{navigationBean.customer.lastName}"/><br/>
-                            <p:inputText value="#{navigationBean.customer.firstName}"/><br/>
-                            <p:inputText value="#{navigationBean.customer.email}"/><br/>
-                            <p:selectOneMenu value="#{navigationBean.customer.street}">
-                                <f:selectItem value="Улица"/>
-                                <f:selectItems value=""/>
-                            </p:selectOneMenu>
-                            <p:selectOneMenu value="#{navigationBean.customer.building}">
-                                <f:selectItem value="Дом"/>
-                                <f:selectItems value=""/>
-                            </p:selectOneMenu>                            
-                            <p:selectOneMenu value="#{navigationBean.customer.flat}">
-                                <f:selectItem value="Квартира"/>
-                                <f:selectItems value=""/>
-                            </p:selectOneMenu>
-                            <!--<h:inputText value="ул. # {navigationBean.customer.street}, д. # {navigationBean.customer.flat}, стр. # {navigationBean.customer.building}"/><br/>-->
-                        </h:column>
-                        <h:column>
-                            <b><h:outputText value="Подключен с: "/></b><br/>
-                            <b><h:outputText value="Баланс: "/></b><br/>
-                            <b><h:outputText value="Карта №: "/></b><br/>
-                            <b><h:outputText value="Дата истечения: "/></b><br/>
-                            <b><h:outputText value="Статус: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <p:inputText value="#{navigationBean.customer.connectionDate}"/><br/>
-                            <p:inputText value="#{navigationBean.customer.balance}"/><br/>
-                            <p:inputText value="#{navigationBean.customer.cardNumber}"/><br/>
-                            <p:inputText value="#{navigationBean.customer.cardExpData}"/><br/>
-                            <p:selectOneMenu value="#{navigationBean.customer.status}">
-                                <f:selectItems value=""/>
-                            </p:selectOneMenu><br/>
-                        </h:column>
-                    </h:dataTable>
+                        <h:dataTable>
+                            <f:facet name="header">Client #{navigationBean.customer.customerId} info</f:facet>
+                            <h:column>
+                                <b><h:outputText value="Фамилия: "/></b><br/>
+                                <b><h:outputText value="Имя: "/></b><br/>
+                                <b><h:outputText value="E-mail: "/></b><br/>
+                                <b><h:outputText value="Адрес: "/></b><br/>
+                            </h:column>
+                            <h:column>
+                                <p:inputText value="#{navigationBean.customer.lastName}"/><br/>
+                                <p:inputText value="#{navigationBean.customer.firstName}"/><br/>
+                                <p:inputText value="#{navigationBean.customer.email}"/><br/>
+                                <p:selectOneMenu value="#{navigationBean.customer.street}">
+                                    <f:selectItem value="Улица"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{navigationBean.customer.building}">
+                                    <f:selectItem value="Дом"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>                            
+                                <p:selectOneMenu value="#{navigationBean.customer.flat}">
+                                    <f:selectItem value="Квартира"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                <!--<h:inputText value="ул. # {navigationBean.customer.street}, д. # {navigationBean.customer.flat}, стр. # {navigationBean.customer.building}"/><br/>-->
+                            </h:column>
+                            <h:column>
+                                <b><h:outputText value="Подключен с: "/></b><br/>
+                                <b><h:outputText value="Баланс: "/></b><br/>
+                                <b><h:outputText value="Карта №: "/></b><br/>
+                                <b><h:outputText value="Дата истечения: "/></b><br/>
+                                <b><h:outputText value="Статус: "/></b><br/>
+                            </h:column>
+                            <h:column>
+                                <p:inputText value="#{navigationBean.customer.connectionDate}"/><br/>
+                                <p:inputText value="#{navigationBean.customer.balance}"/><br/>
+                                <p:inputText value="#{navigationBean.customer.cardNumber}"/><br/>
+                                <p:inputText value="#{navigationBean.customer.cardExpData}"/><br/>
+                                <p:selectOneMenu value="#{navigationBean.customer.status}">
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu><br/>
+                            </h:column>
+                        </h:dataTable>
                     </h:form>
                 </p:tab>
                 <p:tab title="Markets">
-                    <p:dataTable value="#{navigationBean.customer.marketsCustomersList}" var="market">
-                       <p:column>
-                            <f:facet name="header">ID</f:facet>
-                            <h:outputText value="#{market.marketId}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Name</f:facet>
-                            <h:outputText value="#{market.market.name}"/>
-                        </p:column>     
-                        <p:column>
-                            <f:facet name="header">Start date</f:facet>
-                            <h:outputText value="#{market.startDate.toString}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">End date</f:facet>
-                            <h:outputText value="#{market.endDate.toString}"/>
-                        </p:column>     
-                         </p:dataTable>
-                </p:tab>
-                   
+                    <h:form>
+                        <p:dataTable value="#{navigationBean.customer.marketsCustomersList}" var="market">
+                            <p:column>
+                                <f:facet name="header">ID</f:facet>
+                                <h:outputText value="#{market.marketId}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Name</f:facet>
+                                <h:outputText value="#{market.market.name}"/>
+                            </p:column>     
+                            <p:column>
+                                <f:facet name="header">Start date</f:facet>
+                                <h:outputText value="#{market.startDate.toString}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">End date</f:facet>
+                                <h:outputText value="#{market.endDate.toString}"/>
+                            </p:column>     
+                        </p:dataTable>
+                    </h:form>
                 </p:tab>
             </p:tabView>
         </h:form>
