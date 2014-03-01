@@ -3,6 +3,7 @@ package com.crm4telecom.ejb;
 import com.crm4telecom.jpa.Customer;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -72,22 +73,39 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
-    public List<Customer> getAllCustomers(int first, int pageSize, String sortField, String sortOrder) {
+    public List<Customer> getAllCustomers(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters) {
         String sqlQuery = "SELECT c FROM Customer c";
-        if (sortField != null && sortField != "")
-            sqlQuery += " ORDER BY " + sortField;
+        if (filters != null && !filters.isEmpty()) {
+            sqlQuery += " WHERE";
+            for (String filterProperty : filters.keySet()) {
+                String filterValue = filters.get(filterProperty);
+                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+            }
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        if (sortField != null && !"".equals(sortField))
+            sqlQuery += " ORDER BY c." + sortField;
         if ("DESCENDING".endsWith(sortOrder))
             sqlQuery += " DESC";
 
-        Query query = em.createQuery(sqlQuery);
+        Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
         return query.getResultList();
     }
 
     @Override
-    public Long getCustomersCount() {
-        Query query = em.createQuery("SELECT COUNT(c) FROM Customer c", Customer.class);
+    public Long getCustomersCount(Map<String, String> filters) {
+        String sqlQuery = "SELECT COUNT(c) FROM Customer c";
+        if (filters != null && !filters.isEmpty()) {
+            sqlQuery += " WHERE";
+            for (String filterProperty : filters.keySet()) {
+                String filterValue = filters.get(filterProperty);
+                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+            }
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long)query.getSingleResult();
    }
 }

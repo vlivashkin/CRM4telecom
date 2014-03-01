@@ -46,7 +46,7 @@ public class CustomerListBean implements Serializable {
     } 
 
     public int getCount() {
-        int count = cm.getCustomersCount().intValue();
+        int count = cm.getCustomersCount(null).intValue();
         System.out.println("count: " + count);
         return count;
     }

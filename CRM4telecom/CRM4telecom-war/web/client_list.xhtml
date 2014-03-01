@@ -21,15 +21,15 @@
                 
                 <p:commandButton action="#{navigationBean.toCustomerInfo}" />
                 
-                <p:column headerText="ID" sortBy="customer_id" filterBy="#{customer.customerId}">  
+                <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
                     <h:outputText value="#{customer.customerId}" />  
                 </p:column>  
                 
-                <p:column headerText="First Name" sortBy="first_name" filterBy="#{customer.firstName}">  
+                <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
                     <h:outputText value="#{customer.firstName}" />  
                 </p:column>  
 
-                <p:column headerText="Last Name" sortBy="last_name" filterBy="#{customer.lastName}">  
+                <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
                     <h:outputText value="#{customer.lastName}" />  
                 </p:column>  
 
