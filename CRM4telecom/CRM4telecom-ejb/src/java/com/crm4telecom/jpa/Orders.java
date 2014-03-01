@@ -18,24 +18,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
-    @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
-    @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
-    @NamedQuery(name = "Orders.findByOrderType", query = "SELECT o FROM Orders o WHERE o.orderType = :orderType"),
-    @NamedQuery(name = "Orders.findByTypeComment", query = "SELECT o FROM Orders o WHERE o.typeComment = :typeComment"),
-    @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status"),
-    @NamedQuery(name = "Orders.findByPriority", query = "SELECT o FROM Orders o WHERE o.priority = :priority"),
-    @NamedQuery(name = "Orders.findByEmployeeId", query = "SELECT o FROM Orders o WHERE o.employeeId = :employeeId"),
-    @NamedQuery(name = "Orders.findByManagerId", query = "SELECT o FROM Orders o WHERE o.managerId = :managerId"),
-    @NamedQuery(name = "Orders.findByTechnicalSupportFlag", query = "SELECT o FROM Orders o WHERE o.technicalSupportFlag = :technicalSupportFlag")})
+@Entity @Table
 public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
     

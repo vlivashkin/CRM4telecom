@@ -1,5 +1,7 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.OrderPriority;
+import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Orders;
 import java.util.Date;
 import java.util.List;

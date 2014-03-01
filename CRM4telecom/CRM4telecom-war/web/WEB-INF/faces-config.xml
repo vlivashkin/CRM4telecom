@@ -17,4 +17,9 @@
         <managed-bean-class>com.crm4telecom.web.beans.RequestBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>customerListBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.CustomerListBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

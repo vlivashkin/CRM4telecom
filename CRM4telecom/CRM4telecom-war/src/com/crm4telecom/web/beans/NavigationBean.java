@@ -4,9 +4,10 @@ import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
+import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
@@ -14,8 +15,8 @@ import javax.enterprise.context.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
-public class NavigationBean {
+@SessionScoped
+public class NavigationBean implements Serializable {
     
     @EJB
     private CustomerManagerLocal cm;

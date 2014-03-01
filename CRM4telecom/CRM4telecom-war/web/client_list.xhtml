@@ -9,25 +9,34 @@
         <title>Telecom | Clients</title>
     </h:head>
     <h:body>
-        <h:form>
-            <p:breadCrumb style="width: 150px">
-                <p:menuitem value="Main page" url="index.xhtml"/>
-            </p:breadCrumb><br/><br/>
-            <p:commandButton value="Новый клиент" action="new_client"/><br/>
-            <p:dataTable value="#{requestBean.customersList}" var="customer" style="width: 700px">
-                <p:column>
-                    <f:facet name="header">Фамилия</f:facet>
-                    <p:commandLink value="#{customer.lastName}" action="#{navigationBean.toCustomerInfo(customer)}" />
-                </p:column>
-                <p:column>
-                    <f:facet name="header">Имя</f:facet>
-                    #{customer.firstName}
-                </p:column>
-                <p:column>
-                    <f:facet name="header">E-mail</f:facet>
-                    #{customer.email}
-                </p:column>
-            </p:dataTable>
-        </h:form>
+        <h:form id="form">  
+            <p:dataTable var="customer" value="#{customerListBean.customers}" paginator="true" rows="10"  
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selectedCustomer}" id="customerTable" lazy="true">  
+                
+                <f:facet name="header">  
+                    <p:commandButton id="homeButton" value="Main page" icon="ui-icon-home" action="index"/> 
+                    <p:commandButton id="newCustomerButton" value="New client" icon="ui-icon-document" action="new_client"/>  
+                </f:facet>  
+                
+                <p:commandButton action="#{navigationBean.toCustomerInfo}" />
+                
+                <p:column headerText="ID" sortBy="customer_id" filterBy="#{customer.customerId}">  
+                    <h:outputText value="#{customer.customerId}" />  
+                </p:column>  
+                
+                <p:column headerText="First Name" sortBy="first_name" filterBy="#{customer.firstName}">  
+                    <h:outputText value="#{customer.firstName}" />  
+                </p:column>  
+
+                <p:column headerText="Last Name" sortBy="last_name" filterBy="#{customer.lastName}">  
+                    <h:outputText value="#{customer.lastName}" />  
+                </p:column>  
+
+                <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
+                    <h:outputText value="#{customer.email}" />  
+                </p:column>  
+            </p:dataTable>  
+        </h:form>  
     </h:body>
 </html>

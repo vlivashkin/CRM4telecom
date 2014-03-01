@@ -1,5 +1,9 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.OrderPriority;
+import com.crm4telecom.ejb.util.OrderType;
+import com.crm4telecom.ejb.util.OrderState;
+import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.jpa.Product;
@@ -87,12 +91,12 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public List<Orders> getOrdersList() {
-        return em.createNamedQuery("Orders.findAll").getResultList();
+        return em.createQuery("SELECT o FROM Orders o", Orders.class).getResultList();
     }
     
     @Override
     public List<Orders> getOrdersList(String order) {
-        return em.createQuery("SELECT o FROM Orders o ORDER BY " + order, Orders.class).getResultList();
+        return em.createQuery("SELECT o FROM Orders o ORDER BY :order", Orders.class).setParameter("order", order).getResultList();
     }
     
     private Orders fillOrder(Orders order, OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId) {

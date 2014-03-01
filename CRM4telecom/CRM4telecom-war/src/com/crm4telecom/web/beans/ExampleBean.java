@@ -2,8 +2,8 @@ package com.crm4telecom.web.beans;
  
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
-import com.crm4telecom.ejb.OrderPriority;
-import com.crm4telecom.ejb.OrderType;
+import com.crm4telecom.ejb.util.OrderPriority;
+import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import java.util.Date;

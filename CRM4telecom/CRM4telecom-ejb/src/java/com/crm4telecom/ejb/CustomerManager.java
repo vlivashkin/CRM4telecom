@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class CustomerManager implements CustomerManagerLocal {
@@ -48,12 +49,12 @@ public class CustomerManager implements CustomerManagerLocal {
     
     @Override
     public List<Customer> getCustomerList() {    
-        return em.createNamedQuery("Customer.findAll").getResultList();
+        return em.createQuery("SELECT c FROM Customer c").getResultList();
     }
     
     @Override
     public List<Customer> getCustomerList(String order) {    
-        return em.createQuery("SELECT c FROM Customer c ORDER BY " + order, Customer.class).getResultList();
+        return em.createQuery("SELECT c FROM Customer c ORDER BY :order", Customer.class).setParameter("order", order).getResultList();
     }
     
     private Customer fillCustomer(Customer customer, String firstName, String lastName, String email, String street, Long building, Long flat, String cardNumber, Date cardExpData, Long balance) {
@@ -69,4 +70,24 @@ public class CustomerManager implements CustomerManagerLocal {
         
         return customer;
     }
+
+    @Override
+    public List<Customer> getAllCustomers(int first, int pageSize, String sortField, String sortOrder) {
+        String sqlQuery = "SELECT c FROM Customer c";
+        if (sortField != null && sortField != "")
+            sqlQuery += " ORDER BY " + sortField;
+        if ("DESCENDING".endsWith(sortOrder))
+            sqlQuery += " DESC";
+
+        Query query = em.createQuery(sqlQuery);
+        query.setFirstResult(first);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
+
+    @Override
+    public Long getCustomersCount() {
+        Query query = em.createQuery("SELECT COUNT(c) FROM Customer c", Customer.class);
+        return (Long)query.getSingleResult();
+   }
 }

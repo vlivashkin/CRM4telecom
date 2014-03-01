@@ -3,7 +3,6 @@ package com.crm4telecom.jpa;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,27 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
-    @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
-    @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName"),
-    @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName"),
-    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
-    @NamedQuery(name = "Customer.findByStreet", query = "SELECT c FROM Customer c WHERE c.street = :street"),
-    @NamedQuery(name = "Customer.findByBuilding", query = "SELECT c FROM Customer c WHERE c.building = :building"),
-    @NamedQuery(name = "Customer.findByFlat", query = "SELECT c FROM Customer c WHERE c.flat = :flat"),
-    @NamedQuery(name = "Customer.findByCardNumber", query = "SELECT c FROM Customer c WHERE c.cardNumber = :cardNumber"),
-    @NamedQuery(name = "Customer.findByConnectionDate", query = "SELECT c FROM Customer c WHERE c.connectionDate = :connectionDate"),
-    @NamedQuery(name = "Customer.findByStatus", query = "SELECT c FROM Customer c WHERE c.status = :status"),
-    @NamedQuery(name = "Customer.findByStatusUpdateDate", query = "SELECT c FROM Customer c WHERE c.statusUpdateDate = :statusUpdateDate"),
-    @NamedQuery(name = "Customer.findByCardExpData", query = "SELECT c FROM Customer c WHERE c.cardExpData = :cardExpData"),
-    @NamedQuery(name = "Customer.findByBalance", query = "SELECT c FROM Customer c WHERE c.balance = :balance")})
 public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     

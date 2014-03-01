@@ -1,5 +1,7 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.OrderState;
+import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.jpa.Orders;
 import java.util.NoSuchElementException;
 import javax.ejb.Stateless;

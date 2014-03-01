@@ -18,4 +18,8 @@ public interface CustomerManagerLocal {
     List<Customer> getCustomerList();
     
     List<Customer> getCustomerList(String order);
+    
+    List<Customer> getAllCustomers(int first, int pageSize, String sortField, String sortOrder);
+    
+    Long getCustomersCount();
 }
