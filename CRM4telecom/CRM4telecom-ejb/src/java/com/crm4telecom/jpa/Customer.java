@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -24,76 +22,77 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(catalog = "", schema = "CRM4TELECOM")
 public class Customer implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(generator = "SEC_CUSTOMER", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SEC_CUSTOMER", sequenceName = "SEC_CUSTOMER", allocationSize=1)
+    @SequenceGenerator(name = "SEC_CUSTOMER", sequenceName = "SEC_CUSTOMER", allocationSize = 1)
     @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
     private Long customerId;
-    
+
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "FIRST_NAME", nullable = false, length = 30)
     private String firstName;
-    
+
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "LAST_NAME", nullable = false, length = 30)
     private String lastName;
-   
+
     @NotNull
     @Size(min = 1, max = 30)
     @Column(nullable = false, length = 30)
     private String email;
-    
+
     @NotNull
     @Size(min = 1, max = 30)
     @Column(nullable = false, length = 30)
     private String street;
-    
+
     @NotNull
     @Column(nullable = false)
     private Long building;
-    
+
     @NotNull
     @Column(nullable = false)
     private Long flat;
-    
+
     @Size(max = 20)
     @Column(name = "CARD_NUMBER", length = 20)
     private String cardNumber;
-    
+
     @Column(name = "CONNECTION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date connectionDate;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String status;
-    
+
     @Column(name = "STATUS_UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date statusUpdateDate;
-    
+
     @Column(name = "CARD_EXP_DATA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cardExpData;
-    
+
     private Long balance;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<PhoneNumber> phoneNumberList;
-    
+
     @OneToMany(mappedBy = "customerId")
     private List<StaticIp> staticIpList;
-    
+
     @OneToMany(mappedBy = "customerId")
     private List<Orders> ordersList;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
     private BalanceHistory balanceHistory;
-    
+
     @OneToMany(mappedBy = "customerId")
     private List<MarketsCustomers> marketsCustomersList;
 
@@ -286,5 +285,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.Customer[ customerId=" + customerId + " ]";
     }
-    
+
 }

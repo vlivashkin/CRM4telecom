@@ -2,7 +2,6 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,31 +13,24 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "BALANCE_HISTORY", catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "BalanceHistory.findAll", query = "SELECT b FROM BalanceHistory b"),
-    @NamedQuery(name = "BalanceHistory.findByCustomerId", query = "SELECT b FROM BalanceHistory b WHERE b.customerId = :customerId"),
-    @NamedQuery(name = "BalanceHistory.findByBalanceDate", query = "SELECT b FROM BalanceHistory b WHERE b.balanceDate = :balanceDate"),
-    @NamedQuery(name = "BalanceHistory.findByAmount", query = "SELECT b FROM BalanceHistory b WHERE b.amount = :amount")})
 public class BalanceHistory implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    
     @NotNull
     @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
     private Long customerId;
-    
+
     @Column(name = "BALANCE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date balanceDate;
-    
+
     private Long amount;
-    
+
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Customer customer;
@@ -106,5 +98,5 @@ public class BalanceHistory implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.BalanceHistory[ customerId=" + customerId + " ]";
     }
-    
+
 }

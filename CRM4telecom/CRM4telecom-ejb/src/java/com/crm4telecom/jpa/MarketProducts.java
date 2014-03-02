@@ -2,7 +2,6 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,34 +18,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "MARKET_PRODUCTS", catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "MarketProducts.findAll", query = "SELECT m FROM MarketProducts m"),
-    @NamedQuery(name = "MarketProducts.findByMarketId", query = "SELECT m FROM MarketProducts m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "MarketProducts.findByPrice", query = "SELECT m FROM MarketProducts m WHERE m.price = :price"),
-    @NamedQuery(name = "MarketProducts.findByStartDate", query = "SELECT m FROM MarketProducts m WHERE m.startDate = :startDate"),
-    @NamedQuery(name = "MarketProducts.findByEndDate", query = "SELECT m FROM MarketProducts m WHERE m.endDate = :endDate")})
 public class MarketProducts implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @NotNull
     @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
     private Long marketId;
-    
+
     private Long price;
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    
+
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
-    
+
     @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Market market;
@@ -130,5 +123,5 @@ public class MarketProducts implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.MarketProducts[ marketId=" + marketId + " ]";
     }
-    
+
 }

@@ -2,7 +2,6 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,47 +14,37 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "EQUIPMENT_HISTORY", catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EquipmentHistory.findAll", query = "SELECT e FROM EquipmentHistory e"),
-    @NamedQuery(name = "EquipmentHistory.findByEquipmentId", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentId = :equipmentId"),
-    @NamedQuery(name = "EquipmentHistory.findByCustomerId", query = "SELECT e FROM EquipmentHistory e WHERE e.customerId = :customerId"),
-    @NamedQuery(name = "EquipmentHistory.findByStartDate", query = "SELECT e FROM EquipmentHistory e WHERE e.startDate = :startDate"),
-    @NamedQuery(name = "EquipmentHistory.findByEndDate", query = "SELECT e FROM EquipmentHistory e WHERE e.endDate = :endDate"),
-    @NamedQuery(name = "EquipmentHistory.findByEquipmentComment", query = "SELECT e FROM EquipmentHistory e WHERE e.equipmentComment = :equipmentComment"),
-    @NamedQuery(name = "EquipmentHistory.findByStatus", query = "SELECT e FROM EquipmentHistory e WHERE e.status = :status")})
 public class EquipmentHistory implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    
     @NotNull
     @Column(name = "EQUIPMENT_ID", nullable = false, precision = 38, scale = 0)
     private Long equipmentId;
-    
+
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
-    
+
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    
+
     @Size(max = 30)
     @Column(name = "EQUIPMENT_COMMENT", length = 30)
     private String equipmentComment;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String status;
-    
+
     @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Equipment equipment;
@@ -147,5 +136,5 @@ public class EquipmentHistory implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.EquipmentHistory[ equipmentId=" + equipmentId + " ]";
     }
-    
+
 }

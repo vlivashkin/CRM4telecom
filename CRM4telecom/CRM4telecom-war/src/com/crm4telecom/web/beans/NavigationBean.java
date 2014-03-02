@@ -9,20 +9,15 @@ import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 
-/**
- *
- * @author darya
- */
-
 @ManagedBean
 @SessionScoped
 public class NavigationBean implements Serializable {
-    
+
     @EJB
     private CustomerManagerLocal cm;
     @EJB
     private OrderManagerLocal om;
-        
+
     private Customer customer;
     private Orders order;
 
@@ -41,15 +36,15 @@ public class NavigationBean implements Serializable {
     public void setOrder(Orders currentOrder) {
         this.order = currentOrder;
     }
-    
-    public String toCustomerInfo(Customer customer){
+
+    public String toCustomerInfo(Customer customer) {
         this.customer = customer;
-        return "client_info";
+        return "customer_info";
     }
-    
-    public String toOrderInfo(Orders order){
+
+    public String toOrderInfo(Orders order) {
         this.order = order;
         return "order_info";
     }
-    
+
 }

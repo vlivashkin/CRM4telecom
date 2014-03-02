@@ -2,7 +2,6 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,56 +15,46 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "ORDER_PROCESSING", catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OrderProcessing.findAll", query = "SELECT o FROM OrderProcessing o"),
-    @NamedQuery(name = "OrderProcessing.findByOrderId", query = "SELECT o FROM OrderProcessing o WHERE o.orderId = :orderId"),
-    @NamedQuery(name = "OrderProcessing.findByStepName", query = "SELECT o FROM OrderProcessing o WHERE o.stepName = :stepName"),
-    @NamedQuery(name = "OrderProcessing.findByDescription", query = "SELECT o FROM OrderProcessing o WHERE o.description = :description"),
-    @NamedQuery(name = "OrderProcessing.findByStartDate", query = "SELECT o FROM OrderProcessing o WHERE o.startDate = :startDate"),
-    @NamedQuery(name = "OrderProcessing.findByEndDate", query = "SELECT o FROM OrderProcessing o WHERE o.endDate = :endDate"),
-    @NamedQuery(name = "OrderProcessing.findByEndDateHard", query = "SELECT o FROM OrderProcessing o WHERE o.endDateHard = :endDateHard")})
 public class OrderProcessing implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    
     @NotNull
     @Column(name = "ORDER_ID", nullable = false, precision = 38, scale = 0)
     private Long orderId;
-    
+
     @Size(max = 30)
     @Column(name = "STEP_NAME", length = 30)
     private String stepName;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String description;
-    
+
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    
+
     @Column(name = "END_DATE_HARD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
-    
+
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Orders orders;
-    
+
     @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
     @ManyToOne
     private Equipment equipmentId;
-    
+
     @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
     @ManyToOne
     private Employee employeeId;
@@ -173,5 +162,5 @@ public class OrderProcessing implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.OrderProcessing[ orderId=" + orderId + " ]";
     }
-    
+
 }

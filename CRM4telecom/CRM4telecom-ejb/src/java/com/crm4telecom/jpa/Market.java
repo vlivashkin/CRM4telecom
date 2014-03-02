@@ -1,46 +1,37 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Market.findAll", query = "SELECT m FROM Market m"),
-    @NamedQuery(name = "Market.findByMarketId", query = "SELECT m FROM Market m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "Market.findByName", query = "SELECT m FROM Market m WHERE m.name = :name"),
-    @NamedQuery(name = "Market.findByDescription", query = "SELECT m FROM Market m WHERE m.description = :description")})
 public class Market implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @NotNull
     @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
     private Long marketId;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String name;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String description;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
     private MarketProducts marketProducts;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
     private MarketsCustomers marketsCustomers;
 
@@ -115,5 +106,5 @@ public class Market implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.Market[ marketId=" + marketId + " ]";
     }
-    
+
 }

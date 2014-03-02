@@ -10,20 +10,21 @@ import javax.persistence.PersistenceContext;
 
 @Stateless
 public class LifeCycleManager implements LifeCycleManagerLocal {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public Orders changeOrderState(Long orderId, OrderEvent event) {
         Orders order = em.find(Orders.class, orderId);
-        if (order == null)
+        if (order == null) {
             throw new NoSuchElementException();
+        }
         changeOrderState(order, event);
-        
+
         return order;
     }
-    
+
     @Override
     public void changeOrderState(Orders order, OrderEvent event) {
         String rawState = order.getStatus();
@@ -64,17 +65,16 @@ public class LifeCycleManager implements LifeCycleManagerLocal {
                     order.setStatus(OrderState.CLOSED.name());
                 }
                 break;
-            default:
-                break;
         }
         em.merge(order);
     }
-    
+
     @Override
     public OrderState getOrderState(Long orderId) {
         Orders order = em.find(Orders.class, orderId);
-        if (order == null)
+        if (order == null) {
             throw new NoSuchElementException();
+        }
         String rawState = order.getOrderType();
 
         return OrderState.valueOf(rawState);

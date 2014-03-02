@@ -7,9 +7,10 @@ import javax.ejb.Local;
 
 @Local
 public interface LifeCycleManagerLocal {
+
     Orders changeOrderState(Long orderId, OrderEvent event);
-    
+
     void changeOrderState(Orders order, OrderEvent event);
-    
+
     OrderState getOrderState(Long orderId);
 }

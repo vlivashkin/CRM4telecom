@@ -3,7 +3,6 @@ package com.crm4telecom.jpa;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,48 +14,40 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-    @NamedQuery(name = "Product.findBySalesPeriod", query = "SELECT p FROM Product p WHERE p.salesPeriod = :salesPeriod"),
-    @NamedQuery(name = "Product.findByBaselinePrice", query = "SELECT p FROM Product p WHERE p.baselinePrice = :baselinePrice")})
 public class Product implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @NotNull
     @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
     private Long productId;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String name;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String description;
-    
+
     @Column(name = "SALES_PERIOD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriod;
-    
+
     @Column(name = "BASELINE_PRICE")
     private Long baselinePrice;
-    
+
     @OneToMany(mappedBy = "productId")
     private List<MarketProducts> marketProductsList;
-    
+
     @OneToMany(mappedBy = "productId")
     private List<Orders> ordersList;
-    
+
     @OneToMany(mappedBy = "productId")
     private List<CustomerProducts> customerProductsList;
 
@@ -158,5 +149,5 @@ public class Product implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.Product[ productId=" + productId + " ]";
     }
-    
+
 }

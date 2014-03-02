@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Telecom | Order #{navigationBean.order.orderId.toString()}</title>
@@ -66,47 +65,47 @@
                             <h:outputText value="#{navigationBean.order.orderProcessing.endDate}"/>
                         </h:column>
                     </h:dataTable>
-                   
+
                 </p:tab>
                 <p:tab title="Edit">
                     <p:commandButton value="Сохранить" update="editform"/>
                     <h:form id="editform">
-                    <h:dataTable>
-                        <f:facet name="header">Order #{navigationBean.order.orderId} info</f:facet>
-                       <h:column>
-                            <b><h:outputText value="Дата: "/></b><br/>
-                            <b><h:outputText value="Комментарий: "/></b><br/>
-                            <b><h:outputText value="Статус: "/></b><br/>
-                            <b><h:outputText value="Приоритет: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <h:inputText value="#{navigationBean.order.orderDate.toString}"/><br/>
-                            <h:inputText value="#{navigationBean.order.typeComment}"/><br/>
-                            <p:selectOneMenu value="#{requestBean.statuses}" var="status">
-                                <f:selectItems value="#{status}"/>
-                            </p:selectOneMenu><br/>
-                            <p:selectOneMenu value="#{requestBean.priority}" var="priority">
-                                <f:selectItems value="#{priority}"/>
-                            </p:selectOneMenu>
-                        </h:column>
-                        <h:column>
-                            <b><h:outputText value="Клиент №: "/></b><br/>
-                            <b><h:outputText value="Менеджер №: "/></b><br/>
-                            <b><h:outputText value="Оператор №" /></b>
-                            <b><h:outputText value="Услуга №: "/></b><br/>
-                            <b><h:outputText value="Тех. подержка: "/></b><br/>
-                        </h:column>
-                        <h:column>
-                            <p:inputText value="#{navigationBean.order.customerId.customerId.toString}"/><br/>
-                            <p:inputText value="#{navigationBean.order.managerId.toString}"/><br/>
-                            <p:inputText value="#{navigationBean.order.employeeId.toString}"/><br/>
-                            <p:inputText value="#{navigationBean.order.productId.productId.toString}"/><br/>
-                            <p:selectOneMenu value="#{navigationBean.order.technicalSupportFlag}">
-                                <f:selectItem value="Yes"/>
-                                <f:selectItem value="No"/>
-                            </p:selectOneMenu><br/>
-                        </h:column>
-                    </h:dataTable>
+                        <h:dataTable>
+                            <f:facet name="header">Order #{navigationBean.order.orderId} info</f:facet>
+                            <h:column>
+                                <b><h:outputText value="Дата: "/></b><br/>
+                                <b><h:outputText value="Комментарий: "/></b><br/>
+                                <b><h:outputText value="Статус: "/></b><br/>
+                                <b><h:outputText value="Приоритет: "/></b><br/>
+                            </h:column>
+                            <h:column>
+                                <h:inputText value="#{navigationBean.order.orderDate.toString}"/><br/>
+                                <h:inputText value="#{navigationBean.order.typeComment}"/><br/>
+                                <p:selectOneMenu value="#{requestBean.statuses}" var="status">
+                                    <f:selectItems value="#{status}"/>
+                                </p:selectOneMenu><br/>
+                                <p:selectOneMenu value="#{requestBean.priority}" var="priority">
+                                    <f:selectItems value="#{priority}"/>
+                                </p:selectOneMenu>
+                            </h:column>
+                            <h:column>
+                                <b><h:outputText value="Клиент №: "/></b><br/>
+                                <b><h:outputText value="Менеджер №: "/></b><br/>
+                                <b><h:outputText value="Оператор №" /></b>
+                                <b><h:outputText value="Услуга №: "/></b><br/>
+                                <b><h:outputText value="Тех. подержка: "/></b><br/>
+                            </h:column>
+                            <h:column>
+                                <p:inputText value="#{navigationBean.order.customerId.customerId.toString}"/><br/>
+                                <p:inputText value="#{navigationBean.order.managerId.toString}"/><br/>
+                                <p:inputText value="#{navigationBean.order.employeeId.toString}"/><br/>
+                                <p:inputText value="#{navigationBean.order.productId.productId.toString}"/><br/>
+                                <p:selectOneMenu value="#{navigationBean.order.technicalSupportFlag}">
+                                    <f:selectItem value="Yes"/>
+                                    <f:selectItem value="No"/>
+                                </p:selectOneMenu><br/>
+                            </h:column>
+                        </h:dataTable>
                     </h:form>
                 </p:tab>        
             </p:tabView>

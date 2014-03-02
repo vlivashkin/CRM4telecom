@@ -2,7 +2,6 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,54 +17,56 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-@Entity @Table
+@Entity
+@Table
 public class Orders implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(generator = "SEC_ORDER", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SEC_ORDER", sequenceName = "SEC_ORDER", allocationSize=1)
+    @SequenceGenerator(name = "SEC_ORDER", sequenceName = "SEC_ORDER", allocationSize = 1)
     @Column(name = "ORDER_ID", nullable = false, precision = 38, scale = 0)
     private Long orderId;
-    
+
     @Column(name = "ORDER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
-    
+
     @Size(max = 30)
     @Column(name = "ORDER_TYPE", length = 30)
     private String orderType;
-    
+
     @Size(max = 30)
     @Column(name = "TYPE_COMMENT", length = 30)
     private String typeComment;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String status;
-    
+
     @Size(max = 30)
     @Column(length = 30)
     private String priority;
-    
+
     @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
-    
+
     @Column(name = "MANAGER_ID")
     private Long managerId;
-    
+
     @Size(max = 30)
     @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
     private String technicalSupportFlag;
-    
+
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
-    
+
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne
     private Customer customerId;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
     private OrderProcessing orderProcessing;
 
@@ -198,5 +197,5 @@ public class Orders implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.Orders[ orderId=" + orderId + " ]";
     }
-    
+
 }

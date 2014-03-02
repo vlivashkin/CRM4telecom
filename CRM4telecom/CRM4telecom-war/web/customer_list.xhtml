@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Telecom | Clients</title>
@@ -13,18 +12,17 @@
             <p:dataTable var="customer" value="#{customerListBean.customers}" paginator="true" rows="10"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selectedCustomer}" id="customerTable" lazy="true">  
-                
+
                 <f:facet name="header">  
                     <p:commandButton id="homeButton" value="Main page" icon="ui-icon-home" action="index"/> 
-                    <p:commandButton id="newCustomerButton" value="New client" icon="ui-icon-document" action="new_client"/>  
+                    <p:commandButton id="newCustomerButton" value="New client" icon="ui-icon-document" action="new_client"/>
+                    <p:commandButton id="toCustomerInfoButton" value="Go to selected customer's info" icon="ui-icon-document" action="#{customerListBean.toCustomerInfo}"/>  
                 </f:facet>  
-                
-                <p:commandButton action="#{navigationBean.toCustomerInfo}" />
-                
+
                 <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
                     <h:outputText value="#{customer.customerId}" />  
                 </p:column>  
-                
+
                 <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
                     <h:outputText value="#{customer.firstName}" />  
                 </p:column>  

@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Telecom</title>
@@ -12,10 +11,9 @@
         <h1>***-Telecom</h1>
         <h:graphicImage style="margin-left: auto; margin-right: auto" value="logo.jpg"/><br/><br/>
         <h:form>
-            <p:commandButton value="Клиенты" action="client_list"/>
+            <p:commandButton value="Клиенты" action="customer_list"/>
             <p:commandButton value="Добавить заявку"/>
             <p:commandButton value="Заявки" action="order_list"/>
-            <h:outputText value="#{customerListBean.count}"/>
         </h:form>
     </h:body>
 </html>

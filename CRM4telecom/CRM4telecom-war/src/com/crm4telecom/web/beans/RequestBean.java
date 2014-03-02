@@ -16,44 +16,31 @@ import javax.enterprise.context.RequestScoped;
  *
  * @author darya
  */
-
 @ManagedBean
 @RequestScoped
 public class RequestBean {
-        
+
     @EJB
     private CustomerManagerLocal cm;
     @EJB
     private OrderManagerLocal om;
-    
-    public List<Customer> getCustomersList(){
-        List<Customer> customers =  cm.getCustomerList();
-        
-        return customers;
-    }
-    
-    public List<Orders> getOrdersList(){
-        List<Orders> orders = om.getOrdersList();
-        
-        return orders;
-    }
-    
-    public List<String> getStatuses(){
+
+    public List<String> getStatuses() {
         List<String> state = new ArrayList<>();
         OrderState[] orderStates = OrderState.values();
-        for (int i = 0; i < orderStates.length; i++) {
-            state.add(orderStates[i].toString());
+        for (OrderState orderState : orderStates) {
+            state.add(orderState.toString());
         }
         return state;
     }
-    
-    public List<String> getPriority(){
+
+    public List<String> getPriority() {
         List<String> priority = new ArrayList<>();
         OrderPriority[] orderPriority = OrderPriority.values();
-        for (int i = 0; i < orderPriority.length; i++) {
-            priority.add(orderPriority[i].toString());
+        for (OrderPriority orderPriority1 : orderPriority) {
+            priority.add(orderPriority1.toString());
         }
         return priority;
     }
-    
+
 }

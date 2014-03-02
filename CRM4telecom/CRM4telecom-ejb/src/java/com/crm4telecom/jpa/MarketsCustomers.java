@@ -2,50 +2,40 @@ package com.crm4telecom.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "MARKETS_CUSTOMERS", catalog = "", schema = "CRM4TELECOM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "MarketsCustomers.findAll", query = "SELECT m FROM MarketsCustomers m"),
-    @NamedQuery(name = "MarketsCustomers.findByMarketId", query = "SELECT m FROM MarketsCustomers m WHERE m.marketId = :marketId"),
-    @NamedQuery(name = "MarketsCustomers.findByStartDate", query = "SELECT m FROM MarketsCustomers m WHERE m.startDate = :startDate"),
-    @NamedQuery(name = "MarketsCustomers.findByEndDate", query = "SELECT m FROM MarketsCustomers m WHERE m.endDate = :endDate")})
 public class MarketsCustomers implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    
     @NotNull
     @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
     private Long marketId;
-    
+
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    
+
     @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Market market;
-    
+
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne
     private Customer customerId;
@@ -121,5 +111,5 @@ public class MarketsCustomers implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.MarketsCustomers[ marketId=" + marketId + " ]";
     }
-    
+
 }
