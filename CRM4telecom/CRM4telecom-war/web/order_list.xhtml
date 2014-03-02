@@ -3,33 +3,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Telecom | Orders</title>
+        <title>IGNORED</title>
     </h:head>
     <h:body>
-        <h:form id="form">  
-            <p:dataTable var="order" value="#{orderListBean.orders}" paginator="true" rows="10"  
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selectedOrder}" id="orderTable" lazy="true">  
+        <ui:composition template="./templates/masterLayout.xhtml">
+            <ui:define name="windowTitle">
+                CRM4Telecom | Orders
+            </ui:define>
 
-                <f:facet name="header">  
-                    <p:commandButton id="homeButton" value="Main page" icon="ui-icon-home" action="index"/> 
-                    <p:commandButton id="newOrderButton" value="New order" icon="ui-icon-document" action="new_order"/>  
-                </f:facet>  
+            <ui:define name="menuItems">
+            </ui:define>
 
-                <p:column headerText="ID" sortBy="orderId" filterBy="#{orders.orderId}">  
-                    <h:outputText value="#{orders.orderId}" />  
-                </p:column>  
+            <ui:define name="content">
+                <h:form id="form">  
+                    <p:dataTable var="order" value="#{orderListBean.orders}" paginator="true" rows="10"  
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
+                                 rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selectedOrder}" id="orderTable" lazy="true">  
 
-                <p:column headerText="Priority" sortBy="priority" filterBy="#{orders.priority}">  
-                    <h:outputText value="#{orders.priority}" />  
-                </p:column>  
+                        <p:column headerText="ID" sortBy="orderId" filterBy="#{orders.orderId}">  
+                            <h:outputText value="#{orders.orderId}" />  
+                        </p:column>  
 
-                <p:column headerText="Status" sortBy="status" filterBy="#{orders.status}">  
-                    <h:outputText value="#{orders.status}" />  
-                </p:column>  
-            </p:dataTable>  
-        </h:form>
+                        <p:column headerText="Priority" sortBy="priority" filterBy="#{orders.priority}">  
+                            <h:outputText value="#{orders.priority}" />  
+                        </p:column>  
+
+                        <p:column headerText="Status" sortBy="status" filterBy="#{orders.status}">  
+                            <h:outputText value="#{orders.status}" />  
+                        </p:column>  
+                    </p:dataTable>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

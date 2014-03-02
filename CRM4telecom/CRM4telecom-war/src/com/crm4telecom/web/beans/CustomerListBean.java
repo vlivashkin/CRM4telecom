@@ -3,11 +3,13 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
@@ -42,7 +44,7 @@ public class CustomerListBean implements Serializable {
         this.selectedCustomer = selectedCustomer;
     }
     
-    public String toCustomerInfo() {
+    public String onRowSelect() throws IOException {
         return "customer_info?includeViewParams=true";
     }
 }

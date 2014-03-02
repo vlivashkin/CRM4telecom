@@ -27,4 +27,14 @@
         <managed-bean-class>com.crm4telecom.web.beans.OrderListBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>menuBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.MenuBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>customerInfoBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.CustomerInfoBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

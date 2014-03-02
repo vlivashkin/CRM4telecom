@@ -3,6 +3,7 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -36,5 +37,9 @@ public class OrderListBean implements Serializable {
 
     public void setSelectedOrder(Orders selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
+    }
+    
+    public String onRowSelect() throws IOException {
+        return "customer_info?includeViewParams=true";
     }
 }

@@ -1,0 +1,47 @@
+
+#top {
+    position: relative;
+    color: white;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+}
+
+.left_content {
+    margin-left: 170px;
+}
+
+.right_content {
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: black;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+

@@ -1,6 +1,8 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderPriority;
+import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Orders;
 import java.util.List;
@@ -29,4 +31,10 @@ public interface OrderManagerLocal {
     Long getOrdersCount();
 
     Long getOrdersCount(Map<String, String> filters);
+    
+    Orders changeOrderState(Long orderId, OrderEvent event);
+
+    void changeOrderState(Orders order, OrderEvent event);
+
+    OrderState getOrderState(Long orderId);
 }
