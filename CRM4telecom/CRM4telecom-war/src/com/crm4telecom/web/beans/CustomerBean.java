@@ -9,23 +9,21 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
 @ManagedBean
 @SessionScoped
-public class CustomerListBean implements Serializable {
+public class CustomerBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private LazyDataModel<Customer> lazyModel;
-    private Customer selectedCustomer;
+    private Customer customer;
 
     @EJB
     private CustomerManagerLocal cm;
     
     @Inject
-    private NavigationBean nb;
+    private CustomerValidationBean cv;
     
     @PostConstruct
     public void init() {
@@ -36,15 +34,29 @@ public class CustomerListBean implements Serializable {
         return lazyModel;
     }
 
-    public Customer getSelectedCustomer() {
-        return selectedCustomer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setSelectedCustomer(Customer selectedCustomer) {
-        this.selectedCustomer = selectedCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        cv.init(customer);
     }
-    
+
     public String onRowSelect() throws IOException {
         return "customer_info?includeViewParams=true";
+    }
+    
+    public void save() {
+        cv.fillCustomer(customer);
+        cm.modifyCustomer(customer);
+    }
+
+    public CustomerValidationBean getCv() {
+        return cv;
+    }
+
+    public void setCv(CustomerValidationBean cv) {
+        this.cv = cv;
     }
 }

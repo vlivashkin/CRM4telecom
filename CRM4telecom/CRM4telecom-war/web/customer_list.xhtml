@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>IGNORED</title>
+        <title>CRM4telecom | Clients</title>
     </h:head>
     <h:body>
         <ui:composition template="./templates/masterLayout.xhtml">
@@ -15,13 +15,14 @@
             </ui:define>
 
             <ui:define name="menuItems">
+                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
             </ui:define>
 
             <ui:define name="content">
                 <h:form id="form">  
-                    <p:dataTable var="customer" value="#{customerListBean.customers}" paginator="true" rows="10"  
+                    <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                                 rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selectedCustomer}" id="customerTable" lazy="true">  
+                                 rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerBean.customer}" id="customerTable" lazy="true">  
 
                         <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
                             <h:outputText value="#{customer.customerId}" />  
@@ -40,7 +41,7 @@
                         </p:column>  
 
                         <p:column style="width:4%">  
-                            <p:commandButton id="selectButton" action="#{customerListBean.onRowSelect}" icon="ui-icon-search" title="View" />  
+                            <p:commandButton id="selectButton" action="#{customerBean.onRowSelect}" icon="ui-icon-search" title="View" />  
                         </p:column>
                     </p:dataTable>  
                 </h:form>  

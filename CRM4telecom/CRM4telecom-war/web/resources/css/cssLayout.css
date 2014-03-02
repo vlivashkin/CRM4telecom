@@ -44,4 +44,10 @@
   text-decoration : underline;
 }
 
+label {
+    font-weight:bold;
+}
 
+.ui-datatable {
+    margin-bottom: 10px;
+}

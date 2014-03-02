@@ -3,38 +3,18 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
        http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0">
     <managed-bean>
-        <managed-bean-name>exampleBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.ExampleBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>navigationBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.NavigationBean</managed-bean-class>
+        <managed-bean-name>customerBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.CustomerBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>requestBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.RequestBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>customerListBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.CustomerListBean</managed-bean-class>
+        <managed-bean-name>orderBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.OrderBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>orderListBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.OrderListBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>menuBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.MenuBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>customerInfoBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.CustomerInfoBean</managed-bean-class>
+        <managed-bean-name>customerValidationBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.CustomerValidationBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>
