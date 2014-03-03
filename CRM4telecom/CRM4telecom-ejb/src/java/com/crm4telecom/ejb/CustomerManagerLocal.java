@@ -20,4 +20,6 @@ public interface CustomerManagerLocal {
     Long getCustomersCount();
 
     Long getCustomersCount(Map<String, String> filters);
+    
+    List<Customer> search(Map<String, String> parametr);
 }

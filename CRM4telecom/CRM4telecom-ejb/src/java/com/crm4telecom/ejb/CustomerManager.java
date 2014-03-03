@@ -2,6 +2,7 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
@@ -78,4 +79,24 @@ public class CustomerManager implements CustomerManagerLocal {
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
     }
+    
+    @Override
+    public List<Customer> search(Map<String, String> parametr) {
+        String sqlQuery = "SELECT c FROM Customer c";
+        if (!parametr.isEmpty()) {
+            sqlQuery += " WHERE";
+            Iterator it = parametr.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry) it.next();
+                sqlQuery += " c." + pairs.getKey() + " REGEXP '" + pairs.getValue() + "' AND";
+                System.out.println(pairs.getKey() + " = " + pairs.getValue());
+                it.remove(); 
+            }
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        
+        return em.createQuery(sqlQuery).getResultList();
+    }
+
+    
 }
