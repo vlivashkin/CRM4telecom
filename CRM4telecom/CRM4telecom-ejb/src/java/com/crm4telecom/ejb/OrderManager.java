@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,7 +27,7 @@ public class OrderManager implements OrderManagerLocal {
         Orders order = new Orders();
         fillOrder(order, type, typeComment, productId, priority, managerId);
         order.setOrderDate(new Date());
-        order.setStatus(OrderState.NONE.name());
+        order.changeOrderState(OrderEvent.CREATED);
         order.setTechnicalSupportFlag(technicalSupportFlag.toString());
         em.persist(order);
         changeOrderState(order, OrderEvent.CREATED);
@@ -180,45 +179,7 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public void changeOrderState(Orders order, OrderEvent event) {
-        String rawState = order.getStatus();
-        OrderState oldState = OrderState.valueOf(rawState);
-        switch (event) {
-            case CREATED:
-                if (OrderState.NONE.equals(oldState)) {
-                    order.setStatus(OrderState.NEW.name());
-                }
-                break;
-            case SENT_TO_TECH_SUPPORT:
-                if (OrderState.NEW.equals(oldState)) {
-                    order.setStatus(OrderState.OPENED.name());
-                }
-                break;
-            case ENGINEER_APPOINTED:
-                if (OrderState.NEW.equals(oldState)) {
-                    order.setStatus(OrderState.OPENED.name());
-                }
-                break;
-            case DELAY:
-                if (OrderState.OPENED.equals(oldState)) {
-                    order.setStatus(OrderState.WAITING.name());
-                }
-                break;
-            case READY:
-                if (OrderState.WAITING.equals(oldState)) {
-                    order.setStatus(OrderState.OPENED.name());
-                }
-                break;
-            case CANCELLED:
-                if (OrderState.WAITING.equals(oldState)) {
-                    order.setStatus(OrderState.LOCKED.name());
-                }
-                break;
-            case DONE:
-                if (OrderState.OPENED.equals(oldState) || OrderState.LOCKED.equals(oldState)) {
-                    order.setStatus(OrderState.CLOSED.name());
-                }
-                break;
-        }
+        order.changeOrderState(event);
         em.merge(order);
     }
 

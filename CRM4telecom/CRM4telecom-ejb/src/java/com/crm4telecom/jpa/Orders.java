@@ -1,5 +1,7 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.ejb.util.OrderEvent;
+import com.crm4telecom.ejb.util.OrderState;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -113,8 +115,45 @@ public class Orders implements Serializable {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void changeOrderState(OrderEvent event) {
+        OrderState oldState = OrderState.valueOf(status);
+        switch (event) {
+            case CREATED:
+                if (oldState == null) {
+                    status = OrderState.NEW.name();
+                }
+                break;
+            case SENT_TO_TECH_SUPPORT:
+                if (OrderState.NEW.equals(oldState)) {
+                    status = OrderState.OPENED.name();
+                }
+                break;
+            case ENGINEER_APPOINTED:
+                if (OrderState.NEW.equals(oldState)) {
+                    status = OrderState.OPENED.name();
+                }
+                break;
+            case DELAY:
+                if (OrderState.OPENED.equals(oldState)) {
+                    status = OrderState.WAITING.name();
+                }
+                break;
+            case READY:
+                if (OrderState.WAITING.equals(oldState)) {
+                    status = OrderState.OPENED.name();
+                }
+                break;
+            case CANCELLED:
+                if (OrderState.WAITING.equals(oldState)) {
+                    status = OrderState.LOCKED.name();
+                }
+                break;
+            case DONE:
+                if (OrderState.OPENED.equals(oldState) || OrderState.LOCKED.equals(oldState)) {
+                    status = OrderState.CLOSED.name();
+                }
+                break;
+        }
     }
 
     public String getPriority() {
