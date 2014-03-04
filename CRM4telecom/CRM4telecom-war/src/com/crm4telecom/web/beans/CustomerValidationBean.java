@@ -27,7 +27,7 @@ public class CustomerValidationBean {
     Long balance;
 
     @Pattern(regexp = "[\\d]{4} [\\d]{4} [\\d]{4} [\\d]{4}")
-    String cardNumber;
+    String phoneNumber;
 
     @Past
     Date cardExpDate;
@@ -40,8 +40,7 @@ public class CustomerValidationBean {
         building = customer.getBuilding();
         flat = customer.getFlat();
         balance = customer.getBalance();
-        cardNumber = customer.getCardNumber();
-        cardExpDate = customer.getCardExpData();
+        phoneNumber = customer.getphoneNumber();
     }
 
     public void fillCustomer(Customer customer) {
@@ -52,8 +51,7 @@ public class CustomerValidationBean {
         customer.setBuilding(building);
         customer.setFlat(flat);
         customer.setBalance(balance);
-        customer.setCardNumber(cardNumber);
-        customer.setCardExpData(cardExpDate);
+        customer.setphoneNumber(phoneNumber);
     }
 
     public String getFirstName() {
@@ -112,20 +110,12 @@ public class CustomerValidationBean {
         this.balance = balance;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public Date getCardExpDate() {
-        return cardExpDate;
-    }
-
-    public void setCardExpDate(Date cardExpDate) {
-        this.cardExpDate = cardExpDate;
+    public void setphoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

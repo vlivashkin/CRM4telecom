@@ -34,7 +34,7 @@
                         <h:outputLabel value="Квартира:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.flat}"/>
                         <h:outputLabel value="Карта №:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.cardNumber}"/>
+                        <h:inputText value="#{searchBean.cardNumber}" maxlength="3"/>
                         <h:outputLabel value="Дата истечения:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.cardExpData}"/>
                     </h:panelGrid>

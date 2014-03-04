@@ -60,12 +60,8 @@ public class Customer implements Serializable {
     private Long flat;
 
     @Size(max = 20)
-    @Column(name = "CARD_NUMBER", length = 20)
-    private String cardNumber;
-
-    @Column(name = "CONNECTION_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date connectionDate;
+    @Column(name = "PHONE_NUMBER", length = 20)
+    private String phoneNumber;
 
     @Size(max = 30)
     @Column(length = 30)
@@ -74,10 +70,6 @@ public class Customer implements Serializable {
     @Column(name = "STATUS_UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date statusUpdateDate;
-
-    @Column(name = "CARD_EXP_DATA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date cardExpData;
 
     private Long balance;
 
@@ -169,22 +161,15 @@ public class Customer implements Serializable {
         this.flat = flat;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setphoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Date getConnectionDate() {
-        return connectionDate;
-    }
-
-    public void setConnectionDate(Date connectionDate) {
-        this.connectionDate = connectionDate;
-    }
-
+    
     public String getStatus() {
         return status;
     }
@@ -201,14 +186,7 @@ public class Customer implements Serializable {
         this.statusUpdateDate = statusUpdateDate;
     }
 
-    public Date getCardExpData() {
-        return cardExpData;
-    }
-
-    public void setCardExpData(Date cardExpData) {
-        this.cardExpData = cardExpData;
-    }
-
+    
     public Long getBalance() {
         return balance;
     }
@@ -284,6 +262,10 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "com.crm4telecom.jpa.Customer[ customerId=" + customerId + " ]";
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
