@@ -24,17 +24,27 @@
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                                  rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderBean.order}" id="orderTable" lazy="true">  
 
-                        <p:column headerText="ID" sortBy="orderId" filterBy="#{orders.orderId}">  
-                            <h:outputText value="#{orders.orderId}" />  
+                        <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
+                        
+                        <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
+                            <h:outputText value="#{order.orderId}" />  
+                        </p:column>  
+                        
+                        <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
+                            <h:outputText value="#{order.orderDate}" />  
+                        </p:column>  
+                        
+                        <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
+                            <h:outputText value="#{order.priority}" />  
                         </p:column>  
 
-                        <p:column headerText="Priority" sortBy="priority" filterBy="#{orders.priority}">  
-                            <h:outputText value="#{orders.priority}" />  
+                        <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
+                            <h:outputText value="#{order.status}" />  
                         </p:column>  
-
-                        <p:column headerText="Status" sortBy="status" filterBy="#{orders.status}">  
-                            <h:outputText value="#{orders.status}" />  
-                        </p:column>  
+                        
+                        <p:column headerText="Customer ID" sortBy="customerId" filterBy="#{order.customerId}">  
+                            <h:outputText value="#{order.customerId}" />  
+                        </p:column>
                     </p:dataTable>  
                 </h:form>
             </ui:define>

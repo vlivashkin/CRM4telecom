@@ -116,44 +116,9 @@ public class Orders implements Serializable {
     }
 
     public void changeOrderState(OrderEvent event) {
-        OrderState oldState = OrderState.valueOf(status);
-        switch (event) {
-            case CREATED:
-                if (oldState == null) {
-                    status = OrderState.NEW.name();
-                }
-                break;
-            case SENT_TO_TECH_SUPPORT:
-                if (OrderState.NEW.equals(oldState)) {
-                    status = OrderState.OPENED.name();
-                }
-                break;
-            case ENGINEER_APPOINTED:
-                if (OrderState.NEW.equals(oldState)) {
-                    status = OrderState.OPENED.name();
-                }
-                break;
-            case DELAY:
-                if (OrderState.OPENED.equals(oldState)) {
-                    status = OrderState.WAITING.name();
-                }
-                break;
-            case READY:
-                if (OrderState.WAITING.equals(oldState)) {
-                    status = OrderState.OPENED.name();
-                }
-                break;
-            case CANCELLED:
-                if (OrderState.WAITING.equals(oldState)) {
-                    status = OrderState.LOCKED.name();
-                }
-                break;
-            case DONE:
-                if (OrderState.OPENED.equals(oldState) || OrderState.LOCKED.equals(oldState)) {
-                    status = OrderState.CLOSED.name();
-                }
-                break;
-        }
+        OrderState state = OrderState.valueOf(status);
+        state = state.nextState(event);
+        status = state.name();
     }
 
     public String getPriority() {

@@ -9,6 +9,8 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
@@ -21,10 +23,10 @@ public class CustomerBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;
-    
+
     @Inject
     private CustomerValidationBean cv;
-    
+
     @PostConstruct
     public void init() {
         lazyModel = new LazyCustomerDataModel(cm);
@@ -43,10 +45,14 @@ public class CustomerBean implements Serializable {
         cv.init(customer);
     }
 
-    public String onRowSelect() throws IOException {
-        return "customer_info?includeViewParams=true";
+    public void onRowSelect() throws IOException {
+        ConfigurableNavigationHandler configurableNavigationHandler
+                = (ConfigurableNavigationHandler) FacesContext.
+                getCurrentInstance().getApplication().getNavigationHandler();
+
+        configurableNavigationHandler.performNavigation("customer_info?includeViewParams=true");
     }
-    
+
     public void save() {
         cv.fillCustomer(customer);
         cm.modifyCustomer(customer);
