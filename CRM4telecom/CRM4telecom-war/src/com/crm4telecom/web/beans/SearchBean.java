@@ -36,16 +36,11 @@ public class SearchBean implements Serializable {
     private String building;
     private String flat;
     private String balance;
-    private String cardNumber;
+    private String phoneNumber;
     private String status;
     private Date connectionDate;
-    private String cardExpData;
     private Map<String, String> parametrs = new HashMap();
 
-    public String getCardExpData() {
-
-        return cardExpData;
-    }
 
     public Customer getSelectedCustomer() {
         return selectedCustomer;
@@ -84,8 +79,8 @@ public class SearchBean implements Serializable {
         return balance;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getStatus() {
@@ -132,17 +127,14 @@ public class SearchBean implements Serializable {
         this.balance = balance;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setCardExpData(String cardExpData) {
-        this.cardExpData = cardExpData;
-    }
 
     public List<Customer> getCustomers() {
         return customers;
@@ -167,11 +159,8 @@ public class SearchBean implements Serializable {
         if (flat.length() != 0) {
             parametrs.put("flat", flat.toLowerCase());
         }
-        if(cardNumber.length() != 0){
-            parametrs.put("cardNumber",cardNumber.toLowerCase());
-        }
-        if(cardExpData.length() != 0 ){
-            parametrs.put("cardExpData", cardExpData.toLowerCase());
+        if(phoneNumber.length() != 0){
+            parametrs.put("cardNumber",phoneNumber.toLowerCase());
         }
         customers = cm.search(parametrs);
         return "search";

@@ -8,6 +8,7 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.jpa.Product;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -181,6 +182,41 @@ public class OrderManager implements OrderManagerLocal {
     public void changeOrderState(Orders order, OrderEvent event) {
         order.changeOrderState(event);
         em.merge(order);
+    }
+
+    @Override
+    public List<Orders> search(Map<String, List<String>> parametrs) {
+        String sqlQuery = "SELECT c FROM Orders c    ";
+        if (!parametrs.isEmpty()) {
+            sqlQuery += " WHERE";
+            Iterator it = parametrs.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry) it.next();
+                List<String> val = (List<String>) pairs.getValue();
+                if (val.size() > 1) {
+                    sqlQuery += " ( ";
+                    for (int i = 0; i < val.size(); i++) {
+                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val.get(i) + "') OR";
+
+                    }
+                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
+                    sqlQuery += " ) AND";
+                } else {
+                    String check = (String) pairs.getKey();
+                    if (check.compareTo("orderDate") != 0) {
+                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val.get(0) + "') AND";
+                    } else {
+                        sqlQuery += " c.orderDate > CAST(CAST( '"+val.get(0)+ "' AS DATE ) AS TIMESTAMP)" + " AND c.orderDate < CAST( CAST( '"+val.get(0)+"' AS DATE) AS TIMESTAMP)+1 AND"; 
+                    }
+                }
+
+                it.remove();
+            }
+        }
+        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        System.out.println(sqlQuery);
+        return em.createQuery(sqlQuery,Orders.class).getResultList();
+
     }
 
 }

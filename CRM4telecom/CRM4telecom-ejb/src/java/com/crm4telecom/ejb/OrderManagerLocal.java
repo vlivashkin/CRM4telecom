@@ -37,4 +37,6 @@ public interface OrderManagerLocal {
     void changeOrderState(Orders order, OrderEvent event);
 
     OrderState getOrderState(Long orderId);
+    
+    List<Orders> search(Map<String,List<String>> parametrs);
 }
