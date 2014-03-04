@@ -7,20 +7,18 @@ WHEN MATCHED THEN
     Update set  C.first_name = 'Ivan',
                 C.last_name = 'Ivanov',
                 C.email = 'ivanovivan@gmail.com',
-                C.card_number = '23356542143',
-                C.card_exp_data = '25/11/2014 0:50:01' ,
+                C.phone_number = '23356542143',
                 C.balance = 2451,
                 C.STREET = 'Lenina',
                 C.building = 21,
                 C.flat = 5,
                 C.status = 'in proccess',
-                C.Connection_date = '23/9/2013 0:1:2',
                 C.Status_update_date = '25/10/2016 1:43:12'
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.building,c.flat,c.status,C.Connection_date,C.Status_update_date)  
-    Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143','25/11/2014 0:50:01' ,2451,'Lenina',21,5,'in process','23/9/2013 0:1:2','25/10/2016 1:43:12');
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.phone_number,C.balance,C.street,c.building,c.flat,c.status,C.Status_update_date)  
+    Values (1,'Ivan','Ivanov','ivanovivan@gmail.com','23356542143' ,2451,'Lenina',21,5,'in process','25/10/2016 1:43:12');
 
 MERGE INTO Customer C
 Using (select 1 as customer_id from dual d)
@@ -29,21 +27,19 @@ WHEN MATCHED THEN
     Update set  C.first_name = 'Petr',
                 C.last_name = 'Petrov',
                 C.email = 'petrov1232@mail.ru',
-                C.card_number = '24356524545',
-                C.card_exp_data = '15/7/2015 11:25:51' ,
+                C.phone_number = '24356524545',
                 C.balance = 5000,
                 C.STREET = 'Jukova',
                 C.building = 1,
                 C.flat = 24,
                 C.status = 'in proccess',
-                C.Connection_date = '23/9/2013 0:1:2',
                 C.Status_update_date = '25/10/2016 1:43:12'
                 
                 where C.customer_id < 2
     
 WHEN NOT MATCHED THEN 
-    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.card_number,C.card_exp_data,C.balance,C.street,c.building,c.flat,c.status,c.connection_date,c.status_update_date)  
-    Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545','15/7/2015 11:25:51' ,5000,'Jukova',1,24,'in process','23/9/2013 0:1:2','25/10/2016 1:43:12');
+    Insert (C.customer_id,C.first_name,C.last_name,C.email,C.phone_number,C.balance,C.street,c.building,c.flat,c.status,c.status_update_date)  
+    Values (2,'Petr','Petrov','petrov1232@mail.ru','24356524545' ,5000,'Jukova',1,24,'in process','25/10/2016 1:43:12');
 
 delete from Customer where customer_id> 2;
 

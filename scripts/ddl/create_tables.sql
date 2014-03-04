@@ -7,11 +7,9 @@ CREATE TABLE customer
      street VARCHAR(30) NOT NULL,
      building INT NOT NULL,
      flat INT NOT NULL,
-     card_number VARCHAR(20),
-     Connection_date timestamp(9),
+     phone_number VARCHAR(20),
      Status VARCHAR(30),
      Status_update_date timestamp(9),
-     card_exp_data timestamp(9),
      balance INT
   );
 

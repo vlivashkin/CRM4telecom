@@ -88,7 +88,7 @@ public class CustomerManager implements CustomerManagerLocal {
             Iterator it = parametr.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pairs = (Map.Entry) it.next();
-                sqlQuery += " c." + pairs.getKey() + " REGEXP '" + pairs.getValue() + "' AND";
+                sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";
                 System.out.println(pairs.getKey() + " = " + pairs.getValue());
                 it.remove(); 
             }
