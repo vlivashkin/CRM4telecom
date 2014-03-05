@@ -9,45 +9,49 @@
         <title>CRM4Telecom | Orders</title>
     </h:head>
     <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4Telecom | Orders
-            </ui:define>
+        <h:form>            
+            <table>
+                <tr>
+                    <td valign="top">
+                        <p:menu>
+                            <p:submenu label="Navigation">
+                                <p:menuitem value="To main page" url="index.xhtml"/>
+                                <p:menuitem value="To client list" url="client_list.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Editing">
+                                <p:menuitem value="Новая заявка" url="new_order.xhtml"/>
+                            </p:submenu>
+                        </p:menu><br/><br/></td><td valign="top">
+                        <center>
+                            <p:dataTable value="#{orderBean.orders}" var="order" style="width: 700px">
 
-            <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
-            </ui:define>
+                                <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
 
-            <ui:define name="content">
-                <h:form id="form">  
-                    <p:dataTable var="orders" value="#{orderBean.orders}" paginator="true" rows="10"  
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                                 rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderBean.order}" id="orderTable" lazy="true">  
-
-                        <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
-                        
-                        <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
-                            <h:outputText value="#{order.orderId}" />  
-                        </p:column>  
-                        
-                        <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
-                            <h:outputText value="#{order.orderDate}" />  
-                        </p:column>  
-                        
-                        <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
-                            <h:outputText value="#{order.priority}" />  
-                        </p:column>  
-
-                        <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
-                            <h:outputText value="#{order.status}" />  
-                        </p:column>  
-                        
-                        <p:column headerText="Customer ID" sortBy="customerId" filterBy="#{order.customerId}">  
-                            <h:outputText value="#{order.customerId}" />  
-                        </p:column>
-                    </p:dataTable>  
-                </h:form>
-            </ui:define>
-        </ui:composition>
+                                <p:column sortBy="orderId" filterBy="#{order.orderId}">
+                                    <f:facet name="header">ID</f:facet>
+                                    <h:outputText value="#{order.orderId}"/>
+                                </p:column>
+                                <p:column sortBy="orderDate" filterBy="#{order.orderDate}">  
+                                    <f:facet name="header">Date</f:facet>
+                                    <h:outputText value="#{order.orderDate}" />  
+                                </p:column>  
+                                <p:column sortBy="customerId" filterBy="#{order.customerId}">
+                                    <f:facet name="header">Клиент</f:facet>
+                                    <h:outputText value="#{order.customerId}"/>
+                                </p:column>
+                                <p:column sortBy="priority" filterBy="#{order.priority}">
+                                    <f:facet name="header">Приоритет</f:facet>
+                                    <h:outputText value="#{order.priority}"/>
+                                </p:column>
+                                <p:column sortBy="status" filterBy="#{order.status}">
+                                    <f:facet name="header">Статус</f:facet>
+                                    <h:outputText value="#{order.status}"/>
+                                </p:column>     
+                            </p:dataTable>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
     </h:body>
 </html>

@@ -82,7 +82,7 @@ public class CustomerManager implements CustomerManagerLocal {
     
     @Override
     public List<Customer> search(Map<String, String> parametr) {
-        String sqlQuery = "SELECT c FROM Customer c";
+        String sqlQuery = "SELECT c FROM Customer c     ";
         if (!parametr.isEmpty()) {
             sqlQuery += " WHERE";
             Iterator it = parametr.entrySet().iterator();
@@ -94,7 +94,6 @@ public class CustomerManager implements CustomerManagerLocal {
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
-        
         return em.createQuery(sqlQuery).getResultList();
     }
 

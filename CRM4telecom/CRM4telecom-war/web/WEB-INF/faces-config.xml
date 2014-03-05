@@ -27,4 +27,9 @@
         <managed-bean-class>com.crm4telecom.web.beans.SearchOrderBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>createBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.CreateBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

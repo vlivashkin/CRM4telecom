@@ -9,24 +9,17 @@
         <title>CRM4Telecom</title>
     </h:head>
     <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4Telecom
-            </ui:define>
 
-            <ui:define name="menuItems">
-            </ui:define>
-
-            <ui:define name="content">
-                <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:60px;" />
-                <h:form>
-                    <p:commandButton value="Клиенты" action="customer_list"/>
-                    <p:commandButton value="Добавить заявку"/>
-                    <p:commandButton value="Заявки" action="order_list"/>
-                    <p:commandButton value="Поиск" action="search_customer"/>
-                    <p:commandButton value="Поиск Заказа" action="search_order"/>
-                </h:form>
-            </ui:define>
-        </ui:composition>
+        <h:form>
+            <h1 align="center">***-Telecom</h1>
+            <center>
+                <h:graphicImage style="width: 400px; height: 200px" value="logo.jpg"/><br/><br/>
+                <h:outputLink value="customer_list.xhtml"><p:button value="Клиенты"/></h:outputLink>
+                <h:outputLink value="new_order.xhtml"><p:button value="Добавить заявку"/></h:outputLink>
+                <h:outputLink value="order_list.xhtml"><p:button value="Заявки"/></h:outputLink>
+                <h:outputLink value="search_customer.xhtml"><p:button value="Поиск"/></h:outputLink>
+                <h:outputLink value="search_order.xhtml"><p:button value="Поиск заказа"/></h:outputLink>
+            </center>
+        </h:form>
     </h:body>
 </html>
