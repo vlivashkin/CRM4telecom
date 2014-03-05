@@ -9,75 +9,24 @@
         <title>CRM4telecom | Order #{orderBean.order.orderId.toString()}</title>
     </h:head>
     <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4telecom | Order #{orderBean.order.orderId.toString()}
-            </ui:define>
-
-            <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
-                <p:menuitem value="Order List" action="order_list" icon="ui-icon-arrowthick-1-w" />
-            </ui:define>
-
-            <ui:define name="content">
-                <h:form>
-                    <p:tabView>
-                        <p:tab title="Info">
-                            <h:dataTable>
-                                <f:facet name="header">Order #{orderBean.order.orderId.toString()} info</f:facet>
-                                <h:column>
-                                    <b><h:outputText value="Дата: "/></b><br/>
-                                    <b><h:outputText value="Комментарий: "/></b><br/>
-                                    <b><h:outputText value="Статус: "/></b><br/>
-                                    <b><h:outputText value="Приоритет: "/></b><br/>
-                                </h:column>
-                                <h:column>
-                                    <h:outputText value="#{orderBean.order.orderDate.toString}"/><br/>
-                                    <h:outputText value="#{orderBean.order.typeComment}"/><br/>
-                                    <h:outputText value="#{orderBean.order.status}"/><br/>
-                                    <h:outputText value="#{orderBean.order.priority}"/><br/>
-                                </h:column>
-                                <h:column>
-                                    <b><h:outputText value="Клиент №: "/></b><br/>
-                                    <b><h:outputText value="Менеджер №: "/></b><br/>
-                                    <b><h:outputText value="Оператор №" /></b>
-                                    <b><h:outputText value="Услуга №: "/></b><br/>
-                                    <b><h:outputText value="Тех. подержка: "/></b><br/>
-                                </h:column>
-                                <h:column>
-                                    <h:outputText value="#{orderBean.order.customerId.customerId.toString}"/><br/>
-                                    <h:outputText value="#{orderBean.order.managerId.toString}"/><br/>
-                                    <h:outputText value="#{orderBean.order.employeeId.toString}"/><br/>
-                                    <h:outputText value="#{orderBean.order.productId.productId.toString}"/><br/>
-                                    <h:outputText value="#{orderBean.order.technicalSupportFlag}"/><br/>
-                                </h:column>
-                            </h:dataTable>
-                            <h:dataTable>
-                                <f:facet name="header">Процесс:</f:facet>
-                                <h:column>
-                                    <f:facet name="header">Шаг</f:facet>
-                                    <h:outputText value="#{orderBean.order.orderProcessing.stepName}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">Описание</f:facet>
-                                    <h:outputText value="#{orderBean.order.orderProcessing.description}"/>
-                                </h:column>                        
-                                <h:column>
-                                    <f:facet name="header">Дата начала</f:facet>
-                                    <h:outputText value="#{orderBean.order.orderProcessing.startDate}"/>
-                                </h:column>                        
-                                <h:column>
-                                    <f:facet name="header">Дата конца</f:facet>
-                                    <h:outputText value="#{orderBean.order.orderProcessing.endDate}"/>
-                                </h:column>
-                            </h:dataTable>
-
-                        </p:tab>
-                        <p:tab title="Edit">
-                            <p:commandButton value="Сохранить" update="editform"/>
-                            <h:form id="editform">
+        <table>
+            <tr>
+                <td valign="top">
+                    <h:form >
+                        <p:menu>
+                            <p:submenu label="Navigation">
+                                <p:menuitem value="To main page" url="index.xhtml"/>
+                                <p:menuitem value="To order list" url="order_list.xhtml"/>
+                                <p:menuitem value="To client list" url="client_list.xhtml"/>
+                            </p:submenu></p:menu>
+                    </h:form>
+                </td>
+                <td valign="top">
+                    <h:form>
+                        <p:tabView style="width: 700px">
+                            <p:tab title="Info">
                                 <h:dataTable>
-                                    <f:facet name="header">Order #{orderBean.order.orderId} info</f:facet>
+                                    <f:facet name="header">Order #{orderBean.order.orderId.toString()} info</f:facet>
                                     <h:column>
                                         <b><h:outputText value="Дата: "/></b><br/>
                                         <b><h:outputText value="Комментарий: "/></b><br/>
@@ -85,38 +34,92 @@
                                         <b><h:outputText value="Приоритет: "/></b><br/>
                                     </h:column>
                                     <h:column>
-                                        <h:inputText value="#{orderBean.order.orderDate.toString}"/><br/>
-                                        <h:inputText value="#{orderBean.order.typeComment}"/><br/>
-                                        <p:selectOneMenu value="#{requestBean.statuses}" var="status">
-                                            <f:selectItems value="#{status}"/>
-                                        </p:selectOneMenu><br/>
-                                        <p:selectOneMenu value="#{requestBean.priority}" var="priority">
-                                            <f:selectItems value="#{priority}"/>
-                                        </p:selectOneMenu>
+                                        <h:outputText value="#{orderBean.order.orderDate.toString}"/><br/>
+                                        <h:outputText value="#{orderBean.order.typeComment}"/><br/>
+                                        <h:outputText value="#{orderBean.order.status}"/><br/>
+                                        <h:outputText value="#{orderBean.order.priority}"/><br/>
                                     </h:column>
                                     <h:column>
-                                        <b><h:outputText value="Клиент №: "/></b><br/>
-                                        <b><h:outputText value="Менеджер №: "/></b><br/>
-                                        <b><h:outputText value="Оператор №" /></b>
-                                        <b><h:outputText value="Услуга №: "/></b><br/>
-                                        <b><h:outputText value="Тех. подержка: "/></b><br/>
+                                        <b><h:outputText value="Клиент № "/></b><br/>
+                                        <b><h:outputText value="Менеджер № "/></b><br/>
+                                        <b><h:outputText value="Оператор № "/></b>
+                                        <b><h:outputText value="Услуга № "/></b><br/>
+                                        <b><h:outputText value="Тех. подержка "/></b><br/>
                                     </h:column>
                                     <h:column>
-                                        <p:inputText value="#{orderBean.order.customerId.customerId.toString}"/><br/>
-                                        <p:inputText value="#{orderBean.order.managerId.toString}"/><br/>
-                                        <p:inputText value="#{orderBean.order.employeeId.toString}"/><br/>
-                                        <p:inputText value="#{orderBean.order.productId.productId.toString}"/><br/>
-                                        <p:selectOneMenu value="#{orderBean.order.technicalSupportFlag}">
-                                            <f:selectItem value="Yes"/>
-                                            <f:selectItem value="No"/>
-                                        </p:selectOneMenu><br/>
+                                        <h:outputText value="#{orderBean.order.customerId.customerId.toString}"/><br/>
+                                        <h:outputText value="#{orderBean.order.managerId.toString}"/><br/>
+                                        <h:outputText value="#{orderBean.order.employeeId.toString}"/><br/>
+                                        <h:outputText value="#{orderBean.order.productId.productId.toString}"/><br/>
+                                        <h:outputText value="#{orderBean.order.technicalSupportFlag}"/><br/>
                                     </h:column>
                                 </h:dataTable>
-                            </h:form>
-                        </p:tab>        
-                    </p:tabView>
-                </h:form>
-            </ui:define>
-        </ui:composition>
+                                <h:dataTable>
+                                    <f:facet name="header">Процесс:</f:facet>
+                                    <h:column>
+                                        <f:facet name="header">Шаг</f:facet>
+                                        <h:outputText value="#{orderBean.order.orderProcessing.stepName}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Описание</f:facet>
+                                        <h:outputText value="#{orderBean.order.orderProcessing.description}"/>
+                                    </h:column>                        
+                                    <h:column>
+                                        <f:facet name="header">Дата начала</f:facet>
+                                        <h:outputText value="#{orderBean.order.orderProcessing.startDate}"/>
+                                    </h:column>                        
+                                    <h:column>
+                                        <f:facet name="header">Дата конца</f:facet>
+                                        <h:outputText value="#{orderBean.order.orderProcessing.endDate}"/>
+                                    </h:column>
+                                </h:dataTable>
+
+                            </p:tab>
+                            <p:tab title="Edit">
+                                <p:commandButton value="Сохранить" update="editform"/>
+                                <h:form id="editform">
+                                    <h:dataTable>
+                                        <f:facet name="header">Order #{orderBean.order.orderId} info</f:facet>
+                                        <h:column>
+                                            <b><h:outputText value="Дата: "/></b><br/>
+                                            <b><h:outputText value="Комментарий: "/></b><br/>
+                                            <b><h:outputText value="Статус: "/></b><br/>
+                                            <b><h:outputText value="Приоритет: "/></b><br/>
+                                        </h:column>
+                                        <h:column>
+                                            <h:inputText value="#{orderBean.order.orderDate.toString}"/><br/>
+                                            <h:inputText value="#{orderBean.order.typeComment}"/><br/>
+                                            <p:selectOneMenu value="#{requestBean.statuses}" var="status">
+                                                <f:selectItems value="#{status}"/>
+                                            </p:selectOneMenu><br/>
+                                            <p:selectOneMenu value="#{requestBean.priority}" var="priority">
+                                                <f:selectItems value="#{priority}"/>
+                                            </p:selectOneMenu>
+                                        </h:column>
+                                        <h:column>
+                                            <b><h:outputText value="Клиент №: "/></b><br/>
+                                            <b><h:outputText value="Менеджер №: "/></b><br/>
+                                            <b><h:outputText value="Оператор №"/></b>
+                                            <b><h:outputText value="Услуга №: "/></b><br/>
+                                            <b><h:outputText value="Тех. подержка: "/></b><br/>
+                                        </h:column>
+                                        <h:column>
+                                            <p:inputText value="#{orderBean.order.customerId.customerId.toString}"/><br/>
+                                            <p:inputText value="#{orderBean.order.managerId.toString}"/><br/>
+                                            <p:inputText value="#{orderBean.order.employeeId.toString}"/><br/>
+                                            <p:inputText value="#{orderBean.order.productId.productId.toString}"/><br/>
+                                            <p:selectOneMenu value="#{orderBean.order.technicalSupportFlag}">
+                                                <f:selectItem value="Yes"/>
+                                                <f:selectItem value="No"/>
+                                            </p:selectOneMenu><br/>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:form>
+                            </p:tab>    
+                        </p:tabView>
+                    </h:form>
+                </td>
+            </tr>
+        </table>
     </h:body>
 </html>
