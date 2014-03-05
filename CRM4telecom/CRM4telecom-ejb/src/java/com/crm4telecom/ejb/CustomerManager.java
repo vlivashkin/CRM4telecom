@@ -94,7 +94,6 @@ public class CustomerManager implements CustomerManagerLocal {
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
-        
         return em.createQuery(sqlQuery).getResultList();
     }
 

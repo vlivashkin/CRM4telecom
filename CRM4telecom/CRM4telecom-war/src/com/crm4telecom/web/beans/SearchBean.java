@@ -159,11 +159,11 @@ public class SearchBean implements Serializable {
         if (flat.length() != 0) {
             parametrs.put("flat", flat.toLowerCase());
         }
-        if(phoneNumber.length() != 0){
-            parametrs.put("cardNumber",phoneNumber.toLowerCase());
+        if(phoneNumber.length() != 0 && phoneNumber != null){
+            parametrs.put("phoneNumber",("8"+phoneNumber.substring(1,4)+phoneNumber.substring(6, 9)+phoneNumber.substring(10)).toLowerCase());
         }
-        customers = cm.search(parametrs);
-        return "search";
+         customers = cm.search(parametrs);
+        return "search_customer";
     }
 
 }

@@ -22,11 +22,12 @@
                 <h:form id="form">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel value="Фамилия:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.firstName}"/>
-                        <h:outputLabel value="Имя:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.lastName}"/>
+                        <h:outputLabel value="Имя:" style="font-weight:bold"/>
+                        <h:inputText value="#{searchBean.firstName}"/>
                         <h:outputLabel value="E-mail:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.email}"/>
+                        
                         <h:outputLabel value="Улица:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.street}"/>
                         <h:outputLabel value="Дом:" style="font-weight:bold"/>
@@ -34,7 +35,8 @@
                         <h:outputLabel value="Квартира:" style="font-weight:bold"/>
                         <h:inputText value="#{searchBean.flat}"/>
                         <h:outputLabel value="Телефон:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.phoneNumber}" maxlength="3"/>
+                        <p:inputMask value="#{searchBean.phoneNumber}"   
+                        mask="(999) 999-9999" style="width:130px"/>  
                     </h:panelGrid>
                     <h:commandButton value="search" action="#{searchBean.makeSearch()}" />
 
@@ -64,7 +66,7 @@
                         <p:column headerText="Flat" sortBy="flat" filterBy="#{customer.flat}">
                             <h:outputText value="#{customer.flat}"/>
                         </p:column>
-                        <p:column headerText="Card Number" sortBy="card number" filterBy="#{customer.phoneNumber}">
+                        <p:column headerText="Phone Number" sortBy="phone number" filterBy="#{customer.phoneNumber}">
                             <h:outputText value="#{customer.phoneNumber}"/>
                         </p:column>
                     </p:dataTable>  
