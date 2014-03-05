@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +23,28 @@ public class OrderManager implements OrderManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-
+    @EJB
+    private CustomerManagerLocal cm;
+    
+    @Override
+    public Orders createNewOrder(Long OrderId,Long CustomerId,Long EmployeeId,Long productId,String Priority,String type,String status,Date orderDate,String comment,String flag){
+        Orders order = new Orders();
+        order.setOrderId(OrderId);
+        order.setEmployeeId(EmployeeId);
+        order.setOrderDate(orderDate);
+        order.setTechnicalSupportFlag(flag);
+        order.setProductId(em.find(Product.class, productId));
+        order.setTypeComment(comment);
+        order.setCustomerId(cm.getCustomer(CustomerId));
+        order.setOrderType(type);
+        order.setPriority(Priority);
+        order.setPriority(Priority);
+        
+        em.persist(order);
+        return order;
+        
+    }
+    
     @Override
     public Orders createOrder(OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId, Boolean technicalSupportFlag) {
         Orders order = new Orders();

@@ -5,12 +5,15 @@ import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Orders;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
 
 @Local
 public interface OrderManagerLocal {
+    
+    Orders createNewOrder(Long OrderId ,Long CustomerId,Long EmployeeId,Long ProductId,String Priority,String type,String status,Date orderDate,String comment,String flag);
 
     Orders createOrder(OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId, Boolean technicalSupportFlag);
 
