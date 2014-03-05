@@ -25,6 +25,7 @@ public class OrderBean implements Serializable {
     Orders order;
     List<String> priority;
     List<String> state;
+    
 
     @EJB
     private OrderManagerLocal cm;
