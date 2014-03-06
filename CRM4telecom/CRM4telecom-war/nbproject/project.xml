@@ -14,7 +14,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.commentbox-0.0.1-SNAPSHOT.jar}</file>
+                    <file>${file.reference.omnifaces-1.7.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

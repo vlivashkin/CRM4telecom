@@ -1,146 +1,138 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>CRM4telecom | Client #{customerBean.customer.customerId}</title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4telecom | Client #{customerBean.customer.customerId}
-            </ui:define>
+<ui:composition template="./templates/masterLayout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="windowTitle">
+        CRM4telecom | Client #{customerBean.customer.customerId}
+    </ui:define>
 
-            <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
-                <p:menuitem value="Customer List" action="customer_list" icon="ui-icon-arrowthick-1-w" />
-            </ui:define>
+    <ui:define name="menuItems">
+        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" /> 
+        <p:menuitem value="Customer List" action="customer_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
+    </ui:define>
 
-            <ui:define name="content">
-                <p:tabView>
-                    <p:tab title="Info">
-                        <h:form>
-                            <h1>Client #{customerBean.customer.customerId} info</h1>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel value="First name:" style="font-weight:bold"/>
-                                <h:outputText value="#{customerBean.customer.firstName}"/>
-                                <h:outputLabel value="Last name:" style="font-weight:bold"/>
-                                <h:outputText value="#{customerBean.customer.lastName}"/>
-                                <h:outputLabel value="E-mail:" style="font-weight:bold"/>
-                                <h:outputText value="#{customerBean.customer.email}"/>
-                                <h:outputLabel value="Address:" style="font-weight:bold"/>
-                                <h:outputText value="ул. #{customerBean.customer.street}, д. #{customerBean.customer.building}, кв. #{customerBean.customer.flat}"/>
-                                <h:outputLabel value="Balance:" style="font-weight:bold"/>
-                                <h:outputText value="#{customerBean.customer.balance}"/>
-                            </h:panelGrid>       
+    <ui:define name="content">
+        <p:tabView>
+            <p:tab title="Info">
+                <h:form>
+                    <h1>Client #{customerBean.customer.customerId} info</h1>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="First name:" style="font-weight:bold"/>
+                        <h:outputText value="#{customerBean.customer.firstName}"/>
+                        <h:outputLabel value="Last name:" style="font-weight:bold"/>
+                        <h:outputText value="#{customerBean.customer.lastName}"/>
+                        <h:outputLabel value="E-mail:" style="font-weight:bold"/>
+                        <h:outputText value="#{customerBean.customer.email}"/>
+                        <h:outputLabel value="Address:" style="font-weight:bold"/>
+                        <h:outputText value="ул. #{customerBean.customer.street}, д. #{customerBean.customer.building}, кв. #{customerBean.customer.flat}"/>
+                        <h:outputLabel value="Balance:" style="font-weight:bold"/>
+                        <h:outputText value="#{customerBean.customer.balance}"/>
+                    </h:panelGrid>       
 
-                            <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
-                                <p:column headerText="Phone numbers">
-                                    <h:outputText value="#{phone.toString}"/>
-                                </p:column>
-                            </p:dataTable>
+                    <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
+                        <p:column headerText="Phone numbers">
+                            <h:outputText value="#{phone.toString}"/>
+                        </p:column>
+                    </p:dataTable>
 
-                            <p:dataTable value="#{customerBean.customer.staticIpList}" var="ip">
-                                <p:column headerText="Statical IP">
-                                    <h:outputText value="#{ip}"/>
-                                </p:column>
-                            </p:dataTable>
+                    <p:dataTable value="#{customerBean.customer.staticIpList}" var="ip">
+                        <p:column headerText="Statical IP">
+                            <h:outputText value="#{ip}"/>
+                        </p:column>
+                    </p:dataTable>
 
-                            <p:dataTable value="#{customerBean.customer.ordersList}" var="order"
-                                         selectionMode="single" selection="#{orderBean.order}" rowKey="#{order.orderId}">
-                                
-                                <f:facet name="header">
-                                    Orders
-                                </f:facet>
-                                
-                                <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
-                                
-                                <p:column headerText="ID">
-                                    <p:commandLink value="#{order.orderId}"/>
-                                </p:column>
-                                <p:column headerText="State">
-                                    <h:outputText value="#{order.status}"/>
-                                </p:column>
-                                <p:column headerText="Priority">
-                                    <h:outputText value="#{order.priority}"/>
-                                </p:column>
-                                <p:column headerText="Type">
-                                    <h:outputText value="#{order.orderType}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </p:tab>
-                    <p:tab title="Edit">
-                        <h:form id="editform">
-                            <p:messages />  
+                    <p:dataTable value="#{customerBean.customer.ordersList}" var="order"
+                                 selectionMode="single" selection="#{orderBean.order}" rowKey="#{order.orderId}">
 
-                            <h:panelGrid columns="3" cellpadding="5">  
-                                <h:outputLabel for="firstName" value="First Name:" />  
-                                <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
-                                <p:message for="firstName" />  
+                        <f:facet name="header">
+                            Orders
+                        </f:facet>
 
-                                <h:outputLabel for="lastName" value="Last Name:" />  
-                                <p:inputText id="lastName" value="#{customerBean.cv.lastName}" label="Last Name"/>  
-                                <p:message for="lastName" />  
+                        <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
 
-                                <h:outputLabel for="email" value="Email:" />  
-                                <p:inputText id="email" value="#{customerBean.cv.email}" label="Email"/>  
-                                <p:message for="email" />  
+                        <p:column headerText="ID">
+                            <p:commandLink value="#{order.orderId}"/>
+                        </p:column>
+                        <p:column headerText="State">
+                            <h:outputText value="#{order.status}"/>
+                        </p:column>
+                        <p:column headerText="Priority">
+                            <h:outputText value="#{order.priority}"/>
+                        </p:column>
+                        <p:column headerText="Type">
+                            <h:outputText value="#{order.orderType}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+            <p:tab title="Edit">
+                <h:form id="editform">
+                    <p:messages />  
 
-                                <h:outputLabel for="street" value="Street:" />  
-                                <p:inputText id="street" value="#{customerBean.cv.street}" label="Street"/>  
-                                <p:message for="street" />  
+                    <h:panelGrid columns="3" cellpadding="5">  
+                        <h:outputLabel for="firstName" value="First Name:" />  
+                        <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
+                        <p:message for="firstName" />  
 
-                                <h:outputLabel for="building" value="Building:" />  
-                                <p:inputText id="building" value="#{customerBean.cv.building}" label="Building"/>  
-                                <p:message for="building" />  
+                        <h:outputLabel for="lastName" value="Last Name:" />  
+                        <p:inputText id="lastName" value="#{customerBean.cv.lastName}" label="Last Name"/>  
+                        <p:message for="lastName" />  
 
-                                <h:outputLabel for="flat" value="Flat:" />  
-                                <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
-                                <p:message for="flat" />  
+                        <h:outputLabel for="email" value="Email:" />  
+                        <p:inputText id="email" value="#{customerBean.cv.email}" label="Email"/>  
+                        <p:message for="email" />  
 
-                                <h:outputLabel for="status" value="status:" />  
-                                <p:inputText id="status" value="#{customerBean.cv.status}" label="status"/>  
-                                <p:message for="status" />  
-                                
-                                <h:outputLabel for="phoneNumber" value="Phone Number:" />  
-                                <p:inputText id="phoneNumber" value="#{customerBean.cv.status}" label="Phone Number"/>  
-                                <p:message for="phoneNumber" />  
-                                
-                                <h:outputLabel for="Balance" value="balance:" />  
-                                <p:inputText id="balance" value="#{customerBean.cv.balance}" label="Balance"/>  
-                                <p:message for="balance" />  
-                            </h:panelGrid>  
-                            <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerBean.modify()}" />
-                        </h:form>
-                    </p:tab>
-                    <p:tab title="Markets">
-                        <h:form>
-                            <p:dataTable value="#{customerBean.customer.marketsCustomersList}" var="market">
-                                <p:column>
-                                    <f:facet name="header">ID</f:facet>
-                                    <h:outputText value="#{market.marketId}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Name</f:facet>
-                                    <h:outputText value="#{market.market.name}"/>
-                                </p:column>     
-                                <p:column>
-                                    <f:facet name="header">Start date</f:facet>
-                                    <h:outputText value="#{market.startDate.toString}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">End date</f:facet>
-                                    <h:outputText value="#{market.endDate.toString}"/>
-                                </p:column>     
-                            </p:dataTable>
-                        </h:form>
-                    </p:tab>
-                </p:tabView>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+                        <h:outputLabel for="street" value="Street:" />  
+                        <p:inputText id="street" value="#{customerBean.cv.street}" label="Street"/>  
+                        <p:message for="street" />  
+
+                        <h:outputLabel for="building" value="Building:" />  
+                        <p:inputText id="building" value="#{customerBean.cv.building}" label="Building"/>  
+                        <p:message for="building" />  
+
+                        <h:outputLabel for="flat" value="Flat:" />  
+                        <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
+                        <p:message for="flat" />  
+
+                        <h:outputLabel for="status" value="status:" />  
+                        <p:inputText id="status" value="#{customerBean.cv.status}" label="status"/>  
+                        <p:message for="status" />  
+
+                        <h:outputLabel for="phoneNumber" value="Phone Number:" />  
+                        <p:inputText id="phoneNumber" value="#{customerBean.cv.status}" label="Phone Number"/>  
+                        <p:message for="phoneNumber" />  
+
+                        <h:outputLabel for="Balance" value="balance:" />  
+                        <p:inputText id="balance" value="#{customerBean.cv.balance}" label="Balance"/>  
+                        <p:message for="balance" />  
+                    </h:panelGrid>  
+                    <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerBean.modify()}" />
+                </h:form>
+            </p:tab>
+            <p:tab title="Markets">
+                <h:form>
+                    <p:dataTable value="#{customerBean.customer.marketsCustomersList}" var="market">
+                        <p:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{market.marketId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{market.market.name}"/>
+                        </p:column>     
+                        <p:column>
+                            <f:facet name="header">Start date</f:facet>
+                            <h:outputText value="#{market.startDate.toString}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">End date</f:facet>
+                            <h:outputText value="#{market.endDate.toString}"/>
+                        </p:column>     
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+    </ui:define>
+</ui:composition>

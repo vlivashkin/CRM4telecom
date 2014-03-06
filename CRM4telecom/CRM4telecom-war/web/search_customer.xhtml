@@ -1,75 +1,66 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Search_customer</title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4telecom | Clients
-            </ui:define>
+<ui:composition template="./templates/masterLayout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="windowTitle">
+        CRM4telecom | Clients
+    </ui:define>
 
-            <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
-            </ui:define>
+    <ui:define name="menuItems">
+        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" /> 
+    </ui:define>
 
-            <ui:define name="content">
-                <h:form id="form">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel value="Фамилия:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.firstName}"/>
-                        <h:outputLabel value="Имя:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.lastName}"/>
-                        <h:outputLabel value="E-mail:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.email}"/>
-                        <h:outputLabel value="Улица:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.street}"/>
-                        <h:outputLabel value="Дом:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.building}"/>
-                        <h:outputLabel value="Квартира:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.flat}"/>
-                        <h:outputLabel value="Телефон:" style="font-weight:bold"/>
-                        <h:inputText value="#{searchBean.phoneNumber}" maxlength="3"/>
-                    </h:panelGrid>
-                    <h:commandButton value="search" action="#{searchBean.makeSearch()}" />
+    <ui:define name="content">
+        <h:form id="form">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Фамилия:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.firstName}"/>
+                <h:outputLabel value="Имя:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.lastName}"/>
+                <h:outputLabel value="E-mail:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.email}"/>
+                <h:outputLabel value="Улица:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.street}"/>
+                <h:outputLabel value="Дом:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.building}"/>
+                <h:outputLabel value="Квартира:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.flat}"/>
+                <h:outputLabel value="Телефон:" style="font-weight:bold"/>
+                <h:inputText value="#{searchBean.phoneNumber}" maxlength="3"/>
+            </h:panelGrid>
+            <h:commandButton value="search" action="#{searchBean.makeSearch()}" />
 
-                    <p:dataTable var="customer" value="#{searchBean.customers}" scrollable="true" selection="#{searchBean.selectedCustomer}"  scrollHeight="200" id="customerTable" >  
+            <p:dataTable var="customer" value="#{searchBean.customers}" scrollable="true" selection="#{searchBean.selectedCustomer}"  scrollHeight="200" id="customerTable" >  
 
-                        <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
-                            <h:outputText value="#{customer.customerId}" />  
-                        </p:column>  
+                <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
+                    <h:outputText value="#{customer.customerId}" />  
+                </p:column>  
 
-                        <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
-                            <h:outputText value="#{customer.firstName}" />  
-                        </p:column>  
+                <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
+                    <h:outputText value="#{customer.firstName}" />  
+                </p:column>  
 
-                        <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
-                            <h:outputText value="#{customer.lastName}" />  
-                        </p:column>  
+                <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
+                    <h:outputText value="#{customer.lastName}" />  
+                </p:column>  
 
-                        <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
-                            <h:outputText value="#{customer.email}" />  
-                        </p:column> 
-                        <p:column headerText="Street" sortBy="street" filterBy="#{customer.street}">
-                            <h:outputText value="#{customer.street}"/>
-                        </p:column>
-                        <p:column headerText="Building" sortBy="building" filterBy="#{customer.building}">
-                            <h:outputText value="#{customer.building}"/>
-                        </p:column>
-                        <p:column headerText="Flat" sortBy="flat" filterBy="#{customer.flat}">
-                            <h:outputText value="#{customer.flat}"/>
-                        </p:column>
-                        <p:column headerText="Card Number" sortBy="card number" filterBy="#{customer.phoneNumber}">
-                            <h:outputText value="#{customer.phoneNumber}"/>
-                        </p:column>
-                    </p:dataTable>  
-                </h:form>  
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+                <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
+                    <h:outputText value="#{customer.email}" />  
+                </p:column> 
+                <p:column headerText="Street" sortBy="street" filterBy="#{customer.street}">
+                    <h:outputText value="#{customer.street}"/>
+                </p:column>
+                <p:column headerText="Building" sortBy="building" filterBy="#{customer.building}">
+                    <h:outputText value="#{customer.building}"/>
+                </p:column>
+                <p:column headerText="Flat" sortBy="flat" filterBy="#{customer.flat}">
+                    <h:outputText value="#{customer.flat}"/>
+                </p:column>
+                <p:column headerText="Card Number" sortBy="card number" filterBy="#{customer.phoneNumber}">
+                    <h:outputText value="#{customer.phoneNumber}"/>
+                </p:column>
+            </p:dataTable>  
+        </h:form>  
+    </ui:define>
+</ui:composition>

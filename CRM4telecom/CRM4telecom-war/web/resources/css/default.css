@@ -16,14 +16,23 @@ h1 {
     color: #D20005;
 }
 
-a:link, a:visited {
-  color: #045491;
-  font-weight : bold;
-  text-decoration: none;
+#top {
+    position: relative;
+    margin-bottom: 10px;
 }
 
-a:link:hover, a:visited:hover  {
-  color: #045491;
-  font-weight : bold;
-  text-decoration : underline;
+.center_content {
+    position: relative;
+}
+
+label {
+    font-weight:bold;
+}
+
+.ui-datatable {
+    margin-bottom: 10px;
+}
+
+#index-content {
+    margin-top: 50px;
 }

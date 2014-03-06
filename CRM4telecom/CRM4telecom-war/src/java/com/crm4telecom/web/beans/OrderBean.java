@@ -56,7 +56,7 @@ public class OrderBean implements Serializable {
                 = (ConfigurableNavigationHandler) FacesContext.
                 getCurrentInstance().getApplication().getNavigationHandler();
 
-        configurableNavigationHandler.performNavigation("order_info?includeViewParams=true");
+        configurableNavigationHandler.performNavigation("order_info?faces-redirect=true");
     }
 
     public OrderPriority[] getPriorities() {
@@ -76,7 +76,7 @@ public class OrderBean implements Serializable {
                 = (ConfigurableNavigationHandler) FacesContext.
                 getCurrentInstance().getApplication().getNavigationHandler();
 
-        configurableNavigationHandler.performNavigation("order_list");
+        configurableNavigationHandler.performNavigation("order_list?faces-redirect=true");
     }
 
     public void modify() {

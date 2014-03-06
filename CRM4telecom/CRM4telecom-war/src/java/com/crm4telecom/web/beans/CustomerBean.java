@@ -50,7 +50,7 @@ public class CustomerBean implements Serializable {
                 = (ConfigurableNavigationHandler) FacesContext.
                 getCurrentInstance().getApplication().getNavigationHandler();
 
-        configurableNavigationHandler.performNavigation("customer_info?includeViewParams=true");
+        configurableNavigationHandler.performNavigation("customer_info?faces-redirect=true");
     }
 
     public void create() {
@@ -62,7 +62,7 @@ public class CustomerBean implements Serializable {
                 = (ConfigurableNavigationHandler) FacesContext.
                 getCurrentInstance().getApplication().getNavigationHandler();
 
-        configurableNavigationHandler.performNavigation("customer_list");
+        configurableNavigationHandler.performNavigation("customer_list?faces-redirect=true");
     }
 
     public void modify() {

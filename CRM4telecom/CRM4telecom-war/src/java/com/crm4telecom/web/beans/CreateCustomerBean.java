@@ -122,7 +122,7 @@ public class CreateCustomerBean{
         selectedCustomer.setBuilding(building);
         
         cm.createCustomer(selectedCustomer);
-        return "index";
+        return "index?faces-redirect=true";
     }
     
 }

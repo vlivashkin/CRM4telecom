@@ -1,50 +1,42 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>CRM4telecom | Clients</title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./templates/masterLayout.xhtml">
-            <ui:define name="windowTitle">
-                CRM4telecom | Clients
-            </ui:define>
+<ui:composition template="./templates/masterLayout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="windowTitle">
+        CRM4telecom | Clients
+    </ui:define>
 
-            <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" />
-                <p:menuitem value="New Customer" action="new_customer" icon="ui-icon-document" /> 
-                
-            </ui:define>
+    <ui:define name="menuItems">
+        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" />
+        <p:menuitem value="Add Customer" action="new_customer?faces-redirect=true" icon="ui-icon-document" /> 
 
-            <ui:define name="content">
-                <h:form id="customerTableForm">  
-                    <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                                 rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerBean.customer}" id="customerTable" lazy="true">  
-                        
-                        <p:ajax event="rowSelect" listener="#{customerBean.onRowSelect}" />
-                        
-                        <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
-                            <h:outputText value="#{customer.customerId}" />  
-                        </p:column>  
+    </ui:define>
 
-                        <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
-                            <h:outputText value="#{customer.firstName}" />  
-                        </p:column>  
+    <ui:define name="content">
+        <h:form id="customerTableForm">  
+            <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerBean.customer}" id="customerTable" lazy="true">  
 
-                        <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
-                            <h:outputText value="#{customer.lastName}" />  
-                        </p:column>  
+                <p:ajax event="rowSelect" listener="#{customerBean.onRowSelect}" />
 
-                        <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
-                            <h:outputText value="#{customer.email}" />  
-                        </p:column>  
-                    </p:dataTable>  
-                </h:form>  
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+                <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
+                    <h:outputText value="#{customer.customerId}" />  
+                </p:column>  
+
+                <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
+                    <h:outputText value="#{customer.firstName}" />  
+                </p:column>  
+
+                <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
+                    <h:outputText value="#{customer.lastName}" />  
+                </p:column>  
+
+                <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
+                    <h:outputText value="#{customer.email}" />  
+                </p:column>  
+            </p:dataTable>  
+        </h:form>  
+    </ui:define>
+</ui:composition>
