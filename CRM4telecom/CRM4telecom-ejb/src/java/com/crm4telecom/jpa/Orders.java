@@ -114,11 +114,17 @@ public class Orders implements Serializable {
     public String getStatus() {
         return status;
     }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public void changeOrderState(OrderEvent event) {
+    public OrderState changeOrderState(OrderEvent event) {
         OrderState state = OrderState.valueOf(status);
         state = state.nextState(event);
         status = state.name();
+        
+        return state;
     }
 
     public String getPriority() {

@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:wb="http://whitebyte.info/components"
+      xmlns:c="http://java.sun.com/jsf/composite/composites">
     <h:head>
         <title>CRM4telecom | Order #{orderBean.order.orderId}</title>
     </h:head>
@@ -27,8 +29,6 @@
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel value="Date:" style="font-weight:bold"/>
                                 <h:outputText value="#{orderBean.order.orderDate}"/>
-                                <h:outputLabel value="Comment:" style="font-weight:bold"/>
-                                <h:outputText value="#{orderBean.order.typeComment}"/>
                                 <h:outputLabel value="State:" style="font-weight:bold"/>
                                 <h:outputText value="#{orderBean.order.status}"/>
                                 <h:outputLabel value="Priority:" style="font-weight:bold"/>
@@ -42,11 +42,11 @@
                                 <h:outputLabel value="Product:" style="font-weight:bold"/>
                                 <h:outputText value="#{orderBean.order.productId.productId}"/>
                                 <h:outputLabel value="Tech support:" style="font-weight:bold"/>
-                                <h:outputText value="#{orderBean.order.technicalSupportFlag}"/>
+                                <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
                             </h:panelGrid>   
 
                             <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
-                                <f:facet name="header">Процесс:</f:facet>
+                                <f:facet name="header">Process:</f:facet>
 
                                 <p:column headerText="Step Name">
                                     <h:outputText value="#{orderProcessing.stepName}"/>
@@ -73,11 +73,7 @@
                             <h:panelGrid columns="3" cellpadding="5">  
                                 <h:outputLabel for="customerId" value="Customer ID:" />  
                                 <p:inputText id="customerId" value="#{orderBean.ov.customerId}" label="Customer"/>  
-                                <p:message for="customerId" />  
-
-                                <h:outputLabel for="comment" value="Comment:" />  
-                                <p:inputText id="comment" value="#{orderBean.ov.comment}" label="Comment"/>  
-                                <p:message for="comment" />  
+                                <p:message for="customerId" />   
 
                                 <h:outputLabel for="priority" value="Priority:" /> 
                                 <h:selectOneMenu id="priority" value="#{orderBean.ov.priority}">
@@ -97,7 +93,7 @@
                                 <h:outputLabel for="productId" value="Product ID:" />  
                                 <p:inputText id="productId" value="#{orderBean.ov.productId}" label="Product"/>  
                                 <p:message for="productId" />  
-
+                                
                                 <h:outputLabel for="techSupport" value="Tech support flag:" />  
                                 <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.ov.technicalSupportFlag}"/>  
                                 <p:message for="techSupport" />  

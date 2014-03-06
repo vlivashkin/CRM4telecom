@@ -22,8 +22,7 @@ public class OrderBean implements Serializable {
 
     private LazyDataModel<Orders> lazyModel;
     Orders order;
-
-
+    
     @EJB
     private OrderManagerLocal om;
 
@@ -65,8 +64,15 @@ public class OrderBean implements Serializable {
     }
     
     public void create() {
+        Orders order = new Orders();
         ov.fillOrder(order);
         om.createOrder(order);
+        
+        ConfigurableNavigationHandler configurableNavigationHandler
+                = (ConfigurableNavigationHandler) FacesContext.
+                getCurrentInstance().getApplication().getNavigationHandler();
+
+        configurableNavigationHandler.performNavigation("order_list"); 
     }
 
     public void modify() {

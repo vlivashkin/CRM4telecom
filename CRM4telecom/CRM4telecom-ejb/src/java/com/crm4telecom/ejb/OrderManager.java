@@ -5,6 +5,7 @@ import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Customer;
+import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.jpa.Product;
 import java.util.Date;
@@ -26,10 +27,17 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public Orders createOrder(Orders order) {
-        order.setOrderDate(new Date());
+        Date date = new Date();
+        order.setOrderDate(date);
+        order.setStatus(OrderState.NEW.name());
         em.persist(order);
-        changeOrderState(order, OrderEvent.CREATED);
-
+        OrderProcessing op = new OrderProcessing(order.getOrderId());
+        op.setStartDate(date);
+        op.setStepName(OrderEvent.CREATED.name());
+        em.persist(op);
+        order.setOrderProcessing(op);
+        em.persist(order);
+        
         return order;
     }
 
@@ -153,6 +161,10 @@ public class OrderManager implements OrderManagerLocal {
     public void changeOrderState(Orders order, OrderEvent event) {
         order.changeOrderState(event);
         em.merge(order);
+        OrderProcessing op = order.getOrderProcessing();
+        op.setStartDate(new Date());
+        op.setStepName(event.name());
+        em.persist(op);
     }
 
     @Override
