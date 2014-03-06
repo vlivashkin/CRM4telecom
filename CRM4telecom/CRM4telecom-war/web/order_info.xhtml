@@ -44,7 +44,8 @@
                                 <h:outputLabel value="Tech support:" style="font-weight:bold"/>
                                 <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
                             </h:panelGrid>   
-
+                        </h:form>
+                        <h:form id="statusform">
                             <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
                                 <f:facet name="header">Process:</f:facet>
 
@@ -64,6 +65,13 @@
                                     <h:outputText value="#{orderProcessing.endDate}"/>
                                 </p:column>
                             </p:dataTable>
+                            <h:outputText value="New event:" />
+                            <p:selectOneRadio id="grid" value="#{orderBean.event}" layout="grid" columns="1">
+                                <f:selectItems value="#{orderBean.events}" var="event"
+                                               itemValue="#{event}" itemLabel="#{event.label}"/>
+                            </p:selectOneRadio>
+
+                            <p:commandButton id="submitButton" value="Submit" update="statusform" action="#{orderBean.changeState}"/>
                         </h:form>
                     </p:tab>
                     <p:tab title="Edit">
@@ -93,7 +101,7 @@
                                 <h:outputLabel for="productId" value="Product ID:" />  
                                 <p:inputText id="productId" value="#{orderBean.ov.productId}" label="Product"/>  
                                 <p:message for="productId" />  
-                                
+
                                 <h:outputLabel for="techSupport" value="Tech support flag:" />  
                                 <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.ov.technicalSupportFlag}"/>  
                                 <p:message for="techSupport" />  

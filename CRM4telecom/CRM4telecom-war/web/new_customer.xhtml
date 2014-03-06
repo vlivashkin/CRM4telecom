@@ -29,7 +29,7 @@
                         <h:inputText value="#{createCustomerBean.firstName}"/>
                         <h:outputLabel value="E-mail:" style="font-weight:bold"/>
                         <h:inputText value="#{createCustomerBean.email}"/>
-                        
+
                         <h:outputLabel value="Улица:" style="font-weight:bold"/>
                         <h:inputText value="#{createCustomerBean.street}"/>
                         <h:outputLabel value="Дом:" style="font-weight:bold"/>
@@ -38,15 +38,16 @@
                         <h:inputText value="#{createCustomerBean.flat}"/>
                         <h:outputLabel value="Телефон:" style="font-weight:bold"/>
                         <p:inputMask value="#{createCustomerBean.phoneNumber}"   
-                        mask="(999) 999-9999" style="width:130px"/>  
-                        
+                                     mask="(999) 999-9999" style="width:130px"/>  
+
                         <h:outputLabel value="Статус:" style="font-weight:bold"/>
                         <h:inputText value="#{createCustomerBean.status}"/>
 
                     </h:panelGrid>
-                    
+
                     <h:commandButton value="Save" action="#{createCustomerBean.create()}" />
                 </h:form>
             </ui:define>
+        </ui:composition>
     </h:body>
 </html>

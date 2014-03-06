@@ -1,5 +1,8 @@
 package com.crm4telecom.ejb.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum OrderState {
 
     NEW {
@@ -9,6 +12,15 @@ public enum OrderState {
                         return OPENED;
                     }
                     return this;
+                }
+
+                @Override
+                public List<OrderEvent> possibleEvents() {
+                    List<OrderEvent> events = new ArrayList<>();
+                    events.add(OrderEvent.SENT_TO_TECH_SUPPORT);
+                    events.add(OrderEvent.ENGINEER_APPOINTED);
+
+                    return events;
                 }
             },
     OPENED {
@@ -21,6 +33,15 @@ public enum OrderState {
                     }
                     return this;
                 }
+
+                @Override
+                public List<OrderEvent> possibleEvents() {
+                    List<OrderEvent> events = new ArrayList<>();
+                    events.add(OrderEvent.DELAY);
+                    events.add(OrderEvent.DONE);
+
+                    return events;
+                }
             },
     WAITING {
                 @Override
@@ -32,6 +53,15 @@ public enum OrderState {
                     }
                     return this;
                 }
+
+                @Override
+                public List<OrderEvent> possibleEvents() {
+                    List<OrderEvent> events = new ArrayList<>();
+                    events.add(OrderEvent.READY);
+                    events.add(OrderEvent.CANCELLED);
+
+                    return events;
+                }
             },
     LOCKED {
                 @Override
@@ -41,13 +71,30 @@ public enum OrderState {
                     }
                     return this;
                 }
+
+                @Override
+                public List<OrderEvent> possibleEvents() {
+                    List<OrderEvent> events = new ArrayList<>();
+                    events.add(OrderEvent.READY);
+
+                    return events;
+                }
             },
     CLOSED {
                 @Override
                 public OrderState nextState(OrderEvent event) {
                     return this;
                 }
+
+                @Override
+                public List<OrderEvent> possibleEvents() {
+                    List<OrderEvent> events = new ArrayList<>();
+
+                    return events;
+                }
             };
 
     public abstract OrderState nextState(OrderEvent event);
+
+    public abstract List<OrderEvent> possibleEvents();
 }

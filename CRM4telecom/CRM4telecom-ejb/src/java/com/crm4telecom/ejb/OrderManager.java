@@ -147,17 +147,6 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public Orders changeOrderState(Long orderId, OrderEvent event) {
-        Orders order = em.find(Orders.class, orderId);
-        if (order == null) {
-            throw new NoSuchElementException();
-        }
-        changeOrderState(order, event);
-
-        return order;
-    }
-
-    @Override
     public void changeOrderState(Orders order, OrderEvent event) {
         order.changeOrderState(event);
         em.merge(order);

@@ -26,8 +26,6 @@ public interface OrderManagerLocal {
 
     Long getOrdersCount(Map<String, String> filters);
     
-    Orders changeOrderState(Long orderId, OrderEvent event);
-
     void changeOrderState(Orders order, OrderEvent event);
 
     OrderState getOrderState(Long orderId);
