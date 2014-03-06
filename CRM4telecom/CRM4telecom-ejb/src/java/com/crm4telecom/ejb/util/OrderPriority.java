@@ -5,5 +5,5 @@ public enum OrderPriority {
     LOW,
     NORMAL,
     HIGH,
-    CRITICAL
+    CRITICAL;
 }

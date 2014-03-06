@@ -53,7 +53,19 @@ public class CustomerBean implements Serializable {
         configurableNavigationHandler.performNavigation("customer_info?includeViewParams=true");
     }
 
-    public void save() {
+    public void create() {
+        Customer customer = new Customer();
+        cv.fillCustomer(customer);
+        cm.createCustomer(customer);
+        
+        ConfigurableNavigationHandler configurableNavigationHandler
+                = (ConfigurableNavigationHandler) FacesContext.
+                getCurrentInstance().getApplication().getNavigationHandler();
+
+        configurableNavigationHandler.performNavigation("customer_list");
+    }
+
+    public void modify() {
         cv.fillCustomer(customer);
         cm.modifyCustomer(customer);
     }

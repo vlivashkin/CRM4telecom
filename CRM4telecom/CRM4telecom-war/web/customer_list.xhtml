@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>CRM4telecom | Clients</title>
@@ -15,7 +14,9 @@
             </ui:define>
 
             <ui:define name="menuItems">
-                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" /> 
+                <p:menuitem value="Main Page" action="index" icon="ui-icon-home" />
+                <p:menuitem value="New Customer" action="customer_new" icon="ui-icon-document" /> 
+                
             </ui:define>
 
             <ui:define name="content">

@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>CRM4Telecom</title>
@@ -20,11 +19,11 @@
             <ui:define name="content">
                 <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:60px;" />
                 <h:form>
-                    <p:commandButton value="Клиенты" action="customer_list"/>
-                    <p:commandButton value="Добавить заявку"/>
-                    <p:commandButton value="Заявки" action="order_list"/>
-                    <p:commandButton value="Поиск" action="search_customer"/>
-                    <p:commandButton value="Поиск Заявки" action="search_order"/>
+                    <p:commandButton value="Customers" action="customer_list"/>
+                    <p:commandButton value="Add customer" action="customer_new"/>
+                    <p:commandButton value="Orders" action="order_list"/>
+                    <p:commandButton value="Search customer" action="search_customer"/>
+                    <p:commandButton value="Search order" action="search_order"/>
                 </h:form>
             </ui:define>
         </ui:composition>

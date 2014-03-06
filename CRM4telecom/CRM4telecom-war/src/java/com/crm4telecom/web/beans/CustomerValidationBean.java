@@ -4,20 +4,25 @@ import com.crm4telecom.jpa.Customer;
 import java.util.Date;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @ManagedBean
 @RequestScoped
 public class CustomerValidationBean {
 
+    @Size(min=1, max=30)
     String firstName;
 
+    @Size(min=1, max=30)
     String lastName;
 
     @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",  message = "Invalid email address")
     String email;
 
+    @Size(min=1, max=30)
     String street;
 
     Long building;
@@ -26,11 +31,11 @@ public class CustomerValidationBean {
 
     Long balance;
 
-    @Pattern(regexp = "[\\d]{4} [\\d]{4} [\\d]{4} [\\d]{4}")
+    @Pattern(regexp = "[+]?.* (.*{3}) .*{7}")
     String phoneNumber;
 
-    @Past
-    Date cardExpDate;
+    @Size(min=1, max=30)
+    String status;
 
     public void init(Customer customer) {
         firstName = customer.getFirstName();
@@ -40,7 +45,7 @@ public class CustomerValidationBean {
         building = customer.getBuilding();
         flat = customer.getFlat();
         balance = customer.getBalance();
-        phoneNumber = customer.getphoneNumber();
+        phoneNumber = customer.getPhoneNumber();
     }
 
     public void fillCustomer(Customer customer) {
@@ -51,7 +56,7 @@ public class CustomerValidationBean {
         customer.setBuilding(building);
         customer.setFlat(flat);
         customer.setBalance(balance);
-        customer.setphoneNumber(phoneNumber);
+        customer.setPhoneNumber(phoneNumber);
     }
 
     public String getFirstName() {
@@ -110,12 +115,20 @@ public class CustomerValidationBean {
         this.balance = balance;
     }
 
-    public String getphoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setphoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

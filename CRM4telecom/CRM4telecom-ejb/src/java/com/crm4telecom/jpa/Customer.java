@@ -161,11 +161,11 @@ public class Customer implements Serializable {
         this.flat = flat;
     }
 
-    public String getphoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setphoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -261,11 +261,6 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.Customer[ customerId=" + customerId + " ]";
+        return "#" + customerId + " " + firstName + " " + lastName;
     }
-
-    public void setPhoneNumber(String phoneNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

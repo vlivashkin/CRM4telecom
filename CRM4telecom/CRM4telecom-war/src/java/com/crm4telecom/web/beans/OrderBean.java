@@ -7,14 +7,13 @@ import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
 @ManagedBean
@@ -23,27 +22,17 @@ public class OrderBean implements Serializable {
 
     private LazyDataModel<Orders> lazyModel;
     Orders order;
-    List<String> priority;
-    List<String> state;
-    
+
 
     @EJB
-    private OrderManagerLocal cm;
+    private OrderManagerLocal om;
 
-    public OrderBean() {
-        state = new ArrayList<>();
-        for (OrderState temp : OrderState.values()) {
-            state.add(temp.name());
-        }
-        priority = new ArrayList<>();
-        for (OrderPriority temp : OrderPriority.values()) {
-            priority.add(temp.name());
-        }
-    }
+    @Inject
+    private OrderValidationBean ov;
 
     @PostConstruct
     public void init() {
-        lazyModel = new LazyOrderDataModel(cm);
+        lazyModel = new LazyOrderDataModel(om);
     }
 
     public LazyDataModel<Orders> getOrders() {
@@ -56,6 +45,7 @@ public class OrderBean implements Serializable {
 
     public void setOrder(Orders order) {
         this.order = order;
+        ov.init(order);
     }
 
     public void onRowSelect() throws IOException {
@@ -66,12 +56,30 @@ public class OrderBean implements Serializable {
         configurableNavigationHandler.performNavigation("order_info?includeViewParams=true");
     }
 
-    public List<String> getPriority() {
-        return priority;
+    public OrderPriority[] getPriorities() {
+        return OrderPriority.values();
     }
 
-    public List<String> getState() {
-        return state;
+    public OrderState[] getStates() {
+        return OrderState.values();
+    }
+    
+    public void create() {
+        ov.fillOrder(order);
+        om.createOrder(order);
     }
 
+    public void modify() {
+        ov.fillOrder(order);
+        om.modifyOrder(order);
+    }
+
+    public OrderValidationBean getOv() {
+        return ov;
+    }
+
+    public void setOv(OrderValidationBean ov) {
+        this.ov = ov;
+    }
+    
 }
