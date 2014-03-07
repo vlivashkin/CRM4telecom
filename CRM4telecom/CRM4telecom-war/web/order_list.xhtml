@@ -2,18 +2,22 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="windowTitle">
         CRM4Telecom | Orders
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" /> 
-        <p:menuitem value="Add Order" action="order_new?faces-redirect=true" icon="ui-icon-document" />
     </ui:define>
 
     <ui:define name="content">
+        <h1>List of Orders</h1>
         <h:form id="form">  
+            <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
+                <h:outputText value="I think search will be there"/>;  
+            </p:fieldset>  
+            
             <p:dataTable var="order" value="#{orderBean.orders}" paginator="true" rows="10"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderBean.order}" id="orderTable" lazy="true">  
@@ -23,6 +27,10 @@
                 <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
                     <h:outputText value="#{order.orderId}" />  
                 </p:column>  
+
+                <p:column headerText="Customer" sortBy="customerId" filterBy="#{order.customerId}">  
+                    <h:outputText value="#{order.customerId}" />  
+                </p:column>
 
                 <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
                     <h:outputText value="#{order.orderDate}" />  
@@ -34,11 +42,15 @@
 
                 <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
                     <h:outputText value="#{order.status}" />  
-                </p:column>  
+                </p:column> 
 
-                <p:column headerText="Customer ID" sortBy="customerId" filterBy="#{order.customerId}">  
-                    <h:outputText value="#{order.customerId}" />  
-                </p:column>
+                <p:column headerText="Manager" sortBy="managerId" filterBy="#{order.managerId}">  
+                    <h:outputText value="#{order.managerId}" />  
+                </p:column> 
+
+                <f:facet name="footer">  
+                    <p:commandButton value="Add Order" action="order_new?faces-redirect=true" icon="ui-icon-plus"/>  
+                </f:facet>
             </p:dataTable>  
         </h:form>
     </ui:define>

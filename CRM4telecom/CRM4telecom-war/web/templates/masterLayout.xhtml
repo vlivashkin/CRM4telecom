@@ -21,10 +21,19 @@
         <div id="top" class="top">
             <h:form>
                 <p:menubar>  
+                    <p:menuitem value="go back" onclick="history.back()" icon="ui-icon-arrowthick-1-w" />
+                    
                     <ui:insert name="menuItems" />
                     
                     <f:facet name="options">  
-                        <p:inputText style="margin-right:10px"/>  
+                        <p:menuButton value="Go to..." style="margin-right:10px">  
+                            <p:menuitem value="List of customers" action="customer_list?faces-redirect=true" icon="ui-icon-note"/>  
+                            <p:menuitem value="List of orders" action="order_list?faces-redirect=true" icon="ui-icon-note"/>  
+                            <p:menuitem value="Add customer" action="new_customer?faces-redirect=true" icon="ui-icon-plus"/> 
+                            <p:menuitem value="Add order" action="order_new?faces-redirect=true" icon="ui-icon-plus"/>
+                            <p:separator />  
+                            <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home"/>  
+                        </p:menuButton>
                         <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />  
                     </f:facet>  
                 </p:menubar> 

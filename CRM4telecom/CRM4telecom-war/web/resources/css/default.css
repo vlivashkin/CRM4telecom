@@ -29,7 +29,7 @@ label {
     font-weight:bold;
 }
 
-.ui-datatable {
+.ui-datatable, h1, fieldset {
     margin-bottom: 10px;
 }
 

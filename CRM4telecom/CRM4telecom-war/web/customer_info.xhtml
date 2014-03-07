@@ -9,15 +9,13 @@
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" /> 
-        <p:menuitem value="Customer List" action="customer_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
     </ui:define>
 
     <ui:define name="content">
+        <h1>Client #{customerBean.customer}</h1>
         <p:tabView>
             <p:tab title="Info">
                 <h:form>
-                    <h1>Client #{customerBean.customer.customerId} info</h1>
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel value="First name:" style="font-weight:bold"/>
                         <h:outputText value="#{customerBean.customer.firstName}"/>

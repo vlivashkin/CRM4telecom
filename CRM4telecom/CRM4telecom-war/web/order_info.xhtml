@@ -9,15 +9,13 @@
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home" /> 
-        <p:menuitem value="Order List" action="order_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
     </ui:define>
 
     <ui:define name="content">
+        <h1>Order #{orderBean.order.orderId}</h1>
         <p:tabView id="tabPanel">
             <p:tab title="Info">
                 <h:form id="viewform">
-                    <h1>Order #{orderBean.order.orderId.toString()} info</h1>
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel value="Date:" style="font-weight:bold"/>
                         <h:outputText value="#{orderBean.order.orderDate}"/>
