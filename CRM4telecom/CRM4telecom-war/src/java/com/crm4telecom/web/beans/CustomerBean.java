@@ -5,6 +5,7 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -57,7 +58,7 @@ public class CustomerBean implements Serializable {
         Customer customer = new Customer();
         cv.fillCustomer(customer);
         cm.createCustomer(customer);
-        
+
         ConfigurableNavigationHandler configurableNavigationHandler
                 = (ConfigurableNavigationHandler) FacesContext.
                 getCurrentInstance().getApplication().getNavigationHandler();
@@ -76,5 +77,9 @@ public class CustomerBean implements Serializable {
 
     public void setCv(CustomerValidationBean cv) {
         this.cv = cv;
+    }
+
+    public List<String> completeCustomer(String customer) {
+        return cm.completeCustomer(customer);
     }
 }

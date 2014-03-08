@@ -18,23 +18,18 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>orderValidationBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.OrderValidationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>searchBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.SearchBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>searchOrderBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.SearchOrderBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>articleView</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.ArticleView</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>databaseSimulator</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.DatabaseSimulator</managed-bean-class>
+        <managed-bean-name>orderSearchBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.OrderSearchBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>

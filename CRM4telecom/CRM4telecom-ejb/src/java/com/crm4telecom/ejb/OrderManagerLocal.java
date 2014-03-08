@@ -31,4 +31,6 @@ public interface OrderManagerLocal {
     OrderState getOrderState(Long orderId);
     
     List<Orders> search(Map<String,List<String>> parametrs);
+    
+    List<String> completeOrder(String rawOrder);
 }

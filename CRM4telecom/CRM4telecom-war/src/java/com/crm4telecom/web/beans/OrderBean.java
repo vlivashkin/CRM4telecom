@@ -31,11 +31,30 @@ public class OrderBean implements Serializable {
     private OrderManagerLocal om;
 
     @Inject
-    private OrderValidationBean ov;
+    private OrderValidationBean validation;
+
+    @Inject
+    private OrderSearchBean search;
 
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
+    }
+
+    public OrderValidationBean getValidation() {
+        return validation;
+    }
+
+    public void setValidation(OrderValidationBean validation) {
+        this.validation = validation;
+    }
+
+    public OrderSearchBean getSearch() {
+        return search;
+    }
+
+    public void setSearch(OrderSearchBean search) {
+        this.search = search;
     }
 
     public LazyDataModel<Orders> getOrders() {
@@ -48,7 +67,7 @@ public class OrderBean implements Serializable {
 
     public void setOrder(Orders order) {
         this.order = order;
-        ov.init(order);
+        validation.init(order);
     }
 
     public void onRowSelect() throws IOException {
@@ -63,13 +82,13 @@ public class OrderBean implements Serializable {
         return OrderPriority.values();
     }
 
-    public OrderState[] getStates() {
+    public OrderState[] getStatuses() {
         return OrderState.values();
     }
 
     public void create() {
         Orders order = new Orders();
-        ov.fillOrder(order);
+        validation.fillOrder(order);
         om.createOrder(order);
 
         ConfigurableNavigationHandler configurableNavigationHandler
@@ -80,25 +99,18 @@ public class OrderBean implements Serializable {
     }
 
     public void modify() {
-        ov.fillOrder(order);
+        validation.fillOrder(order);
         om.modifyOrder(order);
     }
 
-    public OrderValidationBean getOv() {
-        return ov;
-    }
-
-    public void setOv(OrderValidationBean ov) {
-        this.ov = ov;
-    }
-
     public List<OrderEvent> getEvents() {
-        String status = order.getStatus();
         List<OrderEvent> events = new ArrayList<>();
-        if (status != null) {
-            events = OrderState.valueOf(status).possibleEvents();
+        if (order != null) {
+            String status = order.getStatus();
+            if (status != null) {
+                events = OrderState.valueOf(status).possibleEvents();
+            }
         }
-
         return events;
     }
 
@@ -109,8 +121,12 @@ public class OrderBean implements Serializable {
     public void setEvent(OrderEvent event) {
         this.event = event;
     }
-    
+
     public void changeState() {
         om.changeOrderState(order, event);
+    }
+
+    public List<String> completeOrder(String order) {
+        return om.completeOrder(order);
     }
 }

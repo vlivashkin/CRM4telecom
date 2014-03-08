@@ -3,6 +3,8 @@ package com.crm4telecom.jpa;
 import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderState;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -114,7 +116,7 @@ public class Orders implements Serializable {
     public String getStatus() {
         return status;
     }
-    
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -123,7 +125,7 @@ public class Orders implements Serializable {
         OrderState state = OrderState.valueOf(status);
         state = state.nextState(event);
         status = state.name();
-        
+
         return state;
     }
 
@@ -205,7 +207,8 @@ public class Orders implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.Orders[ orderId=" + orderId + " ]";
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        return "#" + orderId + " " + dateFormat.format(orderDate);
     }
 
 }

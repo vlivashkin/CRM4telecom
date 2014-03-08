@@ -8,6 +8,7 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.jpa.Product;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -189,5 +190,23 @@ public class OrderManager implements OrderManagerLocal {
         System.out.println(sqlQuery);
         return em.createQuery(sqlQuery, Orders.class).getResultList();
 
+    }
+
+    @Override
+    public List<String> completeOrder(String rawOrder) {
+        List<String> orders = new ArrayList<>();
+        String raw = rawOrder.trim();
+
+        if (raw.matches("^\\d+$")) {
+            Long id = Long.parseLong(raw);
+            Orders ord = em.find(Orders.class, id);
+            if (ord != null) {
+                orders.add(ord.toString());
+            }
+        } else {
+            System.out.println("stroka " + raw);
+        }
+
+        return orders;
     }
 }

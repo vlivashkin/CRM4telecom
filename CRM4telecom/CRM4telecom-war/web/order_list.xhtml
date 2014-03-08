@@ -13,12 +13,41 @@
 
     <ui:define name="content">
         <h1>List of Orders</h1>
-        <h:form id="form">  
-            <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
-                <h:outputText value="I think search will be there"/>;  
-            </p:fieldset>  
-            
-            <p:dataTable var="order" value="#{orderBean.orders}" paginator="true" rows="10"  
+
+        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
+            <h:form id="searchForm">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputLabel value="Orderd id:"/>
+                    <p:autoComplete value="#{orderBean.search.order}" completeMethod="#{orderBean.completeOrder}" >
+                        <f:ajax event="change" execute=":tableForm" />
+                    </p:autoComplete>    
+
+                    <h:outputLabel value="Customer id:"/>
+                    <p:autoComplete value="#{orderBean.search.customer}" completeMethod="#{customerBean.completeCustomer}"/>
+
+                    <h:outputLabel value="Employee id:"/>
+                    <p:inputText />
+
+                    <h:outputLabel value="Date ranges:"/>
+                    <h:panelGroup>
+                        <p:calendar value="#{orderBean.search.fromDate}" /> -
+                        <p:calendar value="#{orderBean.search.toDate}" />
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGroup>
+                    <p:selectCheckboxMenu value="#{orderBean.search.selectedPriorities}" label="Priorities" panelStyle="width:220px">  
+                        <f:selectItems value="#{orderBean.priorities}"/>  
+                    </p:selectCheckboxMenu> 
+
+                    <p:selectCheckboxMenu value="#{orderBean.search.selectedStatuses}" label="Statuses" panelStyle="width:220px">  
+                        <f:selectItems value="#{orderBean.statuses}"/>  
+                    </p:selectCheckboxMenu>
+                </h:panelGroup>
+            </h:form>
+        </p:fieldset>  
+        
+        <h:form id="tableForm">
+            <p:dataTable var="order" value="#{orderBean.orders}" paginator="true" rows="10" 
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderBean.order}" id="orderTable" lazy="true">  
 

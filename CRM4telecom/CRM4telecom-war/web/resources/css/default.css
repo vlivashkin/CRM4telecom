@@ -36,3 +36,14 @@ label {
 #index-content {
     margin-top: 50px;
 }
+
+.ui-fieldset {
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.ui-selectcheckboxmenu {
+    margin: 5px;
+}
