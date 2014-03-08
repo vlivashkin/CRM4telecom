@@ -50,10 +50,10 @@ public class CustomerManager implements CustomerManagerLocal {
         if ("DESCENDING".endsWith(sortOrder)) {
             sqlQuery += " DESC";
         }
-
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
+        System.out.println(query.getResultList().get(0));
         return query.getResultList();
     }
 

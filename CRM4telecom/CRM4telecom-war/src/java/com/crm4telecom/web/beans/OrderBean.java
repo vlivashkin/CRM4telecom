@@ -8,13 +8,17 @@ import com.crm4telecom.jpa.Orders;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
@@ -23,7 +27,7 @@ import org.primefaces.model.LazyDataModel;
 @SessionScoped
 public class OrderBean implements Serializable {
 
-    private LazyDataModel<Orders> lazyModel;
+    private LazyOrderDataModel lazyModel;
     Orders order;
     OrderEvent event;
 
@@ -33,12 +37,18 @@ public class OrderBean implements Serializable {
     @Inject
     private OrderValidationBean validation;
 
-    @Inject
+    @ManagedProperty(value="#{orderSearchBean")
     private OrderSearchBean search;
+
+    
+    private Map<String, List<String>> parametrs;
+    private OrderSearchBean sss;
 
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
+        parametrs = new HashMap();
+        search = new OrderSearchBean();
     }
 
     public OrderValidationBean getValidation() {
@@ -50,6 +60,7 @@ public class OrderBean implements Serializable {
     }
 
     public OrderSearchBean getSearch() {
+        
         return search;
     }
 
@@ -58,6 +69,58 @@ public class OrderBean implements Serializable {
     }
 
     public LazyDataModel<Orders> getOrders() {
+        
+        if (search.order != null && search.order.length() != 0) {
+            List<String> l = new ArrayList();
+            System.out.println("aaaaaa");
+            l.add(search.order);
+            parametrs.put("orderId", l);
+        }
+        if (search.customer != null && search.order.length() != 0) {
+            List<String> l = new ArrayList();
+            l.add(search.customer);
+            parametrs.put("customerId", l);
+        }
+        if (search.employee != null && search.employee.length() != 0) {
+            List<String> l = new ArrayList();
+            l.add(search.employee);
+            parametrs.put("employeeId", l);
+        }
+        if (search.fromDate != null) {
+            List<String> date = new ArrayList();
+            Timestamp ts = new Timestamp(search.fromDate.getTime());
+            System.out.println(ts.toString().substring(0, 10));
+            String y = ts.toString().substring(0, 4);
+            String m = search.fromDate.toString().substring(4, 7).toUpperCase();
+            String d = ts.toString().substring(8, 10);
+            System.out.println(d + " " + m + " " + y);
+            
+            date.add(d + "-" + m + "-" + y);
+            parametrs.put("fromDate", date);
+            
+        }
+        if (search.toDate != null) {
+            List<String> date1 = new ArrayList();
+            Timestamp ts = new Timestamp(search.toDate.getTime());
+            String y = ts.toString().substring(0, 4);
+            String m = search.toDate.toString().substring(4, 7).toUpperCase();
+            String d = ts.toString().substring(8, 10);
+            date1.add(d + "-" + m + "-" + y);
+            parametrs.put("toDate", date1);
+            
+        }
+        if (search.selectedPriorities != null && !search.selectedPriorities.isEmpty()) {
+            parametrs.put("priority", search.selectedPriorities);
+        }
+        if (search.selectedStatuses != null && !search.selectedStatuses.isEmpty()) {
+            parametrs.put("status", search.selectedStatuses);
+        }
+        lazyModel.setParametrs(parametrs);
+        search.customer= null;
+        search.order = null;
+        search.selectedPriorities = null;
+        search.selectedStatuses = null;
+        search.employee = null;
         return lazyModel;
     }
 

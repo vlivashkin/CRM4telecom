@@ -11,7 +11,14 @@ public class LazyOrderDataModel extends LazyDataModel<Orders> {
 
     private OrderManagerLocal om;
     private List<Orders> datasource;
+    public Map<String,List<String>> parametrs;
 
+    public void setParametrs(Map<String, List<String>> parametrs) {
+        this.parametrs = parametrs;
+    }
+
+    
+    
     public LazyOrderDataModel(OrderManagerLocal om) {
         this.om = om;
     }
@@ -35,8 +42,10 @@ public class LazyOrderDataModel extends LazyDataModel<Orders> {
 
     @Override
     public List<Orders> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        setRowCount(om.getOrdersCount(filters).intValue());
-        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters);
+        setRowCount(om.getOrdersCount(filters,parametrs).intValue());
+        System.out.println(parametrs);
+        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters,parametrs);
+        parametrs.clear();
 
         return datasource;
     }

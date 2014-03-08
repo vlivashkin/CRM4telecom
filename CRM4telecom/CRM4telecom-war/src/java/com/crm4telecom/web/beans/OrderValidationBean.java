@@ -16,7 +16,7 @@ public class OrderValidationBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;
-    
+
     private Long customerId;
 
     private String comment;
@@ -33,17 +33,23 @@ public class OrderValidationBean implements Serializable {
     private Boolean technicalSupportFlag;
 
     public void init(Orders order) {
-        if (order.getCustomerId() != null)
-            customerId = order.getCustomerId().getCustomerId();
-        comment = order.getTypeComment();
-        if (order.getPriority() != null)
-            priority = OrderPriority.valueOf(order.getPriority());
-        managerId = order.getManagerId();
-        employeeId = order.getEmployeeId();
-        if (order.getProductId() != null)
-            productId = order.getProductId().getProductId();
-        if (order.getTechnicalSupportFlag() != null)
-            technicalSupportFlag = Boolean.valueOf(order.getTechnicalSupportFlag());
+        if (order != null) {
+            if (order.getCustomerId() != null) {
+                customerId = order.getCustomerId().getCustomerId();
+            }
+            comment = order.getTypeComment();
+            if (order.getPriority() != null) {
+                priority = OrderPriority.valueOf(order.getPriority());
+            }
+            managerId = order.getManagerId();
+            employeeId = order.getEmployeeId();
+            if (order.getProductId() != null) {
+                productId = order.getProductId().getProductId();
+            }
+            if (order.getTechnicalSupportFlag() != null) {
+                technicalSupportFlag = Boolean.valueOf(order.getTechnicalSupportFlag());
+            }
+        }
     }
 
     public void fillOrder(Orders order) {

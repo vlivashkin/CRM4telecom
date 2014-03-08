@@ -23,8 +23,8 @@ public class OrderSearchBean implements Serializable {
     String customer;
     String manager;
     String employee;
-    List<OrderPriority> selectedPriorities;
-    List<OrderState> selectedStatuses;
+    List<String> selectedPriorities;
+    List<String> selectedStatuses;
     Date fromDate;
     Date toDate;
 
@@ -37,6 +37,7 @@ public class OrderSearchBean implements Serializable {
 
     }
 
+    
     public String getOrder() {
         return order;
     }
@@ -51,6 +52,7 @@ public class OrderSearchBean implements Serializable {
 
     public void setCustomer(String customer) {
         this.customer = customer;
+        System.out.println(this.customer);
     }
 
     public String getManager() {
@@ -69,19 +71,19 @@ public class OrderSearchBean implements Serializable {
         this.employee = employee;
     }
 
-    public List<OrderPriority> getSelectedPriorities() {
+    public List<String> getSelectedPriorities() {
         return selectedPriorities;
     }
 
-    public void setSelectedPriorities(List<OrderPriority> selectedPriorities) {
+    public void setSelectedPriorities(List<String> selectedPriorities) {
         this.selectedPriorities = selectedPriorities;
     }
 
-    public List<OrderState> getSelectedStatuses() {
+    public List<String> getSelectedStatuses() {
         return selectedStatuses;
     }
 
-    public void setSelectedStatuses(List<OrderState> selectedStatuses) {
+    public void setSelectedStatuses(List<String> selectedStatuses) {
         this.selectedStatuses = selectedStatuses;
     }
 

@@ -18,34 +18,44 @@
             <h:form id="searchForm">
                 <h:panelGrid columns="4" cellpadding="5">
                     <h:outputLabel value="Orderd id:"/>
-                    <p:autoComplete value="#{orderBean.search.order}" completeMethod="#{orderBean.completeOrder}" >
-                        <f:ajax event="change" execute=":tableForm" />
-                    </p:autoComplete>    
-
+                    <p:inputText value="#{orderBean.search.order}">
+                        <f:ajax event="blur" render=":tableForm" />
+                    </p:inputText>
                     <h:outputLabel value="Customer id:"/>
-                    <p:autoComplete value="#{orderBean.search.customer}" completeMethod="#{customerBean.completeCustomer}"/>
-
+                    <p:inputText value="#{orderBean.search.customer}" >
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
                     <h:outputLabel value="Employee id:"/>
-                    <p:inputText />
-
+                    <p:inputText value="#{orderBean.search.employee}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
                     <h:outputLabel value="Date ranges:"/>
-                    <h:panelGroup>
-                        <p:calendar value="#{orderBean.search.fromDate}" /> -
-                        <p:calendar value="#{orderBean.search.toDate}" />
+                    <h:panelGroup >
+                        <p:calendar value="#{orderBean.search.fromDate}" >
+                            
+                             <f:ajax event="dateSelect" render=":tableForm" />
+                        </p:calendar>
+                            -
+                        <p:calendar value="#{orderBean.search.toDate}" >
+                            <f:ajax event="dateSelect" render=":tableForm" />
+                        </p:calendar>
+                            
                     </h:panelGroup>
                 </h:panelGrid>
                 <h:panelGroup>
                     <p:selectCheckboxMenu value="#{orderBean.search.selectedPriorities}" label="Priorities" panelStyle="width:220px">  
                         <f:selectItems value="#{orderBean.priorities}"/>  
+                        <f:ajax event="change" render=":tableForm" />
                     </p:selectCheckboxMenu> 
 
                     <p:selectCheckboxMenu value="#{orderBean.search.selectedStatuses}" label="Statuses" panelStyle="width:220px">  
                         <f:selectItems value="#{orderBean.statuses}"/>  
+                        <f:ajax event="change" render=":tableForm" />
                     </p:selectCheckboxMenu>
                 </h:panelGroup>
             </h:form>
         </p:fieldset>  
-        
+
         <h:form id="tableForm">
             <p:dataTable var="order" value="#{orderBean.orders}" paginator="true" rows="10" 
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  

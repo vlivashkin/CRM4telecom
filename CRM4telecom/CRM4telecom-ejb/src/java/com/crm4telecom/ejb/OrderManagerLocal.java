@@ -20,11 +20,11 @@ public interface OrderManagerLocal {
 
     List<Orders> getAllOrders();
 
-    List<Orders> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters);
+    List<Orders> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters,Map<String,List<String>> parametrs);
 
     Long getOrdersCount();
 
-    Long getOrdersCount(Map<String, String> filters);
+    Long getOrdersCount(Map<String, String> filters,Map<String,List<String>> parametrs);
     
     void changeOrderState(Orders order, OrderEvent event);
 
