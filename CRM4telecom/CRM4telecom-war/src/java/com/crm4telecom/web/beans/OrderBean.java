@@ -39,15 +39,11 @@ public class OrderBean implements Serializable {
 
     @ManagedProperty(value="#{orderSearchBean")
     private OrderSearchBean search;
-
-    
-    private Map<String, List<String>> parametrs;
     private OrderSearchBean sss;
 
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
-        parametrs = new HashMap();
         search = new OrderSearchBean();
     }
 
@@ -69,63 +65,7 @@ public class OrderBean implements Serializable {
     }
 
     public LazyDataModel<Order> getOrders() {
-        
-        if (search.order != null && search.order.length() != 0) {
-            List<String> l = new ArrayList();
-            System.out.println("aaaaaa");
-            l.add(search.order);
-            parametrs.put("orderId", l);
-        }
-        if (search.customer != null && search.customer.length() != 0) {
-            List<String> l = new ArrayList();
-            l.add(search.customer);
-            System.out.println("i am here bro");
-            parametrs.put("customerId", l);
-        }
-        if (search.employee != null && search.employee.length() != 0) {
-            List<String> l = new ArrayList();
-            l.add(search.employee);
-            parametrs.put("employeeId", l);
-        }
-        if (search.fromDate != null) {
-            List<String> date = new ArrayList();
-            Timestamp ts = new Timestamp(search.fromDate.getTime());
-            System.out.println(ts.toString().substring(0, 10));
-            String y = ts.toString().substring(0, 4);
-            String m = search.fromDate.toString().substring(4, 7).toUpperCase();
-            String d = ts.toString().substring(8, 10);
-            System.out.println(d + " " + m + " " + y);
-            
-            date.add(d + "-" + m + "-" + y);
-            parametrs.put("fromDate", date);
-            
-        }
-        if (search.toDate != null) {
-            List<String> date1 = new ArrayList();
-            Timestamp ts = new Timestamp(search.toDate.getTime());
-            String y = ts.toString().substring(0, 4);
-            String m = search.toDate.toString().substring(4, 7).toUpperCase();
-            String d = ts.toString().substring(8, 10);
-            date1.add(d + "-" + m + "-" + y);
-            parametrs.put("toDate", date1);
-            
-        }
-        if (search.selectedPriorities != null && !search.selectedPriorities.isEmpty()) {
-            parametrs.put("priority", search.selectedPriorities);
-        }
-        if (search.selectedStatuses != null && !search.selectedStatuses.isEmpty()) {
-            parametrs.put("status", search.selectedStatuses);
-        }
-        if(search.toDate == null){
-            parametrs.remove("toDate");
-        }
-        if(search.fromDate == null){
-            parametrs.remove("fromDate");
-        }
-        if(search.order == null || search.order.length() == 0){
-            parametrs.remove("orderId");
-        }
-        lazyModel.setParametrs(parametrs);
+        lazyModel.setSearch(search);
         return lazyModel;
     }
 
