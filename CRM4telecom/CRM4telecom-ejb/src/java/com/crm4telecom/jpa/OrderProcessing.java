@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
@@ -12,8 +11,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,20 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Alex
  */
 @Entity
-@Table(name = "ORDER_PROCESSING")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "OrderProcessing.findAll", query = "SELECT o FROM OrderProcessing o"),
-    @NamedQuery(name = "OrderProcessing.findByOrderId", query = "SELECT o FROM OrderProcessing o WHERE o.orderProcessingPK.orderId = :orderId"),
-    @NamedQuery(name = "OrderProcessing.findByStepId", query = "SELECT o FROM OrderProcessing o WHERE o.orderProcessingPK.stepId = :stepId"),
-    @NamedQuery(name = "OrderProcessing.findByStepName", query = "SELECT o FROM OrderProcessing o WHERE o.stepName = :stepName"),
-    @NamedQuery(name = "OrderProcessing.findByDescription", query = "SELECT o FROM OrderProcessing o WHERE o.description = :description"),
-    @NamedQuery(name = "OrderProcessing.findByStartDate", query = "SELECT o FROM OrderProcessing o WHERE o.startDate = :startDate"),
-    @NamedQuery(name = "OrderProcessing.findByEndDate", query = "SELECT o FROM OrderProcessing o WHERE o.endDate = :endDate"),
-    @NamedQuery(name = "OrderProcessing.findByEndDateHard", query = "SELECT o FROM OrderProcessing o WHERE o.endDateHard = :endDateHard"),
-    @NamedQuery(name = "OrderProcessing.findByEmployeeId", query = "SELECT o FROM OrderProcessing o WHERE o.employeeId = :employeeId"),
-    @NamedQuery(name = "OrderProcessing.findByEquipmentId", query = "SELECT o FROM OrderProcessing o WHERE o.equipmentId = :equipmentId")})
+@Table(name = "Order_Processing", catalog = "", schema = "CRM4TELECOM")
 public class OrderProcessing implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected OrderProcessingPK orderProcessingPK;
@@ -57,10 +48,17 @@ public class OrderProcessing implements Serializable {
     @Column(name = "END_DATE_HARD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
-    @Column(name = "EMPLOYEE_ID")
-    private BigInteger employeeId;
-    @Column(name = "EQUIPMENT_ID")
-    private BigInteger equipmentId;
+    @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
+    @ManyToOne
+    private Equipment equipmentId;
+
+    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
+    @ManyToOne
+    private Employee employeeId;
+
+    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Orders orders;
 
     public OrderProcessing() {
     }
@@ -121,20 +119,20 @@ public class OrderProcessing implements Serializable {
         this.endDateHard = endDateHard;
     }
 
-    public BigInteger getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(BigInteger employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public BigInteger getEquipmentId() {
+    public Equipment getEquipmentId() {
         return equipmentId;
     }
 
-    public void setEquipmentId(BigInteger equipmentId) {
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEquipmentId(Equipment equipmentId) {
         this.equipmentId = equipmentId;
+    }
+
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
@@ -161,5 +159,5 @@ public class OrderProcessing implements Serializable {
     public String toString() {
         return "com.crm4telecom.jpa.OrderProcessing[ orderProcessingPK=" + orderProcessingPK + " ]";
     }
-    
+
 }

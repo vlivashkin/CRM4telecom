@@ -32,11 +32,11 @@ public class OrderManager implements OrderManagerLocal {
         order.setOrderDate(date);
         order.setStatus(OrderState.NEW.name());
         em.persist(order);
-        OrderProcessing op = new OrderProcessing(order.getOrderId());
-        op.setStartDate(date);
-        op.setStepName(OrderEvent.CREATED.name());
-        em.persist(op);
-        order.setOrderProcessing(op);
+     //   OrderProcessing op = new OrderProcessing(order.);
+     //   op.setStartDate(date);
+      //  op.setStepName(OrderEvent.CREATED.name());
+      //  em.persist(op);
+     //   order.setOrderProcessing(op);
         em.persist(order);
 
         return order;
