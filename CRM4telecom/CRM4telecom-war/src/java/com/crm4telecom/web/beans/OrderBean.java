@@ -125,18 +125,7 @@ public class OrderBean implements Serializable {
         if(search.order == null || search.order.length() == 0){
             parametrs.remove("orderId");
         }
-//        System.out.println(search.toDate);
-        System.out.println(parametrs);
-        
-        
         lazyModel.setParametrs(parametrs);
-      //  parametrs.clear();
-    ///  search.customer= null;
-    //    search.selectedPriorities = null;
-    //    search.selectedStatuses = null;
-     //   search.employee = null;
-     //   search.toDate = null;
-     //   search.fromDate = null;
         return lazyModel;
     }
 

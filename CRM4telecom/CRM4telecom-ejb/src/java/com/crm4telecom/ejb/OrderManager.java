@@ -232,10 +232,10 @@ public class OrderManager implements OrderManagerLocal {
     public void changeOrderState(Order order, OrderEvent event) {
         order.changeOrderState(event);
         em.merge(order);
-        OrderProcessing op = order.getOrderProcessing();
-        op.setStartDate(new Date());
-        op.setStepName(event.name());
-        em.persist(op);
+     //   OrderProcessing op = order.getOrderProcessing();
+     //   op.setStartDate(new Date());
+     //   op.setStepName(event.name());
+     //   em.persist(op);
     }
 
     @Override

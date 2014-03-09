@@ -5,9 +5,13 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,8 +54,8 @@ public class OrderProcessing implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @ManyToOne()
+    @PrimaryKeyJoinColumn(name= "ORDER_ID" ,referencedColumnName="ID")
     private Order orders;
 
     public OrderProcessing() {
