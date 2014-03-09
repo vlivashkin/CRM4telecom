@@ -19,6 +19,7 @@
 
             </h:form>
         </p:fieldset>  
+        <p:commandButton value="Add customer" action="new_customer?faces-redirect=true"/>
 
         <h:form id="tableForm">  
             <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
