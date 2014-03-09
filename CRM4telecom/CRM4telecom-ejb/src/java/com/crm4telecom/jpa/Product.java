@@ -46,7 +46,7 @@ public class Product implements Serializable {
     private List<MarketProducts> marketProductsList;
 
     @OneToMany(mappedBy = "productId")
-    private List<Orders> ordersList;
+    private List<Order> ordersList;
 
     @OneToMany(mappedBy = "productId")
     private List<CustomerProducts> customerProductsList;
@@ -108,11 +108,11 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public List<Orders> getOrdersList() {
+    public List<Order> getOrdersList() {
         return ordersList;
     }
 
-    public void setOrdersList(List<Orders> ordersList) {
+    public void setOrdersList(List<Order> ordersList) {
         this.ordersList = ordersList;
     }
 

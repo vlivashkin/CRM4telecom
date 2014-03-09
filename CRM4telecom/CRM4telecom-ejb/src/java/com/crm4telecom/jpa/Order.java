@@ -21,9 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "Orders")
 @Table
-public class Orders implements Serializable {
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -74,10 +74,10 @@ public class Orders implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
     private OrderProcessing orderProcessing;
 
-    public Orders() {
+    public Order() {
     }
 
-    public Orders(Long orderId) {
+    public Order(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -195,10 +195,10 @@ public class Orders implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Orders)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        Orders other = (Orders) object;
+        Order other = (Order) object;
         if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
             return false;
         }

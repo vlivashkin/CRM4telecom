@@ -2,7 +2,7 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderState;
-import com.crm4telecom.jpa.Orders;
+import com.crm4telecom.jpa.Order;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -10,27 +10,27 @@ import javax.ejb.Local;
 @Local
 public interface OrderManagerLocal {
 
-    Orders createOrder(Orders order);
+    Order createOrder(Order order);
 
-    void modifyOrder(Orders order);
+    void modifyOrder(Order order);
 
-    Orders setCustomer(Orders order, Long customerId);
+    Order setCustomer(Order order, Long customerId);
 
-    Orders getOrder(Long orderId);
+    Order getOrder(Long orderId);
 
-    List<Orders> getAllOrders();
+    List<Order> getAllOrders();
 
-    List<Orders> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters,Map<String,List<String>> parametrs);
+    List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters,Map<String,List<String>> parametrs);
 
     Long getOrdersCount();
 
     Long getOrdersCount(Map<String, String> filters,Map<String,List<String>> parametrs);
     
-    void changeOrderState(Orders order, OrderEvent event);
+    void changeOrderState(Order order, OrderEvent event);
 
     OrderState getOrderState(Long orderId);
     
-    List<Orders> search(Map<String,List<String>> parametrs);
+    List<Order> search(Map<String,List<String>> parametrs);
     
     List<String> completeOrder(String rawOrder);
 }

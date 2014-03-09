@@ -2,7 +2,7 @@ package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.util.OrderPriority;
-import com.crm4telecom.jpa.Orders;
+import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
@@ -32,7 +32,7 @@ public class OrderValidationBean implements Serializable {
 
     private Boolean technicalSupportFlag;
 
-    public void init(Orders order) {
+    public void init(Order order) {
         if (order != null) {
             if (order.getCustomerId() != null) {
                 customerId = order.getCustomerId().getCustomerId();
@@ -52,7 +52,7 @@ public class OrderValidationBean implements Serializable {
         }
     }
 
-    public void fillOrder(Orders order) {
+    public void fillOrder(Order order) {
         System.out.println("'" + customerId + "'");
         order.setCustomerId(customerId == null ? null : cm.getCustomer(customerId));
         order.setTypeComment(comment);

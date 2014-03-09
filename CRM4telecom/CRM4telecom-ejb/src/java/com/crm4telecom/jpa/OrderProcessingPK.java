@@ -1,54 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Alex
- */
 @Embeddable
 public class OrderProcessingPK implements Serializable {
-    @Basic(optional = false)
+    
     @NotNull
     @Column(name = "ORDER_ID")
-    private BigInteger orderId;
-    @Basic(optional = false)
-    @NotNull
+    private Long orderId;
+    
+    @GeneratedValue(generator = "SEC_STEP_ID", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEC_STEP_ID", sequenceName = "SEC_STEP_ID", allocationSize = 1)
     @Column(name = "STEP_ID")
-    private BigInteger stepId;
+    private Long stepId;
 
     public OrderProcessingPK() {
     }
 
-    public OrderProcessingPK(BigInteger orderId, BigInteger stepId) {
+    public OrderProcessingPK(Long orderId) {
         this.orderId = orderId;
-        this.stepId = stepId;
     }
 
-    public BigInteger getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(BigInteger orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public BigInteger getStepId() {
+    public Long getStepId() {
         return stepId;
     }
 
-    public void setStepId(BigInteger stepId) {
+    public void setStepId(Long stepId) {
         this.stepId = stepId;
     }
 

@@ -80,7 +80,7 @@ public class Customer implements Serializable {
     private List<StaticIp> staticIpList;
 
     @OneToMany(mappedBy = "customerId")
-    private List<Orders> ordersList;
+    private List<Order> ordersList;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
     private BalanceHistory balanceHistory;
@@ -214,11 +214,11 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public List<Orders> getOrdersList() {
+    public List<Order> getOrdersList() {
         return ordersList;
     }
 
-    public void setOrdersList(List<Orders> ordersList) {
+    public void setOrdersList(List<Order> ordersList) {
         this.ordersList = ordersList;
     }
 

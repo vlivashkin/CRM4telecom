@@ -1,53 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
 @Entity
 @Table(name = "Order_Processing", catalog = "", schema = "CRM4TELECOM")
 public class OrderProcessing implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
     protected OrderProcessingPK orderProcessingPK;
+    
     @Size(max = 30)
     @Column(name = "STEP_NAME")
     private String stepName;
+    
     @Size(max = 30)
     @Column(name = "DESCRIPTION")
     private String description;
+    
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+    
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    
     @Column(name = "END_DATE_HARD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
+    
     @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
     @ManyToOne
     private Equipment equipmentId;
@@ -58,7 +52,7 @@ public class OrderProcessing implements Serializable {
 
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Orders orders;
+    private Order orders;
 
     public OrderProcessing() {
     }
@@ -67,8 +61,8 @@ public class OrderProcessing implements Serializable {
         this.orderProcessingPK = orderProcessingPK;
     }
 
-    public OrderProcessing(BigInteger orderId, BigInteger stepId) {
-        this.orderProcessingPK = new OrderProcessingPK(orderId, stepId);
+    public OrderProcessing(Long orderId) {
+        this.orderProcessingPK = new OrderProcessingPK(orderId);
     }
 
     public OrderProcessingPK getOrderProcessingPK() {

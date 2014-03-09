@@ -3,7 +3,7 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
-import com.crm4telecom.jpa.Orders;
+import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

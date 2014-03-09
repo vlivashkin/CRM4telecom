@@ -4,7 +4,7 @@ import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
-import com.crm4telecom.jpa.Orders;
+import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,7 +28,7 @@ import org.primefaces.model.LazyDataModel;
 public class OrderBean implements Serializable {
 
     private LazyOrderDataModel lazyModel;
-    Orders order;
+    Order order;
     OrderEvent event;
 
     @EJB
@@ -68,7 +68,7 @@ public class OrderBean implements Serializable {
         this.search = search;
     }
 
-    public LazyDataModel<Orders> getOrders() {
+    public LazyDataModel<Order> getOrders() {
         
         if (search.order != null && search.order.length() != 0) {
             List<String> l = new ArrayList();
@@ -140,11 +140,11 @@ public class OrderBean implements Serializable {
         return lazyModel;
     }
 
-    public Orders getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Orders order) {
+    public void setOrder(Order order) {
         this.order = order;
         validation.init(order);
     }
@@ -166,7 +166,7 @@ public class OrderBean implements Serializable {
     }
 
     public void create() {
-        Orders order = new Orders();
+        Order order = new Order();
         validation.fillOrder(order);
         om.createOrder(order);
 
