@@ -115,14 +115,16 @@ CREATE TABLE orders
 
 CREATE TABLE order_processing
   (
-     order_id INT PRIMARY KEY,
+     order_id INT ,
+	step_id INT,
      step_name VARCHAR(30),
      description VARCHAR(30),
      start_date timestamp(9),
      end_date timestamp(9),
      end_date_hard timestamp(9),
      employee_id INT,
-     equipment_id INT
+     equipment_id INT,
+     CONSTRAINT orderd_processing_id PRIMARY KEY(order_id,step_id) 
   );
 
 CREATE TABLE employee

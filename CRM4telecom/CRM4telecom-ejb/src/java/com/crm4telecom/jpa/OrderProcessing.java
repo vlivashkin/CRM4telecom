@@ -1,77 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Alex
+ */
 @Entity
-@Table(name = "ORDER_PROCESSING", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "ORDER_PROCESSING")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "OrderProcessing.findAll", query = "SELECT o FROM OrderProcessing o"),
+    @NamedQuery(name = "OrderProcessing.findByOrderId", query = "SELECT o FROM OrderProcessing o WHERE o.orderProcessingPK.orderId = :orderId"),
+    @NamedQuery(name = "OrderProcessing.findByStepId", query = "SELECT o FROM OrderProcessing o WHERE o.orderProcessingPK.stepId = :stepId"),
+    @NamedQuery(name = "OrderProcessing.findByStepName", query = "SELECT o FROM OrderProcessing o WHERE o.stepName = :stepName"),
+    @NamedQuery(name = "OrderProcessing.findByDescription", query = "SELECT o FROM OrderProcessing o WHERE o.description = :description"),
+    @NamedQuery(name = "OrderProcessing.findByStartDate", query = "SELECT o FROM OrderProcessing o WHERE o.startDate = :startDate"),
+    @NamedQuery(name = "OrderProcessing.findByEndDate", query = "SELECT o FROM OrderProcessing o WHERE o.endDate = :endDate"),
+    @NamedQuery(name = "OrderProcessing.findByEndDateHard", query = "SELECT o FROM OrderProcessing o WHERE o.endDateHard = :endDateHard"),
+    @NamedQuery(name = "OrderProcessing.findByEmployeeId", query = "SELECT o FROM OrderProcessing o WHERE o.employeeId = :employeeId"),
+    @NamedQuery(name = "OrderProcessing.findByEquipmentId", query = "SELECT o FROM OrderProcessing o WHERE o.equipmentId = :equipmentId")})
 public class OrderProcessing implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @NotNull
-    @Column(name = "ORDER_ID", nullable = false, precision = 38, scale = 0)
-    private Long orderId;
-
+    @EmbeddedId
+    protected OrderProcessingPK orderProcessingPK;
     @Size(max = 30)
-    @Column(name = "STEP_NAME", length = 30)
+    @Column(name = "STEP_NAME")
     private String stepName;
-
     @Size(max = 30)
-    @Column(length = 30)
+    @Column(name = "DESCRIPTION")
     private String description;
-
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-
     @Column(name = "END_DATE_HARD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
-
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Orders orders;
-
-    @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
-    @ManyToOne
-    private Equipment equipmentId;
-
-    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
-    @ManyToOne
-    private Employee employeeId;
+    @Column(name = "EMPLOYEE_ID")
+    private BigInteger employeeId;
+    @Column(name = "EQUIPMENT_ID")
+    private BigInteger equipmentId;
 
     public OrderProcessing() {
     }
 
-    public OrderProcessing(Long orderId) {
-        this.orderId = orderId;
+    public OrderProcessing(OrderProcessingPK orderProcessingPK) {
+        this.orderProcessingPK = orderProcessingPK;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public OrderProcessing(BigInteger orderId, BigInteger stepId) {
+        this.orderProcessingPK = new OrderProcessingPK(orderId, stepId);
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public OrderProcessingPK getOrderProcessingPK() {
+        return orderProcessingPK;
+    }
+
+    public void setOrderProcessingPK(OrderProcessingPK orderProcessingPK) {
+        this.orderProcessingPK = orderProcessingPK;
     }
 
     public String getStepName() {
@@ -114,34 +121,26 @@ public class OrderProcessing implements Serializable {
         this.endDateHard = endDateHard;
     }
 
-    public Orders getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Orders orders) {
-        this.orders = orders;
-    }
-
-    public Equipment getEquipmentId() {
-        return equipmentId;
-    }
-
-    public void setEquipmentId(Equipment equipmentId) {
-        this.equipmentId = equipmentId;
-    }
-
-    public Employee getEmployeeId() {
+    public BigInteger getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
+    public void setEmployeeId(BigInteger employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public BigInteger getEquipmentId() {
+        return equipmentId;
+    }
+
+    public void setEquipmentId(BigInteger equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (orderId != null ? orderId.hashCode() : 0);
+        hash += (orderProcessingPK != null ? orderProcessingPK.hashCode() : 0);
         return hash;
     }
 
@@ -152,7 +151,7 @@ public class OrderProcessing implements Serializable {
             return false;
         }
         OrderProcessing other = (OrderProcessing) object;
-        if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
+        if ((this.orderProcessingPK == null && other.orderProcessingPK != null) || (this.orderProcessingPK != null && !this.orderProcessingPK.equals(other.orderProcessingPK))) {
             return false;
         }
         return true;
@@ -160,7 +159,7 @@ public class OrderProcessing implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.OrderProcessing[ orderId=" + orderId + " ]";
+        return "com.crm4telecom.jpa.OrderProcessing[ orderProcessingPK=" + orderProcessingPK + " ]";
     }
-
+    
 }

@@ -76,9 +76,10 @@ public class OrderBean implements Serializable {
             l.add(search.order);
             parametrs.put("orderId", l);
         }
-        if (search.customer != null && search.order.length() != 0) {
+        if (search.customer != null && search.customer.length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.customer);
+            System.out.println("i am here bro");
             parametrs.put("customerId", l);
         }
         if (search.employee != null && search.employee.length() != 0) {
@@ -115,12 +116,27 @@ public class OrderBean implements Serializable {
         if (search.selectedStatuses != null && !search.selectedStatuses.isEmpty()) {
             parametrs.put("status", search.selectedStatuses);
         }
+        if(search.toDate == null){
+            parametrs.remove("toDate");
+        }
+        if(search.fromDate == null){
+            parametrs.remove("fromDate");
+        }
+        if(search.order == null || search.order.length() == 0){
+            parametrs.remove("orderId");
+        }
+//        System.out.println(search.toDate);
+        System.out.println(parametrs);
+        
+        
         lazyModel.setParametrs(parametrs);
-        search.customer= null;
-        search.order = null;
-        search.selectedPriorities = null;
-        search.selectedStatuses = null;
-        search.employee = null;
+      //  parametrs.clear();
+    ///  search.customer= null;
+    //    search.selectedPriorities = null;
+    //    search.selectedStatuses = null;
+     //   search.employee = null;
+     //   search.toDate = null;
+     //   search.fromDate = null;
         return lazyModel;
     }
 

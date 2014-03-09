@@ -19,7 +19,7 @@
                 <h:panelGrid columns="4" cellpadding="5">
                     <h:outputLabel value="Orderd id:"/>
                     <p:inputText value="#{orderBean.search.order}">
-                        <f:ajax event="blur" render=":tableForm" />
+                        <f:ajax event="change" render=":tableForm" />
                     </p:inputText>
                     <h:outputLabel value="Customer id:"/>
                     <p:inputText value="#{orderBean.search.customer}" >
@@ -34,10 +34,13 @@
                         <p:calendar value="#{orderBean.search.fromDate}" >
                             
                              <f:ajax event="dateSelect" render=":tableForm" />
+                             <f:ajax event="change" render=":tableForm" />
                         </p:calendar>
                             -
                         <p:calendar value="#{orderBean.search.toDate}" >
                             <f:ajax event="dateSelect" render=":tableForm" />
+                            <f:ajax event="change" render=":tableForm" />
+                            
                         </p:calendar>
                             
                     </h:panelGroup>

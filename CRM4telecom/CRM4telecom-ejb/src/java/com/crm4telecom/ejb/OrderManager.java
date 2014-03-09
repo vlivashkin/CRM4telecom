@@ -92,7 +92,12 @@ public class OrderManager implements OrderManagerLocal {
                 } else {
                     String check = (String) paramProperty;
                     if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(0) + "')   AND";
+                        if (check.compareTo("customerId") == 0) {
+                            
+                            sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                        } else {
+                            sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                        }
                     } else {
                         if (check.compareTo("fromDate") == 0) {
                             sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)     AND";
@@ -123,7 +128,7 @@ public class OrderManager implements OrderManagerLocal {
         if ("DESCENDING".endsWith(sortOrder)) {
             sqlQuery += " DESC";
         }
-        
+
         sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         Query query = em.createQuery(sqlQuery, Orders.class);
         query.setFirstResult(first);
@@ -149,18 +154,20 @@ public class OrderManager implements OrderManagerLocal {
                 String filterValue = filters.get(filterProperty);
                 sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
             }
+            System.out.println("filterasasd");
 
         }
         if (!parametrs.isEmpty()) {
             if (filters.isEmpty()) {
                 sqlQuery += " WHERE";
+                
             }
             for (String paramProperty : parametrs.keySet()) {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
                     for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
+                        sqlQuery += "   LOWER( c." + paramProperty + "  ) REGEXP LOWER('" + val.get(i) + "') OR";
 
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
@@ -168,7 +175,11 @@ public class OrderManager implements OrderManagerLocal {
                 } else {
                     String check = (String) paramProperty;
                     if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(0) + "')   AND";
+                        if (check.compareTo("customerId") == 0) {
+                            sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                        } else {
+                            sqlQuery += " LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                        }
                     } else {
                         if (check.compareTo("fromDate") == 0) {
                             sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)  AND";
@@ -180,9 +191,9 @@ public class OrderManager implements OrderManagerLocal {
                 }
 
             }
-            
+
         }
-        
+
         sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         System.out.println(sqlQuery);
         Query query = em.createQuery(sqlQuery, Orders.class);
