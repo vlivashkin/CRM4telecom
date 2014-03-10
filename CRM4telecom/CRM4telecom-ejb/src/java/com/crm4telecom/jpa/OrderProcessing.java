@@ -3,14 +3,18 @@ package com.crm4telecom.jpa;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,8 +23,15 @@ public class OrderProcessing implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected OrderProcessingPK orderProcessingPK;
+    @Id
+    @GeneratedValue(generator = "SEC_STEP_ID", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEC_STEP_ID", sequenceName = "SEC_STEP_ID", allocationSize = 1)
+    @Column(name = "STEP_ID")
+    private Long stepId;
+    
+    @NotNull
+    @Column(name = "ORDER_ID")
+    private Long orderId;
     
     @Size(max = 30)
     @Column(name = "STEP_NAME")
@@ -56,21 +67,25 @@ public class OrderProcessing implements Serializable {
 
     public OrderProcessing() {
     }
-
-    public OrderProcessing(OrderProcessingPK orderProcessingPK) {
-        this.orderProcessingPK = orderProcessingPK;
-    }
-
+    
     public OrderProcessing(Long orderId) {
-        this.orderProcessingPK = new OrderProcessingPK(orderId);
+        this.orderId = orderId;
     }
 
-    public OrderProcessingPK getOrderProcessingPK() {
-        return orderProcessingPK;
+    public Long getStepId() {
+        return stepId;
     }
 
-    public void setOrderProcessingPK(OrderProcessingPK orderProcessingPK) {
-        this.orderProcessingPK = orderProcessingPK;
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public String getStepName() {
@@ -132,7 +147,7 @@ public class OrderProcessing implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (orderProcessingPK != null ? orderProcessingPK.hashCode() : 0);
+        hash += (stepId != null ? stepId.hashCode() : 0);
         return hash;
     }
 
@@ -143,7 +158,7 @@ public class OrderProcessing implements Serializable {
             return false;
         }
         OrderProcessing other = (OrderProcessing) object;
-        if ((this.orderProcessingPK == null && other.orderProcessingPK != null) || (this.orderProcessingPK != null && !this.orderProcessingPK.equals(other.orderProcessingPK))) {
+        if ((this.stepId == null && other.stepId != null) || (this.stepId != null && !this.stepId.equals(other.stepId))) {
             return false;
         }
         return true;
@@ -151,7 +166,7 @@ public class OrderProcessing implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.OrderProcessing[ orderProcessingPK=" + orderProcessingPK + " ]";
+        return "com.crm4telecom.jpa.OrderProcessing[ stepId=" + stepId + " ]";
     }
 
 }

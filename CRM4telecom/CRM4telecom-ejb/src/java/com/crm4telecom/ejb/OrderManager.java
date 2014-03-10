@@ -65,6 +65,14 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
+    public List<OrderProcessing> getProcessList(Order order) {
+        String sqlQuery = "SELECT c FROM OrderProcessing c WHERE c.orderId = :orderId";
+        Query query = em.createQuery(sqlQuery, OrderProcessing.class);
+        query.setParameter("orderId", order.getOrderId());
+        return query.getResultList();
+    }
+    
+    @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c        ";
         System.out.println("size ===" + parametrs.size());
@@ -223,7 +231,8 @@ public class OrderManager implements OrderManagerLocal {
     public void changeOrderState(Order order, OrderEvent event) {
         order.changeOrderState(event);
         em.merge(order);
-        OrderProcessing op = order.getOrderProcessing();
+        OrderProcessing op = new OrderProcessing();
+        op.setOrderId(order.getOrderId());
         op.setStartDate(new Date());
         op.setStepName(event.name());
         em.persist(op);

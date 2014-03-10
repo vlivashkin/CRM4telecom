@@ -5,6 +5,7 @@ import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import java.io.IOException;
 import java.io.Serializable;
@@ -61,6 +62,10 @@ public class OrderBean implements Serializable {
     public OrderCommentBean getComment() {
         return comment;
     }
+    
+    public List<OrderProcessing> getOrderProcessing() {
+        return om.getProcessList(order);
+    }   
     
     public LazyDataModel<Order> getOrders() {
         
@@ -197,6 +202,7 @@ public class OrderBean implements Serializable {
     }
 
     public void changeState() {
+        System.out.println(order + " " + event);
         om.changeOrderState(order, event);
     }
 
