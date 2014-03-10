@@ -18,8 +18,11 @@
             <h:form id="searchForm">
 
             </h:form>
-        </p:fieldset>  
-        <p:commandButton value="Add customer" action="new_customer?faces-redirect=true"/>
+        </p:fieldset>
+        
+        <h:form>
+            <p:commandButton value="Add customer" action="new_customer?faces-redirect=true" icon="ui-icon-plus"/>
+        </h:form>
 
         <h:form id="tableForm">  
             <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
@@ -43,10 +46,6 @@
                 <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
                     <h:outputText value="#{customer.email}" />  
                 </p:column>  
-
-                <f:facet name="footer">  
-                    <p:commandButton value="Add Customer" action="new_customer?faces-redirect=true" icon="ui-icon-plus"/>  
-                </f:facet>
             </p:dataTable>  
         </h:form>  
     </ui:define>

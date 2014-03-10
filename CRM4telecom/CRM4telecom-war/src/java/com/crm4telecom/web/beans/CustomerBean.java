@@ -3,7 +3,6 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -46,29 +45,23 @@ public class CustomerBean implements Serializable {
         cv.init(customer);
     }
 
-    public void onRowSelect() throws IOException {
-        ConfigurableNavigationHandler configurableNavigationHandler
-                = (ConfigurableNavigationHandler) FacesContext.
-                getCurrentInstance().getApplication().getNavigationHandler();
-
-        configurableNavigationHandler.performNavigation("customer_info?faces-redirect=true");
+    public void onRowSelect() {
+        forvardNavigation("customer_info");
     }
-
+    
     public void create() {
         Customer customer = new Customer();
         cv.fillCustomer(customer);
         cm.createCustomer(customer);
 
-        ConfigurableNavigationHandler configurableNavigationHandler
-                = (ConfigurableNavigationHandler) FacesContext.
-                getCurrentInstance().getApplication().getNavigationHandler();
-
-        configurableNavigationHandler.performNavigation("customer_list?faces-redirect=true");
+        forvardNavigation("customer_list");
     }
 
     public void modify() {
         cv.fillCustomer(customer);
         cm.modifyCustomer(customer);
+        
+        forvardNavigation("customer_info");
     }
 
     public CustomerValidationBean getCv() {
@@ -81,5 +74,13 @@ public class CustomerBean implements Serializable {
 
     public List<String> completeCustomer(String customer) {
         return cm.completeCustomer(customer);
+    }
+    
+    private void forvardNavigation(String outcome) {
+        ConfigurableNavigationHandler configurableNavigationHandler
+                = (ConfigurableNavigationHandler) FacesContext.
+                getCurrentInstance().getApplication().getNavigationHandler();
+
+        configurableNavigationHandler.performNavigation(outcome + "?faces-redirect=true");
     }
 }

@@ -1,3 +1,10 @@
+html, body, div, form {
+    box-sizing: border-box;
+}
+
+.ui-state-default {
+    box-sizing: content-box !important;
+}
 body {
     background-color: #ffffff;
     font-size: 12px;
@@ -29,7 +36,7 @@ label {
     font-weight:bold;
 }
 
-.ui-datatable, h1, fieldset {
+.ui-datatable, h1, fieldset, .ui-tabs {
     margin-bottom: 10px;
 }
 
@@ -46,4 +53,17 @@ label {
 
 .ui-selectcheckboxmenu {
     margin: 5px;
+}
+
+td {
+    vertical-align: top;
+}
+
+pre{
+    text-align: left;
+    margin: 0;
+}
+
+.main, table {
+    width: auto;
 }

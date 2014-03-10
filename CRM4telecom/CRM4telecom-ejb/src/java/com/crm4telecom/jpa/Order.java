@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity(name = "Orders")
 @Table
@@ -41,8 +42,7 @@ public class Order implements Serializable {
     @Column(name = "ORDER_TYPE", length = 30)
     private String orderType;
 
-    @Size(max = 30)
-    @Column(name = "TYPE_COMMENT", length = 30)
+    @Column(name = "TYPE_COMMENT")
     private String typeComment;
 
     @Size(max = 30)
@@ -105,10 +105,12 @@ public class Order implements Serializable {
         this.orderType = orderType;
     }
 
+    @XmlTransient
     public String getTypeComment() {
         return typeComment;
     }
 
+    @XmlTransient
     public void setTypeComment(String typeComment) {
         this.typeComment = typeComment;
     }

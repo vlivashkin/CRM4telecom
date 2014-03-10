@@ -32,17 +32,17 @@
                     <h:outputLabel value="Date ranges:"/>
                     <h:panelGroup >
                         <p:calendar value="#{orderBean.search.fromDate}" >
-                            
-                             <f:ajax event="dateSelect" render=":tableForm" />
-                             <f:ajax event="change" render=":tableForm" />
+
+                            <f:ajax event="dateSelect" render=":tableForm" />
+                            <f:ajax event="change" render=":tableForm" />
                         </p:calendar>
-                            -
+                        -
                         <p:calendar value="#{orderBean.search.toDate}" >
                             <f:ajax event="dateSelect" render=":tableForm" />
                             <f:ajax event="change" render=":tableForm" />
-                            
+
                         </p:calendar>
-                            
+
                     </h:panelGroup>
                 </h:panelGrid>
                 <h:panelGroup>
@@ -58,6 +58,10 @@
                 </h:panelGroup>
             </h:form>
         </p:fieldset>  
+
+        <h:form>  
+            <p:commandButton value="Add Order" action="order_add?faces-redirect=true" icon="ui-icon-plus"/>  
+        </h:form>
 
         <h:form id="tableForm">
             <p:dataTable var="order" value="#{orderBean.orders}" paginator="true" rows="10" 
@@ -89,10 +93,6 @@
                 <p:column headerText="Manager" sortBy="managerId" filterBy="#{order.managerId}">  
                     <h:outputText value="#{order.managerId}" />  
                 </p:column> 
-
-                <f:facet name="footer">  
-                    <p:commandButton value="Add Order" action="order_new?faces-redirect=true" icon="ui-icon-plus"/>  
-                </f:facet>
             </p:dataTable>  
         </h:form>
     </ui:define>

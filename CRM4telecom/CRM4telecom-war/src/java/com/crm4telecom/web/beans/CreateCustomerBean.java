@@ -3,9 +3,11 @@ package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
+import java.io.Serializable;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+
 
 /**
  *
@@ -13,8 +15,8 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
-public class CreateCustomerBean{
+@SessionScoped
+public class CreateCustomerBean implements Serializable {
     private Long customerId;
     private String lastName;
     private String firstName;

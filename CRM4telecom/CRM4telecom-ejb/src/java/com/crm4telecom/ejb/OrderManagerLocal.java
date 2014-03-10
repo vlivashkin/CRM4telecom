@@ -18,8 +18,6 @@ public interface OrderManagerLocal {
 
     Order getOrder(Long orderId);
 
-    List<Order> getAllOrders();
-
     List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters,Map<String,List<String>> parametrs);
 
     Long getOrdersCount();

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.ejb.Stateless;
-import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -32,12 +31,10 @@ public class OrderManager implements OrderManagerLocal {
         order.setOrderDate(date);
         order.setStatus(OrderState.NEW.name());
         em.persist(order);
-     //   OrderProcessing op = new OrderProcessing(order.);
-     //   op.setStartDate(date);
-      //  op.setStepName(OrderEvent.CREATED.name());
-      //  em.persist(op);
-     //   order.setOrderProcessing(op);
-        em.persist(order);
+        OrderProcessing op = new OrderProcessing(order.getOrderId());
+        op.setStartDate(date);
+        op.setStepName(OrderEvent.CREATED.name());
+        em.persist(op);
 
         return order;
     }
@@ -65,12 +62,6 @@ public class OrderManager implements OrderManagerLocal {
     public Order getOrder(Long orderId) {
         Order order = em.find(Order.class, orderId);
         return order;
-    }
-
-    @Override
-    public List<Order> getAllOrders() {
-        return em.createQuery("SELECT c FROM Orders c").getResultList();
-
     }
 
     @Override

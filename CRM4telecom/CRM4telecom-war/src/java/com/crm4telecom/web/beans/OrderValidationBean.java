@@ -6,12 +6,12 @@ import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class OrderValidationBean implements Serializable {
 
     @EJB

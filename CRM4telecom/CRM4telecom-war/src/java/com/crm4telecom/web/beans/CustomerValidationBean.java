@@ -1,17 +1,15 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.jpa.Customer;
-import java.util.Date;
+import java.io.Serializable;
 import javax.annotation.ManagedBean;
-import javax.enterprise.context.RequestScoped;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Past;
+import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @ManagedBean
-@RequestScoped
-public class CustomerValidationBean {
+@SessionScoped
+public class CustomerValidationBean implements Serializable {
 
     @Size(min=1, max=30)
     String firstName;

@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
@@ -37,37 +36,32 @@ public class OrderBean implements Serializable {
     @Inject
     private OrderValidationBean validation;
 
-    @ManagedProperty(value="#{orderSearchBean")
+    @Inject
     private OrderSearchBean search;
-
+    
+    @Inject
+    private OrderCommentBean comment;
     
     private Map<String, List<String>> parametrs;
-    private OrderSearchBean sss;
 
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
         parametrs = new HashMap();
-        search = new OrderSearchBean();
     }
 
     public OrderValidationBean getValidation() {
         return validation;
     }
 
-    public void setValidation(OrderValidationBean validation) {
-        this.validation = validation;
-    }
-
     public OrderSearchBean getSearch() {
-        
         return search;
     }
 
-    public void setSearch(OrderSearchBean search) {
-        this.search = search;
+    public OrderCommentBean getComment() {
+        return comment;
     }
-
+    
     public LazyDataModel<Order> getOrders() {
         
         if (search.order != null && search.order.length() != 0) {
@@ -147,6 +141,7 @@ public class OrderBean implements Serializable {
     public void setOrder(Order order) {
         this.order = order;
         validation.init(order);
+        comment.init(order);
     }
 
     public void onRowSelect() throws IOException {

@@ -3,7 +3,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsf/composite/composites">
     <ui:define name="windowTitle">
         CRM4telecom | Order #{orderBean.order.orderId}
     </ui:define>
@@ -12,93 +13,114 @@
     </ui:define>
 
     <ui:define name="content">
-        <h1>Order #{orderBean.order.orderId}</h1>
-        <p:tabView id="tabPanel">
-            <p:tab title="Info">
-                <h:form id="viewform">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel value="Date:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.orderDate}"/>
-                        <h:outputLabel value="State:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.status}"/>
-                        <h:outputLabel value="Priority:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.priority}"/>
-                        <h:outputLabel value="Client:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.customerId}"/>
-                        <h:outputLabel value="Manager:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.managerId}"/>
-                        <h:outputLabel value="Operator:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.employeeId}"/>
-                        <h:outputLabel value="Product:" style="font-weight:bold"/>
-                        <h:outputText value="#{orderBean.order.productId.productId}"/>
-                        <h:outputLabel value="Tech support:" style="font-weight:bold"/>
-                        <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
-                    </h:panelGrid>   
+        <div class="main">
+            <h1>Order #{orderBean.order.orderId}</h1>
+            <p:tabView id="tabPanel" style="float: left; width: 70%">
+                <p:tab title="Info">
+                    <h:form id="viewform">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Date:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.orderDate}"/>
+                            <h:outputLabel value="State:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.status}"/>
+                            <h:outputLabel value="Priority:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.priority}"/>
+                            <h:outputLabel value="Client:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.customerId}"/>
+                            <h:outputLabel value="Manager:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.managerId}"/>
+                            <h:outputLabel value="Operator:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.employeeId}"/>
+                            <h:outputLabel value="Product:" style="font-weight:bold"/>
+                            <h:outputText value="#{orderBean.order.productId.productId}"/>
+                            <h:outputLabel value="Tech support:" style="font-weight:bold"/>
+                            <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
+                        </h:panelGrid>   
+                    </h:form>
+                    <h:form id="statusform">
+                        <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
+                            <f:facet name="header">Process:</f:facet>
+
+                            <p:column headerText="Step Name">
+                                <h:outputText value="#{orderProcessing.stepName}"/>
+                            </p:column>
+
+                            <p:column headerText="Description">
+                                <h:outputText value="#{orderProcessing.description}"/>
+                            </p:column> 
+
+                            <p:column headerText="Start Date">
+                                <h:outputText value="#{orderProcessing.startDate}"/>
+                            </p:column>   
+
+                            <p:column headerText="End Date">
+                                <h:outputText value="#{orderProcessing.endDate}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <h:outputText value="New event:" />
+                        <p:selectOneRadio id="grid" value="#{orderBean.event}" layout="grid" columns="1">
+                            <f:selectItems value="#{orderBean.events}" var="event"
+                                           itemValue="#{event}" itemLabel="#{event.label}"/>
+                        </p:selectOneRadio>
+
+                        <p:commandButton id="submitButton" value="Submit" update="statusform" action="#{orderBean.changeState}"/>
+                    </h:form>
+                </p:tab>
+                <p:tab title="Edit">
+                    <h:form id="editform">
+                        <p:messages />  
+
+                        <h:panelGrid columns="3" cellpadding="5">  
+                            <h:outputLabel for="customerId" value="Customer ID:" />  
+                            <p:inputText id="customerId" value="#{orderBean.validation.customerId}" label="Customer"/>  
+                            <p:message for="customerId" />  
+
+                            <h:outputLabel for="priority" value="Priority:" /> 
+                            <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
+                                <f:selectItems value="#{orderBean.priorities}" var="priority"
+                                               itemValue="#{priority}" itemLabel="#{priority.name()}"/>
+                            </p:selectOneMenu>
+                            <p:message for="priority" />  
+
+                            <h:outputLabel for="managerId" value="Manager ID:" />  
+                            <p:inputText id="managerId" value="#{orderBean.validation.managerId}" label="Manager"/>  
+                            <p:message for="managerId" />  
+
+                            <h:outputLabel for="employeeId" value="Operator ID:" />  
+                            <p:inputText id="employeeId" value="#{orderBean.validation.employeeId}" label="Operator"/>  
+                            <p:message for="employeeId" />  
+
+                            <h:outputLabel for="productId" value="Product ID:" />  
+                            <p:inputText id="productId" value="#{orderBean.validation.productId}" label="Product"/>  
+                            <p:message for="productId" />  
+
+                            <h:outputLabel for="techSupport" value="Tech support flag:" />  
+                            <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  
+                            <p:message for="techSupport" />  
+                        </h:panelGrid>  
+                        <p:commandButton value="Save" update="editform :tabPanel:viewform" icon="ui-icon-check" validateClient="true" action="#{orderBean.modify()}" />
+                    </h:form>
+                </p:tab>        
+            </p:tabView>
+
+            <div style="float: right; width: 30%">
+                <h:form id="comments" style="padding-left: 5px">
+                    <p:dataGrid var="comment" value="#{orderBean.comment.comments}" columns="1"  
+                                rows="5" paginator="true"  
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                rowsPerPageTemplate="5,10,15">  
+
+                        <p:panel header="guest commented at #{comment.date}" style="text-align:center">  
+                            <pre>#{comment.text}</pre>  
+                        </p:panel> 
+
+                        <f:facet name="footer">  
+                            <p:inputTextarea rows="2" cols="33" value="#{orderBean.comment.text}" style="width: calc(100% - 110px)"/> 
+                            <p:commandButton value="Comment" action="#{orderBean.comment.addComment}" update=":comments" style="float: right"/>
+                        </f:facet>
+                    </p:dataGrid>  
                 </h:form>
-                <h:form id="statusform">
-                    <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
-                        <f:facet name="header">Process:</f:facet>
-
-                        <p:column headerText="Step Name">
-                            <h:outputText value="#{orderProcessing.stepName}"/>
-                        </p:column>
-
-                        <p:column headerText="Description">
-                            <h:outputText value="#{orderProcessing.description}"/>
-                        </p:column> 
-
-                        <p:column headerText="Start Date">
-                            <h:outputText value="#{orderProcessing.startDate}"/>
-                        </p:column>   
-
-                        <p:column headerText="End Date">
-                            <h:outputText value="#{orderProcessing.endDate}"/>
-                        </p:column>
-                    </p:dataTable>
-                    <h:outputText value="New event:" />
-                    <p:selectOneRadio id="grid" value="#{orderBean.event}" layout="grid" columns="1">
-                        <f:selectItems value="#{orderBean.events}" var="event"
-                                       itemValue="#{event}" itemLabel="#{event.label}"/>
-                    </p:selectOneRadio>
-
-                    <p:commandButton id="submitButton" value="Submit" update="statusform" action="#{orderBean.changeState}"/>
-                </h:form>
-            </p:tab>
-            <p:tab title="Edit">
-                <h:form id="editform">
-                    <p:messages />  
-
-                    <h:panelGrid columns="3" cellpadding="5">  
-                        <h:outputLabel for="customerId" value="Customer ID:" />  
-                        <p:inputText id="customerId" value="#{orderBean.validation.customerId}" label="Customer"/>  
-                        <p:message for="customerId" />  
-
-                        <h:outputLabel for="priority" value="Priority:" /> 
-                        <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
-                            <f:selectItems value="#{orderBean.priorities}" var="priority"
-                                           itemValue="#{priority}" itemLabel="#{priority.name()}"/>
-                        </p:selectOneMenu>
-                        <p:message for="priority" />  
-
-                        <h:outputLabel for="managerId" value="Manager ID:" />  
-                        <p:inputText id="managerId" value="#{orderBean.validation.managerId}" label="Manager"/>  
-                        <p:message for="managerId" />  
-
-                        <h:outputLabel for="employeeId" value="Operator ID:" />  
-                        <p:inputText id="employeeId" value="#{orderBean.validation.employeeId}" label="Operator"/>  
-                        <p:message for="employeeId" />  
-
-                        <h:outputLabel for="productId" value="Product ID:" />  
-                        <p:inputText id="productId" value="#{orderBean.validation.productId}" label="Product"/>  
-                        <p:message for="productId" />  
-
-                        <h:outputLabel for="techSupport" value="Tech support flag:" />  
-                        <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  
-                        <p:message for="techSupport" />  
-                    </h:panelGrid>  
-                    <p:commandButton value="Save" update="editform :tabPanel:viewform" icon="ui-icon-check" validateClient="true" action="#{orderBean.modify()}" />
-                </h:form>
-            </p:tab>        
-        </p:tabView>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
