@@ -78,7 +78,6 @@ public class OrderManager implements OrderManagerLocal {
     @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c        ";
-        System.out.println("size ===" + parametrs.size());
         if (!parametrs.isEmpty()) {
             sqlQuery += " WHERE";
             for (String paramProperty : parametrs.keySet()) {
@@ -135,7 +134,7 @@ public class OrderManager implements OrderManagerLocal {
             }
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += " LOWER(c." + filterProperty + ") like LOWER ( \'%" + filterValue + "%\' ) AND";
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
@@ -172,7 +171,7 @@ public class OrderManager implements OrderManagerLocal {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += " LOWER( c." + filterProperty + ") like LWER ( \'%" + filterValue + "%\' )  AND";
             }
 
         }

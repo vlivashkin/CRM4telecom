@@ -39,7 +39,7 @@ public class OrderBean implements Serializable {
 
     @ManagedProperty(value="#{orderSearchBean")
     private OrderSearchBean search;
-    private OrderSearchBean sss;
+    
 
     @PostConstruct
     public void init() {

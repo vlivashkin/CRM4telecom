@@ -14,11 +14,11 @@ public interface CustomerManagerLocal {
 
     Customer getCustomer(Long customerId);
 
-    List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters);
+    List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters,Map<String,List<String>> parametrs);
 
     Long getCustomersCount();
 
-    Long getCustomersCount(Map<String, String> filters);
+    Long getCustomersCount(Map<String, String> filters, Map<String,List<String>> parametrs);
     
     List<Customer> search(Map<String, String> parametr);
     

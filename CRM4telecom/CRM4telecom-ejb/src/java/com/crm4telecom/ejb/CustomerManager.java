@@ -34,16 +34,43 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
-    public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters) {
-        String sqlQuery = "SELECT c FROM Customer c";
+    public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
+        String sqlQuery = "SELECT c FROM Customer c       ";
+        if (!parametrs.isEmpty()) {
+            sqlQuery += " WHERE";
+            for (String paramProperty : parametrs.keySet()) {
+                List<String> val = (List<String>) parametrs.get(paramProperty);
+                if (val.size() > 1) {
+                    sqlQuery += " ( ";
+                    for (int i = 0; i < val.size(); i++) {
+                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
+
+                    }
+                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
+                    sqlQuery += " ) AND";
+                } else {
+                    String check = (String) paramProperty;
+                    sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+
+                }
+
+            }
+
+        }
         if (filters != null && !filters.isEmpty()) {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += "  LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\')  AND";
             }
+        }
+        
+        if (sqlQuery.endsWith("WHERE")) {
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
+        } else {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
+
         if (sortField != null && !"".equals(sortField)) {
             sqlQuery += " ORDER BY c." + sortField;
         }
@@ -53,7 +80,7 @@ public class CustomerManager implements CustomerManagerLocal {
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
-        System.out.println(query.getResultList().get(0));
+        System.out.println(sqlQuery);
         return query.getResultList();
     }
 
@@ -66,16 +93,43 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
-    public Long getCustomersCount(Map<String, String> filters) {
-        String sqlQuery = "SELECT COUNT(c) FROM Customer c";
+    public Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
+        String sqlQuery = "SELECT COUNT(c) FROM Customer c      ";
+        if (!parametrs.isEmpty()) {
+            sqlQuery += " WHERE";
+            for (String paramProperty : parametrs.keySet()) {
+                List<String> val = (List<String>) parametrs.get(paramProperty);
+                if (val.size() > 1) {
+                    sqlQuery += " ( ";
+                    for (int i = 0; i < val.size(); i++) {
+                        sqlQuery += "  LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
+
+                    }
+                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
+                    sqlQuery += " ) AND";
+                } else {
+                    String check = (String) paramProperty;
+                    sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+
+                }
+
+            }
+
+        }
+
         if (filters != null && !filters.isEmpty()) {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += "   LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\' ) AND";
             }
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
+        if( sqlQuery.endsWith("WHERE")){
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
+        }else{
+        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
     }
@@ -88,7 +142,7 @@ public class CustomerManager implements CustomerManagerLocal {
             Iterator it = parametr.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pairs = (Map.Entry) it.next();
-                sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";
+                sqlQuery += "  LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";
                 System.out.println(pairs.getKey() + " = " + pairs.getValue());
                 it.remove();
             }
@@ -128,7 +182,7 @@ public class CustomerManager implements CustomerManagerLocal {
                 return customers;
             }
             query.setMaxResults(10);
-            
+
             return query.getResultList();
         }
         return customers;
