@@ -70,13 +70,15 @@ public class OrderManager implements OrderManagerLocal {
     public List<OrderProcessing> getProcessList(Order order) {
         String sqlQuery = "SELECT c FROM OrderProcessing c WHERE c.orderId = :orderId";
         Query query = em.createQuery(sqlQuery, OrderProcessing.class);
+        System.out.println("id==="+order.getOrderId());
         query.setParameter("orderId", order.getOrderId());
+        System.out.println(sqlQuery);
         return query.getResultList();
     }
-    
+
     @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT c FROM Orders c        ";
+        String sqlQuery = "SELECT c FROM Orders c";
         if (!parametrs.isEmpty()) {
             sqlQuery += " WHERE";
             for (String paramProperty : parametrs.keySet()) {
@@ -143,10 +145,11 @@ public class OrderManager implements OrderManagerLocal {
         if ("DESCENDING".endsWith(sortOrder)) {
             sqlQuery += " DESC";
         }
-        if( sqlQuery.endsWith("WHERE")){
+        if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }else{
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        if (sqlQuery.endsWith("AND")) {
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
         }
         Query query = em.createQuery(sqlQuery, Order.class);
         query.setFirstResult(first);
@@ -223,13 +226,13 @@ public class OrderManager implements OrderManagerLocal {
                 }
 
             }
-
         }
-         if( sqlQuery.endsWith("WHERE")){
+        if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }else{
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
-         }
+        }
+        if (sqlQuery.endsWith("AND")) {
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
+        }
         System.out.println(sqlQuery);
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();

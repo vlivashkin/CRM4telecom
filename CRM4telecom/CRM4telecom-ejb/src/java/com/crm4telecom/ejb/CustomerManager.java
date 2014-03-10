@@ -35,7 +35,7 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT c FROM Customer c       ";
+        String sqlQuery = "SELECT c FROM Customer c";
         if (!parametrs.isEmpty()) {
             sqlQuery += " WHERE";
             for (String paramProperty : parametrs.keySet()) {
@@ -64,13 +64,14 @@ public class CustomerManager implements CustomerManagerLocal {
                 sqlQuery += "  LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\')  AND";
             }
         }
-        
+
         if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        } else {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        } 
+        if (sqlQuery.endsWith("AND")) {
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
         }
-
+        
         if (sortField != null && !"".equals(sortField)) {
             sqlQuery += " ORDER BY c." + sortField;
         }
@@ -94,7 +95,7 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT COUNT(c) FROM Customer c      ";
+        String sqlQuery = "SELECT COUNT(c) FROM Customer c";
         if (!parametrs.isEmpty()) {
             sqlQuery += " WHERE";
             for (String paramProperty : parametrs.keySet()) {
@@ -124,12 +125,12 @@ public class CustomerManager implements CustomerManagerLocal {
                 sqlQuery += "   LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\' ) AND";
             }
         }
-        if( sqlQuery.endsWith("WHERE")){
+        if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }else{
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
-        
+        if (sqlQuery.endsWith("AND")) {
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
+        }
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
     }
