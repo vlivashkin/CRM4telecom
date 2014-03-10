@@ -16,7 +16,41 @@
 
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
             <h:form id="searchForm">
-
+                <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputLabel value="Last Name:"/>
+                    <p:inputText value="#{customerBean.search.lastName}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="First Name:"/>
+                    <p:inputText value="#{customerBean.search.firstName}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Email:"/>
+                    <p:inputText value="#{customerBean.search.email}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Balance:"/>
+                    <p:inputText value="#{customerBean.search.balance}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Street:"/>
+                    <p:inputText value="#{customerBean.search.street}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Building:"/>
+                    <p:inputText value="#{customerBean.search.building}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Flat:"/>
+                    <p:inputText value="#{customerBean.search.flat}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    <h:outputLabel value="Phone number:"/>
+                    <p:inputText value="#{customerBean.search.phoneNumber}">
+                        <f:ajax event="change" render=":tableForm" />
+                    </p:inputText>
+                    
+                </h:panelGrid>
             </h:form>
         </p:fieldset>
         
@@ -25,7 +59,7 @@
         </h:form>
 
         <h:form id="tableForm">  
-            <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="10"  
+            <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="5"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerBean.customer}" id="customerTable" lazy="true">  
 

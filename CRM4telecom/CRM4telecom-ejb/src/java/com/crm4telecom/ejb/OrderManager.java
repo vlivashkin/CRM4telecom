@@ -5,8 +5,8 @@ import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.ejb.util.OrderType;
 import com.crm4telecom.jpa.Customer;
-import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Product;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -75,7 +77,6 @@ public class OrderManager implements OrderManagerLocal {
     @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c        ";
-        System.out.println("size ===" + parametrs.size());
         if (!parametrs.isEmpty()) {
             sqlQuery += " WHERE";
             for (String paramProperty : parametrs.keySet()) {
@@ -92,8 +93,23 @@ public class OrderManager implements OrderManagerLocal {
                     String check = (String) paramProperty;
                     if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
                         if (check.compareTo("customerId") == 0) {
-                            
-                            sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                            Pattern p = Pattern.compile("[0-9]{1,}");
+                            Pattern p1 = Pattern.compile("#[0-9]{1,}");
+                            Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
+                            Matcher m2 = p2.matcher(val.get(0));
+                            Matcher m1 = p1.matcher(val.get(0));
+                            Matcher m = p.matcher(val.get(0));
+
+                            if (m2.matches()) {
+                                sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                            }
+
+                            if (m.matches()) {
+                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                            }
+                            if (m1.matches()) {
+                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
+                            }
                         } else {
                             sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
                         }
@@ -117,7 +133,7 @@ public class OrderManager implements OrderManagerLocal {
             }
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += " LOWER(c." + filterProperty + ") like LOWER ( \'%" + filterValue + "%\' ) AND";
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
@@ -127,8 +143,11 @@ public class OrderManager implements OrderManagerLocal {
         if ("DESCENDING".endsWith(sortOrder)) {
             sqlQuery += " DESC";
         }
-
+        if( sqlQuery.endsWith("WHERE")){
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
+        }else{
         sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
         Query query = em.createQuery(sqlQuery, Order.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
@@ -151,15 +170,14 @@ public class OrderManager implements OrderManagerLocal {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " c." + filterProperty + " like \'" + filterValue + "%\' AND";
+                sqlQuery += " LOWER( c." + filterProperty + ") like LWER ( \'%" + filterValue + "%\' )  AND";
             }
-            System.out.println("filterasasd");
 
         }
         if (!parametrs.isEmpty()) {
             if (filters.isEmpty()) {
                 sqlQuery += " WHERE";
-                
+
             }
             for (String paramProperty : parametrs.keySet()) {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
@@ -175,7 +193,22 @@ public class OrderManager implements OrderManagerLocal {
                     String check = (String) paramProperty;
                     if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
                         if (check.compareTo("customerId") == 0) {
-                            sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                            Pattern p = Pattern.compile("[0-9]{1,}");
+                            Pattern p1 = Pattern.compile("#[0-9]{1,}");
+                            Matcher m1 = p1.matcher(val.get(0));
+                            Matcher m = p.matcher(val.get(0));
+                            Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
+                            Matcher m2 = p2.matcher(val.get(0));
+
+                            if (m2.matches()) {
+                                sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                            }
+                            if (m.matches()) {
+                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                            }
+                            if (m1.matches()) {
+                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
+                            }
                         } else {
                             sqlQuery += " LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
                         }
@@ -192,8 +225,11 @@ public class OrderManager implements OrderManagerLocal {
             }
 
         }
-
+         if( sqlQuery.endsWith("WHERE")){
+            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
+        }else{
         sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+         }
         System.out.println(sqlQuery);
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();

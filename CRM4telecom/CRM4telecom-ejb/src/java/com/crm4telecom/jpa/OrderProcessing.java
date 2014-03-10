@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,8 +61,8 @@ public class OrderProcessing implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @ManyToOne()
+    @PrimaryKeyJoinColumn(name= "ORDER_ID" ,referencedColumnName="ID")
     private Order orders;
 
     public OrderProcessing() {

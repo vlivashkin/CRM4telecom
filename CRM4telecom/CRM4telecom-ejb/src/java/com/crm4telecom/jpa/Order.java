@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -71,8 +75,8 @@ public class Order implements Serializable {
     @ManyToOne
     private Customer customerId;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orders")
-    private OrderProcessing orderProcessing;
+    @OneToMany( mappedBy = "orders")
+    private List<OrderProcessing> orderProcessing;
 
     public Order() {
     }
@@ -179,11 +183,11 @@ public class Order implements Serializable {
         this.customerId = customerId;
     }
 
-    public OrderProcessing getOrderProcessing() {
+    public List<OrderProcessing> getOrderProcessing() {
         return orderProcessing;
     }
 
-    public void setOrderProcessing(OrderProcessing orderProcessing) {
+    public void setOrderProcessing(List<OrderProcessing> orderProcessing) {
         this.orderProcessing = orderProcessing;
     }
 
