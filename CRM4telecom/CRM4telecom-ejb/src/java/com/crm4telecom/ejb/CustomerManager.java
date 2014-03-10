@@ -67,11 +67,11 @@ public class CustomerManager implements CustomerManagerLocal {
 
         if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        } 
+        }
         if (sqlQuery.endsWith("AND")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
         }
-        
+
         if (sortField != null && !"".equals(sortField)) {
             sqlQuery += " ORDER BY c." + sortField;
         }

@@ -19,9 +19,8 @@
     </managed-bean>
     <managed-bean>
         <managed-bean-name>searchBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.SearchBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>com.crm4telecom.web.beans.CustomerSearchBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>orderBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderBean</managed-bean-class>

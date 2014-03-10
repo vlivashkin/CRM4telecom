@@ -16,11 +16,12 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
     private OrderManagerLocal om;
     private List<Order> datasource;
     public OrderSearchBean search;
-    public Map<String,List<String>> parametrs;
-
+    public Map<String, List<String>> parametrs;
 
     public void setSearch(OrderSearchBean search) {
-         if(parametrs == null) parametrs = new HashMap();
+        if (parametrs == null) {
+            parametrs = new HashMap();
+        }
         if (search.getOrder() != null && search.getOrder().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getOrder());
@@ -60,30 +61,27 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
         if (search.getSelectedStatuses() != null && !search.getSelectedStatuses().isEmpty()) {
             parametrs.put("status", search.getSelectedStatuses());
         }
-        if(search.getToDate() == null){
+        if (search.getToDate() == null) {
             parametrs.remove("toDate");
         }
-        if(search.getFromDate() == null){
+        if (search.getFromDate() == null) {
             parametrs.remove("fromDate");
         }
-        if(search.getOrder() == null || search.getOrder().length() == 0){
+        if (search.getOrder() == null || search.getOrder().length() == 0) {
             parametrs.remove("orderId");
         }
-        if(search.getCustomer() == null || search.getCustomer().length() == 0 ){
+        if (search.getCustomer() == null || search.getCustomer().length() == 0) {
             parametrs.remove("customerId");
         }
-        if(search.getSelectedPriorities() == null || search.getSelectedPriorities().isEmpty()){
+        if (search.getSelectedPriorities() == null || search.getSelectedPriorities().isEmpty()) {
             parametrs.remove("priority");
         }
-        if(search.getSelectedStatuses() == null || search.getSelectedStatuses().isEmpty()){
+        if (search.getSelectedStatuses() == null || search.getSelectedStatuses().isEmpty()) {
             parametrs.remove("status");
         }
         this.search = search;
     }
-    
 
-    
-    
     public LazyOrderDataModel(OrderManagerLocal om) {
         this.om = om;
     }
@@ -107,9 +105,9 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
 
     @Override
     public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        setRowCount(om.getOrdersCount(filters,parametrs).intValue());
+        setRowCount(om.getOrdersCount(filters, parametrs).intValue());
         System.out.println(parametrs);
-        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters,parametrs);
+        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters, parametrs);
         parametrs.clear();
 
         return datasource;

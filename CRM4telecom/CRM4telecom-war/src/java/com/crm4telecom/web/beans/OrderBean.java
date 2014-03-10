@@ -5,15 +5,11 @@ import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderPriority;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.jpa.Order;
-import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,12 +39,9 @@ public class OrderBean implements Serializable {
     @Inject
     private OrderCommentBean comment;
     
-    private Map<String, List<String>> parametrs;
-    
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
-        parametrs = new HashMap();
     }
 
     public OrderValidationBean getValidation() {
@@ -62,13 +55,6 @@ public class OrderBean implements Serializable {
     public OrderCommentBean getComment() {
         return comment;
     }
-    
-    public List<OrderProcessing> getOrderProcessing() {
-        for(OrderProcessing temp : order.getOrderProcessing()) {
-            System.out.println("ee:" + temp.getStepName());
-        }
-        return order.getOrderProcessing();
-    }   
     
     public LazyDataModel<Order> getOrders() {
         lazyModel.setSearch(search);

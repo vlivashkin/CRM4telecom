@@ -3,7 +3,6 @@ package com.crm4telecom.ejb;
 import com.crm4telecom.ejb.util.OrderEvent;
 import com.crm4telecom.ejb.util.OrderState;
 import com.crm4telecom.jpa.Order;
-import com.crm4telecom.jpa.OrderProcessing;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;

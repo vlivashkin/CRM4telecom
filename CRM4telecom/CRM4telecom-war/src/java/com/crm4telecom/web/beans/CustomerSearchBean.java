@@ -22,7 +22,7 @@ import javax.enterprise.context.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class SearchBean implements Serializable {
+public class CustomerSearchBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;

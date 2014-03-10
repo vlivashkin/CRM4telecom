@@ -75,7 +75,7 @@ public class Order implements Serializable {
     @ManyToOne
     private Customer customerId;
 
-    @OneToMany( mappedBy = "orders")
+    @OneToMany(mappedBy = "orders")
     private List<OrderProcessing> orderProcessing;
 
     public Order() {

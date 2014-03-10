@@ -19,26 +19,26 @@
                 <p:tab title="Info">
                     <h:form id="viewform">
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel value="Date:" style="font-weight:bold"/>
+                            <h:outputLabel value="Date:"/>
                             <h:outputText value="#{orderBean.order.orderDate}"/>
-                            <h:outputLabel value="State:" style="font-weight:bold"/>
+                            <h:outputLabel value="State:"/>
                             <h:outputText value="#{orderBean.order.status}"/>
-                            <h:outputLabel value="Priority:" style="font-weight:bold"/>
+                            <h:outputLabel value="Priority:"/>
                             <h:outputText value="#{orderBean.order.priority}"/>
-                            <h:outputLabel value="Client:" style="font-weight:bold"/>
+                            <h:outputLabel value="Client:"/>
                             <h:outputText value="#{orderBean.order.customerId}"/>
-                            <h:outputLabel value="Manager:" style="font-weight:bold"/>
+                            <h:outputLabel value="Manager:"/>
                             <h:outputText value="#{orderBean.order.managerId}"/>
-                            <h:outputLabel value="Operator:" style="font-weight:bold"/>
+                            <h:outputLabel value="Operator:"/>
                             <h:outputText value="#{orderBean.order.employeeId}"/>
-                            <h:outputLabel value="Product:" style="font-weight:bold"/>
+                            <h:outputLabel value="Product:"/>
                             <h:outputText value="#{orderBean.order.productId.productId}"/>
-                            <h:outputLabel value="Tech support:" style="font-weight:bold"/>
+                            <h:outputLabel value="Tech support:"/>
                             <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
                         </h:panelGrid>   
                     </h:form>
                     <h:form id="statusform">
-                        <p:dataTable value="#{orderBean.orderProcessing}" var="orderProcessing">
+                        <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
                             <f:facet name="header">Process:</f:facet>
 
                             <p:column headerText="Step Name">
@@ -103,24 +103,22 @@
                 </p:tab>        
             </p:tabView>
 
-            <div style="float: right; width: 30%">
-                <h:form id="comments" style="padding-left: 5px">
-                    <p:dataGrid var="comment" value="#{orderBean.comment.comments}" columns="1"  
-                                rows="5" paginator="true"  
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                rowsPerPageTemplate="5,10,15">  
+            <h:form id="comments" style="float: right; width: calc(30% - 10px)">
+                <p:dataGrid var="comment" value="#{orderBean.comment.comments}" columns="1"  
+                            rows="5" paginator="true"  
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                            rowsPerPageTemplate="5,10,15">  
 
-                        <p:panel header="guest commented at #{comment.date}" style="text-align:center">  
-                            <pre>#{comment.text}</pre>  
-                        </p:panel> 
+                    <p:panel header="guest commented at #{comment.date}" style="text-align:center">  
+                        <pre>#{comment.text}</pre>  
+                    </p:panel> 
 
-                        <f:facet name="footer">  
-                            <p:inputTextarea rows="2" cols="33" value="#{orderBean.comment.text}" style="width: calc(100% - 110px)"/> 
-                            <p:commandButton value="Comment" action="#{orderBean.comment.addComment}" update=":comments" style="float: right"/>
-                        </f:facet>
-                    </p:dataGrid>  
-                </h:form>
-            </div>
+                    <f:facet name="footer">  
+                        <p:inputTextarea rows="2" cols="33" value="#{orderBean.comment.text}" style="width: calc(100% - 110px)"/> 
+                        <p:commandButton value="Comment" action="#{orderBean.comment.addComment}" update=":comments" style="float: right"/>
+                    </f:facet>
+                </p:dataGrid>  
+            </h:form>
         </div>
     </ui:define>
 </ui:composition>

@@ -29,10 +29,6 @@ public class OrderProcessing implements Serializable {
     @Column(name = "STEP_ID")
     private Long stepId;
 
-    @NotNull
-    @Column(name = "ORDER_ID")
-    private Long orderId;
-
     @Size(max = 30)
     @Column(name = "STEP_NAME")
     private String stepName;
@@ -61,15 +57,11 @@ public class OrderProcessing implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    @ManyToOne()
-    @PrimaryKeyJoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
+    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
+    @ManyToOne
     private Order orders;
 
     public OrderProcessing() {
-    }
-
-    public OrderProcessing(Long orderId) {
-        this.orderId = orderId;
     }
 
     public Long getStepId() {
@@ -78,14 +70,6 @@ public class OrderProcessing implements Serializable {
 
     public void setStepId(Long stepId) {
         this.stepId = stepId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
     }
 
     public String getStepName() {
@@ -144,6 +128,14 @@ public class OrderProcessing implements Serializable {
         this.employeeId = employeeId;
     }
 
+    public Order getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Order orders) {
+        this.orders = orders;
+    }
+ 
     @Override
     public int hashCode() {
         int hash = 0;
