@@ -67,16 +67,6 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public List<OrderProcessing> getProcessList(Order order) {
-        String sqlQuery = "SELECT c FROM OrderProcessing c WHERE c.orderId = :orderId";
-        Query query = em.createQuery(sqlQuery, OrderProcessing.class);
-        System.out.println("id==="+order.getOrderId());
-        query.setParameter("orderId", order.getOrderId());
-        System.out.println(sqlQuery);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c";
         if (!parametrs.isEmpty()) {

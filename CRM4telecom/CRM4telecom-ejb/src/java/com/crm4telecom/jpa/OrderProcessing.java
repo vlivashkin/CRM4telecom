@@ -22,37 +22,37 @@ import javax.validation.constraints.Size;
 public class OrderProcessing implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(generator = "SEC_STEP_ID", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "SEC_STEP_ID", sequenceName = "SEC_STEP_ID", allocationSize = 1)
     @Column(name = "STEP_ID")
     private Long stepId;
-    
+
     @NotNull
     @Column(name = "ORDER_ID")
     private Long orderId;
-    
+
     @Size(max = 30)
     @Column(name = "STEP_NAME")
     private String stepName;
-    
+
     @Size(max = 30)
     @Column(name = "DESCRIPTION")
     private String description;
-    
+
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    
+
     @Column(name = "END_DATE_HARD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
-    
+
     @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
     @ManyToOne
     private Equipment equipmentId;
@@ -62,12 +62,12 @@ public class OrderProcessing implements Serializable {
     private Employee employeeId;
 
     @ManyToOne()
-    @PrimaryKeyJoinColumn(name= "ORDER_ID" ,referencedColumnName="ID")
+    @PrimaryKeyJoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
     private Order orders;
 
     public OrderProcessing() {
     }
-    
+
     public OrderProcessing(Long orderId) {
         this.orderId = orderId;
     }

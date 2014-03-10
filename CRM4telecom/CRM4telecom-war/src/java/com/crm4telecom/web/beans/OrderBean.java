@@ -64,7 +64,10 @@ public class OrderBean implements Serializable {
     }
     
     public List<OrderProcessing> getOrderProcessing() {
-        return om.getProcessList(order);
+        for(OrderProcessing temp : order.getOrderProcessing()) {
+            System.out.println("ee:" + temp.getStepName());
+        }
+        return order.getOrderProcessing();
     }   
     
     public LazyDataModel<Order> getOrders() {
