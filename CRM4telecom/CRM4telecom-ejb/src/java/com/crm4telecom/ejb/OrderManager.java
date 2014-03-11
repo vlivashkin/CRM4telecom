@@ -163,7 +163,7 @@ public class OrderManager implements OrderManagerLocal {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
                 String filterValue = filters.get(filterProperty);
-                sqlQuery += " LOWER( c." + filterProperty + ") like LWER ( \'%" + filterValue + "%\' )  AND";
+                sqlQuery += " LOWER( c." + filterProperty + ") like LOWER ( \'%" + filterValue + "%\' )  AND";
             }
 
         }

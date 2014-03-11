@@ -19,11 +19,11 @@ public class Users implements Serializable {
     @Id
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(nullable = false, length = 30)
+    @Column(name="LOGIN", nullable = false, length = 30)
     private String login;
 
     @Size(max = 30)
-    @Column(length = 30)
+    @Column(name="PASSWORD",length = 30)
     private String password;
 
     @Size(max = 30)
