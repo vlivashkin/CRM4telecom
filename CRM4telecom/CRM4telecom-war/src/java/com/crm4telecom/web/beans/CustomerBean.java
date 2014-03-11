@@ -3,14 +3,13 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
+import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
@@ -26,7 +25,7 @@ public class CustomerBean implements Serializable {
 
     @Inject
     private CustomerValidationBean cv;
-    
+
     @Inject
     private CustomerSearchBean search;
 
@@ -51,8 +50,6 @@ public class CustomerBean implements Serializable {
     public void setSearch(CustomerSearchBean search) {
         this.search = search;
     }
-    
-    
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -60,22 +57,25 @@ public class CustomerBean implements Serializable {
     }
 
     public void onRowSelect() {
-        forwardNavigation("customer_info");
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("customer_info");
     }
-    
-    public void create() {
-        Customer customer = new Customer();
-        cv.fillCustomer(customer);
-        cm.createCustomer(customer);
 
-        forwardNavigation("customer_list");
+    public void create() {
+        Customer customerNew = new Customer();
+        cv.fillCustomer(customerNew);
+        cm.createCustomer(customerNew);
+
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("customer_list");
     }
 
     public void modify() {
         cv.fillCustomer(customer);
         cm.modifyCustomer(customer);
-        
-        forwardNavigation("customer_info");
+
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("customer_info");
     }
 
     public CustomerValidationBean getCv() {
@@ -88,13 +88,5 @@ public class CustomerBean implements Serializable {
 
     public List<String> completeCustomer(String customer) {
         return cm.completeCustomer(customer);
-    }
-    
-    private void forwardNavigation(String outcome) {
-        ConfigurableNavigationHandler configurableNavigationHandler
-                = (ConfigurableNavigationHandler) FacesContext.
-                getCurrentInstance().getApplication().getNavigationHandler();
-
-        configurableNavigationHandler.performNavigation(outcome + "?faces-redirect=true");
     }
 }

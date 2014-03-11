@@ -1,13 +1,13 @@
-package com.crm4telecom.ejb.util;
+package com.crm4telecom.enums;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public enum OrderState {
+public enum OrderStatus {
 
     NEW {
                 @Override
-                public OrderState nextState(OrderEvent event) {
+                public OrderStatus nextState(OrderEvent event) {
                     if (event == OrderEvent.SENT_TO_TECH_SUPPORT || event == OrderEvent.ENGINEER_APPOINTED) {
                         return OPENED;
                     }
@@ -25,7 +25,7 @@ public enum OrderState {
             },
     OPENED {
                 @Override
-                public OrderState nextState(OrderEvent event) {
+                public OrderStatus nextState(OrderEvent event) {
                     if (event == OrderEvent.DELAY) {
                         return WAITING;
                     } else if (event == OrderEvent.DONE) {
@@ -45,7 +45,7 @@ public enum OrderState {
             },
     WAITING {
                 @Override
-                public OrderState nextState(OrderEvent event) {
+                public OrderStatus nextState(OrderEvent event) {
                     if (event == OrderEvent.READY) {
                         return OPENED;
                     } else if (event == OrderEvent.CANCELLED) {
@@ -65,7 +65,7 @@ public enum OrderState {
             },
     LOCKED {
                 @Override
-                public OrderState nextState(OrderEvent event) {
+                public OrderStatus nextState(OrderEvent event) {
                     if (event == OrderEvent.READY) {
                         return OPENED;
                     }
@@ -82,7 +82,7 @@ public enum OrderState {
             },
     CLOSED {
                 @Override
-                public OrderState nextState(OrderEvent event) {
+                public OrderStatus nextState(OrderEvent event) {
                     return this;
                 }
 
@@ -94,7 +94,7 @@ public enum OrderState {
                 }
             };
 
-    public abstract OrderState nextState(OrderEvent event);
+    public abstract OrderStatus nextState(OrderEvent event);
 
     public abstract List<OrderEvent> possibleEvents();
 }

@@ -1,30 +1,27 @@
 package com.crm4telecom.jpa;
 
-import com.crm4telecom.ejb.util.OrderEvent;
-import com.crm4telecom.ejb.util.OrderState;
+import com.crm4telecom.enums.*;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity(name = "Orders")
 @Table
@@ -42,20 +39,20 @@ public class Order implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
-    @Size(max = 30)
     @Column(name = "ORDER_TYPE", length = 30)
-    private String orderType;
+    @Enumerated(EnumType.STRING)
+    private OrderType orderType;
 
-    @Column(name = "TYPE_COMMENT")
-    private String typeComment;
+    @Column(name = "COMMENTS")
+    private String comments;
 
-    @Size(max = 30)
     @Column(length = 30)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    @Size(max = 30)
     @Column(length = 30)
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    private OrderPriority priority;
 
     @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
@@ -63,7 +60,6 @@ public class Order implements Serializable {
     @Column(name = "MANAGER_ID")
     private Long managerId;
 
-    @Size(max = 30)
     @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
     private String technicalSupportFlag;
 
@@ -75,22 +71,14 @@ public class Order implements Serializable {
     @ManyToOne
     private Customer customerId;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderProcessing> orderProcessing;
 
     public Order() {
     }
 
-    public Order(Long orderId) {
-        this.orderId = orderId;
-    }
-
     public Long getOrderId() {
         return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
     }
 
     public Date getOrderDate() {
@@ -101,46 +89,41 @@ public class Order implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public String getOrderType() {
+    public OrderType getOrderType() {
         return orderType;
     }
 
-    public void setOrderType(String orderType) {
+    public void setOrderType(OrderType orderType) {
         this.orderType = orderType;
     }
 
-    @XmlTransient
-    public String getTypeComment() {
-        return typeComment;
+    public String getComments() {
+        return comments;
     }
 
-    @XmlTransient
-    public void setTypeComment(String typeComment) {
-        this.typeComment = typeComment;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public OrderState changeOrderState(OrderEvent event) {
-        OrderState state = OrderState.valueOf(status);
-        state = state.nextState(event);
-        status = state.name();
-
-        return state;
-    }
-
-    public String getPriority() {
+    public OrderPriority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(OrderPriority priority) {
         this.priority = priority;
+    }
+
+    public OrderStatus changeOrderState(OrderEvent event) {
+        status = status.nextState(event);
+        return status;
     }
 
     public Long getEmployeeId() {
@@ -187,10 +170,6 @@ public class Order implements Serializable {
         return orderProcessing;
     }
 
-    public void setOrderProcessing(List<OrderProcessing> orderProcessing) {
-        this.orderProcessing = orderProcessing;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -205,10 +184,7 @@ public class Order implements Serializable {
             return false;
         }
         Order other = (Order) object;
-        if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
-            return false;
-        }
-        return true;
+        return (this.orderId != null || other.orderId == null) && (this.orderId == null || this.orderId.equals(other.orderId));
     }
 
     @Override

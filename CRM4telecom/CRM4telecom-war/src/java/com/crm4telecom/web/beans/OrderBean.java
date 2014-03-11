@@ -1,11 +1,12 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
-import com.crm4telecom.ejb.util.OrderEvent;
-import com.crm4telecom.ejb.util.OrderPriority;
-import com.crm4telecom.ejb.util.OrderState;
+import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderPriority;
+import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
+import com.crm4telecom.web.util.JSFHelper;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,8 +15,6 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 
@@ -72,31 +71,25 @@ public class OrderBean implements Serializable {
     }
 
     public void onRowSelect() throws IOException {
-        ConfigurableNavigationHandler configurableNavigationHandler
-                = (ConfigurableNavigationHandler) FacesContext.
-                getCurrentInstance().getApplication().getNavigationHandler();
-
-        configurableNavigationHandler.performNavigation("order_info?faces-redirect=true");
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_info");
     }
 
     public OrderPriority[] getPriorities() {
         return OrderPriority.values();
     }
 
-    public OrderState[] getStatuses() {
-        return OrderState.values();
+    public OrderStatus[] getStatuses() {
+        return OrderStatus.values();
     }
 
     public void create() {
-        Order order = new Order();
-        validation.fillOrder(order);
-        om.createOrder(order);
+        Order orderNew = new Order();
+        validation.fillOrder(orderNew);
+        om.createOrder(orderNew);
 
-        ConfigurableNavigationHandler configurableNavigationHandler
-                = (ConfigurableNavigationHandler) FacesContext.
-                getCurrentInstance().getApplication().getNavigationHandler();
-
-        configurableNavigationHandler.performNavigation("order_list?faces-redirect=true");
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_list");
     }
 
     public void modify() {
@@ -107,9 +100,9 @@ public class OrderBean implements Serializable {
     public List<OrderEvent> getEvents() {
         List<OrderEvent> events = new ArrayList<>();
         if (order != null) {
-            String status = order.getStatus();
+            OrderStatus status = order.getStatus();
             if (status != null) {
-                events = OrderState.valueOf(status).possibleEvents();
+                events = status.possibleEvents();
             }
         }
         return events;

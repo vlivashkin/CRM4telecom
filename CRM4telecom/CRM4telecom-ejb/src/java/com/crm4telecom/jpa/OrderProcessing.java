@@ -1,21 +1,23 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.OrderEvent;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Order_Processing", catalog = "", schema = "CRM4TELECOM")
@@ -29,11 +31,10 @@ public class OrderProcessing implements Serializable {
     @Column(name = "STEP_ID")
     private Long stepId;
 
-    @Size(max = 30)
     @Column(name = "STEP_NAME")
-    private String stepName;
+    @Enumerated(EnumType.STRING)
+    private OrderEvent stepEvent;
 
-    @Size(max = 30)
     @Column(name = "DESCRIPTION")
     private String description;
 
@@ -58,8 +59,8 @@ public class OrderProcessing implements Serializable {
     private Employee employeeId;
 
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
-    @ManyToOne
-    private Order orders;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Order order;
 
     public OrderProcessing() {
     }
@@ -68,16 +69,12 @@ public class OrderProcessing implements Serializable {
         return stepId;
     }
 
-    public void setStepId(Long stepId) {
-        this.stepId = stepId;
+    public OrderEvent getStepEvent() {
+        return stepEvent;
     }
 
-    public String getStepName() {
-        return stepName;
-    }
-
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
+    public void setStepEvent(OrderEvent stepEvent) {
+        this.stepEvent = stepEvent;
     }
 
     public String getDescription() {
@@ -128,14 +125,14 @@ public class OrderProcessing implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public Order getOrders() {
-        return orders;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrders(Order orders) {
-        this.orders = orders;
+    public void setOrder(Order order) {
+        this.order = order;
     }
- 
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -150,10 +147,7 @@ public class OrderProcessing implements Serializable {
             return false;
         }
         OrderProcessing other = (OrderProcessing) object;
-        if ((this.stepId == null && other.stepId != null) || (this.stepId != null && !this.stepId.equals(other.stepId))) {
-            return false;
-        }
-        return true;
+        return (this.stepId != null || other.stepId == null) && (this.stepId == null || this.stepId.equals(other.stepId));
     }
 
     @Override

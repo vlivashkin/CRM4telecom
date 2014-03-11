@@ -1,4 +1,4 @@
-package com.crm4telecom.ejb.util;
+package com.crm4telecom.enums;
 
 public enum OrderEvent {
 

@@ -1,7 +1,7 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
-import com.crm4telecom.ejb.util.OrderPriority;
+import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
@@ -19,7 +19,7 @@ public class OrderValidationBean implements Serializable {
 
     private Long customerId;
 
-    private String comment;
+    private String comments;
 
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
@@ -37,9 +37,9 @@ public class OrderValidationBean implements Serializable {
             if (order.getCustomerId() != null) {
                 customerId = order.getCustomerId().getCustomerId();
             }
-            comment = order.getTypeComment();
+            comments = order.getComments();
             if (order.getPriority() != null) {
-                priority = OrderPriority.valueOf(order.getPriority());
+                priority = order.getPriority();
             }
             managerId = order.getManagerId();
             employeeId = order.getEmployeeId();
@@ -53,10 +53,9 @@ public class OrderValidationBean implements Serializable {
     }
 
     public void fillOrder(Order order) {
-        System.out.println("'" + customerId + "'");
         order.setCustomerId(customerId == null ? null : cm.getCustomer(customerId));
-        order.setTypeComment(comment);
-        order.setPriority(priority.name());
+        order.setComments(comments);
+        order.setPriority(priority);
         order.setManagerId(managerId);
         order.setEmployeeId(employeeId);
         order.setProductId(null);
@@ -72,11 +71,11 @@ public class OrderValidationBean implements Serializable {
     }
 
     public String getComment() {
-        return comment;
+        return comments;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comments = comment;
     }
 
     public OrderPriority getPriority() {

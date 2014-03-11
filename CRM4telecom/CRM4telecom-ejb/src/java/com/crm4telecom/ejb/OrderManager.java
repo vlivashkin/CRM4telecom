@@ -1,9 +1,9 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.ejb.util.OrderEvent;
-import com.crm4telecom.ejb.util.OrderPriority;
-import com.crm4telecom.ejb.util.OrderState;
-import com.crm4telecom.ejb.util.OrderType;
+import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderPriority;
+import com.crm4telecom.enums.OrderStatus;
+import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
@@ -23,30 +23,30 @@ import javax.persistence.Query;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public Order createOrder(Order order) {
         Date date = new Date();
         order.setOrderDate(date);
-        order.setStatus(OrderState.NEW.name());
+        order.setStatus(OrderStatus.NEW);
         em.persist(order);
         OrderProcessing op = new OrderProcessing();
-        op.setOrders(order);
+        op.setOrder(order);
         op.setStartDate(date);
-        op.setStepName(OrderEvent.CREATED.name());
+        op.setStepEvent(OrderEvent.CREATED);
         em.persist(op);
-        
+
         return order;
     }
-    
+
     @Override
     public void modifyOrder(Order order) {
         em.merge(order);
     }
-    
+
     @Override
     public Order setCustomer(Order order, Long customerId) {
         if (customerId != null) {
@@ -57,16 +57,16 @@ public class OrderManager implements OrderManagerLocal {
             order.setCustomerId(customer);
             em.merge(order);
         }
-        
+
         return order;
     }
-    
+
     @Override
     public Order getOrder(Long orderId) {
         Order order = em.find(Order.class, orderId);
         return order;
     }
-    
+
     @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c";
@@ -76,9 +76,8 @@ public class OrderManager implements OrderManagerLocal {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
-                    for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
-                        
+                    for (String val1 : val) {
+                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
@@ -92,11 +91,11 @@ public class OrderManager implements OrderManagerLocal {
                             Matcher m2 = p2.matcher(val.get(0));
                             Matcher m1 = p1.matcher(val.get(0));
                             Matcher m = p.matcher(val.get(0));
-                            
+
                             if (m2.matches()) {
                                 sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
                             }
-                            
+
                             if (m.matches()) {
                                 sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
                             }
@@ -115,11 +114,11 @@ public class OrderManager implements OrderManagerLocal {
                         }
                     }
                 }
-                
+
             }
-            
+
         }
-        
+
         if (filters != null && !filters.isEmpty()) {
             if (parametrs.isEmpty()) {
                 sqlQuery += " WHERE";
@@ -148,15 +147,15 @@ public class OrderManager implements OrderManagerLocal {
         System.out.println(sqlQuery);
         return query.getResultList();
     }
-    
+
     @Override
     public Long getOrdersCount() {
         String sqlQuery = "SELECT COUNT(c) FROM Orders c   ";
-        
+
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();
     }
-    
+
     @Override
     public Long getOrdersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT COUNT(c) FROM Orders c       ";
@@ -166,20 +165,19 @@ public class OrderManager implements OrderManagerLocal {
                 String filterValue = filters.get(filterProperty);
                 sqlQuery += " LOWER( c." + filterProperty + ") like LWER ( \'%" + filterValue + "%\' )  AND";
             }
-            
+
         }
         if (!parametrs.isEmpty()) {
             if (filters.isEmpty()) {
                 sqlQuery += " WHERE";
-                
+
             }
             for (String paramProperty : parametrs.keySet()) {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
-                    for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += "   LOWER( c." + paramProperty + "  ) REGEXP LOWER('" + val.get(i) + "') OR";
-                        
+                    for (String val1 : val) {
+                        sqlQuery += "   LOWER( c." + paramProperty + "  ) REGEXP LOWER('" + val1 + "') OR";
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
@@ -193,7 +191,7 @@ public class OrderManager implements OrderManagerLocal {
                             Matcher m = p.matcher(val.get(0));
                             Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
                             Matcher m2 = p2.matcher(val.get(0));
-                            
+
                             if (m2.matches()) {
                                 sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
                             }
@@ -215,7 +213,7 @@ public class OrderManager implements OrderManagerLocal {
                         }
                     }
                 }
-                
+
             }
         }
         if (sqlQuery.endsWith("WHERE")) {
@@ -228,8 +226,8 @@ public class OrderManager implements OrderManagerLocal {
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();
     }
-    
-    private Order fillOrder(Order order, OrderType type, String typeComment, Long productId, OrderPriority priority, Long managerId) {
+
+    private Order fillOrder(Order order, OrderType type, String comments, Long productId, OrderPriority priority, Long managerId) {
         if (productId != null) {
             Product product = em.find(Product.class, productId);
             if (product == null) {
@@ -237,37 +235,37 @@ public class OrderManager implements OrderManagerLocal {
             }
             order.setProductId(product);
         }
-        
-        order.setOrderType(type.name());
-        order.setTypeComment(typeComment);
-        order.setPriority(priority.name());
+
+        order.setOrderType(type);
+        order.setComments(comments);
+        order.setPriority(priority);
         order.setManagerId(managerId);
-        
+
         return order;
     }
-    
+
     @Override
-    public OrderState getOrderState(Long orderId) {
+    public OrderStatus getOrderState(Long orderId) {
         Order order = em.find(Order.class, orderId);
         if (order == null) {
             throw new NoSuchElementException();
         }
-        String rawState = order.getOrderType();
-        
-        return OrderState.valueOf(rawState);
+
+        return order.getStatus();
     }
-    
+
     @Override
     public void changeOrderState(Order order, OrderEvent event) {
-        order.changeOrderState(event);
-        em.merge(order);
         OrderProcessing op = new OrderProcessing();
-        op.setOrders(order);
+        op.setOrder(order);
         op.setStartDate(new Date());
-        op.setStepName(event.name());
+        op.setStepEvent(event);
+        order.changeOrderState(event);
+        order.getOrderProcessing().add(op);
         em.persist(op);
+        em.merge(order);
     }
-    
+
     @Override
     public List<Order> search(Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c    ";
@@ -279,9 +277,8 @@ public class OrderManager implements OrderManagerLocal {
                 List<String> val = (List<String>) pairs.getValue();
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
-                    for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val.get(i) + "') OR";
-                        
+                    for (String val1 : val) {
+                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val1 + "') OR";
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
@@ -293,21 +290,21 @@ public class OrderManager implements OrderManagerLocal {
                         sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)" + " AND c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP)+1 AND";
                     }
                 }
-                
+
                 it.remove();
             }
         }
         sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         System.out.println(sqlQuery);
         return em.createQuery(sqlQuery, Order.class).getResultList();
-        
+
     }
-    
+
     @Override
     public List<String> completeOrder(String rawOrder) {
         List<String> orders = new ArrayList<>();
         String raw = rawOrder.trim();
-        
+
         if (raw.matches("^\\d+$")) {
             Long id = Long.parseLong(raw);
             Order ord = em.find(Order.class, id);
@@ -317,7 +314,7 @@ public class OrderManager implements OrderManagerLocal {
         } else {
             System.out.println("stroka " + raw);
         }
-        
+
         return orders;
     }
 }

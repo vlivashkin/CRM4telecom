@@ -24,9 +24,9 @@ public class OrderCommentBean implements Serializable {
 
     public void init(Order order) {
         this.order = order;
-        if (order.getTypeComment() != null) {
+        if (order.getComments() != null) {
             Gson gson = new Gson();
-            String json = order.getTypeComment().replace("\'", "\"");
+            String json = order.getComments().replace("\'", "\"");
             comments = gson.fromJson(json, List.class);
         } else {
             comments = new ArrayList<>();
@@ -54,7 +54,7 @@ public class OrderCommentBean implements Serializable {
 
             comments.add(comment);
             json = gson.toJson(comments);
-            order.setTypeComment(json);
+            order.setComments(json);
             System.out.println(json);
             System.out.println(order.toString());
             om.modifyOrder(order);

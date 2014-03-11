@@ -12,77 +12,74 @@ import org.primefaces.model.SortOrder;
 
 public class LazyCustomerDataModel extends LazyDataModel<Customer> {
 
-    private CustomerManagerLocal cm;
+    private final CustomerManagerLocal cm;
     private List<Customer> datasource;
-    private CustomerSearchBean search;
-    public Map<String, List<String>> parametrs;
+    public Map<String, List<String>> parameters;
 
     public LazyCustomerDataModel(CustomerManagerLocal cm) {
         this.cm = cm;
     }
 
     public void setSearch(CustomerSearchBean search) {
-        if (parametrs == null) {
-            parametrs = new HashMap();
+        if (parameters == null) {
+            parameters = new HashMap();
         }
         if (search.getLastName() != null && search.getLastName().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getLastName());
-            parametrs.put("lastName", l);
+            parameters.put("lastName", l);
         } else {
-            parametrs.remove("lastName");
+            parameters.remove("lastName");
         }
         if (search.getFirstName() != null && search.getFirstName().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getFirstName());
-            parametrs.put("firstName", l);
+            parameters.put("firstName", l);
         } else {
-            parametrs.remove("firstName");
+            parameters.remove("firstName");
         }
         if (search.getEmail() != null && search.getEmail().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getEmail());
-            parametrs.put("email", l);
+            parameters.put("email", l);
         } else {
-            parametrs.remove("email");
+            parameters.remove("email");
         }
         if (search.getBalance() != null && search.getBalance().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getBalance());
-            parametrs.put("balance", l);
+            parameters.put("balance", l);
         } else {
-            parametrs.remove("balance");
+            parameters.remove("balance");
         }
         if (search.getStreet() != null && search.getStreet().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getStreet());
-            parametrs.put("street", l);
+            parameters.put("street", l);
         } else {
-            parametrs.remove("street");
+            parameters.remove("street");
         }
         if (search.getBuilding() != null && search.getBuilding().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getBuilding());
-            parametrs.put("building", l);
+            parameters.put("building", l);
         } else {
-            parametrs.remove("building");
+            parameters.remove("building");
         }
         if (search.getFlat() != null && search.getFlat().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getFlat());
-            parametrs.put("flat", l);
+            parameters.put("flat", l);
         } else {
-            parametrs.remove("flat");
+            parameters.remove("flat");
         }
         if (search.getPhoneNumber() != null && search.getPhoneNumber().length() != 0) {
             List<String> l = new ArrayList();
             l.add(search.getPhoneNumber());
-            parametrs.put("phoneNumber", l);
+            parameters.put("phoneNumber", l);
         } else {
-            parametrs.remove("phoneNumber");
+            parameters.remove("phoneNumber");
         }
-
-        this.search = search;
     }
 
     @Override
@@ -104,8 +101,8 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
 
     @Override
     public List<Customer> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        setRowCount(cm.getCustomersCount(filters, parametrs).intValue());
-        datasource = cm.getCustomersList(first, pageSize, sortField, sortOrder.name(), filters, parametrs);
+        setRowCount(cm.getCustomersCount(filters, parameters).intValue());
+        datasource = cm.getCustomersList(first, pageSize, sortField, sortOrder.name(), filters, parameters);
 
         return datasource;
     }
