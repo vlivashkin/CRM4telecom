@@ -110,7 +110,7 @@ public class OrderManager implements OrderManagerLocal {
                             sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)     AND";
                         }
                         if (check.compareTo("toDate") == 0) {
-                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP)    AND";
+                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP) +1   AND";
                         }
                     }
                 }
@@ -209,7 +209,7 @@ public class OrderManager implements OrderManagerLocal {
                             sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)  AND";
                         }
                         if (check.compareTo("toDate") == 0) {
-                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP)  AND";
+                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP) +1 AND";
                         }
                     }
                 }

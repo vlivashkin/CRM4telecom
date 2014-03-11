@@ -35,9 +35,11 @@
 
                             <f:ajax event="dateSelect" render=":tableForm" />
                             <f:ajax event="change" render=":tableForm" />
+                            <f:ajax event="dateSelect" render="toDate" />
+                            <f:ajax event="change" render="toDate" />
                         </p:calendar>
                         -
-                        <p:calendar value="#{orderBean.search.toDate}" >
+                        <p:calendar id="toDate" value="#{orderBean.search.toDate}"  mindate="#{orderBean.search.fromDate}" >
                             <f:ajax event="dateSelect" render=":tableForm" />
                             <f:ajax event="change" render=":tableForm" />
 
