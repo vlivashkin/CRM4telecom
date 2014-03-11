@@ -44,18 +44,14 @@ public class CustomerManager implements CustomerManagerLocal {
                     sqlQuery += " ( ";
                     for (int i = 0; i < val.size(); i++) {
                         sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
-
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
                 } else {
                     String check = (String) paramProperty;
                     sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-
                 }
-
             }
-
         }
         if (filters != null && !filters.isEmpty()) {
             sqlQuery += " WHERE";
@@ -64,14 +60,12 @@ public class CustomerManager implements CustomerManagerLocal {
                 sqlQuery += "  LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\')  AND";
             }
         }
-
         if (sqlQuery.endsWith("WHERE")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
         }
         if (sqlQuery.endsWith("AND")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
         }
-
         if (sortField != null && !"".equals(sortField)) {
             sqlQuery += " ORDER BY c." + sortField;
         }
@@ -88,7 +82,6 @@ public class CustomerManager implements CustomerManagerLocal {
     @Override
     public Long getCustomersCount() {
         String sqlQuery = "SELECT COUNT(c) FROM Customer c";
-
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
     }
@@ -104,20 +97,15 @@ public class CustomerManager implements CustomerManagerLocal {
                     sqlQuery += " ( ";
                     for (int i = 0; i < val.size(); i++) {
                         sqlQuery += "  LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
-
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
                 } else {
                     String check = (String) paramProperty;
                     sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-
                 }
-
             }
-
         }
-
         if (filters != null && !filters.isEmpty()) {
             sqlQuery += " WHERE";
             for (String filterProperty : filters.keySet()) {
@@ -188,5 +176,4 @@ public class CustomerManager implements CustomerManagerLocal {
         }
         return customers;
     }
-
 }

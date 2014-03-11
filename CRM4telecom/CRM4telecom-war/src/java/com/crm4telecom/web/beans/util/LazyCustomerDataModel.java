@@ -3,6 +3,7 @@ package com.crm4telecom.web.beans.util;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.CustomerSearchBean;
+import com.crm4telecom.stringutils.StringUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,56 +25,56 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
         if (parameters == null) {
             parameters = new HashMap();
         }
-        if (search.getLastName() != null && search.getLastName().length() != 0) {
+        if (StringUtils.isValidString(search.getLastName())) {
             List<String> l = new ArrayList();
             l.add(search.getLastName());
             parameters.put("lastName", l);
         } else {
             parameters.remove("lastName");
         }
-        if (search.getFirstName() != null && search.getFirstName().length() != 0) {
+        if (StringUtils.isValidString(search.getFirstName())) {
             List<String> l = new ArrayList();
             l.add(search.getFirstName());
             parameters.put("firstName", l);
         } else {
             parameters.remove("firstName");
         }
-        if (search.getEmail() != null && search.getEmail().length() != 0) {
+        if (StringUtils.isValidString(search.getEmail())) {
             List<String> l = new ArrayList();
             l.add(search.getEmail());
             parameters.put("email", l);
         } else {
             parameters.remove("email");
         }
-        if (search.getBalance() != null && search.getBalance().length() != 0) {
+        if (StringUtils.isValidString(search.getBalance())) {
             List<String> l = new ArrayList();
             l.add(search.getBalance());
             parameters.put("balance", l);
         } else {
             parameters.remove("balance");
         }
-        if (search.getStreet() != null && search.getStreet().length() != 0) {
+        if (StringUtils.isValidString(search.getStreet())) {
             List<String> l = new ArrayList();
             l.add(search.getStreet());
             parameters.put("street", l);
         } else {
             parameters.remove("street");
         }
-        if (search.getBuilding() != null && search.getBuilding().length() != 0) {
+        if (StringUtils.isValidString(search.getBuilding())) {
             List<String> l = new ArrayList();
             l.add(search.getBuilding());
             parameters.put("building", l);
         } else {
             parameters.remove("building");
         }
-        if (search.getFlat() != null && search.getFlat().length() != 0) {
+        if (StringUtils.isValidString(search.getFlat())) {
             List<String> l = new ArrayList();
             l.add(search.getFlat());
             parameters.put("flat", l);
         } else {
             parameters.remove("flat");
         }
-        if (search.getPhoneNumber() != null && search.getPhoneNumber().length() != 0) {
+        if (StringUtils.isValidString(search.getPhoneNumber())) {
             List<String> l = new ArrayList();
             l.add(search.getPhoneNumber());
             parameters.put("phoneNumber", l);

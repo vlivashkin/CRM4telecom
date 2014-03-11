@@ -3,6 +3,7 @@ package com.crm4telecom.web.beans.util;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.OrderSearchBean;
+import com.crm4telecom.stringutils.StringUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,20 +23,26 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
         if (parametrs == null) {
             parametrs = new HashMap();
         }
-        if (search.getOrder() != null && search.getOrder().length() != 0) {
+        if (StringUtils.isValidString(search.getOrder())) {
             List<String> l = new ArrayList();
             l.add(search.getOrder());
             parametrs.put("orderId", l);
+        } else {
+            parametrs.remove("orderId");
         }
-        if (search.getCustomer() != null && search.getCustomer().length() != 0) {
+        if (StringUtils.isValidString(search.getCustomer())) {
             List<String> l = new ArrayList();
             l.add(search.getCustomer());
             parametrs.put("customerId", l);
+        } else {
+            parametrs.remove("customerId");
         }
-        if (search.getEmployee() != null && search.getEmployee().length() != 0) {
+        if (StringUtils.isValidString(search.getEmployee())) {
             List<String> l = new ArrayList();
             l.add(search.getEmployee());
             parametrs.put("employeeId", l);
+        } else {
+            parametrs.remove("employeeId");
         }
         if (search.getFromDate() != null) {
             List<String> date = new ArrayList();
@@ -45,6 +52,8 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
             String d = ts.toString().substring(8, 10);
             date.add(d + "-" + m + "-" + y);
             parametrs.put("fromDate", date);
+        } else {
+            parametrs.remove("fromDate");
         }
         if (search.getToDate() != null) {
             List<String> date1 = new ArrayList();
@@ -54,29 +63,17 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
             String d = ts.toString().substring(8, 10);
             date1.add(d + "-" + m + "-" + y);
             parametrs.put("toDate", date1);
+        } else {
+            parametrs.remove("toDate");
         }
         if (search.getSelectedPriorities() != null && !search.getSelectedPriorities().isEmpty()) {
             parametrs.put("priority", search.getSelectedPriorities());
+        } else {
+            parametrs.remove("priority");
         }
         if (search.getSelectedStatuses() != null && !search.getSelectedStatuses().isEmpty()) {
             parametrs.put("status", search.getSelectedStatuses());
-        }
-        if (search.getToDate() == null) {
-            parametrs.remove("toDate");
-        }
-        if (search.getFromDate() == null) {
-            parametrs.remove("fromDate");
-        }
-        if (search.getOrder() == null || search.getOrder().length() == 0) {
-            parametrs.remove("orderId");
-        }
-        if (search.getCustomer() == null || search.getCustomer().length() == 0) {
-            parametrs.remove("customerId");
-        }
-        if (search.getSelectedPriorities() == null || search.getSelectedPriorities().isEmpty()) {
-            parametrs.remove("priority");
-        }
-        if (search.getSelectedStatuses() == null || search.getSelectedStatuses().isEmpty()) {
+        } else {
             parametrs.remove("status");
         }
         this.search = search;
@@ -109,7 +106,6 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
         System.out.println(parametrs);
         datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters, parametrs);
         parametrs.clear();
-
         return datasource;
     }
 }

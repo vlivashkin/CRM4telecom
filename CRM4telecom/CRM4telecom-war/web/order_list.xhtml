@@ -31,7 +31,7 @@
                     </p:inputText>
                     <h:outputLabel value="Date ranges:"/>
                     <h:panelGroup >
-                        <p:calendar value="#{orderBean.search.fromDate}" >
+                        <p:calendar id="fromDate" maxdate="#{orderBean.search.toDate}" value="#{orderBean.search.fromDate}" >
 
                             <f:ajax event="dateSelect" render=":tableForm" />
                             <f:ajax event="change" render=":tableForm" />
@@ -42,7 +42,8 @@
                         <p:calendar id="toDate" value="#{orderBean.search.toDate}"  mindate="#{orderBean.search.fromDate}" >
                             <f:ajax event="dateSelect" render=":tableForm" />
                             <f:ajax event="change" render=":tableForm" />
-
+                            <f:ajax event="dateSelect" render="fromDate" />
+                            <f:ajax event="change" render="fromDate" />
                         </p:calendar>
 
                     </h:panelGroup>
