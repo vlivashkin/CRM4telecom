@@ -8,6 +8,7 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Product;
+import com.crm4telecom.mail.MailManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -264,6 +265,8 @@ public class OrderManager implements OrderManagerLocal {
         order.getOrderProcessing().add(op);
         em.persist(op);
         em.merge(order);
+        MailManager mm = new MailManager();
+        mm.statusChangedEmail(order);
     }
 
     @Override
