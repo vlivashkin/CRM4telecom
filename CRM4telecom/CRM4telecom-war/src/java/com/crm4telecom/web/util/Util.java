@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
  
 public class Util {
-    
  
       public static HttpSession getSession() {
         return (HttpSession)

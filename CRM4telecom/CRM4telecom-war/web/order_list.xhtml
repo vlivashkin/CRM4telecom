@@ -13,9 +13,9 @@
 
     <ui:define name="content">
         <h1>List of Orders</h1>
-
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
             <h:form id="searchForm">
+               
                 <h:panelGrid columns="4" cellpadding="5">
                     <h:outputLabel value="Orderd id:"/>
                     <p:inputText value="#{orderBean.search.order}">
@@ -99,4 +99,5 @@
             </p:dataTable>  
         </h:form>
     </ui:define>
+   
 </ui:composition>
