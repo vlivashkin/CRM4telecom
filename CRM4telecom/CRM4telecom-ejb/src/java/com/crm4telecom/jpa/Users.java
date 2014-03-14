@@ -22,9 +22,13 @@ public class Users implements Serializable {
     @Column(name="LOGIN", nullable = false, length = 30)
     private String login;
 
-    @Size(max = 30)
-    @Column(name="PASSWORD",length = 30)
+    @Size(max = 50)
+    @Column(name="PASSWORD",length = 50)
     private String password;
+    
+     @Size(max = 50)
+    @Column(name="SALT",length = 50)
+    private String salt;
 
     @Size(max = 30)
     @Column(length = 30)
@@ -52,9 +56,17 @@ public class Users implements Serializable {
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getType() {

@@ -1,5 +1,7 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.jpa.Users;
+import com.crm4telecom.util.MD5;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,11 +16,15 @@ public class UserManager implements UserManagerLocal {
     
     @Override
     public boolean login(String login, String password) {
-        String sqlQuery = "SELECT u.password FROM Users u WHERE u.login = :login";
+        String sqlQuery = "SELECT u FROM Users u WHERE u.login = :login";
         Query query = em.createQuery(sqlQuery).setParameter("login", login);
         if (query.getResultList().size() > 0) {
-            String pass = (String) query.getResultList().get(0);
-            if (pass != null && pass.equals(password)) {
+            Users user = (Users)query.getResultList().get(0);
+            
+            String pass = user.getPassword();
+            String salt = user.getSalt();
+            System.out.println(salt);
+            if (pass != null && pass.equals(MD5.getHash(password, salt)) ) {
                 return true;
             } else {
                 return false;

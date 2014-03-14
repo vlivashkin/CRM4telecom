@@ -34,7 +34,7 @@
                             <p:separator />  
                             <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home"/>  
                         </p:menuButton>
-                        <p:commandButton  value="Logout" icon="ui-icon-extlink" action="#{loginBean.logout()}" />  
+                        <p:commandButton  value="Logout #{loginBean.uname}" icon="ui-icon-extlink" action="#{loginBean.logout()}" />  
                     </f:facet>  
                 </p:menubar> 
             </h:form>
