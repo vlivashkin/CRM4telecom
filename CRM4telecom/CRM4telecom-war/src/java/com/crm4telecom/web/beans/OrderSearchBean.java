@@ -13,9 +13,6 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 public class OrderSearchBean implements Serializable {
 
-    @EJB
-    private OrderManagerLocal om;
-
     String order;
     String customer;
     String manager;
@@ -24,6 +21,9 @@ public class OrderSearchBean implements Serializable {
     List<String> selectedStatuses;
     Date fromDate;
     Date toDate;
+
+    @EJB
+    private OrderManagerLocal om;
 
     public OrderManagerLocal getOm() {
         return om;
@@ -34,7 +34,6 @@ public class OrderSearchBean implements Serializable {
 
     }
 
-    
     public String getOrder() {
         return order;
     }

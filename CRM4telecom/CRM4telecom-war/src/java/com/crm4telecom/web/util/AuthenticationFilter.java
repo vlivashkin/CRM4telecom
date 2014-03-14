@@ -1,19 +1,30 @@
 package com.crm4telecom.web.util;
 
 import com.crm4telecom.ejb.UserManagerLocal;
-import com.crm4telecom.web.beans.LoginBean;
 import java.io.*;
 import javax.ejb.EJB;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
 
-@WebFilter("/*")
+@WebFilter("/content/*")
 public final class AuthenticationFilter implements Filter {
 
     private FilterConfig filterConfig = null;
+
     @EJB
     private UserManagerLocal um;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        this.filterConfig = filterConfig;
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -26,33 +37,25 @@ public final class AuthenticationFilter implements Filter {
             requestURL.append("?").append(req.getQueryString());
         }
         String path = requestURL.toString();
-     
-       if (path.contains("login")) {
-            if(login != null && um.getlogins().contains(login)) {
-               HttpServletResponse res = (HttpServletResponse) response;
-                res.sendRedirect("http://localhost:8080/CRM4telecom-war/index.xhtml");
-            }else{
-                 chain.doFilter(request, response);
+
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        if (path.contains("login")) {
+            if (login != null && um.getlogins().contains(login)) {
+                res.sendRedirect("./content/index.xhtml");
+            } else {
+                chain.doFilter(request, response);
             }
-       }else{
+        } else {
             if (login != null) {
-                if (login != null && login.equals("admin")) {
+                if (login.equals("admin")) {
                     chain.doFilter(request, response);
                 } else {
-                    HttpServletResponse res = (HttpServletResponse) response;
-                    res.sendRedirect("http://localhost:8080/CRM4telecom-war/login.xhtml");
+                    res.sendRedirect("./login.xhtml");
                 }
             } else {
-                HttpServletResponse res = (HttpServletResponse) response;
-                res.sendRedirect("http://localhost:8080/CRM4telecom-war/login.xhtml");
+                res.sendRedirect("./login.xhtml");
             }
-       }
-    }
-
-    public void destroy() {
-    }
-
-    public void init(FilterConfig filterConfig) {
-        this.filterConfig = filterConfig;
+        }
     }
 }

@@ -22,24 +22,24 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <listener-class>com.crm4telecom.web.util.SessionListener</listener-class>
+    </listener>
     <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>content/index.xhtml</welcome-file>
     </welcome-file-list>
     <filter>
-    <filter-name>LoginFilter</filter-name>
-    <filter-class>com.crm4telecom.web.util.AuthenticationFilter</filter-class>
-  </filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.crm4telecom.web.util.AuthenticationFilter</filter-class>
+    </filter>
     <filter-mapping>
-    <filter-name>LoginFilter</filter-name>
-    <url-pattern>/index.xhtml</url-pattern>
-    <url-pattern>/customer_info.xhtml</url-pattern>
-    <url-pattern>/customer_list.xhtml</url-pattern>
-    <url-pattern>/order_add.xhtml</url-pattern>
-    <url-pattern>/order_info.xhtml</url-pattern>
-    <url-pattern>/order_list.xhtml</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>FORWARD</dispatcher>
-</filter-mapping>
-    
-    
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/content/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/service/error.xhtml</location>
+    </error-page>
 </web-app>

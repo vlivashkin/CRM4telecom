@@ -20,7 +20,8 @@
     <managed-bean>
         <managed-bean-name>searchBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.CustomerSearchBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>orderBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderBean</managed-bean-class>
@@ -42,8 +43,21 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>loginBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.LoginBean</managed-bean-class>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.UserBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <navigation-rule>
+        <from-view-id>login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>content/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

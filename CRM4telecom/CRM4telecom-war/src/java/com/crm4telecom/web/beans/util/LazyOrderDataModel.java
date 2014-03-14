@@ -3,7 +3,7 @@ package com.crm4telecom.web.beans.util;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.OrderSearchBean;
-import com.crm4telecom.stringutils.StringUtils;
+import com.crm4telecom.web.util.StringUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;

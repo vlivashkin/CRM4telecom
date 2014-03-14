@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +10,6 @@ import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 
-/**
- *
- * @author Alex
- */
 @ManagedBean
 @SessionScoped
 public class CustomerSearchBean implements Serializable {
@@ -38,9 +28,11 @@ public class CustomerSearchBean implements Serializable {
     private String balance;
     private String phoneNumber;
     private String status;
-    private Date connectionDate;
-    private Map<String, String> parametrs = new HashMap();
+    private Map<String, String> parametrs;
 
+    public CustomerSearchBean() {
+        parametrs = new HashMap<>();
+    }
 
     public Customer getSelectedCustomer() {
         return selectedCustomer;
@@ -49,8 +41,7 @@ public class CustomerSearchBean implements Serializable {
     public void setSelectedCustomer(Customer selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
     }
-    
-    
+
     public CustomerManagerLocal getCm() {
         return cm;
     }
@@ -135,7 +126,6 @@ public class CustomerSearchBean implements Serializable {
         this.status = status;
     }
 
-
     public List<Customer> getCustomers() {
         return customers;
     }
@@ -159,10 +149,10 @@ public class CustomerSearchBean implements Serializable {
         if (flat.length() != 0) {
             parametrs.put("flat", flat.toLowerCase());
         }
-        if(phoneNumber.length() != 0 && phoneNumber != null){
-            parametrs.put("phoneNumber",("8"+phoneNumber.substring(1,4)+phoneNumber.substring(6, 9)+phoneNumber.substring(10)).toLowerCase());
+        if (phoneNumber.length() != 0 && phoneNumber != null) {
+            parametrs.put("phoneNumber", ("8" + phoneNumber.substring(1, 4) + phoneNumber.substring(6, 9) + phoneNumber.substring(10)).toLowerCase());
         }
-         customers = cm.search(parametrs);
+        customers = cm.search(parametrs);
         return "search_customer";
     }
 

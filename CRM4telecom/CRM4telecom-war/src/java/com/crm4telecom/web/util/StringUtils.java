@@ -1,5 +1,5 @@
 
-package com.crm4telecom.stringutils;
+package com.crm4telecom.web.util;
 
 public class StringUtils {
 

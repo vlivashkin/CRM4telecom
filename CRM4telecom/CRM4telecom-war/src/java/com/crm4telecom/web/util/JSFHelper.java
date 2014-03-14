@@ -72,6 +72,7 @@ public class JSFHelper {
  
     public void redirect(String nav) {
         NavigationHandler handler = getApplication().getNavigationHandler();
+        nav += "?faces-redirect=true";
         handler.handleNavigation(getFacesContext(), null, nav);
     }
     
