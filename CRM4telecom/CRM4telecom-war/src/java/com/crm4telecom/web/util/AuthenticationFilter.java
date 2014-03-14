@@ -48,13 +48,17 @@ public final class AuthenticationFilter implements Filter {
             }
         } else {
             if (login != null) {
-                if (login.equals("admin")) {
-                    chain.doFilter(request, response);
+                if (path.contains("user") && !login.equals("admin")) {
+                    res.sendRedirect("../login.xhtml");
                 } else {
-                    res.sendRedirect("./login.xhtml");
+                    if (um.getlogins().contains(login)) {
+                        chain.doFilter(request, response);
+                    } else {
+                        res.sendRedirect("../login.xhtml");
+                    }
                 }
             } else {
-                res.sendRedirect("./login.xhtml");
+                res.sendRedirect("../login.xhtml");
             }
         }
     }

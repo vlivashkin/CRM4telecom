@@ -15,6 +15,7 @@
                 <p:commandButton value="Customers" action="customer_list?faces-redirect=true"/>
                 <p:commandButton value="Add customer" action="customer_new?faces-redirect=true"/>
                 <p:commandButton value="Orders" action="order_list?faces-redirect=true"/>
+                <p:commandButton value="Add user" action="user?faces-redirect=true"  style="visibility: #{userBean.visibility}"/>
             </h:form>
         </center>
     </ui:define>

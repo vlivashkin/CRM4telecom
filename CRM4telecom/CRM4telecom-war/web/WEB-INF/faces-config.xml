@@ -47,6 +47,11 @@
         <managed-bean-class>com.crm4telecom.web.beans.UserBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>adduserBean</managed-bean-name>
+        <managed-bean-class>com.crm4telecom.web.beans.AddUserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <navigation-rule>
         <from-view-id>login.xhtml</from-view-id>
         <navigation-case>

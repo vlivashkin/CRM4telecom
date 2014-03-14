@@ -20,6 +20,7 @@ public class UserBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
+    private String visibility;
 
     @EJB
     private UserManagerLocal um;
@@ -58,6 +59,17 @@ public class UserBean implements Serializable {
             return null;
         }
     }
+    
+    public String getVisibility() {
+        if (uname.equals("admin")) {
+            System.out.println("ssss");
+            return "";
+        } else {
+            System.out.println("aaaaa");
+            return "hidden";
+        }
+    }
+
 
     public String logout() {
         JSFHelper helper = new JSFHelper();
