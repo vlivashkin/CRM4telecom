@@ -17,10 +17,11 @@
             <p:messages />  
 
             <h:panelGrid columns="3" cellpadding="5">  
+
                 <h:outputLabel for="customerId" value="Customer ID:" />  
                 <p:inputText id="customerId" value="#{orderBean.validation.customerId}" label="Customer"/>  
-                <p:message for="customerId" />  
-
+                <p:message for="customerId" /> 
+                
                 <h:outputLabel for="priority" value="Priority:" /> 
                 <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
                     <f:selectItems value="#{orderBean.priorities}" var="priority"
@@ -28,12 +29,9 @@
                 </p:selectOneMenu>
                 <p:message for="priority" />  
 
-                <h:outputLabel for="managerId" value="Manager ID:" />  
-                <p:inputText id="managerId" value="#{orderBean.validation.managerId}" label="Manager"/>  
-                <p:message for="managerId" />  
-
-                <h:outputLabel for="employeeId" value="Operator ID:" />  
-                <p:inputText id="employeeId" value="#{orderBean.validation.employeeId}" label="Operator"/>  
+                <h:outputLabel for="employeeId" value="Employee ID:" />
+                <p:autoComplete id="employeeId" value="#{orderBean.validation.empl}"   
+                                completeMethod="#{orderValidationBean.complete}"/>  
                 <p:message for="employeeId" />  
 
                 <h:outputLabel for="product" value="Product ID:" /> 

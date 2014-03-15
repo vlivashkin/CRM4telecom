@@ -1,11 +1,14 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
+import com.crm4telecom.ejb.EmployeeManager;
+import com.crm4telecom.ejb.EmployeeManagerLocal;
 import com.crm4telecom.ejb.ProductManagerLocal;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.ProductsName;
 import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -21,10 +24,15 @@ public class OrderValidationBean implements Serializable {
     
     @EJB
     private ProductManagerLocal pm;
+    
+    @EJB
+    private EmployeeManagerLocal em;
 
     private Long customerId;
 
     private String comments;
+    
+    private String empl;
 
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
@@ -78,6 +86,17 @@ public class OrderValidationBean implements Serializable {
         this.customerId = customerId;
     }
 
+    public String getEmpl() {
+        return empl;
+    }
+
+    public void setEmpl(String empl) {
+        employeeId = Long.valueOf(empl.substring(1,empl.indexOf(" ")));
+        this.empl = empl;
+    }
+
+    
+    
     public String getComment() {
         return comments;
     }
@@ -134,6 +153,10 @@ public class OrderValidationBean implements Serializable {
 
     public void setTechnicalSupportFlag(Boolean technicalSupportFlag) {
         this.technicalSupportFlag = technicalSupportFlag;
+    }
+
+    public List<String> complete(String query){
+        return em.completeEmployee(query);
     }
 
 }

@@ -133,7 +133,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.Employee[ employeeId=" + employeeId + " ]";
+        return "#" + employeeId + " " + firstName + " " + lastName;
     }
 
 }
