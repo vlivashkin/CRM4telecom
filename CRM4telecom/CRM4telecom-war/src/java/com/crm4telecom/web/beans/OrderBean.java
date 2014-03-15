@@ -4,6 +4,7 @@ import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.enums.OrderEvent;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
+import com.crm4telecom.enums.ProductsName;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import com.crm4telecom.web.util.JSFHelper;
@@ -81,6 +82,10 @@ public class OrderBean implements Serializable {
 
     public OrderStatus[] getStatuses() {
         return OrderStatus.values();
+    }
+    
+    public ProductsName[] getProduct(){
+        return ProductsName.values();
     }
 
     public void create() {

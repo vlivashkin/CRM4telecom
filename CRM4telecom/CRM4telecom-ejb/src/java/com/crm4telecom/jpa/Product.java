@@ -1,10 +1,13 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.ProductsName;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,18 +30,22 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
     private Long productId;
 
-    @Size(max = 30)
+    @Enumerated(EnumType.STRING)
     @Column(length = 30)
-    private String name;
+    private ProductsName name;
 
-    @Size(max = 30)
     @Column(length = 30)
     private String description;
 
-    @Column(name = "SALES_PERIOD")
+    @Column(name = "SALES_PERIOD_START")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date salesPeriod;
+    private Date salesPeriodStart;
 
+    @Column(name = "SALES_PERIOD_END")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date salesPeriodEnd;
+
+    
     @Column(name = "BASELINE_PRICE")
     private Long baselinePrice;
 
@@ -66,11 +73,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public String getName() {
+    public ProductsName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(ProductsName name) {
         this.name = name;
     }
 
@@ -82,12 +89,20 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Date getSalesPeriod() {
-        return salesPeriod;
+    public Date getSalesPeriodStart() {
+        return salesPeriodStart;
     }
 
-    public void setSalesPeriod(Date salesPeriod) {
-        this.salesPeriod = salesPeriod;
+    public void setSalesPeriodStart(Date salesPeriodStart) {
+        this.salesPeriodStart = salesPeriodStart;
+    }
+
+    public Date getSalesPeriodEnd() {
+        return salesPeriodEnd;
+    }
+
+    public void setSalesPeriodEnd(Date salesPeriodEnd) {
+        this.salesPeriodEnd = salesPeriodEnd;
     }
 
     public Long getBaselinePrice() {

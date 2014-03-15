@@ -36,9 +36,12 @@
                 <p:inputText id="employeeId" value="#{orderBean.validation.employeeId}" label="Operator"/>  
                 <p:message for="employeeId" />  
 
-                <h:outputLabel for="productId" value="Product ID:" />  
-                <p:inputText id="productId" value="#{orderBean.validation.productId}" label="Product"/>  
-                <p:message for="productId" />  
+                <h:outputLabel for="product" value="Product ID:" /> 
+                <p:selectOneMenu id="product" value="#{orderBean.validation.product}">
+                    <f:selectItems value="#{orderBean.product}" var="product"
+                                   itemValue="#{product}" itemLabel="#{product.name()}"/>
+                </p:selectOneMenu>
+                <p:message for="product" />  
 
                 <h:outputLabel for="techSupport" value="Tech support flag:" />  
                 <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  

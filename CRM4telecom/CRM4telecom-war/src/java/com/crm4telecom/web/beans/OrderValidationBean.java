@@ -1,7 +1,9 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
+import com.crm4telecom.ejb.ProductManagerLocal;
 import com.crm4telecom.enums.OrderPriority;
+import com.crm4telecom.enums.ProductsName;
 import com.crm4telecom.jpa.Order;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
@@ -16,6 +18,9 @@ public class OrderValidationBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;
+    
+    @EJB
+    private ProductManagerLocal pm;
 
     private Long customerId;
 
@@ -23,6 +28,9 @@ public class OrderValidationBean implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
+    
+    @Enumerated(EnumType.STRING)
+    private ProductsName product;
 
     private Long managerId;
 
@@ -58,7 +66,7 @@ public class OrderValidationBean implements Serializable {
         order.setPriority(priority);
         order.setManagerId(managerId);
         order.setEmployeeId(employeeId);
-        order.setProductId(null);
+        order.setProductId(pm.getProduct(pm.getProductId(product)));
         order.setTechnicalSupportFlag(technicalSupportFlag.toString());
     }
 
@@ -85,6 +93,16 @@ public class OrderValidationBean implements Serializable {
     public void setPriority(OrderPriority priority) {
         this.priority = priority;
     }
+
+    public ProductsName getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductsName product) {
+        this.product = product;
+    }
+    
+    
 
     public Long getManagerId() {
         return managerId;
