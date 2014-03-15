@@ -145,9 +145,7 @@ public class CustomerManager implements CustomerManagerLocal {
         if (rawCustomer == null) {
             return null;
         }
-
         List<String> customers = new ArrayList<>();
-
         String raw = rawCustomer.trim();
         if (raw.matches("^#?\\d+$")) {
             if (raw.startsWith("#")) {
@@ -160,7 +158,6 @@ public class CustomerManager implements CustomerManagerLocal {
             }
         } else {
             String[] split = raw.split(" ");
-
             String sqlQuery = "SELECT c FROM Customer c WHERE c.firstName like :str1 or c.lastName like :str2";
             Query query = em.createQuery(sqlQuery).setParameter("str1", "%" + split[0] + "%");
             if (split.length == 1) {
@@ -171,7 +168,6 @@ public class CustomerManager implements CustomerManagerLocal {
                 return customers;
             }
             query.setMaxResults(10);
-
             return query.getResultList();
         }
         return customers;
