@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -10,17 +9,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css"/>
 
-        <title>
-            <ui:insert name="windowTitle">
-                CRM4telecom | Login
-            </ui:insert>
-        </title>
+        <title>CRM4telecom | Login</title>
     </h:head>
 
     <h:body>
-        <div id="top" class="top">
+        <div id="header">
             <h:form>
                 <p:menubar>
+                    <p:menuitem value="CRM4telecom" action="index?faces-redirect=true" styleClass="header-logo" />
+
                     <f:facet name="options">  
                         <p:commandButton  value="Login" icon="ui-icon-key" action="login.xhtml" />  
                     </f:facet>  
@@ -28,27 +25,27 @@
             </h:form>
         </div>
 
-        <div id="content" class="center_content">
+        <div id="content">
             <center id="index-content">
                 <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:60px;" />
             </center>
-            
+
             <h1>Log in</h1>
-            
+
             <h:form id="loginForm">
                 <p:messages />  
-                
-                <h:panelGrid columns="3" cellpadding="5">
+
+                <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel value="Username:" />
                     <p:inputText id="username" value="#{userBean.uname}" placeholder="Enter your username" required="true" requiredMessage="Please enter your username" />
-                    <h:message for="username" errorClass="errorMessage" />
-                    
+
                     <p:outputLabel value="Password:" />
                     <p:password id="password" value="#{userBean.password}" placeholder="Enter your password" required="true" requiredMessage="Please enter your password" />
-                    <h:message for="password" errorClass="errorMessage" />
                 </h:panelGrid>
                 <p:commandButton value="Log in" update="loginForm" action="#{userBean.login}" />
             </h:form>
         </div>
+        
+        
     </h:body>
 </html>

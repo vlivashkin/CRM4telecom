@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:panelGrid styleClass="list" columns="3" cellpadding="5">  
+        <h:outputLabel for="firstName" value="First Name:" />  
+        <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
+        <p:message for="firstName" />  
+
+        <h:outputLabel for="lastName" value="Last Name:" />  
+        <p:inputText id="lastName" value="#{customerBean.cv.lastName}" label="Last Name"/>  
+        <p:message for="lastName" />  
+
+        <h:outputLabel for="email" value="Email:" />  
+        <p:inputText id="email" value="#{customerBean.cv.email}" label="Email"/>  
+        <p:message for="email" />  
+
+        <h:outputLabel for="street" value="Street:" />  
+        <p:inputText id="street" value="#{customerBean.cv.street}" label="Street"/>  
+        <p:message for="street" />  
+
+        <h:outputLabel for="building" value="Building:" />  
+        <p:inputText id="building" value="#{customerBean.cv.building}" label="Building"/>  
+        <p:message for="building" />  
+
+        <h:outputLabel for="flat" value="Flat:" />  
+        <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
+        <p:message for="flat" />  
+
+        <h:outputLabel for="status" value="status:" />  
+        <p:inputText id="status" value="#{customerBean.cv.status}" label="status"/>  
+        <p:message for="status" />  
+
+        <h:outputLabel for="phoneNumber" value="Phone Number:" />  
+        <p:inputText id="phoneNumber" value="#{customerBean.cv.status}" label="Phone Number"/>  
+        <p:message for="phoneNumber" />  
+
+        <h:outputLabel for="Balance" value="balance:" />  
+        <p:inputText id="balance" value="#{customerBean.cv.balance}" label="Balance"/>  
+        <p:message for="balance" />  
+    </h:panelGrid> 
+</ui:composition>

@@ -1,6 +1,6 @@
 package com.crm4telecom.jpa;
 
-import com.crm4telecom.enums.ProductsName;
+import com.crm4telecom.enums.OrderProduct;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Product implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
-    private ProductsName name;
+    private OrderProduct name;
 
     @Column(length = 30)
     private String description;
@@ -73,11 +73,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public ProductsName getName() {
+    public OrderProduct getName() {
         return name;
     }
 
-    public void setName(ProductsName name) {
+    public void setName(OrderProduct name) {
         this.name = name;
     }
 
@@ -162,7 +162,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.Product[ productId=" + productId + " ]";
+        return "#" + productId + " " + name.name();
     }
 
 }

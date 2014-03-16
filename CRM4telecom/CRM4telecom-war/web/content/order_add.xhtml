@@ -9,6 +9,7 @@
     </ui:define>
 
     <ui:define name="menuItems">
+        <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
     </ui:define>
 
     <ui:define name="content">
@@ -16,37 +17,10 @@
         <h:form id="editform">
             <p:messages />  
 
-            <h:panelGrid columns="3" cellpadding="5">  
-
-                <h:outputLabel for="customerId" value="Customer ID:" />  
-                <p:inputText id="customerId" value="#{orderBean.validation.customerId}" label="Customer"/>  
-                <p:message for="customerId" /> 
-                
-                <h:outputLabel for="priority" value="Priority:" /> 
-                <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
-                    <f:selectItems value="#{orderBean.priorities}" var="priority"
-                                   itemValue="#{priority}" itemLabel="#{priority.name()}"/>
-                </p:selectOneMenu>
-                <p:message for="priority" />  
-
-                <h:outputLabel for="employeeId" value="Employee ID:" />
-                <p:autoComplete id="employeeId" value="#{orderBean.validation.empl}"   
-                                completeMethod="#{orderValidationBean.complete}"/>  
-                <p:message for="employeeId" />  
-
-                <h:outputLabel for="product" value="Product ID:" /> 
-                <p:selectOneMenu id="product" value="#{orderBean.validation.product}">
-                    <f:selectItems value="#{orderBean.product}" var="product"
-                                   itemValue="#{product}" itemLabel="#{product.name()}"/>
-                </p:selectOneMenu>
-                <p:message for="product" />  
-
-                <h:outputLabel for="techSupport" value="Tech support flag:" />  
-                <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  
-                <p:message for="techSupport" />  
-            </h:panelGrid>  
+            <ui:include src="./templates/orderForm.xhtml" />
 
             <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{orderBean.create()}" />
+            <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
         </h:form>
     </ui:define>
 </ui:composition>

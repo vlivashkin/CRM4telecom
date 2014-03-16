@@ -1,10 +1,7 @@
-html, body, div, form {
-    box-sizing: border-box;
-}
+/*
+    COMMON
+*/
 
-.ui-state-default {
-    box-sizing: content-box !important;
-}
 body {
     background-color: #ffffff;
     font-size: 12px;
@@ -14,26 +11,44 @@ body {
 }
 
 h1 {
-    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    font-family: "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     border-bottom: 1px solid #AFAFAF; 
-    font-size:  16px;
+    font-size:  22px;
     font-weight: bold;
     margin: 0px;
     padding: 0px;
     color: #D20005;
+    text-align: left;
 }
 
-#top {
+#header {
     position: relative;
     margin-bottom: 10px;
 }
 
-.center_content {
+#content {
     position: relative;
 }
 
-label {
-    font-weight:bold;
+.header-logo {  
+    font-family: Georgia, serif;
+    font-size:  16px;
+    font-weight: bold !important;
+    background: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.ui-widget {
+    font-size: 13px !important;
+}
+
+h1>form {
+    float: right;
+}
+
+h1>form>button {
+    margin-right: 6px !important;
 }
 
 .ui-datatable, h1, fieldset, .ui-tabs {
@@ -60,6 +75,68 @@ pre{
     margin: 0;
 }
 
+.index-button {
+    width: 120px;
+}
+
 .main, table {
     width: auto;
+}
+
+.list, .table-row {
+    width: 100%;
+}
+
+.list tr>td:nth-child(odd) {
+    width: 100px;
+    text-align: right;
+    font-weight:bold;
+}
+
+.list td>div {
+    vertical-align: middle;
+}
+
+.table-row tr>td{
+    width: 50%;
+}
+
+table input {
+    width: calc(100% - 10px);
+}
+
+table input.hasDatepicker {
+    width: calc(50% - 35px) !important;
+}
+
+#searchForm\:toDate_input {
+    float: right;
+}
+
+table div.ui-selectcheckboxmenu {
+    width: calc(100% - 2px);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/*
+    ORDER INFO
+*/
+.oinfo-container {
+    padding: 0 360px 0 0;
+}
+
+.oinfo-left {
+    float: right;
+    margin-left: -100%;
+    width: 100%;
+    position: relative; 
+}
+
+.oinfo-right {
+    float: right;
+    width: 350px;
+    margin-right: -360px;
+    overflow: visible;
+    position: relative;
 }

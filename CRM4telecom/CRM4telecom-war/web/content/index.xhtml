@@ -2,20 +2,30 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="windowTitle">
         CRM4Telecom
     </ui:define>
+
     <ui:define name="menuItems">
+
     </ui:define>
+
     <ui:define name="content">
         <center id="index-content">
             <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:60px;" />
             <h:form>
-                <p:commandButton value="Customers" action="customer_list?faces-redirect=true"/>
-                <p:commandButton value="Add customer" action="customer_new?faces-redirect=true"/>
-                <p:commandButton value="Orders" action="order_list?faces-redirect=true"/>
-                <p:commandButton value="Add user" action="user?faces-redirect=true"  style="visibility: #{userBean.visibility}"/>
+                <h1>Common actions</h1>
+
+                <p:commandButton value="Customers" styleClass="index-button" action="customer_list?faces-redirect=true"/>
+                <p:commandButton value="Add customer" styleClass="index-button" action="customer_add?faces-redirect=true"/>
+                <p:commandButton value="Orders" styleClass="index-button" action="order_list?faces-redirect=true"/>
+
+                <c:if test="#{userBean.isAdmin}">
+                    <h1>Admin actions</h1>
+                    <p:commandButton value="Add user" styleClass="index-button" action="user_add?faces-redirect=true" />
+                </c:if>
             </h:form>
         </center>
     </ui:define>

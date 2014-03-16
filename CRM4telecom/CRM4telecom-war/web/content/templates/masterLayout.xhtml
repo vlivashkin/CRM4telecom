@@ -9,7 +9,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css"/>
-        
+
         <title>
             <ui:insert name="windowTitle">
                 CRM4telecom
@@ -18,14 +18,13 @@
     </h:head>
 
     <h:body>
-
-        <div id="top" class="top">
+        <div id="header">
             <h:form>
                 <p:menubar>  
-                    <p:menuitem value="go back" onclick="history.back()" icon="ui-icon-arrowthick-1-w" />
-                    
+                    <p:menuitem value="CRM4telecom" action="index?faces-redirect=true" styleClass="header-logo" />
+
                     <ui:insert name="menuItems" />
-                    
+
                     <f:facet name="options">  
                         <p:menuButton value="Go to..." style="margin-right:10px">  
                             <p:menuitem value="List of customers" action="customer_list?faces-redirect=true" icon="ui-icon-note"/>  
@@ -41,7 +40,7 @@
             </h:form>
         </div>
 
-        <div id="content" class="center_content">
+        <div id="content">
             <ui:insert name="content">Content</ui:insert>
         </div>
 

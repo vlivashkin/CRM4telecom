@@ -59,14 +59,8 @@ public class UserBean implements Serializable {
         }
     }
     
-    public String getVisibility() {
-        if (uname.equals("admin")) {
-            System.out.println("ssss");
-            return "";
-        } else {
-            System.out.println("aaaaa");
-            return "hidden";
-        }
+    public Boolean getIsAdmin() {
+        return uname.equals("admin");
     }
 
 
