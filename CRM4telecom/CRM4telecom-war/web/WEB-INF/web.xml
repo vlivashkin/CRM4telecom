@@ -40,6 +40,6 @@
     </filter-mapping>
     <error-page>
         <error-code>404</error-code>
-        <location>/service/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
 </web-app>

@@ -12,14 +12,18 @@ import javax.validation.constraints.Size;
 @SessionScoped
 public class UserValidationBean implements Serializable {
 
-    @Size(min=1, max=30)
+    @Size(min = 1, max = 30)
     private String login;
-    @Size(min=1, max=30)
+
+    @Size(min = 1, max = 30)
     private String password;
-    @Size(min=1, max=30)
+
+    @Size(min = 1, max = 30)
     private String type;
-    @Size(min=1, max=30)
+
+    @Size(min = 1, max = 30)
     private String employeeid;
+
     @EJB
     UserManagerLocal um;
     private Users u;

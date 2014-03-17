@@ -6,15 +6,17 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsf/composite/composites">
     <ui:define name="windowTitle">
-        CRM4telecom | Order #{orderBean.order.orderId}
+        CRM4telecom | Order #{orderBean.order}
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />        
+        <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" /> 
+        <p:menuitem value="&gt;" disabled="true" />
+        <p:menuitem value="Order #{orderBean.order}" action="order_info?faces-redirect=true" /> 
     </ui:define>
 
     <ui:define name="content">
-        <h1>Order #{orderBean.order.orderId}</h1>
+        <h1>Order #{orderBean.order}</h1>
 
         <div class="oinfo-container">
             <div class="oinfo-left">
@@ -94,7 +96,7 @@
                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                 rowsPerPageTemplate="5,10,15">  
 
-                        <p:panel header="guest commented at #{comment.date}" style="text-align:center">  
+                        <p:panel header="#{comment.owner} commented at #{comment.date}" style="text-align:center">  
                             <pre>#{comment.text}</pre>  
                         </p:panel> 
 

@@ -9,29 +9,29 @@
     </ui:define>
     
     <ui:define name="menuItems">
-        
+        <p:menuitem value="Add User" action="user_add?faces-redirect=true"/>  
     </ui:define>
     
     <ui:define name="content">
         <h:form id="form">
             <h:panelGrid styleClass="list" columns="3" cellpadding="5">
                 <h:outputLabel for="login"  value="Login:"/>
-                <p:inputText id="login" value="#{adduserBean.login}"/>
+                <p:inputText id="login" value="#{userValidationBean.login}"/>
                 <p:message for="login" />
                 
                 <h:outputLabel value="Password:"/>
-                <p:password id="password" value="#{adduserBean.password}"/>
+                <p:password id="password" value="#{userValidationBean.password}"/>
                 <p:message for="password" />
                 
                 <h:outputLabel value="Type:"/>
-                <p:inputText id="type" value="#{adduserBean.type}"/>
+                <p:inputText id="type" value="#{userValidationBean.type}"/>
                 <p:message for="type" />
                 
                 <h:outputLabel value="Employee ID:"/>
-                <p:inputText id="employee" value="#{adduserBean.employeeid}"/>
+                <p:inputText id="employee" value="#{userValidationBean.employeeid}"/>
                 <p:message for="employee" />
             </h:panelGrid>
-            <p:commandButton value="Save" icon="ui-icon-check" action="#{adduserBean.create()}" />
+            <p:commandButton value="Save" icon="ui-icon-check" action="#{userValidationBean.create()}" />
             <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />
         </h:form>
     </ui:define>

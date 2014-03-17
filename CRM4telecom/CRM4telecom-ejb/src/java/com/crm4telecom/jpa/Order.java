@@ -43,7 +43,7 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
-    @Column(name = "COMMENTS")
+    @Column(name = "COMMENTS", length = 2147483647)
     private String comments;
 
     @Column(length = 30)

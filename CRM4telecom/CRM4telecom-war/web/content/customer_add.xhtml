@@ -5,14 +5,17 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="windowTitle">
-        CRM4telecom | New customer
+        CRM4telecom | Add new Customer
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
+        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
+        <p:menuitem value="&gt;" disabled="true" />
+        <p:menuitem value="Add new Customer" action="customer_add?faces-redirect=true" />
     </ui:define>
 
     <ui:define name="content">
+        <h1>Add new Customer</h1>
         <h:form id="editform">
             <p:messages />  
 

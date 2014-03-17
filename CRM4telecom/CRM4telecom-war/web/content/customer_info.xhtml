@@ -9,11 +9,13 @@
     </ui:define>
 
     <ui:define name="menuItems">
-        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" icon="ui-icon-arrowthick-1-w" />
+        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
+        <p:menuitem value="&gt;" disabled="true" />
+        <p:menuitem value="Customer #{customerBean.customer}" action="customer_info?faces-redirect=true" />
     </ui:define>
 
     <ui:define name="content">
-        <h1>Client #{customerBean.customer}</h1>
+        <h1>Customer #{customerBean.customer}</h1>
         <p:tabView>
             <p:tab title="Info">
                 <h:form>
@@ -83,7 +85,7 @@
                         </p:column>
                         
                         <f:facet name="footer">  
-                            <p:commandButton value="Add Order" icon="ui-icon-plus" action="#{customerBean.toAddOrder}" />
+                            <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerBean.toAddOrder}" />
                         </f:facet>
                     </p:dataTable>
 

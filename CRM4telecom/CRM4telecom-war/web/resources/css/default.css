@@ -37,7 +37,13 @@ h1 {
     background: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
+    margin-top: -3px !important;
 }
+
+.ui-menuitem {
+    margin-top: 3px !important;
+}
+
 
 .ui-widget {
     font-size: 13px !important;

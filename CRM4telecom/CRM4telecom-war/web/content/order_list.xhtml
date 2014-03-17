@@ -9,14 +9,14 @@
     </ui:define>
 
     <ui:define name="menuItems">
-
+        <p:menuitem value="List of Orders" action="order_list?faces-redirect=true"/>  
     </ui:define>
 
     <ui:define name="content">
         <h1>
             <h:outputText value="List of Orders" />
             <h:form>  
-                <p:commandButton value="Add Order" action="#{orderBean.toAddOrder}" icon="ui-icon-plus"/>  
+                <p:commandButton value="Add Order" action="#{orderBean.toAddOrder}"/>  
             </h:form>
         </h1>
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
