@@ -54,22 +54,20 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
 
-    @Column(name = "EMPLOYEE_ID")
-    private Long employeeId;
+    @JoinColumn(name = "CUSTOMER_ID")
+    @ManyToOne
+    private Customer customerId;
 
-    @Column(name = "MANAGER_ID")
-    private Long managerId;
-
-    @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
-    private String technicalSupportFlag;
-
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    @JoinColumn(name = "PRODUCT_ID")
     @ManyToOne
     private Product productId;
 
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
+    @JoinColumn(name = "EMPLOYEE_ID")
     @ManyToOne
-    private Customer customerId;
+    private Employee employeeId;
+    
+    @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
+    private String technicalSupportFlag;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderProcessing> orderProcessing;
@@ -113,33 +111,45 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    public OrderStatus changeOrderStatus(OrderEvent event) {
+        status = status.nextState(event);
+        return status;
+    }
+
+    public Customer getCustomer() {
+        return customerId;
+    }
+
+    public Long getCustomerId() {
+        if (customerId != null)
+            return customerId.getCustomerId();
+        return null;
+    }
+
+    public void setCustomer(Customer customerId) {
+        this.customerId = customerId;
+    }
+
+    public Employee getEmployee() {
+        return employeeId;
+    }
+
+    public Long getEmployeeId() {
+        if (employeeId != null)
+            return employeeId.getEmployeeId();
+        return null;
+    }
+
+    public void setEmployee(Employee employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public OrderPriority getPriority() {
         return priority;
     }
 
     public void setPriority(OrderPriority priority) {
         this.priority = priority;
-    }
-
-    public OrderStatus changeOrderState(OrderEvent event) {
-        status = status.nextState(event);
-        return status;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public Long getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
     }
 
     public String getTechnicalSupportFlag() {
@@ -150,20 +160,12 @@ public class Order implements Serializable {
         this.technicalSupportFlag = technicalSupportFlag;
     }
 
-    public Product getProductId() {
+    public Product getProduct() {
         return productId;
     }
 
-    public void setProductId(Product productId) {
+    public void setProduct(Product productId) {
         this.productId = productId;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
     }
 
     public List<OrderProcessing> getOrderProcessing() {

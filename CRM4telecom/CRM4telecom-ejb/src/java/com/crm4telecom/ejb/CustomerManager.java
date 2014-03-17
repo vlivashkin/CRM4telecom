@@ -139,37 +139,4 @@ public class CustomerManager implements CustomerManagerLocal {
         }
         return em.createQuery(sqlQuery).getResultList();
     }
-
-    @Override
-    public List<String> completeCustomer(String rawCustomer) {
-        if (rawCustomer == null) {
-            return null;
-        }
-        List<String> customers = new ArrayList<>();
-        String raw = rawCustomer.trim();
-        if (raw.matches("^#?\\d+$")) {
-            if (raw.startsWith("#")) {
-                raw = raw.substring(1);
-            }
-            Long id = Long.parseLong(raw);
-            Customer found = em.find(Customer.class, id);
-            if (found != null) {
-                customers.add(found.toString());
-            }
-        } else {
-            String[] split = raw.split(" ");
-            String sqlQuery = "SELECT c FROM Customer c WHERE c.firstName like :str1 or c.lastName like :str2";
-            Query query = em.createQuery(sqlQuery).setParameter("str1", "%" + split[0] + "%");
-            if (split.length == 1) {
-                query.setParameter("str2", "%" + split[0] + "%");
-            } else if (split.length == 2) {
-                query.setParameter("str2", "%" + split[1] + "%");
-            } else {
-                return customers;
-            }
-            query.setMaxResults(10);
-            return query.getResultList();
-        }
-        return customers;
-    }
 }

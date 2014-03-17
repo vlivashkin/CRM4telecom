@@ -79,26 +79,51 @@ pre{
     width: 120px;
 }
 
-.main, table {
-    width: auto;
-}
-
-.list, .table-row {
+.table-2, .table-3, .table-4 {
     width: 100%;
 }
 
-.list tr>td:nth-child(odd) {
+.table-2 {
+    border-spacing: 0 !important;
+}
+.table-2 tr>td {
+    width: 50%;
+}
+
+.table-2 tr>td:nth-child(1) {
+    padding-left: 0;
+}
+
+.table-2 tr>td:nth-child(2) {
+    padding-right: 0;
+}
+
+.table-3 tr>td:nth-child(1) {
     width: 100px;
     text-align: right;
     font-weight:bold;
 }
 
-.list td>div {
-    vertical-align: middle;
+.table-3 tr>td:nth-child(2) {
+    width: calc(50% - 100px);
 }
 
-.table-row tr>td{
-    width: 50%;
+.table-3 tr>td:nth-child(3) {
+    width: calc(50% - 100px);
+}
+
+.table-4 tr>td:nth-child(odd) {
+    width: 100px;
+    text-align: right;
+    font-weight:bold;
+}
+
+.table-4 tr>td:nth-child(even) {
+    width: calc(50% - 100px);
+}
+
+.table-4 td>div {
+    vertical-align: middle;
 }
 
 table input {

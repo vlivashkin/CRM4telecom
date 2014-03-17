@@ -21,7 +21,7 @@
 
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
             <h:form id="searchForm">
-                <h:panelGrid styleClass="list" columns="4" cellpadding="5">
+                <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
                     <h:outputLabel value="First Name:"/>
                     <p:inputText value="#{customerBean.search.firstName}">
                         <f:ajax event="change" render=":tableForm" />

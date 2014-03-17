@@ -1,13 +1,10 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.enums.OrderEvent;
-import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
-import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
-import com.crm4telecom.jpa.Product;
 import com.crm4telecom.mail.MailManager;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +52,7 @@ public class OrderManager implements OrderManagerLocal {
             if (customer == null) {
                 throw new NoSuchElementException();
             }
-            order.setCustomerId(customer);
+            order.setCustomer(customer);
             em.merge(order);
         }
 
@@ -228,23 +225,6 @@ public class OrderManager implements OrderManagerLocal {
         return (Long) query.getSingleResult();
     }
 
-    private Order fillOrder(Order order, OrderType type, String comments, Long productId, OrderPriority priority, Long managerId) {
-        if (productId != null) {
-            Product product = em.find(Product.class, productId);
-            if (product == null) {
-                throw new NoSuchElementException();
-            }
-            order.setProductId(product);
-        }
-
-        order.setOrderType(type);
-        order.setComments(comments);
-        order.setPriority(priority);
-        order.setManagerId(managerId);
-
-        return order;
-    }
-
     @Override
     public OrderStatus getOrderState(Long orderId) {
         Order order = em.find(Order.class, orderId);
@@ -261,7 +241,7 @@ public class OrderManager implements OrderManagerLocal {
         op.setOrder(order);
         op.setStartDate(new Date());
         op.setStepEvent(event);
-        order.changeOrderState(event);
+        order.changeOrderStatus(event);
         order.getOrderProcessing().add(op);
         em.persist(op);
         em.merge(order);

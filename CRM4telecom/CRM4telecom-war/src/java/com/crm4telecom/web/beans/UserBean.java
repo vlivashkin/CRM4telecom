@@ -10,7 +10,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @ManagedBean
@@ -20,7 +19,6 @@ public class UserBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
-    private String visibility;
 
     @EJB
     private UserManagerLocal um;
@@ -52,22 +50,21 @@ public class UserBean implements Serializable {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);
             session.setAttribute("login", uname);
-            return "success";
+            return "/content/index.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Username or password is incorrect", "Please Try Again"));
             return null;
         }
     }
-    
+
     public Boolean getIsAdmin() {
         return uname.equals("admin");
     }
-
 
     public String logout() {
         JSFHelper helper = new JSFHelper();
         HttpSession session = helper.getSession(false);
         session.invalidate();
-        return "logout";
+        return "/login.xhtml?faces-redirect=true";
     }
 }

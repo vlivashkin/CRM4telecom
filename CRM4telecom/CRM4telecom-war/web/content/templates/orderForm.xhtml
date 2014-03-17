@@ -3,10 +3,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <h:panelGrid styleClass="list" columns="3" cellpadding="5">  
-        <h:outputLabel for="customerId" value="Customer ID:" />  
-        <p:inputText id="customerId" value="#{orderBean.validation.customerId}" label="Customer"/>  
-        <p:message for="customerId" /> 
+    <h:panelGrid styleClass="table-3" columns="3" cellpadding="5">  
+        <h:outputLabel for="customer" value="Customer:" />  
+        <p:autoComplete id="customer" value="#{orderBean.validation.customer}"   
+                        completeMethod="#{orderValidationBean.completeCustomer}"/>  
+        <p:message for="customer" /> 
 
         <h:outputLabel for="priority" value="Priority:" /> 
         <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
@@ -15,15 +16,15 @@
         </p:selectOneMenu>
         <p:message for="priority" />  
 
-        <h:outputLabel for="employeeId" value="Employee ID:" />
-        <p:autoComplete id="employeeId" value="#{orderBean.validation.employee}"   
-                        completeMethod="#{orderValidationBean.complete}"/>  
-        <p:message for="employeeId" />  
+        <h:outputLabel for="employee" value="Employee:" />
+        <p:autoComplete id="employee" value="#{orderBean.validation.employee}"   
+                        completeMethod="#{orderValidationBean.completeEmployee}"/>  
+        <p:message for="employee" />  
 
         <h:outputLabel for="product" value="Product:" /> 
         <p:selectOneMenu id="product" value="#{orderBean.validation.product}">
             <f:selectItems value="#{orderBean.product}" var="product"
-                           itemValue="#{product}" itemLabel="#{product.name()}"/>
+                           itemValue="#{product}" itemLabel="#{product}"/>
         </p:selectOneMenu>
         <p:message for="product" />  
 

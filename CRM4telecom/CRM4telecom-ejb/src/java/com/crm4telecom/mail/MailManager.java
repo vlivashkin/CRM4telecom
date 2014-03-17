@@ -18,12 +18,12 @@ public class MailManager {
     public void statusChangedEmail(Order order) {
         String subject = "Order #" + order.getOrderId() + " status changed to " + order.getStatus().name();
 
-        String text = "Dear " + order.getCustomerId().getFirstName() + " "
-                + order.getCustomerId().getLastName() + ",<br><br><br>"
+        String text = "Dear " + order.getCustomer().getFirstName() + " "
+                + order.getCustomer().getLastName() + ",<br><br><br>"
                 + "The order #" + order.getOrderId() + " status changed to "
                 + order.getStatus().name() + "<br><br> crm4telecom";
 
-        send(order.getCustomerId().getEmail(), subject, text);
+        send(order.getCustomer().getEmail(), subject, text);
     }
 
     public void send(String to, String subject, String text) {

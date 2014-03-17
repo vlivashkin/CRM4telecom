@@ -21,6 +21,4 @@ public interface CustomerManagerLocal {
     Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs);
 
     List<Customer> search(Map<String, String> parametr);
-
-    List<String> completeCustomer(String rawCustomer);
 }

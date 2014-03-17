@@ -17,7 +17,7 @@
         <p:tabView>
             <p:tab title="Info">
                 <h:form>
-                    <h:panelGrid styleClass="list" columns="4" cellpadding="5">
+                    <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
                         <h:outputLabel value="First name:"/>
                         <h:outputText value="#{customerBean.customer.firstName}"/>
 
@@ -43,7 +43,7 @@
                         <h:outputText value="#{customerBean.customer.balance}"/>
                     </h:panelGrid>       
 
-                    <h:panelGrid class="table-row" columns="2" cellpadding="5">
+                    <h:panelGrid class="table-2" columns="2" cellpadding="5">
                         <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
                             <p:column headerText="Phone numbers">
                                 <h:outputText value="#{phone.toString}"/>
@@ -117,6 +117,9 @@
                     <ui:include src="./templates/customerForm.xhtml" />
 
                     <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerBean.modify()}" />
+                    <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+                        <f:ajax render="editform" />
+                    </p:commandButton>
                 </h:form>
             </p:tab>
         </p:tabView>

@@ -1,22 +1,16 @@
 package com.crm4telecom.jpa;
 
-import com.crm4telecom.enums.OrderProduct;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
@@ -30,9 +24,8 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
     private Long productId;
 
-    @Enumerated(EnumType.STRING)
     @Column(length = 30)
-    private OrderProduct name;
+    private String name;
 
     @Column(length = 30)
     private String description;
@@ -73,11 +66,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public OrderProduct getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(OrderProduct name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -162,7 +155,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "#" + productId + " " + name.name();
+        return "#" + productId + " " + name;
     }
 
 }

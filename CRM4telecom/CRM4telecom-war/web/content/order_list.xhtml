@@ -21,7 +21,7 @@
         </h1>
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
             <h:form id="searchForm">
-                <h:panelGrid styleClass="list" columns="4" cellpadding="5">
+                <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
                     <h:outputLabel value="Orderd id:"/>
                     <p:inputText value="#{orderBean.search.order}">
                         <f:ajax event="change" render=":tableForm" />
@@ -79,15 +79,15 @@
                 </p:column>  
 
                 <p:column headerText="Customer" sortBy="customerId" filterBy="#{order.customerId}">  
-                    <h:outputText value="#{order.customerId}" />  
+                    <h:outputText value="#{order.customer}" />  
                 </p:column>
 
                 <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
                     <h:outputText value="#{order.orderDate}" />  
                 </p:column>  
 
-                <p:column headerText="Product" sortBy="productId" filterBy="#{order.productId}">  
-                    <h:outputText value="#{order.productId}" />  
+                <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
+                    <h:outputText value="#{order.product}" />  
                 </p:column>
 
                 <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
@@ -98,12 +98,8 @@
                     <h:outputText value="#{order.status}" />  
                 </p:column> 
 
-                <p:column headerText="Manager" sortBy="managerId" filterBy="#{order.managerId}">  
-                    <h:outputText value="#{order.employeeId}" />  
-                </p:column> 
-
                 <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  
-                    <h:outputText value="#{order.employeeId}" />  
+                    <h:outputText value="#{order.employee}" />  
                 </p:column> 
             </p:dataTable>  
         </h:form>

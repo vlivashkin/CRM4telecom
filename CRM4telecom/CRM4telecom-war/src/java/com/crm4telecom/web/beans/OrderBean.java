@@ -1,10 +1,10 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.enums.OrderEvent;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
-import com.crm4telecom.enums.OrderProduct;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import com.crm4telecom.web.util.JSFHelper;
@@ -26,9 +26,12 @@ public class OrderBean implements Serializable {
     private LazyOrderDataModel lazyModel;
     Order order;
     OrderEvent event;
-
+    
     @EJB
     private OrderManagerLocal om;
+    
+    @EJB
+    private GetManagerLocal gm;
 
     @Inject
     private OrderValidationBean validation;
@@ -84,8 +87,8 @@ public class OrderBean implements Serializable {
         return OrderStatus.values();
     }
     
-    public OrderProduct[] getProduct(){
-        return OrderProduct.values();
+    public List<String> getProduct(){
+        return gm.getProductList();
     }
 
     public void create() {
@@ -100,6 +103,8 @@ public class OrderBean implements Serializable {
     public void modify() {
         validation.fillOrder(order);
         om.modifyOrder(order);
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_info");
     }
 
     public List<OrderEvent> getEvents() {

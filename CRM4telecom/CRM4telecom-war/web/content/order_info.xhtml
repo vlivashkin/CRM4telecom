@@ -21,28 +21,25 @@
                 <p:tabView id="tabPanel">
                     <p:tab title="Info">
                         <h:form id="viewform">
-                            <h:panelGrid styleClass="list" columns="4" cellpadding="5">
-                                <h:outputLabel value="Customer:"/>
-                                <h:outputText value="#{orderBean.order.customerId}"/>
-                                
-                                <h:outputLabel value="Date:"/>
-                                <h:outputText value="#{orderBean.order.orderDate}"/>
-                                
+                            <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
                                 <h:outputLabel value="State:"/>
                                 <h:outputText value="#{orderBean.order.status}"/>
-                                
+
+                                <h:outputLabel value="Date:"/>
+                                <h:outputText value="#{orderBean.order.orderDate}"/>
+
                                 <h:outputLabel value="Priority:"/>
                                 <h:outputText value="#{orderBean.order.priority}"/>
-                                
-                                <h:outputLabel value="Manager:"/>
-                                <h:outputText value="#{orderBean.order.managerId}"/>
-                                
+
                                 <h:outputLabel value="Employee:"/>
-                                <h:outputText value="#{orderBean.order.employeeId}"/>
-                                
+                                <h:outputText value="#{orderBean.order.employee}"/>
+
+                                <h:outputLabel value="Customer:"/>
+                                <h:outputText value="#{orderBean.order.customer}"/>
+
                                 <h:outputLabel value="Product:"/>
-                                <h:outputText value="#{orderBean.order.productId}"/>
-                                
+                                <h:outputText value="#{orderBean.order.product}"/>
+
                                 <h:outputLabel value="Tech support:"/>
                                 <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
                             </h:panelGrid>   
@@ -82,7 +79,10 @@
 
                             <ui:include src="./templates/orderForm.xhtml" />
 
-                            <p:commandButton value="Save" update="editform :tabPanel:viewform" icon="ui-icon-check" validateClient="true" action="#{orderBean.modify()}" />
+                            <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderBean.modify()}" />
+                            <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+                                <f:ajax render="editform" />
+                            </p:commandButton>
                         </h:form>
                     </p:tab>        
                 </p:tabView>

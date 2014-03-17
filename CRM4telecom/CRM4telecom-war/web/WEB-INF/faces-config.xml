@@ -8,19 +8,14 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>createCustomerBean</managed-bean-name>
-        <managed-bean-class>com.crm4telecom.web.beans.CreateCustomerBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>customerValidationBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.CustomerValidationBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>searchBean</managed-bean-name>
+        <managed-bean-name>customerSearchBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.CustomerSearchBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>orderBean</managed-bean-name>
@@ -30,17 +25,17 @@
     <managed-bean>
         <managed-bean-name>orderValidationBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderValidationBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>orderSearchBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderSearchBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>orderCommentBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderCommentBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>userBean</managed-bean-name>
@@ -48,21 +43,8 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>adduserBean</managed-bean-name>
+        <managed-bean-name>userValidationBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.UserValidationBean</managed-bean-class>
-    
-        <managed-bean-scope>session</managed-bean-scope></managed-bean>
-    <navigation-rule>
-        <from-view-id>login.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>success</from-outcome>
-            <to-view-id>/content/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>logout</from-outcome>
-            <to-view-id>/login.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

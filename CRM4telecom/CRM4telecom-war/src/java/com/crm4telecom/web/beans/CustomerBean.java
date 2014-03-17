@@ -1,6 +1,7 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
+import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
@@ -22,6 +23,9 @@ public class CustomerBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;
+    
+    @EJB
+    private GetManagerLocal gm;
 
     @Inject
     private CustomerValidationBean cv;
@@ -87,6 +91,11 @@ public class CustomerBean implements Serializable {
     }
 
     public List<String> completeCustomer(String customer) {
-        return cm.completeCustomer(customer);
+        return gm.completeCustomer(customer);
+    }
+    
+    public void resetForm() {
+        JSFHelper helper = new JSFHelper();
+        helper.removeViewScopedBean("orderValidationBean");
     }
 }
