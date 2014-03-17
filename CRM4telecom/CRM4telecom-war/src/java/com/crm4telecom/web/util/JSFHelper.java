@@ -107,8 +107,4 @@ public class JSFHelper {
         }
         return msg;
     }
-
-    public void removeViewScopedBean(String beanName) {
-        context.getViewRoot().getViewMap().remove(beanName);
-    }
 }

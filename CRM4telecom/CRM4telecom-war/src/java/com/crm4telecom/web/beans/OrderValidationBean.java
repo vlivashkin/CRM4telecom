@@ -37,6 +37,19 @@ public class OrderValidationBean implements Serializable {
     private String product;
 
     private Boolean technicalSupportFlag;
+    
+    private Boolean newOrder;
+
+    public void init() {
+        customerId = null;
+        employeeId = null;
+        customer = null;
+        employee = null;
+        priority = null;
+        product = null;
+        technicalSupportFlag = null;
+        newOrder = true;
+    }
 
     public void init(Order order) {
         if (order != null) {
@@ -53,6 +66,9 @@ public class OrderValidationBean implements Serializable {
             if (order.getTechnicalSupportFlag() != null) {
                 technicalSupportFlag = Boolean.valueOf(order.getTechnicalSupportFlag());
             }
+            newOrder = order.getOrderId() == null;
+        } else {
+            init();
         }
     }
 
@@ -118,9 +134,12 @@ public class OrderValidationBean implements Serializable {
     public List<String> completeCustomer(String query) {
         return gm.completeCustomer(query);
     }
-    
+
     public List<String> completeEmployee(String query) {
         return gm.completeEmployee(query);
     }
 
+    public Boolean isNewOrder() {
+        return newOrder;
+    }
 }

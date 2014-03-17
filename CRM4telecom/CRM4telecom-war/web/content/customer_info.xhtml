@@ -81,6 +81,10 @@
                         <p:column headerText="Type">
                             <h:outputText value="#{order.orderType}"/>
                         </p:column>
+                        
+                        <f:facet name="footer">  
+                            <p:commandButton value="Add Order" icon="ui-icon-plus" action="#{customerBean.toAddOrder}" />
+                        </f:facet>
                     </p:dataTable>
 
                     <p:dataTable value="#{customerBean.customer.marketsCustomersList}" var="market">

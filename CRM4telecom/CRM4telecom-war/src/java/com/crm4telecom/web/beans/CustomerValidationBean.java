@@ -35,6 +35,17 @@ public class CustomerValidationBean implements Serializable {
     @Size(min=1, max=30)
     String status;
 
+    public void init() {
+        firstName = null;
+        lastName = null;
+        email = null;
+        street = null;
+        building = null;
+        flat = null;
+        balance = null;
+        phoneNumber = null;
+    }
+    
     public void init(Customer customer) {
         firstName = customer.getFirstName();
         lastName = customer.getLastName();

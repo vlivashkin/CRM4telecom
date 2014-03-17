@@ -2,7 +2,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:panelGrid styleClass="table-3" columns="3" cellpadding="5">  
         <h:outputLabel for="customer" value="Customer:" />  
         <p:autoComplete id="customer" value="#{orderBean.validation.customer}"   
@@ -28,9 +29,11 @@
         </p:selectOneMenu>
         <p:message for="product" />  
 
-        <h:outputLabel for="techSupport" value="Tech support:" />  
-        <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  
-        <p:message for="techSupport" />  
+        <c:if test="#{orderBean.validation.isNewOrder()}">
+            <h:outputLabel for="techSupport" value="Tech support:" />  
+            <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>  
+            <p:message for="techSupport" />  
+        </c:if>
     </h:panelGrid>  
 </ui:composition>
 

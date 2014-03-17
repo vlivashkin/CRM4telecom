@@ -26,29 +26,29 @@ public class OrderBean implements Serializable {
     private LazyOrderDataModel lazyModel;
     Order order;
     OrderEvent event;
-    
+
     @EJB
     private OrderManagerLocal om;
-    
+
     @EJB
     private GetManagerLocal gm;
 
     @Inject
-    private OrderValidationBean validation;
+    private OrderValidationBean ov;
 
     @Inject
     private OrderSearchBean search;
-    
+
     @Inject
     private OrderCommentBean comment;
-    
+
     @PostConstruct
     public void init() {
         lazyModel = new LazyOrderDataModel(om);
     }
 
     public OrderValidationBean getValidation() {
-        return validation;
+        return ov;
     }
 
     public OrderSearchBean getSearch() {
@@ -58,7 +58,7 @@ public class OrderBean implements Serializable {
     public OrderCommentBean getComment() {
         return comment;
     }
-    
+
     public LazyDataModel<Order> getOrders() {
         lazyModel.setSearch(search);
         return lazyModel;
@@ -70,7 +70,7 @@ public class OrderBean implements Serializable {
 
     public void setOrder(Order order) {
         this.order = order;
-        validation.init(order);
+        ov.init(order);
         comment.init(order);
     }
 
@@ -86,14 +86,14 @@ public class OrderBean implements Serializable {
     public OrderStatus[] getStatuses() {
         return OrderStatus.values();
     }
-    
-    public List<String> getProduct(){
+
+    public List<String> getProduct() {
         return gm.getProductList();
     }
 
     public void create() {
         Order orderNew = new Order();
-        validation.fillOrder(orderNew);
+        ov.fillOrder(orderNew);
         om.createOrder(orderNew);
 
         JSFHelper helper = new JSFHelper();
@@ -101,7 +101,7 @@ public class OrderBean implements Serializable {
     }
 
     public void modify() {
-        validation.fillOrder(order);
+        ov.fillOrder(order);
         om.modifyOrder(order);
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info");
@@ -133,5 +133,12 @@ public class OrderBean implements Serializable {
 
     public List<String> completeOrder(String order) {
         return om.completeOrder(order);
+    }
+
+    public void toAddOrder() {
+        ov.init();
+
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_add");
     }
 }

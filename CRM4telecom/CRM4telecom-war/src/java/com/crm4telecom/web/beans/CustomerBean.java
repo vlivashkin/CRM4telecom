@@ -23,9 +23,12 @@ public class CustomerBean implements Serializable {
 
     @EJB
     private CustomerManagerLocal cm;
-    
+
     @EJB
     private GetManagerLocal gm;
+
+    @Inject
+    private OrderBean ob;
 
     @Inject
     private CustomerValidationBean cv;
@@ -93,9 +96,28 @@ public class CustomerBean implements Serializable {
     public List<String> completeCustomer(String customer) {
         return gm.completeCustomer(customer);
     }
-    
-    public void resetForm() {
+
+    public void toAddOrder() {
+        ob.getValidation().init();
+        ob.getValidation().setCustomer(customer.toString());
+
         JSFHelper helper = new JSFHelper();
-        helper.removeViewScopedBean("orderValidationBean");
+        helper.redirect("order_add");
+    }
+
+    public void toAddCustomer() {
+        cv.init();
+
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("customer_add");
+    }
+
+    public void toCustomer() {
+        if (ob.getOrder() != null) {
+            setCustomer(ob.getOrder().getCustomer());
+
+            JSFHelper helper = new JSFHelper();
+            helper.redirect("customer_info");
+        }
     }
 }
