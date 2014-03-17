@@ -111,11 +111,11 @@ pre{
 }
 
 .table-3 tr>td:nth-child(2) {
-    width: calc(50% - 100px);
+    width: 45%;
 }
 
 .table-3 tr>td:nth-child(3) {
-    width: calc(50% - 100px);
+    width: 45%;
 }
 
 .table-4 tr>td:nth-child(odd) {
@@ -125,7 +125,7 @@ pre{
 }
 
 .table-4 tr>td:nth-child(even) {
-    width: calc(50% - 100px);
+    width: 39%;
 }
 
 .table-4 td>div {
