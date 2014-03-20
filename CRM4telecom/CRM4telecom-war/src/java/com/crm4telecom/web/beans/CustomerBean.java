@@ -2,6 +2,7 @@ package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
+import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
@@ -119,5 +120,9 @@ public class CustomerBean implements Serializable {
             JSFHelper helper = new JSFHelper();
             helper.redirect("customer_info");
         }
+    }
+    
+    public CustomerStatus[] getStatus() {
+        return CustomerStatus.values();
     }
 }

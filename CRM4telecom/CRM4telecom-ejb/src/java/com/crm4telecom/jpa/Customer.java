@@ -1,11 +1,14 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.CustomerStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,8 +67,8 @@ public class Customer implements Serializable {
     private String phoneNumber;
 
     @Size(max = 30)
-    @Column(length = 30)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
 
     @Column(name = "STATUS_UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -170,11 +173,11 @@ public class Customer implements Serializable {
     }
 
     
-    public String getStatus() {
+    public CustomerStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CustomerStatus status) {
         this.status = status;
     }
 

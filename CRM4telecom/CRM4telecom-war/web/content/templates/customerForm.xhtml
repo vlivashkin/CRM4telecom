@@ -1,7 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:panelGrid styleClass="table-3" columns="3" cellpadding="5">  
         <h:outputLabel for="firstName" value="First Name:" />  
         <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
@@ -26,11 +27,15 @@
         <h:outputLabel for="flat" value="Flat:" />  
         <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
         <p:message for="flat" />  
-
-        <h:outputLabel for="status" value="Status:" />  
-        <p:inputText id="status" value="#{customerBean.cv.status}" label="status"/>  
+        
+        <h:outputLabel for="status" value="Status:" /> 
+        <p:selectOneMenu id="status" value="#{customerBean.cv.status}">
+            <f:selectItems value="#{customerBean.getStatus()}" var="status"
+                           itemValue="#{status}" itemLabel="#{status.name()}"/>
+        </p:selectOneMenu>
         <p:message for="status" />  
-
+        
+        
         <h:outputLabel for="phoneNumber" value="Phone Number:" />  
         <p:inputText id="phoneNumber" value="#{customerBean.cv.status}" label="Phone Number"/>  
         <p:message for="phoneNumber" />  
