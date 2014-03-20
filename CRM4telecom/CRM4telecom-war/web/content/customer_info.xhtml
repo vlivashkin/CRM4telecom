@@ -15,50 +15,84 @@
     </ui:define>
 
     <ui:define name="content">
-        <h1>Customer #{customerBean.customer}</h1>
+        <h1>
+            Customer #{customerBean.customer}
+            <h:outputLabel value="#{customerBean.customer.status.label}" styleClass="customer-status" style="background-color: \##{customerBean.customer.status.colorHex};" />
+        </h1>
         <p:tabView>
             <p:tab title="Info">
                 <h:form>
-                    <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
-                        <h:outputLabel value="First name:"/>
-                        <h:outputText value="#{customerBean.customer.firstName}"/>
+                    <div class="g">
+                        <div class="gc w-50">
+                            <h:panelGrid styleClass="table-4" columns="2" cellpadding="5">
+                                <h:outputLabel value="First name:"/>
+                                <h:outputText value="#{customerBean.customer.firstName}"/>
 
-                        <h:outputLabel value="Street:"/>
-                        <h:outputText value="#{customerBean.customer.street}"/>
+                                <h:outputLabel value="Last name:"/>
+                                <h:outputText value="#{customerBean.customer.lastName}"/>
 
-                        <h:outputLabel value="Last name:"/>
-                        <h:outputText value="#{customerBean.customer.lastName}"/>
+                                <h:outputLabel value="Status:"/>
+                                <h:outputText value="#{customerBean.customer.status.label}"/>
 
-                        <h:outputLabel value="Building:"/>
-                        <h:outputText value="#{customerBean.customer.building}"/>
+                                <h:outputLabel value="E-mail:"/>
+                                <h:outputText value="#{customerBean.customer.email}"/>
 
-                        <h:outputLabel value="E-mail:"/>
-                        <h:outputText value="#{customerBean.customer.email}"/>
+                                <h:outputLabel value="Street:"/>
+                                <h:outputText value="#{customerBean.customer.street}"/>
 
-                        <h:outputLabel value="Flat:"/>
-                        <h:outputText value="#{customerBean.customer.flat}"/>
+                                <h:outputLabel value="Building:"/>
+                                <h:outputText value="#{customerBean.customer.building}"/>
 
-                        <h:outputLabel value="Phone number:"/>
-                        <h:outputText value="#{customerBean.customer.phoneNumber}"/>
+                                <h:outputLabel value="Flat:"/>
+                                <h:outputText value="#{customerBean.customer.flat}"/>
 
-                        <h:outputLabel value="Balance:"/>
-                        <h:outputText value="#{customerBean.customer.balance}"/>
-                    </h:panelGrid>       
+                                <h:outputLabel value="Phone number:"/>
+                                <h:outputText value="#{customerBean.customer.phoneNumber}"/>
 
-                    <h:panelGrid class="table-2" columns="2" cellpadding="5">
-                        <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
-                            <p:column headerText="Phone numbers">
-                                <h:outputText value="#{phone.toString}"/>
-                            </p:column>
-                        </p:dataTable>
+                                <h:outputLabel value="Balance:"/>
+                                <h:outputText value="#{customerBean.customer.balance}"/>
+                            </h:panelGrid>       
+                        </div>
+                        <div class="gc w-50">
+                            <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
+                                <p:column headerText="Phone numbers">
+                                    <h:outputText value="#{phone.toString}"/>
+                                </p:column>
+                            </p:dataTable>
 
-                        <p:dataTable value="#{customerBean.customer.staticIpList}" var="ip">
-                            <p:column headerText="Statical IP">
-                                <h:outputText value="#{ip}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </h:panelGrid>
+                            <p:dataTable value="#{customerBean.customer.staticIpList}" var="ip">
+                                <p:column headerText="Statical IP">
+                                    <h:outputText value="#{ip}"/>
+                                </p:column>
+                            </p:dataTable>
 
+                            <p:dataTable value="#{customerBean.customer.marketsCustomersList}" var="market">
+                                <f:facet name="header">
+                                    Markets
+                                </f:facet>
+
+                                <p:column>
+                                    <f:facet name="header">ID</f:facet>
+                                    <h:outputText value="#{market.marketId}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">Name</f:facet>
+                                    <h:outputText value="#{market.market.name}"/>
+                                </p:column>     
+
+                                <p:column>
+                                    <f:facet name="header">Start date</f:facet>
+                                    <h:outputText value="#{market.startDate.toString}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">End date</f:facet>
+                                    <h:outputText value="#{market.endDate.toString}"/>
+                                </p:column>     
+                            </p:dataTable>
+                        </div>
+                    </div>
 
                     <p:dataTable value="#{customerBean.customer.ordersList}" var="order"
                                  selectionMode="single" selection="#{orderBean.order}" rowKey="#{order.orderId}">
@@ -68,51 +102,33 @@
 
                         <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
 
-                        <p:column headerText="ID">
-                            <p:commandLink value="#{order.orderId}"/>
+                        <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
+                            <h:outputText value="#{order.orderId}" />  
+                        </p:column>  
+
+                        <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
+                            <h:outputText value="#{order.orderDate}" />  
+                        </p:column>  
+
+                        <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
+                            <h:outputText value="#{order.product}" />  
                         </p:column>
 
-                        <p:column headerText="State">
-                            <h:outputText value="#{order.status}"/>
+                        <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
+                            <h:outputText value="#{order.priority}" />  
+                        </p:column>  
+
+                        <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
+                            <h:outputText value="#{order.status}" />  
+                        </p:column> 
+
+                        <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  
+                            <h:outputText value="#{order.employee}" />  
                         </p:column>
 
-                        <p:column headerText="Priority">
-                            <h:outputText value="#{order.priority}"/>
-                        </p:column>
-
-                        <p:column headerText="Type">
-                            <h:outputText value="#{order.orderType}"/>
-                        </p:column>
-                        
                         <f:facet name="footer">  
                             <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerBean.toAddOrder}" />
                         </f:facet>
-                    </p:dataTable>
-
-                    <p:dataTable value="#{customerBean.customer.marketsCustomersList}" var="market">
-                        <f:facet name="header">
-                            Markets
-                        </f:facet>
-
-                        <p:column>
-                            <f:facet name="header">ID</f:facet>
-                            <h:outputText value="#{market.marketId}"/>
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">Name</f:facet>
-                            <h:outputText value="#{market.market.name}"/>
-                        </p:column>     
-
-                        <p:column>
-                            <f:facet name="header">Start date</f:facet>
-                            <h:outputText value="#{market.startDate.toString}"/>
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">End date</f:facet>
-                            <h:outputText value="#{market.endDate.toString}"/>
-                        </p:column>     
                     </p:dataTable>
                 </h:form>
             </p:tab>

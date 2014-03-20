@@ -31,11 +31,6 @@ public class OrderManager implements OrderManagerLocal {
         order.setOrderDate(date);
         order.setStatus(OrderStatus.NEW);
         em.persist(order);
-        OrderProcessing op = new OrderProcessing();
-        op.setOrder(order);
-        op.setStartDate(date);
-        op.setStepEvent(OrderEvent.CREATED);
-        em.persist(op);
 
         return order;
     }

@@ -2,13 +2,10 @@ package com.crm4telecom.enums;
 
 public enum OrderEvent {
 
-    CREATED("Created"),
-    SENT_TO_TECH_SUPPORT("Sent to technical support"),
-    ENGINEER_APPOINTED("Engineer appointed"),
-    DELAY("Delay deadlines"),
-    READY("Ready"),
-    DONE("Done"),
-    CANCELLED("Cancelled");
+    SEND_TO_TECH_SUPPORT("Send to technical support"),
+    ENGINEER_APPOINT("Engineer appoint"),
+    SUCCESS("Close order"),
+    CANCEL("Cancel order");
 
     private final String label;
 

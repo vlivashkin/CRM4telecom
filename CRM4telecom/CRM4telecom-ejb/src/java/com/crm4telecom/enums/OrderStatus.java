@@ -1,34 +1,41 @@
 package com.crm4telecom.enums;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public enum OrderStatus {
 
-    NEW {
+    NEW("New", Color.BLUE) {
                 @Override
                 public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.SENT_TO_TECH_SUPPORT || event == OrderEvent.ENGINEER_APPOINTED) {
+                    if (event == OrderEvent.SEND_TO_TECH_SUPPORT
+                    || event == OrderEvent.ENGINEER_APPOINT) {
                         return OPENED;
                     }
+                    if (event == OrderEvent.CANCEL) {
+                        return CLOSED;
+                    }
+
                     return this;
                 }
 
                 @Override
                 public List<OrderEvent> possibleEvents() {
                     List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.SENT_TO_TECH_SUPPORT);
-                    events.add(OrderEvent.ENGINEER_APPOINTED);
-
+                    events.add(OrderEvent.SEND_TO_TECH_SUPPORT);
+                    events.add(OrderEvent.ENGINEER_APPOINT);
+                    events.add(OrderEvent.CANCEL);
                     return events;
                 }
             },
-    OPENED {
+    OPENED("Opened", Color.GREEN) {
                 @Override
                 public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.DELAY) {
-                        return WAITING;
-                    } else if (event == OrderEvent.DONE) {
+                    if (event == OrderEvent.SUCCESS) {
+                        return CLOSED;
+                    }
+                    if (event == OrderEvent.CANCEL) {
                         return CLOSED;
                     }
                     return this;
@@ -37,53 +44,16 @@ public enum OrderStatus {
                 @Override
                 public List<OrderEvent> possibleEvents() {
                     List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.DELAY);
-                    events.add(OrderEvent.DONE);
-
+                    events.add(OrderEvent.SUCCESS);
+                    events.add(OrderEvent.CANCEL);
+                    
                     return events;
                 }
             },
-    WAITING {
+    CLOSED("Closed", Color.LIGHT_GRAY) {
                 @Override
                 public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.READY) {
-                        return OPENED;
-                    } else if (event == OrderEvent.CANCELLED) {
-                        return LOCKED;
-                    }
-                    return this;
-                }
-
-                @Override
-                public List<OrderEvent> possibleEvents() {
-                    List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.READY);
-                    events.add(OrderEvent.CANCELLED);
-
-                    return events;
-                }
-            },
-    LOCKED {
-                @Override
-                public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.READY) {
-                        return OPENED;
-                    }
-                    return this;
-                }
-
-                @Override
-                public List<OrderEvent> possibleEvents() {
-                    List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.READY);
-
-                    return events;
-                }
-            },
-    CLOSED {
-                @Override
-                public OrderStatus nextState(OrderEvent event) {
-                    return this;
+                    return null;
                 }
 
                 @Override
@@ -93,6 +63,26 @@ public enum OrderStatus {
                     return events;
                 }
             };
+
+    private final String label;
+    private final Color color;
+
+    private OrderStatus(String label, Color color) {
+        this.label = label;
+        this.color = color;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public String getColorHex() {
+        return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1);
+    }
 
     public abstract OrderStatus nextState(OrderEvent event);
 

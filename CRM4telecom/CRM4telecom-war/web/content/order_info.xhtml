@@ -16,7 +16,10 @@
     </ui:define>
 
     <ui:define name="content">
-        <h1>Order #{orderBean.order}</h1>
+        <h1>
+            Order #{orderBean.order}
+            <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status" style="background-color: \##{orderBean.order.status.colorHex};" />
+        </h1>
 
         <div class="oinfo-container">
             <div class="oinfo-left">

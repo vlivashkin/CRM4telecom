@@ -85,23 +85,8 @@ pre{
     width: 120px;
 }
 
-.table-2, .table-3, .table-4 {
+.table-3, .table-4 {
     width: 100%;
-}
-
-.table-2 {
-    border-spacing: 0 !important;
-}
-.table-2 tr>td {
-    width: 50%;
-}
-
-.table-2 tr>td:nth-child(1) {
-    padding-left: 0;
-}
-
-.table-2 tr>td:nth-child(2) {
-    padding-right: 0;
 }
 
 .table-3 tr>td:nth-child(1) {
@@ -125,7 +110,7 @@ pre{
 }
 
 .table-4 tr>td:nth-child(even) {
-    width: 39%;
+    width: auto;
 }
 
 .table-4 td>div {
@@ -150,8 +135,14 @@ table div.ui-selectcheckboxmenu {
     margin-right: 0;
 }
 
+.customer-status {
+    margin-right: 6px;
+    float: right;
+    color: black;
+}
+
 /*
-    ORDER INFO
+    ORDER INFO LAYOUT
 */
 .oinfo-container {
     padding: 0 360px 0 0;
@@ -171,3 +162,21 @@ table div.ui-selectcheckboxmenu {
     overflow: visible;
     position: relative;
 }
+
+/*
+    COLUMNS
+*/
+
+.g, .gc { zoom: 1; }
+.g:after, .gc:after { content: '.'; display: block; height: 0; clear: both; visibility: hidden; }
+.gc { float: left; clear: right; text-align: center; }
+.gcb-first { padding-right: 10px; }
+.gcb { padding-left: 10px; }
+
+.w-20 { width: 20%; }
+.w-33 { width: 33.33%; }
+.w-40 { width: 40%; }
+.w-50 { width: 50%; }
+.w-60 { width: 60%; }
+.w-66 { width: 66.66%; }
+.w-80 { width: 80%; }

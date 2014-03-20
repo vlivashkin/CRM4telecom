@@ -66,7 +66,6 @@ public class Customer implements Serializable {
     @Column(name = "PHONE_NUMBER", length = 20)
     private String phoneNumber;
 
-    @Size(max = 30)
     @Enumerated(EnumType.STRING)
     private CustomerStatus status;
 
@@ -172,7 +171,6 @@ public class Customer implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    
     public CustomerStatus getStatus() {
         return status;
     }
@@ -189,7 +187,6 @@ public class Customer implements Serializable {
         this.statusUpdateDate = statusUpdateDate;
     }
 
-    
     public Long getBalance() {
         return balance;
     }
