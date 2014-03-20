@@ -6,14 +6,14 @@ import java.util.List;
 
 public enum OrderStatus {
 
-    NEW("New", Color.BLUE) {
+    NEW("New", Color.YELLOW) {
                 @Override
-                public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.SEND_TO_TECH_SUPPORT
-                    || event == OrderEvent.ENGINEER_APPOINT) {
+                public OrderStatus nextStatus(OrderStep event) {
+                    if (event == OrderStep.SEND_TO_TECH_SUPPORT
+                    || event == OrderStep.ENGINEER_APPOINT) {
                         return OPENED;
                     }
-                    if (event == OrderEvent.CANCEL) {
+                    if (event == OrderStep.CANCEL) {
                         return CLOSED;
                     }
 
@@ -21,44 +21,44 @@ public enum OrderStatus {
                 }
 
                 @Override
-                public List<OrderEvent> possibleEvents() {
-                    List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.SEND_TO_TECH_SUPPORT);
-                    events.add(OrderEvent.ENGINEER_APPOINT);
-                    events.add(OrderEvent.CANCEL);
+                public List<OrderStep> possibleEvents() {
+                    List<OrderStep> events = new ArrayList<>();
+                    events.add(OrderStep.SEND_TO_TECH_SUPPORT);
+                    events.add(OrderStep.ENGINEER_APPOINT);
+                    events.add(OrderStep.CANCEL);
                     return events;
                 }
             },
     OPENED("Opened", Color.GREEN) {
                 @Override
-                public OrderStatus nextState(OrderEvent event) {
-                    if (event == OrderEvent.SUCCESS) {
+                public OrderStatus nextStatus(OrderStep event) {
+                    if (event == OrderStep.SUCCESS) {
                         return CLOSED;
                     }
-                    if (event == OrderEvent.CANCEL) {
+                    if (event == OrderStep.CANCEL) {
                         return CLOSED;
                     }
                     return this;
                 }
 
                 @Override
-                public List<OrderEvent> possibleEvents() {
-                    List<OrderEvent> events = new ArrayList<>();
-                    events.add(OrderEvent.SUCCESS);
-                    events.add(OrderEvent.CANCEL);
-                    
+                public List<OrderStep> possibleEvents() {
+                    List<OrderStep> events = new ArrayList<>();
+                    events.add(OrderStep.SUCCESS);
+                    events.add(OrderStep.CANCEL);
+
                     return events;
                 }
             },
     CLOSED("Closed", Color.LIGHT_GRAY) {
                 @Override
-                public OrderStatus nextState(OrderEvent event) {
+                public OrderStatus nextStatus(OrderStep event) {
                     return null;
                 }
 
                 @Override
-                public List<OrderEvent> possibleEvents() {
-                    List<OrderEvent> events = new ArrayList<>();
+                public List<OrderStep> possibleEvents() {
+                    List<OrderStep> events = new ArrayList<>();
 
                     return events;
                 }
@@ -84,7 +84,7 @@ public enum OrderStatus {
         return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1);
     }
 
-    public abstract OrderStatus nextState(OrderEvent event);
+    public abstract OrderStatus nextStatus(OrderStep event);
 
-    public abstract List<OrderEvent> possibleEvents();
+    public abstract List<OrderStep> possibleEvents();
 }

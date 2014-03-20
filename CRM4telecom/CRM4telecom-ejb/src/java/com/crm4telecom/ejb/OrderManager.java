@@ -1,6 +1,6 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
@@ -30,7 +30,22 @@ public class OrderManager implements OrderManagerLocal {
         Date date = new Date();
         order.setOrderDate(date);
         order.setStatus(OrderStatus.NEW);
+        if (order.getTechnicalSupportFlag()) {
+            order.setProcessStep(OrderStep.SEND_TO_TECH_SUPPORT);
+        } else {
+            order.setProcessStep(OrderStep.ENGINEER_APPOINT);
+        }
         em.persist(order);
+        OrderProcessing op = new OrderProcessing();
+        op.setOrderId(order.getOrderId());
+        op.setStartDate(date);
+        if (order.getTechnicalSupportFlag()) {
+            op.setStepEvent(OrderStep.SEND_TO_TECH_SUPPORT);
+        } else {
+            op.setStepEvent(OrderStep.ENGINEER_APPOINT);
+
+        }
+        em.persist(op);
 
         return order;
     }
@@ -231,20 +246,6 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public void changeOrderState(Order order, OrderEvent event) {
-        OrderProcessing op = new OrderProcessing();
-        op.setOrder(order);
-        op.setStartDate(new Date());
-        op.setStepEvent(event);
-        order.changeOrderStatus(event);
-        order.getOrderProcessing().add(op);
-        em.persist(op);
-        em.merge(order);
-        MailManager mm = new MailManager();
-        mm.statusChangedEmail(order);
-    }
-
-    @Override
     public List<Order> search(Map<String, List<String>> parametrs) {
         String sqlQuery = "SELECT c FROM Orders c    ";
         if (!parametrs.isEmpty()) {
@@ -294,5 +295,42 @@ public class OrderManager implements OrderManagerLocal {
         }
 
         return orders;
+    }
+
+    @Override
+    public void toNextStep(Order order) {
+        OrderStep nextStep = order.getProcessStep().nextStep();
+        
+        if (nextStep != order.getProcessStep()) {
+            OrderProcessing op = new OrderProcessing();
+            op.setOrderId(order.getOrderId());
+            op.setStartDate(new Date());
+            op.setStepEvent(nextStep);
+            order.setProcessStep(nextStep);
+            if (nextStep == OrderStep.IN_WORK)
+                order.setStatus(OrderStatus.OPENED);
+            else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL)
+                order.setStatus(OrderStatus.CLOSED);
+            em.persist(op);
+            em.merge(order);
+            /*
+             MailManager mm = new MailManager();
+             mm.statusChangedEmail(order);
+             */
+        }
+    }
+
+    @Override
+    public void cancelOrder(Order order) {
+        if (order.getStatus() != OrderStatus.CLOSED) {
+            order.setStatus(OrderStatus.CLOSED);
+            em.merge(order);
+            
+            OrderProcessing op = new OrderProcessing();
+            op.setOrderId(order.getOrderId());
+            op.setStartDate(new Date());
+            op.setStepEvent(OrderStep.CANCEL);
+            em.persist(op);
+        }
     }
 }

@@ -18,7 +18,9 @@
     <ui:define name="content">
         <h1>
             Order #{orderBean.order}
-            <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status" style="background-color: \##{orderBean.order.status.colorHex};" />
+            <h:form id="headerstatus">
+                <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status" style="background-color: \##{orderBean.order.status.colorHex};" />
+            </h:form>
         </h1>
 
         <div class="oinfo-container">
@@ -50,7 +52,7 @@
                             </h:panelGrid>   
                         </h:form>
                         <h:form id="statusform">
-                            <p:dataTable value="#{orderBean.order.orderProcessing}" var="orderProcessing">
+                            <p:dataTable value="#{orderBean.orderSteps}" var="orderProcessing">
                                 <f:facet name="header">Process:</f:facet>
 
                                 <p:column headerText="Step Name">
@@ -69,13 +71,8 @@
                                     <h:outputText value="#{orderProcessing.endDate}"/>
                                 </p:column>
                             </p:dataTable>
-                            <h:outputText value="New event:" />
-                            <p:selectOneRadio id="grid" value="#{orderBean.event}" layout="grid" columns="1">
-                                <f:selectItems value="#{orderBean.events}" var="event"
-                                               itemValue="#{event}" itemLabel="#{event.label}"/>
-                            </p:selectOneRadio>
-
-                            <p:commandButton id="submitButton" value="Submit" update="statusform" action="#{orderBean.changeState}"/>
+                            <p:commandButton value="To next step" update="statusform :headerstatus" action="#{orderBean.nextStep}" />
+                            <p:commandButton value="Cancel Order" update="statusform :headerstatus" action="#{orderBean.cancelOrder}" />
                         </h:form>
                     </p:tab>
                     <p:tab title="Edit">

@@ -2,6 +2,8 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Employee;
+import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,13 @@ public class GetManager implements GetManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Override
+    public List<OrderProcessing> getOrderSteps(Order order) {
+        String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id ORDER BY o.startDate";
+        Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+        return query.getResultList();
+    }
 
     @Override
     public Product getProduct(Long productId) {

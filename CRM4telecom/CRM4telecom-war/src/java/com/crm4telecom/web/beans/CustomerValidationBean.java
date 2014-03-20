@@ -1,9 +1,12 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -29,11 +32,10 @@ public class CustomerValidationBean implements Serializable {
 
     Long balance;
 
-    @Pattern(regexp = "[+]?.* (.*{3}) .*{7}")
     String phoneNumber;
 
-    @Size(min=1, max=30)
-    String status;
+    @Enumerated(EnumType.STRING)
+    CustomerStatus status;
 
     public void init() {
         firstName = null;
@@ -44,6 +46,7 @@ public class CustomerValidationBean implements Serializable {
         flat = null;
         balance = null;
         phoneNumber = null;
+        status = null;
     }
     
     public void init(Customer customer) {
@@ -55,6 +58,7 @@ public class CustomerValidationBean implements Serializable {
         flat = customer.getFlat();
         balance = customer.getBalance();
         phoneNumber = customer.getPhoneNumber();
+        status = customer.getStatus();
     }
 
     public void fillCustomer(Customer customer) {
@@ -66,6 +70,7 @@ public class CustomerValidationBean implements Serializable {
         customer.setFlat(flat);
         customer.setBalance(balance);
         customer.setPhoneNumber(phoneNumber);
+        customer.setStatus(status);
     }
 
     public String getFirstName() {
@@ -132,11 +137,11 @@ public class CustomerValidationBean implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getStatus() {
+    public CustomerStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CustomerStatus status) {
         this.status = status;
     }
 

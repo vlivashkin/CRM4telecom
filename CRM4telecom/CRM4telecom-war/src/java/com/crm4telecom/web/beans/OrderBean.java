@@ -2,10 +2,11 @@ package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
-import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class OrderBean implements Serializable {
 
     private LazyOrderDataModel lazyModel;
     Order order;
-    OrderEvent event;
+    OrderStep event;
 
     @EJB
     private OrderManagerLocal om;
@@ -107,8 +108,8 @@ public class OrderBean implements Serializable {
         helper.redirect("order_info");
     }
 
-    public List<OrderEvent> getEvents() {
-        List<OrderEvent> events = new ArrayList<>();
+    public List<OrderStep> getEvents() {
+        List<OrderStep> events = new ArrayList<>();
         if (order != null) {
             OrderStatus status = order.getStatus();
             if (status != null) {
@@ -118,17 +119,12 @@ public class OrderBean implements Serializable {
         return events;
     }
 
-    public OrderEvent getEvent() {
+    public OrderStep getEvent() {
         return event;
     }
 
-    public void setEvent(OrderEvent event) {
+    public void setEvent(OrderStep event) {
         this.event = event;
-    }
-
-    public void changeState() {
-        System.out.println(order + " " + event);
-        om.changeOrderState(order, event);
     }
 
     public List<String> completeOrder(String order) {
@@ -140,5 +136,17 @@ public class OrderBean implements Serializable {
 
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_add");
+    }
+
+    public List<OrderProcessing> getOrderSteps() {
+        return gm.getOrderSteps(order);
+    }
+    
+    public void nextStep() {
+        om.toNextStep(order);
+    }
+    
+    public void cancelOrder() {
+        om.cancelOrder(order);
     }
 }

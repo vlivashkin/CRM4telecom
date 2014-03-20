@@ -1,6 +1,6 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.jpa.Order;
 import java.util.List;
@@ -23,12 +23,14 @@ public interface OrderManagerLocal {
     Long getOrdersCount();
 
     Long getOrdersCount(Map<String, String> filters,Map<String,List<String>> parametrs);
-    
-    void changeOrderState(Order order, OrderEvent event);
 
     OrderStatus getOrderState(Long orderId);
     
     List<Order> search(Map<String,List<String>> parametrs);
     
     List<String> completeOrder(String rawOrder);
+    
+    void toNextStep(Order order);
+    
+    void cancelOrder(Order order);
 }

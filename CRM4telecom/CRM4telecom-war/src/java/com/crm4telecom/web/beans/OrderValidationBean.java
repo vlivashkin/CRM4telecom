@@ -24,11 +24,9 @@ public class OrderValidationBean implements Serializable {
     private GetManagerLocal gm;
 
     private String customer;
-    private String manager;
     private String employee;
 
     private Long customerId;
-    private Long managerId;
     private Long employeeId;
 
     @Enumerated(EnumType.STRING)
@@ -64,7 +62,7 @@ public class OrderValidationBean implements Serializable {
                 product = order.getProduct().getName();
             }
             if (order.getTechnicalSupportFlag() != null) {
-                technicalSupportFlag = Boolean.valueOf(order.getTechnicalSupportFlag());
+                technicalSupportFlag = order.getTechnicalSupportFlag();
             }
             newOrder = order.getOrderId() == null;
         } else {
@@ -77,7 +75,7 @@ public class OrderValidationBean implements Serializable {
         order.setEmployee(gm.getEmployee(employeeId));
         order.setProduct(gm.getProduct(product));
         order.setPriority(priority);
-        order.setTechnicalSupportFlag(technicalSupportFlag.toString());
+        order.setTechnicalSupportFlag(technicalSupportFlag);
     }
 
     public String getCustomer() {
@@ -87,15 +85,6 @@ public class OrderValidationBean implements Serializable {
     public void setCustomer(String customer) {
         customerId = Long.parseLong(customer.substring(1, customer.indexOf(" ")));
         this.customer = customer;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        managerId = Long.parseLong(manager.substring(1, manager.indexOf(" ")));
-        this.manager = manager;
     }
 
     public String getEmployee() {

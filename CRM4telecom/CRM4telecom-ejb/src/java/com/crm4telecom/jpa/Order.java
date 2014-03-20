@@ -67,11 +67,12 @@ public class Order implements Serializable {
     private Employee employeeId;
     
     @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
-    private String technicalSupportFlag;
+    private Boolean technicalSupportFlag;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderProcessing> orderProcessing;
-
+    @Column(name = "PROCESS_STEP")
+    @Enumerated(EnumType.STRING)
+    private OrderStep processStep;
+    
     public Order() {
     }
 
@@ -111,8 +112,8 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public OrderStatus changeOrderStatus(OrderEvent event) {
-        status = status.nextState(event);
+    public OrderStatus changeOrderStatus(OrderStep event) {
+        status = status.nextStatus(event);
         return status;
     }
 
@@ -152,11 +153,19 @@ public class Order implements Serializable {
         this.priority = priority;
     }
 
-    public String getTechnicalSupportFlag() {
+    public OrderStep getProcessStep() {
+        return processStep;
+    }
+
+    public void setProcessStep(OrderStep processStep) {
+        this.processStep = processStep;
+    }
+
+    public Boolean getTechnicalSupportFlag() {
         return technicalSupportFlag;
     }
 
-    public void setTechnicalSupportFlag(String technicalSupportFlag) {
+    public void setTechnicalSupportFlag(Boolean technicalSupportFlag) {
         this.technicalSupportFlag = technicalSupportFlag;
     }
 
@@ -166,10 +175,6 @@ public class Order implements Serializable {
 
     public void setProduct(Product productId) {
         this.productId = productId;
-    }
-
-    public List<OrderProcessing> getOrderProcessing() {
-        return orderProcessing;
     }
 
     @Override

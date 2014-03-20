@@ -1,6 +1,6 @@
 package com.crm4telecom.jpa;
 
-import com.crm4telecom.enums.OrderEvent;
+import com.crm4telecom.enums.OrderStep;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -33,7 +33,7 @@ public class OrderProcessing implements Serializable {
 
     @Column(name = "STEP_NAME")
     @Enumerated(EnumType.STRING)
-    private OrderEvent stepEvent;
+    private OrderStep stepEvent;
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -58,9 +58,8 @@ public class OrderProcessing implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Order order;
+    @Column(name = "ORDER_ID")
+    private Long orderId;
 
     public OrderProcessing() {
     }
@@ -69,11 +68,11 @@ public class OrderProcessing implements Serializable {
         return stepId;
     }
 
-    public OrderEvent getStepEvent() {
+    public OrderStep getStepEvent() {
         return stepEvent;
     }
 
-    public void setStepEvent(OrderEvent stepEvent) {
+    public void setStepEvent(OrderStep stepEvent) {
         this.stepEvent = stepEvent;
     }
 
@@ -125,12 +124,12 @@ public class OrderProcessing implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderId(Long order) {
+        this.orderId = order;
     }
 
     @Override

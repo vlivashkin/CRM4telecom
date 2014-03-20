@@ -31,13 +31,12 @@
         <h:outputLabel for="status" value="Status:" /> 
         <p:selectOneMenu id="status" value="#{customerBean.cv.status}">
             <f:selectItems value="#{customerBean.getStatus()}" var="status"
-                           itemValue="#{status}" itemLabel="#{status.name()}"/>
+                           itemValue="#{status}" itemLabel="#{status.label}"/>
         </p:selectOneMenu>
         <p:message for="status" />  
         
-        
         <h:outputLabel for="phoneNumber" value="Phone Number:" />  
-        <p:inputText id="phoneNumber" value="#{customerBean.cv.status}" label="Phone Number"/>  
+        <p:inputMask id="phoneNumber" value="#{customerBean.cv.phoneNumber}" label="Phone Number" mask="(999) 999-99-99" />  
         <p:message for="phoneNumber" />  
 
         <h:outputLabel for="Balance" value="balance:" />  
