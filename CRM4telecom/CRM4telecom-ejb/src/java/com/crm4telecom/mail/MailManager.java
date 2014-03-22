@@ -1,9 +1,18 @@
 package com.crm4telecom.mail;
 
+import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.OrderProcessing;
+import java.io.StringWriter;
 import java.util.*;
+import javax.ejb.EJB;
 import javax.mail.*;
 import javax.mail.internet.*;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
@@ -14,16 +23,28 @@ public class MailManager {
     private final Boolean startTLS = true;
     private final String host = "smtp.gmail.com";
     private final Integer port = 587;
+            
+    public void statusChangedEmail(Order order, List<OrderProcessing> steps) {
+        String subject = "Order #" + order.getOrderId();
 
-    public void statusChangedEmail(Order order) {
-        String subject = "Order #" + order.getOrderId() + " status changed to " + order.getStatus().name();
+        VelocityEngine ve = new VelocityEngine();
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty("directive.set.null.allowed", true);
+        ve.init();
+        Template t = ve.getTemplate("templates/mailtemplate.vm");
 
-        String text = "Dear " + order.getCustomer().getFirstName() + " "
-                + order.getCustomer().getLastName() + ",<br><br><br>"
-                + "The order #" + order.getOrderId() + " status changed to "
-                + order.getStatus().name() + "<br><br> crm4telecom";
+        VelocityContext context = new VelocityContext();
+        context.put("firstName", order.getCustomer().getFirstName());
+        context.put("lastName", order.getCustomer().getLastName());
+        context.put("orderId", order.getOrderId());
+        context.put("status", order.getStatus());
+        context.put("steps", steps);
 
-        send(order.getCustomer().getEmail(), subject, text);
+        StringWriter writer = new StringWriter();
+        t.merge(context, writer);
+
+        send(order.getCustomer().getEmail(), subject, writer.toString());
     }
 
     public void send(String to, String subject, String text) {

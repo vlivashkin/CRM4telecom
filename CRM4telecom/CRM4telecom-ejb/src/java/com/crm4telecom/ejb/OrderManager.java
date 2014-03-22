@@ -1,7 +1,7 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.enums.OrderStatus;
+import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +26,9 @@ public class OrderManager implements OrderManagerLocal {
     @PersistenceContext
     private EntityManager em;
 
+    @EJB
+    private GetManagerLocal gm;
+    
     @Override
     public Order createOrder(Order order) {
         Date date = new Date();
@@ -300,23 +304,23 @@ public class OrderManager implements OrderManagerLocal {
     @Override
     public void toNextStep(Order order) {
         OrderStep nextStep = order.getProcessStep().nextStep();
-        
+
         if (nextStep != order.getProcessStep()) {
             OrderProcessing op = new OrderProcessing();
             op.setOrderId(order.getOrderId());
             op.setStartDate(new Date());
             op.setStepEvent(nextStep);
             order.setProcessStep(nextStep);
-            if (nextStep == OrderStep.IN_WORK)
+            if (nextStep == OrderStep.IN_WORK) {
                 order.setStatus(OrderStatus.OPENED);
-            else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL)
+            } else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL) {
                 order.setStatus(OrderStatus.CLOSED);
+            }
             em.persist(op);
             em.merge(order);
-            /*
-             MailManager mm = new MailManager();
-             mm.statusChangedEmail(order);
-             */
+            
+            MailManager mm = new MailManager();
+            mm.statusChangedEmail(order, gm.getOrderSteps(order));
         }
     }
 
@@ -325,7 +329,7 @@ public class OrderManager implements OrderManagerLocal {
         if (order.getStatus() != OrderStatus.CLOSED) {
             order.setStatus(OrderStatus.CLOSED);
             em.merge(order);
-            
+
             OrderProcessing op = new OrderProcessing();
             op.setOrderId(order.getOrderId());
             op.setStartDate(new Date());
