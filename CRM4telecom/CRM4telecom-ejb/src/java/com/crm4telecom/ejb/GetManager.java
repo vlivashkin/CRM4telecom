@@ -20,8 +20,8 @@ public class GetManager implements GetManagerLocal {
 
     @Override
     public List<OrderProcessing> getOrderSteps(Order order) {
-        String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id ORDER BY o.startDate";
-        Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+        String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = "+order.getOrderId()+ " ORDER BY o.startDate";
+        Query query = em.createQuery(sqlQuery);
         return query.getResultList();
     }
 

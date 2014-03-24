@@ -19,16 +19,24 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import templates.FillingDatabase;
+import templates.IpFillingDatabase;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
+
+    @EJB
+    private IpManagerLocal ipManager;
 
     @PersistenceContext
     private EntityManager em;
 
     @EJB
     private GetManagerLocal gm;
+
     
+    private FillingDatabase f;
+
     @Override
     public Order createOrder(Order order) {
         Date date = new Date();
@@ -314,11 +322,16 @@ public class OrderManager implements OrderManagerLocal {
             if (nextStep == OrderStep.IN_WORK) {
                 order.setStatus(OrderStatus.OPENED);
             } else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL) {
+                f = new IpFillingDatabase();
+                System.out.println(f);
+                f.FillData(order.getCustomerId());
+               ipManager.getFreeIp(order.getCustomerId());
+
                 order.setStatus(OrderStatus.CLOSED);
             }
             em.persist(op);
             em.merge(order);
-            
+
             MailManager mm = new MailManager();
             mm.statusChangedEmail(order, gm.getOrderSteps(order));
         }
