@@ -98,7 +98,8 @@ pre{
 }
 
 
-.ui-datatable, h1, fieldset, .ui-tabs {
+.ui-datatable, fieldset, .ui-tabs {
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -136,7 +137,3 @@ table div.ui-selectcheckboxmenu {
 .noBorders tr, .noBorders td {
     border: none !important;
 }
-
-/*
-    ERROR 
-*/
