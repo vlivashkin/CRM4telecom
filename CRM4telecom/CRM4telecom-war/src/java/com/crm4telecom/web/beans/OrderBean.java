@@ -96,9 +96,11 @@ public class OrderBean implements Serializable {
         Order orderNew = new Order();
         ov.fillOrder(orderNew);
         om.createOrder(orderNew);
+        
+        order = orderNew;
 
         JSFHelper helper = new JSFHelper();
-        helper.redirect("order_list");
+        helper.redirect("order_info");
     }
 
     public void modify() {

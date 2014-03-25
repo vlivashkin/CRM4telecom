@@ -1,33 +1,9 @@
 /*
-    COMMON
+    HEADER
 */
 
-body {
-    background-color: #ffffff;
-    font-size: 12px;
-    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-    color: #000000;  
-    margin: 10px;
-}
-
-h1 {
-    font-family: "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-    border-bottom: 1px solid #AFAFAF; 
-    font-size:  22px;
-    font-weight: bold;
-    margin: 0px;
-    padding: 0px;
-    color: #D20005;
-    text-align: left;
-}
-
 #header {
-    position: relative;
-    margin-bottom: 10px;
-}
-
-#content {
-    position: relative;
+    margin-top: 5px;
 }
 
 .header-logo {  
@@ -44,9 +20,13 @@ h1 {
     margin-top: 3px !important;
 }
 
-
-.ui-widget {
-    font-size: 13px !important;
+h1 {
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  22px  !important;
+    font-weight: bold !important;
+    color: #D20005 !important;
+    text-align: left !important;
+    margin-top: 10px !important;
 }
 
 h1>form {
@@ -57,12 +37,73 @@ h1>form>button {
     margin-right: 6px !important;
 }
 
+/*
+    CONTENT
+*/
+
+legend, fieldset {
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+}
+
+fieldset {
+    margin-bottom: 10px !important;
+}
+
+legend {
+    width: 115px !important;
+    margin-bottom: 5px !important;
+    font-size: 18px !important;
+}
+
+legend .ui-fieldset-toggler {
+    margin-top: 4px !important;
+}
+
+input {
+    width: 100%;
+}
+
+pre{
+    text-align: left;
+    margin: 0;
+}
+
+.ui-selectcheckboxmenu {
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 0 4px;
+}
+
+.ui-widget,
+.ui-selectcheckboxmenu-trigger,
+.ui-selectonemenu-trigger {
+    box-sizing: content-box !important;
+}
+
+.ui-menuitem-link {
+    width: 100% !important;
+}
+
+.search-wrap {
+    margin-right: 15px;
+}
+
+.ui-selectcheckboxmenu-label {
+    margin-bottom: 0px;
+}
+
+.ui-widget {
+    font-size: 13px !important;
+}
+
+
 .ui-datatable, h1, fieldset, .ui-tabs {
     margin-bottom: 10px;
 }
 
-#index-content {
-    margin-top: 50px;
+.ui-panelgrid tr:nth-child(even) {
+    background-color: #F2F5F9;
 }
 
 .ui-fieldset {
@@ -76,57 +117,8 @@ h1>form>button {
     margin: 5px;
 }
 
-pre{
-    text-align: left;
-    margin: 0;
-}
-
 .index-button {
     width: 120px;
-}
-
-.table-3, .table-4 {
-    width: 100%;
-}
-
-.table-3 tr>td:nth-child(1) {
-    width: 100px;
-    text-align: right;
-    font-weight:bold;
-}
-
-.table-3 tr>td:nth-child(2) {
-    width: 45%;
-}
-
-.table-3 tr>td:nth-child(3) {
-    width: 45%;
-}
-
-.table-4 tr>td:nth-child(odd) {
-    width: 100px;
-    text-align: right;
-    font-weight:bold;
-}
-
-.table-4 tr>td:nth-child(even) {
-    width: auto;
-}
-
-.table-4 td>div {
-    vertical-align: middle;
-}
-
-table input {
-    width: calc(100% - 10px);
-}
-
-table input.hasDatepicker {
-    width: calc(50% - 35px) !important;
-}
-
-#searchForm\:toDate_input {
-    float: right;
 }
 
 table div.ui-selectcheckboxmenu {
@@ -141,42 +133,10 @@ table div.ui-selectcheckboxmenu {
     color: black;
 }
 
-/*
-    ORDER INFO LAYOUT
-*/
-.oinfo-container {
-    padding: 0 360px 0 0;
-}
-
-.oinfo-left {
-    float: right;
-    margin-left: -100%;
-    width: 100%;
-    position: relative; 
-}
-
-.oinfo-right {
-    float: right;
-    width: 350px;
-    margin-right: -360px;
-    overflow: visible;
-    position: relative;
+.noBorders tr, .noBorders td {
+    border: none !important;
 }
 
 /*
-    COLUMNS
+    ERROR 
 */
-
-.g, .gc { zoom: 1; }
-.g:after, .gc:after { content: '.'; display: block; height: 0; clear: both; visibility: hidden; }
-.gc { float: left; clear: right; text-align: center; }
-.gcb-first { padding-right: 10px; }
-.gcb { padding-left: 10px; }
-
-.w-20 { width: 20%; }
-.w-33 { width: 33.33%; }
-.w-40 { width: 40%; }
-.w-50 { width: 50%; }
-.w-60 { width: 60%; }
-.w-66 { width: 66.66%; }
-.w-80 { width: 80%; }

@@ -3,10 +3,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>404</title>
+        <title>Error 404 (Not Found)!!1</title>
+
+        <style type="text/css">
+            html, body, .error-body {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background: #a7cfdf;
+                background: radial-gradient(ellipse at 500px 250px, #6e8ca6 0%, #3c5a76 100%);
+            }
+
+            .error-body {
+                height: 100%;
+                background-image: url("#{resource['img:404.png']}");
+                background-repeat: no-repeat;
+            }
+
+            .content {
+                margin-left: 45px;
+            }
+            
+            h1 {
+                display: inline;
+                position: relative;
+                font: 50px Helvetica, Sans-Serif;
+                font-weight: bold;
+                letter-spacing: -5px;
+                color: rgba(0,0,255,0.5); 
+                padding-right: 5px;
+            }
+
+            h1:after {
+                content: "404. That’s an error.";
+                position: absolute; left: 5px; top: 2px;
+                color: rgba(255,0,0,0.4);   
+            }
+
+            h2 {
+                font: 20px Helvetica, Sans-Serif;
+                color: #132e49;
+            }
+        </style>
     </h:head>
     <h:body>
-        404 404 404 404 404 404 404 404 404 404 404 404 404
+        <div class="error-body">
+            <div class="content">
+                <br/>
+                <h1>404. That’s an error.</h1>
+                <br/>
+                <h2>
+                    The requested URL was not found on this server.<br/>
+                    That’s all we know.
+                </h2>
+            </div>
+        </div>
     </h:body>
 </html>
 

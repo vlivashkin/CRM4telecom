@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form id="searchForm">
+        <div class="row">
+            <div class="col-md-6 form-horizontal">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="First Name:"/>
+                    <div class="col-sm-9">
+                        <p:inputText  value="#{customerBean.search.firstName}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Last Name:"/>
+                    <div class="col-sm-9">
+                        <p:inputText  value="#{customerBean.search.lastName}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Email:"/>
+                    <div class="col-sm-9">
+                        <p:inputText  value="#{customerBean.search.email}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Balance:"/>
+                    <div class="col-sm-9">
+                        <p:inputText  value="#{customerBean.search.balance}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 form-horizontal">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Street:"/>
+                    <div class="col-sm-9">
+                        <p:inputText value="#{customerBean.search.street}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Building:"/>
+                    <div class="col-sm-9">
+                        <p:inputText value="#{customerBean.search.building}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Flat:"/>
+                    <div class="col-sm-9">
+                        <p:inputText value="#{customerBean.search.flat}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label" value="Phone number:"/>
+                    <div class="col-sm-9">
+                        <p:inputText value="#{customerBean.search.phoneNumber}">
+                            <f:ajax event="change" render=":tableForm" />
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

@@ -8,63 +8,24 @@
         CRM4Telecom | Orders
     </ui:define>
 
-    <ui:define name="menuItems">
+    <ui:define name="navHierarhy">
         <p:menuitem value="List of Orders" action="order_list?faces-redirect=true"/>  
     </ui:define>
 
-    <ui:define name="content">
+    <ui:define name="header">
         <h1>
             <h:outputText value="List of Orders" />
             <h:form>  
                 <p:commandButton value="Add Order" action="#{orderBean.toAddOrder}"/>  
             </h:form>
         </h1>
-        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
-            <h:form id="searchForm">
-                <h:panelGrid styleClass="table-4" columns="4" cellpadding="5">
-                    <h:outputLabel value="Orderd id:"/>
-                    <p:inputText value="#{orderBean.search.order}">
-                        <f:ajax event="change" render=":tableForm" />
-                    </p:inputText>
-                    <h:outputLabel value="Customer id:"/>
-                    <p:inputText value="#{orderBean.search.customer}" >
-                        <f:ajax event="change" render=":tableForm" />
-                    </p:inputText>
-                    <h:outputLabel value="Employee id:"/>
-                    <p:inputText value="#{orderBean.search.employee}">
-                        <f:ajax event="change" render=":tableForm" />
-                    </p:inputText>
-                    <h:outputLabel value="Date ranges:"/>
-                    <h:panelGroup style="text-align: center">
-                        <h:outputLabel value="from " />
-                        <p:calendar id="fromDate" maxdate="#{orderBean.search.toDate}" value="#{orderBean.search.fromDate}" >
-                            <f:ajax event="dateSelect" render=":tableForm" />
-                            <f:ajax event="change" render=":tableForm" />
-                            <f:ajax event="dateSelect" render="toDate" />
-                            <f:ajax event="change" render="toDate" />
-                        </p:calendar>
-                        <h:outputLabel value=" to " />
-                        <p:calendar id="toDate" value="#{orderBean.search.toDate}"  mindate="#{orderBean.search.fromDate}" >
-                            <f:ajax event="dateSelect" render=":tableForm" />
-                            <f:ajax event="change" render=":tableForm" />
-                            <f:ajax event="dateSelect" render="fromDate" />
-                            <f:ajax event="change" render="fromDate" />
-                        </p:calendar>
-                    </h:panelGroup>
+    </ui:define> 
 
-                    <h:outputLabel value="Priorities:"/>
-                    <p:selectCheckboxMenu value="#{orderBean.search.selectedPriorities}" label="Priorities" panelStyle="width:220px">  
-                        <f:selectItems value="#{orderBean.priorities}"/>  
-                        <f:ajax event="change" render=":tableForm" />
-                    </p:selectCheckboxMenu> 
-
-                    <h:outputLabel value="Statuses:"/>
-                    <p:selectCheckboxMenu value="#{orderBean.search.selectedStatuses}" label="Statuses" panelStyle="width:220px">  
-                        <f:selectItems value="#{orderBean.statuses}"/>  
-                        <f:ajax event="change" render=":tableForm" />
-                    </p:selectCheckboxMenu>
-                </h:panelGrid>
-            </h:form>
+    <ui:define name="content">
+        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">
+            <div class="search-wrap">
+                <ui:include src="./templates/orderSearchForm.xhtml" />
+            </div>
         </p:fieldset>   
 
         <h:form id="tableForm">

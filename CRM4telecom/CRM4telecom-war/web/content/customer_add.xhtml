@@ -8,19 +8,24 @@
         CRM4telecom | Add new Customer
     </ui:define>
 
-    <ui:define name="menuItems">
+    <ui:define name="navHierarhy">
         <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
         <p:menuitem value="Add new Customer" action="customer_add?faces-redirect=true" />
     </ui:define>
 
+    <ui:define name="header">
+        <h1>
+            <h:outputText value="Add new Customer" />
+        </h1>
+    </ui:define>
+
     <ui:define name="content">
-        <h1>Add new Customer</h1>
         <h:form id="editform">
             <p:messages />  
 
             <ui:include src="./templates/customerForm.xhtml" />
-            
+
             <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerBean.create()}"/>
             <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="customer_list?faces-redirect=true" />
         </h:form>

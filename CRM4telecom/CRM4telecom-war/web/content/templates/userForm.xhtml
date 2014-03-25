@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="login"  value="Login:" />  
+            <div class="col-sm-4">
+                <p:inputText id="login" value="#{userValidationBean.login}"/>
+            </div>
+            <div class="col-sm-4">
+                <p:message for="login" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="password" value="Password:" /> 
+            <div class="col-sm-4">
+                <p:password id="password" value="#{userValidationBean.password}"/>
+            </div>
+            <div class="col-sm-4">
+                <p:message for="password" /> 
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" />  
+            <div class="col-sm-4">
+                <p:inputText id="type" value="#{userValidationBean.type}"/>
+            </div>
+            <div class="col-sm-4">
+                <p:message for="type" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee ID:" />  
+            <div class="col-sm-4">
+                <p:inputText id="employee" value="#{userValidationBean.employeeid}"/>
+            </div>
+            <div class="col-sm-4">
+                <p:message for="employee" />
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -33,10 +33,10 @@
                                         </tr>
                                         #foreach($step in $steps)
                                             <tr style="margin: 0;padding: 0;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;">
-                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$step.stepEvent.label</td>
-                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$step.description</td>
-                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$step.startDate</td>
-                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$step.endDate</td>
+                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$!step.stepEvent.label</td>
+                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$!step.description</td>
+                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$!step.startDate</td>
+                                                <td style="margin: 0;padding: 3px 7px 2px 7px;font-family: &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;font-size: 100%;line-height: 1.6;border: 1px solid #888;">$!step.endDate</td>
                                             </tr>
                                         #end
                                     </table>

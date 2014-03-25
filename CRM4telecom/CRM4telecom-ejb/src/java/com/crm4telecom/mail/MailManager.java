@@ -1,11 +1,9 @@
 package com.crm4telecom.mail;
 
-import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import java.io.StringWriter;
 import java.util.*;
-import javax.ejb.EJB;
 import javax.mail.*;
 import javax.mail.internet.*;
 import org.apache.velocity.Template;
@@ -63,23 +61,12 @@ public class MailManager {
                 });
 
         try {
-            // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress("illusionww@gmail.com"));
-
-            // Set Subject: header field
             message.setSubject(subject);
-
-            // Now set the actual message
             message.setContent(text, "text/html");
-
-            // Send message
             Transport.send(message);
             System.out.println("Sent message \"" + subject + "\" to " + to);
         } catch (MessagingException e) {

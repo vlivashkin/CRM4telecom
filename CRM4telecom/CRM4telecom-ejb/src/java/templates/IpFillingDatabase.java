@@ -1,4 +1,3 @@
-
 package templates;
 
 import com.crm4telecom.ejb.IpManager;

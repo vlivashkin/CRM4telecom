@@ -8,14 +8,19 @@
         CRM4telecom | Add new Order
     </ui:define>
 
-    <ui:define name="menuItems">
+    <ui:define name="navHierarhy">
         <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
         <p:menuitem value="Add new Order" action="order_add?faces-redirect=true"/>
     </ui:define>
 
+    <ui:define name="header">
+        <h1>
+            <h:outputText value="Add new Order" />
+        </h1>
+    </ui:define>
+
     <ui:define name="content">
-        <h1>Add new Order</h1>
         <h:form id="editform">
             <p:messages />  
 

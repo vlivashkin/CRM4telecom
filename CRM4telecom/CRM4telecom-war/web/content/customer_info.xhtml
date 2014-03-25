@@ -8,23 +8,28 @@
         CRM4telecom | Client #{customerBean.customer.customerId}
     </ui:define>
 
-    <ui:define name="menuItems">
+    <ui:define name="navHierarhy">
         <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
         <p:menuitem value="Customer #{customerBean.customer}" action="customer_info?faces-redirect=true" />
     </ui:define>
 
-    <ui:define name="content">
+    <ui:define name="header">
         <h1>
-            Customer #{customerBean.customer}
-            <h:outputLabel value="#{customerBean.customer.status.label}" styleClass="customer-status" style="background-color: \##{customerBean.customer.status.colorHex};" />
+            <h:outputText value="Customer #{customerBean.customer}" />
+            <h:form id="headerstatus">
+                <h:outputLabel value="#{customerBean.customer.status.label}" styleClass="customer-status" style="background-color: \##{customerBean.customer.status.colorHex};" />
+            </h:form>
         </h1>
+    </ui:define>
+
+    <ui:define name="content">
         <p:tabView>
             <p:tab title="Info">
                 <h:form>
-                    <div class="g">
-                        <div class="gc w-50">
-                            <h:panelGrid styleClass="table-4" columns="2" cellpadding="5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
                                 <h:outputLabel value="First name:"/>
                                 <h:outputText value="#{customerBean.customer.firstName}"/>
 
@@ -51,18 +56,36 @@
 
                                 <h:outputLabel value="Balance:"/>
                                 <h:outputText value="#{customerBean.customer.balance}"/>
-                            </h:panelGrid>       
+                            </p:panelGrid>     
                         </div>
-                        <div class="gc w-50">
+                        <div class="col-md-6">
                             <p:dataTable value="#{customerBean.customer.phoneNumberList}" var="phone">
-                                <p:column headerText="Phone numbers">
-                                    <h:outputText value="#{phone.toString}"/>
+                                <f:facet name="header">
+                                    Phone numbers
+                                </f:facet>
+
+                                <p:column headerText="Phone number">
+                                    <h:outputText value="#{phone.phoneNumber}"/>
+                                </p:column>
+
+                                <p:column headerText="Status">
+                                    <h:outputText value="#{phone.status}"/>
                                 </p:column>
                             </p:dataTable>
 
                             <p:dataTable value="#{customerBean.customer.staticIpList}" var="ip">
+                                <f:facet name="header">
+                                    Statical IP
+                                </f:facet>
+
                                 <p:column headerText="Statical IP">
-                                    <h:outputText value="#{ip}"/>
+                                    <f:facet name="header">IP</f:facet>
+                                    <h:outputText value="#{ip.ip}"/>
+                                </p:column>
+
+                                <p:column headerText="Statical IP">
+                                    <f:facet name="header">Status</f:facet>
+                                    <h:outputText value="#{ip.status}"/>
                                 </p:column>
                             </p:dataTable>
 

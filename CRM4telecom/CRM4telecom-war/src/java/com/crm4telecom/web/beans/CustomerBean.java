@@ -74,8 +74,10 @@ public class CustomerBean implements Serializable {
         cv.fillCustomer(customerNew);
         cm.createCustomer(customerNew);
 
+        customer = customerNew;
+        
         JSFHelper helper = new JSFHelper();
-        helper.redirect("customer_list");
+        helper.redirect("customer_info");
     }
 
     public void modify() {

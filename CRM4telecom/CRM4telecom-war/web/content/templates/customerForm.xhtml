@@ -3,44 +3,90 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:panelGrid styleClass="table-3" columns="3" cellpadding="5">  
-        <h:outputLabel for="firstName" value="First Name:" />  
-        <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
-        <p:message for="firstName" />  
-
-        <h:outputLabel for="lastName" value="Last Name:" />  
-        <p:inputText id="lastName" value="#{customerBean.cv.lastName}" label="Last Name"/>  
-        <p:message for="lastName" />  
-
-        <h:outputLabel for="email" value="Email:" />  
-        <p:inputText id="email" value="#{customerBean.cv.email}" label="Email"/>  
-        <p:message for="email" />  
-
-        <h:outputLabel for="street" value="Street:" />  
-        <p:inputText id="street" value="#{customerBean.cv.street}" label="Street"/>  
-        <p:message for="street" />  
-
-        <h:outputLabel for="building" value="Building:" />  
-        <p:inputText id="building" value="#{customerBean.cv.building}" label="Building"/>  
-        <p:message for="building" />  
-
-        <h:outputLabel for="flat" value="Flat:" />  
-        <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
-        <p:message for="flat" />  
-        
-        <h:outputLabel for="status" value="Status:" /> 
-        <p:selectOneMenu id="status" value="#{customerBean.cv.status}">
-            <f:selectItems value="#{customerBean.getStatus()}" var="status"
-                           itemValue="#{status}" itemLabel="#{status.label}"/>
-        </p:selectOneMenu>
-        <p:message for="status" />  
-        
-        <h:outputLabel for="phoneNumber" value="Phone Number:" />  
-        <p:inputMask id="phoneNumber" value="#{customerBean.cv.phoneNumber}" label="Phone Number" mask="(999) 999-99-99" />  
-        <p:message for="phoneNumber" />  
-
-        <h:outputLabel for="Balance" value="balance:" />  
-        <p:inputText id="balance" value="#{customerBean.cv.balance}" label="Balance"/>  
-        <p:message for="balance" />  
-    </h:panelGrid> 
+    <div class="form-horizontal">
+        <div class="form-group ">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="firstName" value="First Name:" />
+            <div class="col-sm-4">
+                <p:inputText id="firstName" value="#{customerBean.cv.firstName}" label="First Name"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="firstName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="lastName" value="Last Name:" />  
+            <div class="col-sm-4">
+                <p:inputText id="lastName" value="#{customerBean.cv.lastName}" label="Last Name"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="lastName" /> 
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="email" value="Email:" />  
+            <div class="col-sm-4">
+                <p:inputText id="email" value="#{customerBean.cv.email}" label="Email"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="email" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="street" value="Street:" />  
+            <div class="col-sm-4">
+                <p:inputText id="street" value="#{customerBean.cv.street}" label="Street"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="street" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="building" value="Building:" />  
+            <div class="col-sm-4">
+                <p:inputText id="building" value="#{customerBean.cv.building}" label="Building"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="building" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="flat" value="Flat:" />  
+            <div class="col-sm-4">
+                <p:inputText id="flat" value="#{customerBean.cv.flat}" label="Flat"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="flat" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="status" value="Status:" />  
+            <div class="col-sm-4">
+                <p:selectOneMenu id="status" value="#{customerBean.cv.status}">
+                    <f:selectItems value="#{customerBean.getStatus()}" var="status"
+                                   itemValue="#{status}" itemLabel="#{status.label}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="col-sm-4">
+                <p:message for="status" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="phoneNumber" value="Phone Number:" />  
+            <div class="col-sm-4">
+                <p:inputText id="phoneNumber" value="#{customerBean.cv.phoneNumber}" label="Phone Number"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="phoneNumber" />
+            </div>
+        </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label" for="balance" value="Balance:" />  
+            <div class="col-sm-4">
+                <p:inputText id="balance" value="#{customerBean.cv.balance}" label="Balance"/>  
+            </div>
+            <div class="col-sm-4">
+                <p:message for="balance" />
+            </div>
+        </div>
+    </div>
 </ui:composition>
