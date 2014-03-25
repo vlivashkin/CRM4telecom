@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import templates.FillingDatabase;
 import templates.IpFillingDatabase;
+import templates.PhoneFillingDatabase;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
@@ -34,8 +35,8 @@ public class OrderManager implements OrderManagerLocal {
     @EJB
     private GetManagerLocal gm;
 
-    
     private FillingDatabase f;
+    private FillingDatabase p;
 
     @Override
     public Order createOrder(Order order) {
@@ -322,10 +323,14 @@ public class OrderManager implements OrderManagerLocal {
             if (nextStep == OrderStep.IN_WORK) {
                 order.setStatus(OrderStatus.OPENED);
             } else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL) {
-                f = new IpFillingDatabase();
-                System.out.println(f);
-                f.FillData(order.getCustomerId());
-               ipManager.getFreeIp(order.getCustomerId());
+                System.out.println(order.getProduct().getName());
+                if (order.getProduct().getName().equals("IPoEUnlim100") || order.getProduct().getName().equals("IPoEUnlim60")
+                        || order.getProduct().getName().equals("IPoEBasic80")) {
+                    f = new IpFillingDatabase();
+                    f.FillData(order.getCustomerId());
+                    p = new PhoneFillingDatabase();
+                    p.FillData(order.getCustomerId());
+                }
 
                 order.setStatus(OrderStatus.CLOSED);
             }

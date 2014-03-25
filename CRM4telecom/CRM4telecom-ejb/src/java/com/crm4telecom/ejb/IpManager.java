@@ -37,6 +37,7 @@ public class IpManager implements IpManagerLocal {
             s.setCustomerId(em.find(Customer.class, customerId));
             em.persist(s);
         }
+        em.close();
         
     }
 
