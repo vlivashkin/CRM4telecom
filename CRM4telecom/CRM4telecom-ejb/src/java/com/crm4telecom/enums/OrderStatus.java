@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum OrderStatus {
 
-    NEW("New", Color.YELLOW) {
+    NEW("New", "#5bc0de") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     if (event == OrderStep.SEND_TO_TECH_SUPPORT
@@ -29,7 +29,7 @@ public enum OrderStatus {
                     return events;
                 }
             },
-    OPENED("Opened", Color.GREEN) {
+    OPENED("Opened", "#5cb85c") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     if (event == OrderStep.SUCCESS) {
@@ -50,7 +50,7 @@ public enum OrderStatus {
                     return events;
                 }
             },
-    CLOSED("Closed", Color.LIGHT_GRAY) {
+    CLOSED("Closed", "#eee") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     return null;
@@ -65,9 +65,9 @@ public enum OrderStatus {
             };
 
     private final String label;
-    private final Color color;
+    private final String color;
 
-    private OrderStatus(String label, Color color) {
+    private OrderStatus(String label, String color) {
         this.label = label;
         this.color = color;
     }
@@ -76,12 +76,8 @@ public enum OrderStatus {
         return label;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
     public String getColorHex() {
-        return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1);
+        return color;
     }
 
     public abstract OrderStatus nextStatus(OrderStep event);
