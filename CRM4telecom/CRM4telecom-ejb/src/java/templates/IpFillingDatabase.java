@@ -1,27 +1,17 @@
 package templates;
 
-import com.crm4telecom.ejb.IpManager;
-import com.crm4telecom.ejb.IpManagerLocal;
-import com.crm4telecom.jpa.Customer;
-import com.crm4telecom.jpa.StaticIp;
+import com.crm4telecom.ejb.GetManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 @Stateless
-public class IpFillingDatabase  extends FillingDatabase{
-    @EJB
-    private IpManagerLocal ipManager;
+public class IpFillingDatabase extends FillingDatabase {
 
-    
+    @EJB
+    private GetManagerLocal gm;
+
     @Override
     protected void GetDataAndFill(Long customerId) {
-        ipManager = new IpManager();
-        ipManager.getFreeIp(customerId);
-    
+        gm.getFreeIp(customerId);
     }
-    
-    
 }

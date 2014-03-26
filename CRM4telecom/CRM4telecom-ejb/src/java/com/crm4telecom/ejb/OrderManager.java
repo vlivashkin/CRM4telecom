@@ -2,16 +2,13 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderStep;
-import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
@@ -25,9 +22,6 @@ import templates.PhoneFillingDatabase;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
-
-    @EJB
-    private IpManagerLocal ipManager;
 
     @PersistenceContext
     private EntityManager em;
@@ -66,20 +60,6 @@ public class OrderManager implements OrderManagerLocal {
     @Override
     public void modifyOrder(Order order) {
         em.merge(order);
-    }
-
-    @Override
-    public Order setCustomer(Order order, Long customerId) {
-        if (customerId != null) {
-            Customer customer = em.find(Customer.class, customerId);
-            if (customer == null) {
-                throw new NoSuchElementException();
-            }
-            order.setCustomer(customer);
-            em.merge(order);
-        }
-
-        return order;
     }
 
     @Override
@@ -135,9 +115,7 @@ public class OrderManager implements OrderManagerLocal {
                         }
                     }
                 }
-
             }
-
         }
 
         if (filters != null && !filters.isEmpty()) {
@@ -167,14 +145,6 @@ public class OrderManager implements OrderManagerLocal {
         query.setMaxResults(pageSize);
         System.out.println(sqlQuery);
         return query.getResultList();
-    }
-
-    @Override
-    public Long getOrdersCount() {
-        String sqlQuery = "SELECT COUNT(c) FROM Orders c   ";
-
-        Query query = em.createQuery(sqlQuery, Order.class);
-        return (Long) query.getSingleResult();
     }
 
     @Override
@@ -234,7 +204,6 @@ public class OrderManager implements OrderManagerLocal {
                         }
                     }
                 }
-
             }
         }
         if (sqlQuery.endsWith("WHERE")) {
@@ -246,50 +215,6 @@ public class OrderManager implements OrderManagerLocal {
         System.out.println(sqlQuery);
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();
-    }
-
-    @Override
-    public OrderStatus getOrderState(Long orderId) {
-        Order order = em.find(Order.class, orderId);
-        if (order == null) {
-            throw new NoSuchElementException();
-        }
-
-        return order.getStatus();
-    }
-
-    @Override
-    public List<Order> search(Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT c FROM Orders c    ";
-        if (!parametrs.isEmpty()) {
-            sqlQuery += " WHERE";
-            Iterator it = parametrs.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pairs = (Map.Entry) it.next();
-                List<String> val = (List<String>) pairs.getValue();
-                if (val.size() > 1) {
-                    sqlQuery += " ( ";
-                    for (String val1 : val) {
-                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val1 + "') OR";
-                    }
-                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
-                    sqlQuery += " ) AND";
-                } else {
-                    String check = (String) pairs.getKey();
-                    if (check.compareTo("orderDate") != 0) {
-                        sqlQuery += " LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + val.get(0) + "') AND";
-                    } else {
-                        sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)" + " AND c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP)+1 AND";
-                    }
-                }
-
-                it.remove();
-            }
-        }
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
-        System.out.println(sqlQuery);
-        return em.createQuery(sqlQuery, Order.class).getResultList();
-
     }
 
     @Override
@@ -311,39 +236,57 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
+    public List<OrderProcessing> getOrderSteps(Order order) {
+        String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id ORDER BY o.startDate";
+        Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+        return query.getResultList();
+    }
+
+    @Override
     public void toNextStep(Order order) {
         OrderStep nextStep = order.getProcessStep().nextStep();
 
         if (nextStep != order.getProcessStep()) {
-            OrderProcessing op = new OrderProcessing();
-            op.setOrderId(order.getOrderId());
-            op.setStartDate(new Date());
-            op.setStepEvent(nextStep);
+            OrderProcessing newStep = new OrderProcessing();
+
+            // update end date for previous step in OrderProcessing
+            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
+            Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+            OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
+            oldStep.setEndDate(new Date());
+            em.merge(oldStep);
+
+            // create new step in OrderProcessing
+            newStep.setOrderId(order.getOrderId());
+            newStep.setStartDate(new Date());
+            newStep.setStepEvent(nextStep);
+            em.persist(newStep);
+
+            // update information about current step in order
             order.setProcessStep(nextStep);
-            if (nextStep == OrderStep.IN_WORK) {
-                order.setStatus(OrderStatus.OPENED);
-            } else if (nextStep == OrderStep.SUCCESS || nextStep == OrderStep.CANCEL) {
-                System.out.println(order.getProduct().getName());
-                if (order.getProduct().getName().equals("IPoEUnlim100") || order.getProduct().getName().equals("IPoEUnlim60")
-                        || order.getProduct().getName().equals("IPoEBasic80")) {
+            order.setStatus(nextStep.getStatus());
+            em.merge(order);
+
+            // use new ip
+            if (nextStep == OrderStep.SUCCESS) {
+                String name = order.getProduct().getName();
+                if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
                     f = new IpFillingDatabase();
                     f.FillData(order.getCustomerId());
                     p = new PhoneFillingDatabase();
                     p.FillData(order.getCustomerId());
                 }
-
-                order.setStatus(OrderStatus.CLOSED);
             }
-            em.persist(op);
-            em.merge(order);
 
+            // send email 'status changed'
             MailManager mm = new MailManager();
-            mm.statusChangedEmail(order, gm.getOrderSteps(order));
+            mm.statusChangedEmail(order, getOrderSteps(order));
         }
     }
 
     @Override
-    public void cancelOrder(Order order) {
+    public void cancelOrder(Order order
+    ) {
         if (order.getStatus() != OrderStatus.CLOSED) {
             order.setStatus(OrderStatus.CLOSED);
             em.merge(order);

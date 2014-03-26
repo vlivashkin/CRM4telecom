@@ -141,7 +141,7 @@ public class OrderBean implements Serializable {
     }
 
     public List<OrderProcessing> getOrderSteps() {
-        return gm.getOrderSteps(order);
+        return om.getOrderSteps(order);
     }
     
     public void nextStep() {

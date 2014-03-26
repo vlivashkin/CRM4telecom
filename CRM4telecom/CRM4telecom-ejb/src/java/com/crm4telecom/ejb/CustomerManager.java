@@ -1,7 +1,6 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;

@@ -1,16 +1,14 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Employee;
-import com.crm4telecom.jpa.Order;
-import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Product;
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
 public interface GetManagerLocal {
-    
-    public List<OrderProcessing> getOrderSteps(Order order);
+
+    void getFreeIp(Long customerId);
 
     public Product getProduct(Long productId);
 

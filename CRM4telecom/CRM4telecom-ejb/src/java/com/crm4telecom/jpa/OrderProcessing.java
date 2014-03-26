@@ -2,6 +2,7 @@ package com.crm4telecom.jpa;
 
 import com.crm4telecom.enums.OrderStep;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -88,12 +89,28 @@ public class OrderProcessing implements Serializable {
         return startDate;
     }
 
+    public String getStartDateShort() {
+        if (startDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+            return dateFormat.format(startDate);
+        }
+        return null;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public String getEndDateShort() {
+        if (endDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+            return dateFormat.format(endDate);
+        }
+        return null;
     }
 
     public void setEndDate(Date endDate) {

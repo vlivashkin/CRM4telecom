@@ -99,8 +99,11 @@ pre{
 
 
 .ui-datatable, fieldset, .ui-tabs {
-    margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.ui-datatable {
+    margin-top: 10px;
 }
 
 .ui-panelgrid tr:nth-child(even) {
