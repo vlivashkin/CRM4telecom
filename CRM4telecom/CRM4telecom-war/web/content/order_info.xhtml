@@ -25,7 +25,7 @@
     </ui:define>
 
     <ui:define name="content">
-                <p:tabView id="tabPanel">
+        <p:tabView id="tabPanel">
             <p:tab title="Info">
                 <div class="row">
                     <div class="col-md-6">
@@ -56,9 +56,9 @@
                                 </h:panelGroup>                                            
                             </p:panelGrid>   
 
-                       
+
                         </h:form>
-                                        </div>
+                    </div>
                     <div class="col-md-6">
                         <h:form id="statusform">
                             <p:dataTable value="#{orderBean.orderSteps}" var="orderProcessing">
@@ -88,6 +88,8 @@
                                 </f:facet>
                             </p:dataTable>
                         </h:form>
+                    </div>
+                </div>
             </p:tab>
             <p:tab title="Edit">
                 <h:form id="editform">
@@ -99,12 +101,8 @@
                     <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
                         <f:ajax render="editform" />
                     </p:commandButton>
-
-                        </h:form>
-                    </div>
-                </div>
-            </p:tab>
-                        </p:tab>        
+                </h:form>
+            </p:tab>       
         </p:tabView>
 
         <h:form id="comments">

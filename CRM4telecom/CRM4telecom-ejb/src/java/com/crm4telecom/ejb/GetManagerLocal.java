@@ -8,8 +8,6 @@ import javax.ejb.Local;
 @Local
 public interface GetManagerLocal {
 
-    void getFreeIp(Long customerId);
-
     public Product getProduct(Long productId);
 
     public Product getProduct(String product);

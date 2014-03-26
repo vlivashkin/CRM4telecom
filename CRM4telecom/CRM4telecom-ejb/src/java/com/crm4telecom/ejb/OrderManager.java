@@ -1,5 +1,6 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.jpa.Order;
@@ -16,21 +17,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import templates.FillingDatabase;
-import templates.IpFillingDatabase;
-import templates.PhoneFillingDatabase;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-
+    
     @EJB
-    private GetManagerLocal gm;
-
-    private FillingDatabase f;
-    private FillingDatabase p;
+    private IpFillingLocal ipFilling;
 
     @Override
     public Order createOrder(Order order) {
@@ -161,7 +156,6 @@ public class OrderManager implements OrderManagerLocal {
         if (!parametrs.isEmpty()) {
             if (filters.isEmpty()) {
                 sqlQuery += " WHERE";
-
             }
             for (String paramProperty : parametrs.keySet()) {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
@@ -271,10 +265,7 @@ public class OrderManager implements OrderManagerLocal {
             if (nextStep == OrderStep.SUCCESS) {
                 String name = order.getProduct().getName();
                 if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
-                    f = new IpFillingDatabase();
-                    f.FillData(order.getCustomerId());
-                    p = new PhoneFillingDatabase();
-                    p.FillData(order.getCustomerId());
+                    ipFilling.fillData(order.getCustomer());
                 }
             }
 

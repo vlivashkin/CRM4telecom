@@ -2,10 +2,7 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Employee;
-import com.crm4telecom.jpa.Order;
-import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.jpa.Product;
-import com.crm4telecom.jpa.StaticIp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,21 +15,6 @@ public class GetManager implements GetManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-
-    @Override
-    public void getFreeIp(Long customerId) {
-        String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId IS NULL ";
-        System.out.println(em == null);
-        Query query = em.createQuery(sqlQuery);
-        String ip;
-        StaticIp s;
-        System.out.println(query.getResultList().size());
-        if (query.getResultList().size() > 0) {
-            s = (StaticIp) query.getResultList().get(0);
-            s.setCustomerId(em.find(Customer.class, customerId));
-            em.persist(s);
-        }
-    }
 
     @Override
     public Product getProduct(Long productId) {
