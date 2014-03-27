@@ -1,17 +1,15 @@
 package com.crm4telecom.enums;
 
-import java.awt.Color;
-
 public enum CustomerStatus {
 
-    ACTIVE("Active", Color.GREEN),
-    BLOCKED("Blocked", Color.CYAN),
-    UNPLUGGED("Unplugged", Color.RED);
+    ACTIVE("Active", "bg-success"),
+    BLOCKED("Blocked", "bg-warning"),
+    UNPLUGGED("Unplugged", "bg-danger");
 
     private final String label;
-    private final Color color;
+    private final String color;
 
-    private CustomerStatus(String label, Color color) {
+    private CustomerStatus(String label, String color) {
         this.label = label;
         this.color = color;
     }
@@ -19,12 +17,8 @@ public enum CustomerStatus {
     public String getLabel() {
         return label;
     }
-
-    public Color getColor() {
-        return color;
-    }
     
-    public String getColorHex() {
-        return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1);
+    public String getColor() {
+        return color;
     }
 }

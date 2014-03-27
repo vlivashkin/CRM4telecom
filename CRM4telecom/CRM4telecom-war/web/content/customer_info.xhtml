@@ -18,7 +18,7 @@
         <h1>
             <h:outputText value="Customer #{customerBean.customer}" />
             <h:form id="headerstatus">
-                <h:outputLabel value="#{customerBean.customer.status.label}" styleClass="customer-status" style="background-color: \##{customerBean.customer.status.colorHex};" />
+                <h:outputLabel value="#{customerBean.customer.status.label}" styleClass="customer-status #{customerBean.customer.status.color}" />
             </h:form>
         </h1>
     </ui:define>

@@ -19,7 +19,7 @@
         <h1>
             <h:outputText value="Order #{orderBean.order}" />
             <h:form id="headerstatus">
-                <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status" style="background-color: \##{orderBean.order.status.colorHex};" />
+                <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status #{orderBean.order.status.color}" />
             </h:form>
         </h1>
     </ui:define>
@@ -31,14 +31,17 @@
                     <div class="col-md-6">
                         <h:form>
                             <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-                                <h:outputLabel value="State:"/>
-                                <h:outputText value="#{orderBean.order.status}"/>
+                                <h:outputLabel value="Status:"/>
+                                <h:outputText value="#{orderBean.order.status.label}"/>
 
                                 <h:outputLabel value="Date:"/>
                                 <h:outputText value="#{orderBean.order.orderDate}"/>
 
+                                <h:outputLabel value="Type:"/>
+                                <h:outputText value="#{orderBean.order.orderType.label}"/>
+                                
                                 <h:outputLabel value="Priority:"/>
-                                <h:outputText value="#{orderBean.order.priority}"/>
+                                <h:outputText value="#{orderBean.order.priority.label}"/>
 
                                 <h:outputLabel value="Employee:"/>
                                 <h:outputText value="#{orderBean.order.employee}"/>
@@ -55,8 +58,6 @@
                                     <h:outputText value=" #{orderBean.order.technicalSupportFlag}"/>
                                 </h:panelGroup>                                            
                             </p:panelGrid>   
-
-
                         </h:form>
                     </div>
                     <div class="col-md-6">

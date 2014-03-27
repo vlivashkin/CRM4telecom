@@ -1,12 +1,11 @@
 package com.crm4telecom.enums;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public enum OrderStatus {
 
-    NEW("New", "#5bc0de") {
+    NEW("New", "bg-info") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     if (event == OrderStep.SEND_TO_TECH_SUPPORT
@@ -29,7 +28,7 @@ public enum OrderStatus {
                     return events;
                 }
             },
-    OPENED("Opened", "#5cb85c") {
+    OPENED("Opened", "bg-success") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     if (event == OrderStep.SUCCESS) {
@@ -50,7 +49,7 @@ public enum OrderStatus {
                     return events;
                 }
             },
-    CLOSED("Closed", "#eee") {
+    CLOSED("Closed", "bg-info") {
                 @Override
                 public OrderStatus nextStatus(OrderStep event) {
                     return null;
@@ -76,7 +75,7 @@ public enum OrderStatus {
         return label;
     }
 
-    public String getColorHex() {
+    public String getColor() {
         return color;
     }
 

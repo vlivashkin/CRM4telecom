@@ -6,7 +6,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <div class="form-horizontal">
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="customer" value="Customer ID:" />  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="customer" value="Customer:" />  
             <div class="col-sm-4">
                 <p:autoComplete id="customer" value="#{orderBean.validation.customer}"   
                                 completeMethod="#{orderValidationBean.completeCustomer}"/> 
@@ -15,12 +15,26 @@
                 <p:message for="customer" />
             </div>
         </div>
+        <c:if test="#{orderBean.validation.isNewOrder()}">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
+                <div class="col-sm-4">
+                    <p:selectOneMenu id="type" value="#{orderBean.validation.type}">
+                        <f:selectItems value="#{orderBean.types}" var="type"
+                                       itemValue="#{type}" itemLabel="#{type.label}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="col-sm-4">
+                    <p:message for="type" /> 
+                </div>
+            </div>
+        </c:if>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="priority" value="Priority:" /> 
             <div class="col-sm-4">
                 <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
                     <f:selectItems value="#{orderBean.priorities}" var="priority"
-                                   itemValue="#{priority}" itemLabel="#{priority.name()}"/>
+                                   itemValue="#{priority}" itemLabel="#{priority.label}"/>
                 </p:selectOneMenu>
             </div>
             <div class="col-sm-4">

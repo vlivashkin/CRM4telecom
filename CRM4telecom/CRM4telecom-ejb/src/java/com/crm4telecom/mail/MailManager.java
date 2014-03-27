@@ -30,7 +30,7 @@ public class MailManager {
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.setProperty("directive.set.null.allowed", true);
         ve.init();
-        Template t = ve.getTemplate("templates/mailtemplate.vm");
+        Template t = ve.getTemplate("com/crm4telecom/mail/mailtemplate.vm");
 
         VelocityContext context = new VelocityContext();
         context.put("firstName", order.getCustomer().getFirstName());
