@@ -801,20 +801,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-lang-2.2.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.commons-logging-1.1.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.commons-validator-1.3.1.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.dom4j-1.1.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.dvsl-1.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.oro-2.0.8.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.servletapi-2.3.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.sslext-1.2-0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.struts-core-1.3.8.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.struts-taglib-1.3.8.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.struts-tiles-1.3.8.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.velocity-1.5.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.velocity-1.6.2.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.velocity-tools-2.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.velocity-tools-generic-2.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.velocity-tools-view-2.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.anakia-1.0.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${file.reference.velocity-1.7.jar}" property="manifest.file.reference.velocity-1.7.jar"/>
@@ -825,22 +811,8 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.commons-lang-2.2.jar}" property="manifest.file.reference.commons-lang-2.2.jar"/>
         <basename file="${file.reference.commons-logging-1.1.jar}" property="manifest.file.reference.commons-logging-1.1.jar"/>
         <basename file="${file.reference.commons-validator-1.3.1.jar}" property="manifest.file.reference.commons-validator-1.3.1.jar"/>
-        <basename file="${file.reference.dom4j-1.1.jar}" property="manifest.file.reference.dom4j-1.1.jar"/>
-        <basename file="${file.reference.dvsl-1.0.jar}" property="manifest.file.reference.dvsl-1.0.jar"/>
-        <basename file="${file.reference.oro-2.0.8.jar}" property="manifest.file.reference.oro-2.0.8.jar"/>
-        <basename file="${file.reference.servletapi-2.3.jar}" property="manifest.file.reference.servletapi-2.3.jar"/>
-        <basename file="${file.reference.sslext-1.2-0.jar}" property="manifest.file.reference.sslext-1.2-0.jar"/>
-        <basename file="${file.reference.struts-core-1.3.8.jar}" property="manifest.file.reference.struts-core-1.3.8.jar"/>
-        <basename file="${file.reference.struts-taglib-1.3.8.jar}" property="manifest.file.reference.struts-taglib-1.3.8.jar"/>
-        <basename file="${file.reference.struts-tiles-1.3.8.jar}" property="manifest.file.reference.struts-tiles-1.3.8.jar"/>
-        <basename file="${file.reference.velocity-1.5.jar}" property="manifest.file.reference.velocity-1.5.jar"/>
-        <basename file="${file.reference.velocity-1.6.2.jar}" property="manifest.file.reference.velocity-1.6.2.jar"/>
-        <basename file="${file.reference.velocity-tools-2.0.jar}" property="manifest.file.reference.velocity-tools-2.0.jar"/>
-        <basename file="${file.reference.velocity-tools-generic-2.0.jar}" property="manifest.file.reference.velocity-tools-generic-2.0.jar"/>
-        <basename file="${file.reference.velocity-tools-view-2.0.jar}" property="manifest.file.reference.velocity-tools-view-2.0.jar"/>
-        <basename file="${file.reference.anakia-1.0.jar}" property="manifest.file.reference.anakia-1.0.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 jar-17 jar-18 jar-19 jar-20 jar-21 jar-22 "/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.velocity-1.7.jar}"/>
             <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.commons-beanutils-1.7.0.jar}"/>
             <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.commons-chain-1.1.jar}"/>
@@ -849,20 +821,6 @@ exists or setup the property manually. For example like this:
             <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.commons-lang-2.2.jar}"/>
             <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.commons-logging-1.1.jar}"/>
             <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.commons-validator-1.3.1.jar}"/>
-            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.dom4j-1.1.jar}"/>
-            <attribute name="jar-10-Extension-Name" value="${manifest.file.reference.dvsl-1.0.jar}"/>
-            <attribute name="jar-11-Extension-Name" value="${manifest.file.reference.oro-2.0.8.jar}"/>
-            <attribute name="jar-12-Extension-Name" value="${manifest.file.reference.servletapi-2.3.jar}"/>
-            <attribute name="jar-13-Extension-Name" value="${manifest.file.reference.sslext-1.2-0.jar}"/>
-            <attribute name="jar-14-Extension-Name" value="${manifest.file.reference.struts-core-1.3.8.jar}"/>
-            <attribute name="jar-15-Extension-Name" value="${manifest.file.reference.struts-taglib-1.3.8.jar}"/>
-            <attribute name="jar-16-Extension-Name" value="${manifest.file.reference.struts-tiles-1.3.8.jar}"/>
-            <attribute name="jar-17-Extension-Name" value="${manifest.file.reference.velocity-1.5.jar}"/>
-            <attribute name="jar-18-Extension-Name" value="${manifest.file.reference.velocity-1.6.2.jar}"/>
-            <attribute name="jar-19-Extension-Name" value="${manifest.file.reference.velocity-tools-2.0.jar}"/>
-            <attribute name="jar-20-Extension-Name" value="${manifest.file.reference.velocity-tools-generic-2.0.jar}"/>
-            <attribute name="jar-21-Extension-Name" value="${manifest.file.reference.velocity-tools-view-2.0.jar}"/>
-            <attribute name="jar-22-Extension-Name" value="${manifest.file.reference.anakia-1.0.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
@@ -874,20 +832,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.commons-lang-2.2.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.commons-logging-1.1.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.commons-validator-1.3.1.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.dom4j-1.1.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.dvsl-1.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.oro-2.0.8.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.servletapi-2.3.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.sslext-1.2-0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.struts-core-1.3.8.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.struts-taglib-1.3.8.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.struts-tiles-1.3.8.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.velocity-1.5.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.velocity-1.6.2.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.velocity-tools-2.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.velocity-tools-generic-2.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.velocity-tools-view-2.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.anakia-1.0.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

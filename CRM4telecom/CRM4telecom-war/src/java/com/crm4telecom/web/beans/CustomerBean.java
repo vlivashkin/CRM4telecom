@@ -4,6 +4,8 @@ import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
+import com.crm4telecom.soapclient.Billing;
+import com.crm4telecom.soapclient.Services;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
@@ -126,5 +128,15 @@ public class CustomerBean implements Serializable {
     
     public CustomerStatus[] getStatus() {
         return CustomerStatus.values();
+    }
+    
+    public long getBalance() {
+        Services service = new Services();
+        Billing port = service.getBillingPort();
+        long result = port.getBalance(customer.getCustomerId());
+
+        System.out.println("balance " + result);
+
+        return result;
     }
 }

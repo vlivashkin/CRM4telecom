@@ -7,8 +7,12 @@ import javax.jws.WebParam;
 @WebService(serviceName = "services")
 public class Billing {
 
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getBalance")
+    public long getBalance(@WebParam(name = "id") long id) {
+        //TODO write your implementation code here:
+        return 6;
     }
 }
