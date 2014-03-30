@@ -87,8 +87,6 @@ public class Customer implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
     private BalanceHistory balanceHistory;
 
-    @OneToMany(mappedBy = "customerId")
-    private List<MarketsCustomers> marketsCustomersList;
 
     public Customer() {
     }
@@ -230,14 +228,6 @@ public class Customer implements Serializable {
         this.balanceHistory = balanceHistory;
     }
 
-    @XmlTransient
-    public List<MarketsCustomers> getMarketsCustomersList() {
-        return marketsCustomersList;
-    }
-
-    public void setMarketsCustomersList(List<MarketsCustomers> marketsCustomersList) {
-        this.marketsCustomersList = marketsCustomersList;
-    }
 
     @Override
     public int hashCode() {

@@ -1,58 +1,58 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Alex
+ */
 @Entity
-@Table(name = "MARKETS_CUSTOMERS", catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "", schema = "CRM4TELECOM")
 public class MarketsCustomers implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @NotNull
-    @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
-    private Long marketId;
-
+    @EmbeddedId
+    protected MarketsCustomersPK marketsCustomersPK;
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Market market;
-
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
-    @ManyToOne
-    private Customer customerId;
-
     public MarketsCustomers() {
     }
 
-    public MarketsCustomers(Long marketId) {
-        this.marketId = marketId;
+    public MarketsCustomers(MarketsCustomersPK marketsCustomersPK) {
+        this.marketsCustomersPK = marketsCustomersPK;
     }
 
-    public Long getMarketId() {
-        return marketId;
+    public MarketsCustomers(BigInteger marketId, BigInteger customerId) {
+        this.marketsCustomersPK = new MarketsCustomersPK(marketId, customerId);
     }
 
-    public void setMarketId(Long marketId) {
-        this.marketId = marketId;
+    public MarketsCustomersPK getMarketsCustomersPK() {
+        return marketsCustomersPK;
+    }
+
+    public void setMarketsCustomersPK(MarketsCustomersPK marketsCustomersPK) {
+        this.marketsCustomersPK = marketsCustomersPK;
     }
 
     public Date getStartDate() {
@@ -71,26 +71,10 @@ public class MarketsCustomers implements Serializable {
         this.endDate = endDate;
     }
 
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (marketId != null ? marketId.hashCode() : 0);
+        hash += (marketsCustomersPK != null ? marketsCustomersPK.hashCode() : 0);
         return hash;
     }
 
@@ -101,7 +85,7 @@ public class MarketsCustomers implements Serializable {
             return false;
         }
         MarketsCustomers other = (MarketsCustomers) object;
-        if ((this.marketId == null && other.marketId != null) || (this.marketId != null && !this.marketId.equals(other.marketId))) {
+        if ((this.marketsCustomersPK == null && other.marketsCustomersPK != null) || (this.marketsCustomersPK != null && !this.marketsCustomersPK.equals(other.marketsCustomersPK))) {
             return false;
         }
         return true;
@@ -109,7 +93,7 @@ public class MarketsCustomers implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.MarketsCustomers[ marketId=" + marketId + " ]";
+        return "com.crm4telecom.jpa.MarketsCustomers[ marketsCustomersPK=" + marketsCustomersPK + " ]";
     }
-
+    
 }

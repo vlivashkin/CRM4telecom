@@ -29,11 +29,6 @@ public class Market implements Serializable {
     @Column(length = 30)
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
-    private MarketProducts marketProducts;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "market")
-    private MarketsCustomers marketsCustomers;
 
     public Market() {
     }
@@ -66,22 +61,7 @@ public class Market implements Serializable {
         this.description = description;
     }
 
-    public MarketProducts getMarketProducts() {
-        return marketProducts;
-    }
-
-    public void setMarketProducts(MarketProducts marketProducts) {
-        this.marketProducts = marketProducts;
-    }
-
-    public MarketsCustomers getMarketsCustomers() {
-        return marketsCustomers;
-    }
-
-    public void setMarketsCustomers(MarketsCustomers marketsCustomers) {
-        this.marketsCustomers = marketsCustomers;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

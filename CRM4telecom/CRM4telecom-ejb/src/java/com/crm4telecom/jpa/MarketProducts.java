@@ -1,69 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Alex
+ */
 @Entity
-@Table(name = "MARKET_PRODUCTS", catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "", schema = "CRM4TELECOM")
 public class MarketProducts implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @NotNull
-    @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
-    private Long marketId;
-
-    private Long price;
+    @EmbeddedId
+    protected MarketProductsPK marketProductsPK;
+    @Column(name = "PRICE")
+    private BigInteger price;
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
-    @ManyToOne
-    private Product productId;
-
-    @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Market market;
-
     public MarketProducts() {
     }
 
-    public MarketProducts(Long marketId) {
-        this.marketId = marketId;
+    public MarketProducts(MarketProductsPK marketProductsPK) {
+        this.marketProductsPK = marketProductsPK;
     }
 
-    public Long getMarketId() {
-        return marketId;
+    public MarketProducts(BigInteger marketId, BigInteger productId) {
+        this.marketProductsPK = new MarketProductsPK(marketId, productId);
     }
 
-    public void setMarketId(Long marketId) {
-        this.marketId = marketId;
+    public MarketProductsPK getMarketProductsPK() {
+        return marketProductsPK;
     }
 
-    public Long getPrice() {
+    public void setMarketProductsPK(MarketProductsPK marketProductsPK) {
+        this.marketProductsPK = marketProductsPK;
+    }
+
+    public BigInteger getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigInteger price) {
         this.price = price;
     }
 
@@ -83,26 +81,10 @@ public class MarketProducts implements Serializable {
         this.endDate = endDate;
     }
 
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (marketId != null ? marketId.hashCode() : 0);
+        hash += (marketProductsPK != null ? marketProductsPK.hashCode() : 0);
         return hash;
     }
 
@@ -113,7 +95,7 @@ public class MarketProducts implements Serializable {
             return false;
         }
         MarketProducts other = (MarketProducts) object;
-        if ((this.marketId == null && other.marketId != null) || (this.marketId != null && !this.marketId.equals(other.marketId))) {
+        if ((this.marketProductsPK == null && other.marketProductsPK != null) || (this.marketProductsPK != null && !this.marketProductsPK.equals(other.marketProductsPK))) {
             return false;
         }
         return true;
@@ -121,7 +103,7 @@ public class MarketProducts implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.MarketProducts[ marketId=" + marketId + " ]";
+        return "com.crm4telecom.jpa.MarketProducts[ marketProductsPK=" + marketProductsPK + " ]";
     }
-
+    
 }

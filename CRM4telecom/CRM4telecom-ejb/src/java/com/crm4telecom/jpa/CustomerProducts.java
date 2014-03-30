@@ -1,55 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Alex
+ */
 @Entity
-@Table(name = "CUSTOMER_PRODUCTS", catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "", schema = "CRM4TELECOM")
 public class CustomerProducts implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @NotNull
-    @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
-    private Long customerId;
-
+    @EmbeddedId
+    protected CustomerProductsPK customerProductsPK;
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-
-    private Long price;
-
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
-    @ManyToOne
-    private Product productId;
+    @Column(name = "PRICE")
+    private BigInteger price;
 
     public CustomerProducts() {
     }
 
-    public CustomerProducts(Long customerId) {
-        this.customerId = customerId;
+    public CustomerProducts(CustomerProductsPK customerProductsPK) {
+        this.customerProductsPK = customerProductsPK;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public CustomerProducts(Long customerId, Long productId) {
+        this.customerProductsPK = new CustomerProductsPK(customerId, productId);
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public CustomerProductsPK getCustomerProductsPK() {
+        return customerProductsPK;
+    }
+
+    public void setCustomerProductsPK(CustomerProductsPK customerProductsPK) {
+        this.customerProductsPK = customerProductsPK;
     }
 
     public Date getStartDate() {
@@ -68,26 +73,18 @@ public class CustomerProducts implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getPrice() {
+    public BigInteger getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigInteger price) {
         this.price = price;
-    }
-
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (customerId != null ? customerId.hashCode() : 0);
+        hash += (customerProductsPK != null ? customerProductsPK.hashCode() : 0);
         return hash;
     }
 
@@ -98,7 +95,7 @@ public class CustomerProducts implements Serializable {
             return false;
         }
         CustomerProducts other = (CustomerProducts) object;
-        if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
+        if ((this.customerProductsPK == null && other.customerProductsPK != null) || (this.customerProductsPK != null && !this.customerProductsPK.equals(other.customerProductsPK))) {
             return false;
         }
         return true;
@@ -106,7 +103,7 @@ public class CustomerProducts implements Serializable {
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.CustomerProducts[ customerId=" + customerId + " ]";
+        return "com.crm4telecom.jpa.CustomerProducts[ customerProductsPK=" + customerProductsPK + " ]";
     }
-
+    
 }

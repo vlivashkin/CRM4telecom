@@ -37,19 +37,12 @@ public class Product implements Serializable {
     @Column(name = "SALES_PERIOD_END")
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriodEnd;
-
     
     @Column(name = "BASELINE_PRICE")
     private Long baselinePrice;
 
     @OneToMany(mappedBy = "productId")
-    private List<MarketProducts> marketProductsList;
-
-    @OneToMany(mappedBy = "productId")
     private List<Order> ordersList;
-
-    @OneToMany(mappedBy = "productId")
-    private List<CustomerProducts> customerProductsList;
 
     public Product() {
     }
@@ -107,30 +100,12 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public List<MarketProducts> getMarketProductsList() {
-        return marketProductsList;
-    }
-
-    public void setMarketProductsList(List<MarketProducts> marketProductsList) {
-        this.marketProductsList = marketProductsList;
-    }
-
-    @XmlTransient
     public List<Order> getOrdersList() {
         return ordersList;
     }
 
     public void setOrdersList(List<Order> ordersList) {
         this.ordersList = ordersList;
-    }
-
-    @XmlTransient
-    public List<CustomerProducts> getCustomerProductsList() {
-        return customerProductsList;
-    }
-
-    public void setCustomerProductsList(List<CustomerProducts> customerProductsList) {
-        this.customerProductsList = customerProductsList;
     }
 
     @Override
