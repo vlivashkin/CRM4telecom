@@ -7,7 +7,7 @@
     <module>
         <web>
             <web-uri>CRM4telecom-war.war</web-uri>
-            <context-root>CRM4telecom-war</context-root>
+            <context-root>CRM4telecom</context-root>
         </web>
     </module>
   
