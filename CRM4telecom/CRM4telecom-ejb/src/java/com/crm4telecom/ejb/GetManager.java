@@ -15,13 +15,18 @@ public class GetManager implements GetManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public Product getProduct(String product) {
-        String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
-        Query query = em.createQuery(sqlQuery).setParameter("name", product);
+        if (product != null) {
+            String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
+            Query query = em.createQuery(sqlQuery).setParameter("name", product);
 
-        return (Product) query.getResultList().get(0);
+            return (Product) query.getResultList().get(0);
+        } else {
+            throw new NullPointerException();
+        }
+
     }
 
     @Override
@@ -34,7 +39,12 @@ public class GetManager implements GetManagerLocal {
 
     @Override
     public Employee getEmployee(Long employeeId) {
+        if( employeeId != null){
         return em.find(Employee.class, employeeId);
+        }else {
+            throw new NullPointerException();
+        }
+        
     }
 
     @Override

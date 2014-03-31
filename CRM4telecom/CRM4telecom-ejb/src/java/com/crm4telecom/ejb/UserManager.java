@@ -31,17 +31,21 @@ public class UserManager implements UserManagerLocal {
 
     @Override
     public boolean login(String login, String password) {
-        String sqlQuery = "SELECT u FROM Users u WHERE u.login = :login";
+        if (login != null && password != null) {
+            String sqlQuery = "SELECT u FROM Users u WHERE u.login = :login";
 
-        Query query = em.createQuery(sqlQuery).setParameter("login", login);
-        if (query.getResultList().size() > 0) {
-            Users user = (Users) query.getResultList().get(0);
-            String pass = user.getPassword();
-            String salt = user.getSalt();
-            System.out.println(salt);
-            return pass != null && pass.equals(MD5.getHash(password, salt));
+            Query query = em.createQuery(sqlQuery).setParameter("login", login);
+            if (query.getResultList().size() > 0) {
+                Users user = (Users) query.getResultList().get(0);
+                String pass = user.getPassword();
+                String salt = user.getSalt();
+                System.out.println(salt);
+                return pass != null && pass.equals(MD5.getHash(password, salt));
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            throw new NullPointerException();
         }
 
     }

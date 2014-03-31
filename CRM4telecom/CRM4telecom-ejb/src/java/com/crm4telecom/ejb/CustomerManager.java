@@ -11,14 +11,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class CustomerManager implements CustomerManagerLocal {
+public class CustomerManager implements CustomerManagerLocal,CustomerManagerRemote {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     public void createCustomer(Customer customer) {
-        em.persist(customer);
+        if (customer != null) {
+            persist(customer);
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     @Override
@@ -28,16 +32,28 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public Customer getCustomer(Long customerId) {
-        Customer customer = em.find(Customer.class, customerId);
+        Customer customer;
+        if (customerId == null) {
+            throw new NullPointerException();
+        }
+        if (customerId > 0) {
+            customer = em.find(Customer.class, customerId);
+        } else {
+            return null;
+        }
 
         return customer;
     }
 
     @Override
     public List<Market> getMarkets(Customer customer) {
+        if( customer != null){
         String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
         Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
         return query.getResultList();
+        }else{
+            throw new NullPointerException();
+        }
     }
 
     @Override
@@ -143,5 +159,10 @@ public class CustomerManager implements CustomerManagerLocal {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
         return em.createQuery(sqlQuery).getResultList();
+    }
+    
+    @Override
+    public void persist(Customer c) {
+        em.persist(c);
     }
 }

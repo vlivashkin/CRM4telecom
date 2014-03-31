@@ -1,13 +1,14 @@
+
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
-@Local
-public interface CustomerManagerLocal {
+@Remote
+public interface CustomerManagerRemote {
 
     void createCustomer(Customer customer);
 
