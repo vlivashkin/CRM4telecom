@@ -54,8 +54,8 @@
 
                                 <h:outputLabel value="Tech support:"/>
                                 <h:panelGroup>
-                                    <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.technicalSupportFlag}" disabled="true"/>
-                                    <h:outputText value=" #{orderBean.order.technicalSupportFlag}"/>
+                                    <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.techSupport}" disabled="true"/>
+                                    <h:outputText value=" #{orderBean.order.techSupport}"/>
                                 </h:panelGroup>                                            
                             </p:panelGrid>   
                         </h:form>
@@ -84,7 +84,7 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    <p:commandButton value="To next step" update=":tabPanel:statusform :headerstatus" action="#{orderBean.nextStep}" />
+                                    <p:commandButton value="To next step" update=":tabPanel:statusform :headerstatus" disabled="#{orderBean.closed}" action="#{orderBean.nextStep}" />
                                     <p:commandButton value="Cancel Order" update=":tabPanel:statusform :headerstatus" action="#{orderBean.cancelOrder}" />
                                 </f:facet>
                             </p:dataTable>

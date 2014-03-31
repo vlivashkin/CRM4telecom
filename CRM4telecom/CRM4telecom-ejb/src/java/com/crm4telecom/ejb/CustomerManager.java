@@ -1,6 +1,7 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
+import com.crm4telecom.jpa.Market;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,13 @@ public class CustomerManager implements CustomerManagerLocal {
         Customer customer = em.find(Customer.class, customerId);
 
         return customer;
+    }
+
+    @Override
+    public List<Market> getMarkets(Customer customer) {
+        String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
+        Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
+        return query.getResultList();
     }
 
     @Override
@@ -121,11 +129,11 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
-    public List<Customer> search(Map<String, String> parametr) {
+    public List<Customer> search(Map<String, String> parameter) {
         String sqlQuery = "SELECT c FROM Customer c     ";
-        if (!parametr.isEmpty()) {
+        if (!parameter.isEmpty()) {
             sqlQuery += " WHERE";
-            Iterator it = parametr.entrySet().iterator();
+            Iterator it = parameter.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pairs = (Map.Entry) it.next();
                 sqlQuery += "  LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";

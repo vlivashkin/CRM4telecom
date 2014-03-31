@@ -12,7 +12,6 @@ import com.crm4telecom.web.beans.util.LazyOrderDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -88,7 +87,7 @@ public class OrderBean implements Serializable {
     public OrderStatus[] getStatuses() {
         return OrderStatus.values();
     }
-    
+
     public OrderType[] getTypes() {
         return OrderType.values();
     }
@@ -97,11 +96,19 @@ public class OrderBean implements Serializable {
         return gm.getProductList();
     }
 
+    public String getClosed() {
+        if (order.getStatus().equals(OrderStatus.CLOSED)) {
+            return "disabled";
+        } else {
+            return "";
+        }
+    }
+
     public void create() {
         Order orderNew = new Order();
         ov.fillOrder(orderNew);
         om.createOrder(orderNew);
-        
+
         order = orderNew;
 
         JSFHelper helper = new JSFHelper();
@@ -113,17 +120,6 @@ public class OrderBean implements Serializable {
         om.modifyOrder(order);
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info");
-    }
-
-    public List<OrderStep> getEvents() {
-        List<OrderStep> events = new ArrayList<>();
-        if (order != null) {
-            OrderStatus status = order.getStatus();
-            if (status != null) {
-                events = status.possibleEvents();
-            }
-        }
-        return events;
     }
 
     public OrderStep getEvent() {
@@ -148,11 +144,11 @@ public class OrderBean implements Serializable {
     public List<OrderProcessing> getOrderSteps() {
         return om.getOrderSteps(order);
     }
-    
+
     public void nextStep() {
         om.toNextStep(order);
     }
-    
+
     public void cancelOrder() {
         om.cancelOrder(order);
     }

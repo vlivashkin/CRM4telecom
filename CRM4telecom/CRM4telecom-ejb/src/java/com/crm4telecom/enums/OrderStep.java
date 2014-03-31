@@ -2,40 +2,50 @@ package com.crm4telecom.enums;
 
 public enum OrderStep {
 
-    SEND_TO_TECH_SUPPORT("Send to technical support", OrderStatus.NEW) {
+    PRE_CONFIRM("Pre-confirm", OrderStatus.NEW) {
                 @Override
-                public OrderStep nextStep() {
-                    return IN_WORK;
+                public OrderStep nextStep(Boolean flag) {
+                    if (flag) {
+                        return SEND_TO_TECH_SUPPORT;
+                    } else {
+                        return ENGINEER_APPOINT;
+                    }
                 }
             },
-    ENGINEER_APPOINT("Engineer appoint", OrderStatus.NEW) {
+    SEND_TO_TECH_SUPPORT("Send to technical support", OrderStatus.OPENED) {
                 @Override
-                public OrderStep nextStep() {
-                    return IN_WORK;
+                public OrderStep nextStep(Boolean flag) {
+                    return POST_CONFIRM;
                 }
             },
-    IN_WORK("In work", OrderStatus.OPENED) {
+    ENGINEER_APPOINT("Engineer appoint", OrderStatus.OPENED) {
                 @Override
-                public OrderStep nextStep() {
-                    return SUCCESS;
+                public OrderStep nextStep(Boolean flag) {
+                    return POST_CONFIRM;
                 }
             },
-    SUCCESS("Close order", OrderStatus.CLOSED) {
+    POST_CONFIRM("Post-confirm", OrderStatus.OPENED) {
                 @Override
-                public OrderStep nextStep() {
+                public OrderStep nextStep(Boolean flag) {
+                    return DONE;
+                }
+            },
+    DONE("Done", OrderStatus.CLOSED) {
+                @Override
+                public OrderStep nextStep(Boolean flag) {
                     return this;
                 }
             },
     CANCEL("Cancel order", OrderStatus.CLOSED) {
                 @Override
-                public OrderStep nextStep() {
+                public OrderStep nextStep(Boolean flag) {
                     return this;
                 }
             };
 
     private final String label;
     private final OrderStatus status;
-    
+
     private OrderStep(String label, OrderStatus status) {
         this.label = label;
         this.status = status;
@@ -49,5 +59,5 @@ public enum OrderStep {
         return status;
     }
 
-    public abstract OrderStep nextStep();
+    public abstract OrderStep nextStep(Boolean flag);
 }

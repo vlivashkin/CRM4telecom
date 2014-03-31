@@ -66,8 +66,8 @@ public class OrderValidationBean implements Serializable {
             if (order.getProduct() != null) {
                 product = order.getProduct().getName();
             }
-            if (order.getTechnicalSupportFlag() != null) {
-                technicalSupportFlag = order.getTechnicalSupportFlag();
+            if (order.getTechSupport() != null) {
+                technicalSupportFlag = order.getTechSupport();
             }
             newOrder = order.getOrderId() == null;
         } else {
@@ -81,7 +81,7 @@ public class OrderValidationBean implements Serializable {
         order.setProduct(gm.getProduct(product));
         order.setPriority(priority);
         order.setOrderType(type);
-        order.setTechnicalSupportFlag(technicalSupportFlag);
+        order.setTechSupport(technicalSupportFlag);
     }
     
     public String getCustomer() {

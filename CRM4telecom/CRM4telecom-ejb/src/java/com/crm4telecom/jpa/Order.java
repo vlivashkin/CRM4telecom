@@ -39,7 +39,7 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
-    @Column(name = "COMMENTS", length = 2147483647)
+    @Column(name = "COMMENTS", length = 4000)
     private String comments;
 
     @Column(length = 30)
@@ -108,11 +108,6 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public OrderStatus changeOrderStatus(OrderStep event) {
-        status = status.nextStatus(event);
-        return status;
-    }
-
     public Customer getCustomer() {
         return customerId;
     }
@@ -159,12 +154,12 @@ public class Order implements Serializable {
         this.processStep = processStep;
     }
 
-    public Boolean getTechnicalSupportFlag() {
+    public Boolean getTechSupport() {
         return technicalSupportFlag;
     }
 
-    public void setTechnicalSupportFlag(Boolean technicalSupportFlag) {
-        this.technicalSupportFlag = technicalSupportFlag;
+    public void setTechSupport(Boolean techSupport) {
+        this.technicalSupportFlag = techSupport;
     }
 
     public Product getProduct() {

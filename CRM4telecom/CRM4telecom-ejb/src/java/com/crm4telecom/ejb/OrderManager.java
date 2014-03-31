@@ -30,23 +30,16 @@ public class OrderManager implements OrderManagerLocal {
     @Override
     public Order createOrder(Order order) {
         Date date = new Date();
+        
         order.setOrderDate(date);
         order.setStatus(OrderStatus.NEW);
-        if (order.getTechnicalSupportFlag()) {
-            order.setProcessStep(OrderStep.SEND_TO_TECH_SUPPORT);
-        } else {
-            order.setProcessStep(OrderStep.ENGINEER_APPOINT);
-        }
+        order.setProcessStep(OrderStep.PRE_CONFIRM);
         em.persist(order);
+        
         OrderProcessing op = new OrderProcessing();
         op.setOrderId(order.getOrderId());
         op.setStartDate(date);
-        if (order.getTechnicalSupportFlag()) {
-            op.setStepEvent(OrderStep.SEND_TO_TECH_SUPPORT);
-        } else {
-            op.setStepEvent(OrderStep.ENGINEER_APPOINT);
-
-        }
+        op.setStepEvent(OrderStep.PRE_CONFIRM);
         em.persist(op);
 
         return order;
@@ -238,7 +231,7 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public void toNextStep(Order order) {
-        OrderStep nextStep = order.getProcessStep().nextStep();
+        OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
 
         if (nextStep != order.getProcessStep()) {
             OrderProcessing newStep = new OrderProcessing();
@@ -262,7 +255,7 @@ public class OrderManager implements OrderManagerLocal {
             em.merge(order);
 
             // use new ip
-            if (nextStep == OrderStep.SUCCESS) {
+            if (nextStep == OrderStep.DONE) {
                 String name = order.getProduct().getName();
                 if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
                     ipFilling.fillData(order.getCustomer());
@@ -270,8 +263,8 @@ public class OrderManager implements OrderManagerLocal {
             }
 
             // send email 'status changed'
-            MailManager mm = new MailManager();
-            mm.statusChangedEmail(order, getOrderSteps(order));
+            /*MailManager mm = new MailManager();
+            mm.statusChangedEmail(order, getOrderSteps(order));*/
         }
     }
 

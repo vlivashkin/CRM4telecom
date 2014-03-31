@@ -15,12 +15,7 @@ public class GetManager implements GetManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-
-    @Override
-    public Product getProduct(Long productId) {
-        return em.find(Product.class, productId);
-    }
-
+    
     @Override
     public Product getProduct(String product) {
         String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";

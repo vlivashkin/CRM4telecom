@@ -139,3 +139,7 @@ table div.ui-selectcheckboxmenu {
 .noBorders tr, .noBorders td {
     border: none !important;
 }
+
+.ui-panel-content {
+    padding: 0 !important;
+}
