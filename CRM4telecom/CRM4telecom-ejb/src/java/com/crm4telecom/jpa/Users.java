@@ -19,15 +19,15 @@ public class Users implements Serializable {
     @Id
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name="LOGIN", nullable = false, length = 30)
+    @Column(name = "LOGIN", nullable = false, length = 30)
     private String login;
 
     @Size(max = 50)
-    @Column(name="PASSWORD",length = 50)
+    @Column(name = "PASSWORD", length = 50)
     private String password;
-    
-     @Size(max = 50)
-    @Column(name="SALT",length = 50)
+
+    @Size(max = 50)
+    @Column(name = "SALT", length = 50)
     private String salt;
 
     @Size(max = 30)
@@ -56,7 +56,7 @@ public class Users implements Serializable {
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -94,15 +94,11 @@ public class Users implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Users)) {
             return false;
         }
         Users other = (Users) object;
-        if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
-            return false;
-        }
-        return true;
+        return this.login.equals(other.login);
     }
 
     @Override

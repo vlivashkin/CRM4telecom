@@ -1,28 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Alex
- */
 @Embeddable
 public class CustomerProductsPK implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRODUCT_ID")
@@ -62,23 +53,19 @@ public class CustomerProductsPK implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof CustomerProductsPK)) {
             return false;
         }
         CustomerProductsPK other = (CustomerProductsPK) object;
-        if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
+        if (!this.customerId.equals(other.customerId)) {
             return false;
         }
-        if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
-            return false;
-        }
-        return true;
+        return this.productId.equals(other.productId);
     }
 
     @Override
     public String toString() {
         return "com.crm4telecom.jpa.CustomerProductsPK[ customerId=" + customerId + ", productId=" + productId + " ]";
     }
-    
+
 }

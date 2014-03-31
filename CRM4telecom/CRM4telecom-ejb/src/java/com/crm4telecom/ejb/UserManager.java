@@ -39,11 +39,7 @@ public class UserManager implements UserManagerLocal {
             String pass = user.getPassword();
             String salt = user.getSalt();
             System.out.println(salt);
-            if (pass != null && pass.equals(MD5.getHash(password, salt))) {
-                return true;
-            } else {
-                return false;
-            }
+            return pass != null && pass.equals(MD5.getHash(password, salt));
         } else {
             return false;
         }

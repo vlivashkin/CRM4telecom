@@ -1,42 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Alex
- */
 @Entity
 @Table(catalog = "", schema = "CRM4TELECOM")
 public class CustomerProducts implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @EmbeddedId
     protected CustomerProductsPK customerProductsPK;
+
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+
     @Column(name = "PRICE")
-    private BigInteger price;
+    private Long price;
 
     public CustomerProducts() {
     }
@@ -73,11 +64,11 @@ public class CustomerProducts implements Serializable {
         this.endDate = endDate;
     }
 
-    public BigInteger getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -90,20 +81,16 @@ public class CustomerProducts implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof CustomerProducts)) {
             return false;
         }
         CustomerProducts other = (CustomerProducts) object;
-        if ((this.customerProductsPK == null && other.customerProductsPK != null) || (this.customerProductsPK != null && !this.customerProductsPK.equals(other.customerProductsPK))) {
-            return false;
-        }
-        return true;
+        return (this.customerProductsPK != null || other.customerProductsPK == null) && (this.customerProductsPK == null || this.customerProductsPK.equals(other.customerProductsPK));
     }
 
     @Override
     public String toString() {
         return "com.crm4telecom.jpa.CustomerProducts[ customerProductsPK=" + customerProductsPK + " ]";
     }
-    
+
 }

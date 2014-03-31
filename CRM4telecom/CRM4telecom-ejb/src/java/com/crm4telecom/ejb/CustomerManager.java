@@ -41,13 +41,12 @@ public class CustomerManager implements CustomerManagerLocal {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
-                    for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
+                    for (String val1 : val) {
+                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
                 } else {
-                    String check = (String) paramProperty;
                     sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
                 }
             }
@@ -94,13 +93,12 @@ public class CustomerManager implements CustomerManagerLocal {
                 List<String> val = (List<String>) parametrs.get(paramProperty);
                 if (val.size() > 1) {
                     sqlQuery += " ( ";
-                    for (int i = 0; i < val.size(); i++) {
-                        sqlQuery += "  LOWER(c." + paramProperty + ") REGEXP LOWER('" + val.get(i) + "') OR";
+                    for (String val1 : val) {
+                        sqlQuery += "  LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
                     }
                     sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
                     sqlQuery += " ) AND";
                 } else {
-                    String check = (String) paramProperty;
                     sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
                 }
             }

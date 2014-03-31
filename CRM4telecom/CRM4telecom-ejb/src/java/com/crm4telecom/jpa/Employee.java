@@ -125,10 +125,7 @@ public class Employee implements Serializable {
             return false;
         }
         Employee other = (Employee) object;
-        if ((this.employeeId == null && other.employeeId != null) || (this.employeeId != null && !this.employeeId.equals(other.employeeId))) {
-            return false;
-        }
-        return true;
+        return this.employeeId.equals(other.employeeId);
     }
 
     @Override

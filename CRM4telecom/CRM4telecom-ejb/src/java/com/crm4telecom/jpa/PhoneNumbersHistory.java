@@ -108,15 +108,11 @@ public class PhoneNumbersHistory implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof PhoneNumbersHistory)) {
             return false;
         }
         PhoneNumbersHistory other = (PhoneNumbersHistory) object;
-        if ((this.phoneNumber == null && other.phoneNumber != null) || (this.phoneNumber != null && !this.phoneNumber.equals(other.phoneNumber))) {
-            return false;
-        }
-        return true;
+        return this.phoneNumber.equals(other.phoneNumber);
     }
 
     @Override

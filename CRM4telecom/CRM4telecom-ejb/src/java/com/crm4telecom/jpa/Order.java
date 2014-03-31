@@ -61,14 +61,14 @@ public class Order implements Serializable {
     @JoinColumn(name = "EMPLOYEE_ID")
     @ManyToOne
     private Employee employeeId;
-    
+
     @Column(name = "TECHNICAL_SUPPORT_FLAG", length = 30)
     private Boolean technicalSupportFlag;
 
     @Column(name = "PROCESS_STEP")
     @Enumerated(EnumType.STRING)
     private OrderStep processStep;
-    
+
     public Order() {
     }
 
@@ -118,8 +118,9 @@ public class Order implements Serializable {
     }
 
     public Long getCustomerId() {
-        if (customerId != null)
+        if (customerId != null) {
             return customerId.getCustomerId();
+        }
         return null;
     }
 
@@ -132,8 +133,9 @@ public class Order implements Serializable {
     }
 
     public Long getEmployeeId() {
-        if (employeeId != null)
+        if (employeeId != null) {
             return employeeId.getEmployeeId();
+        }
         return null;
     }
 
@@ -182,7 +184,6 @@ public class Order implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Order)) {
             return false;
         }

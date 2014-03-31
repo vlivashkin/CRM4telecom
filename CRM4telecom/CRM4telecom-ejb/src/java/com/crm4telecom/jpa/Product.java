@@ -37,7 +37,7 @@ public class Product implements Serializable {
     @Column(name = "SALES_PERIOD_END")
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriodEnd;
-    
+
     @Column(name = "BASELINE_PRICE")
     private Long baselinePrice;
 
@@ -117,15 +117,11 @@ public class Product implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Product)) {
             return false;
         }
         Product other = (Product) object;
-        if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
-            return false;
-        }
-        return true;
+        return this.productId.equals(other.productId);
     }
 
     @Override

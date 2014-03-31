@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class StaticIpHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @NotNull
     @Size(min = 1, max = 30)
@@ -108,15 +108,11 @@ public class StaticIpHistory implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof StaticIpHistory)) {
             return false;
         }
         StaticIpHistory other = (StaticIpHistory) object;
-        if ((this.ip == null && other.ip != null) || (this.ip != null && !this.ip.equals(other.ip))) {
-            return false;
-        }
-        return true;
+        return this.ip.equals(other.ip);
     }
 
     @Override

@@ -95,15 +95,11 @@ public class StaticIp implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof StaticIp)) {
             return false;
         }
         StaticIp other = (StaticIp) object;
-        if ((this.ip == null && other.ip != null) || (this.ip != null && !this.ip.equals(other.ip))) {
-            return false;
-        }
-        return true;
+        return this.ip.equals(other.ip);
     }
 
     @Override

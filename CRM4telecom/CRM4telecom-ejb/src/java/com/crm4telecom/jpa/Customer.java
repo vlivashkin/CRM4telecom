@@ -87,7 +87,6 @@ public class Customer implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
     private BalanceHistory balanceHistory;
 
-
     public Customer() {
     }
 
@@ -228,7 +227,6 @@ public class Customer implements Serializable {
         this.balanceHistory = balanceHistory;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -238,15 +236,11 @@ public class Customer implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Customer)) {
             return false;
         }
         Customer other = (Customer) object;
-        if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
-            return false;
-        }
-        return true;
+        return (this.customerId != null || other.customerId == null) && (this.customerId == null || this.customerId.equals(other.customerId));
     }
 
     @Override

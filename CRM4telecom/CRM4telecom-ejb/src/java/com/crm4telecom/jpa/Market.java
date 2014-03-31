@@ -1,11 +1,9 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,7 +26,6 @@ public class Market implements Serializable {
     @Size(max = 30)
     @Column(length = 30)
     private String description;
-
 
     public Market() {
     }
@@ -61,7 +58,6 @@ public class Market implements Serializable {
         this.description = description;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -71,15 +67,11 @@ public class Market implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Market)) {
             return false;
         }
         Market other = (Market) object;
-        if ((this.marketId == null && other.marketId != null) || (this.marketId != null && !this.marketId.equals(other.marketId))) {
-            return false;
-        }
-        return true;
+        return this.marketId.equals(other.marketId);
     }
 
     @Override

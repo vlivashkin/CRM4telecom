@@ -129,15 +129,11 @@ public class Equipment implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Equipment)) {
             return false;
         }
         Equipment other = (Equipment) object;
-        if ((this.equipmentId == null && other.equipmentId != null) || (this.equipmentId != null && !this.equipmentId.equals(other.equipmentId))) {
-            return false;
-        }
-        return true;
+        return this.equipmentId.equals(other.equipmentId);
     }
 
     @Override
