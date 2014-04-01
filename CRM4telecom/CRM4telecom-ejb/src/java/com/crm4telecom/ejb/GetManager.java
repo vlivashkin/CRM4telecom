@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class GetManager implements GetManagerLocal {
+public class GetManager implements GetManagerLocal,GetManagerRemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -20,9 +20,9 @@ public class GetManager implements GetManagerLocal {
     public Product getProduct(String product) {
         if (product != null) {
             String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
-            Query query = em.createQuery(sqlQuery).setParameter("name", product);
-
-            return (Product) query.getResultList().get(0);
+            return   create(sqlQuery,product);
+          //  Query query = em.createQuery(sqlQuery).setParameter("name", product);
+          //  return (Product) query.getResultList().get(0);
         } else {
             throw new NullPointerException();
         }
@@ -40,7 +40,7 @@ public class GetManager implements GetManagerLocal {
     @Override
     public Employee getEmployee(Long employeeId) {
         if( employeeId != null){
-        return em.find(Employee.class, employeeId);
+        return find(employeeId);
         }else {
             throw new NullPointerException();
         }
@@ -95,6 +95,17 @@ public class GetManager implements GetManagerLocal {
 
             return query.getResultList();
         }
+    }
+    
+    @Override
+    public Product create(String sqlQuery,String product){
+        Query query =         em.createQuery(sqlQuery).setParameter("name", product);
+        return (Product) query.getResultList().get(0);
+    }
+    
+    @Override 
+    public Employee find(long employeeId){
+        return em.find(Employee.class, employeeId);
     }
 
 }

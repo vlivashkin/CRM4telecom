@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class CustomerManager implements CustomerManagerLocal,CustomerManagerRemote {
+public class CustomerManager implements CustomerManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
@@ -37,7 +37,7 @@ public class CustomerManager implements CustomerManagerLocal,CustomerManagerRemo
             throw new NullPointerException();
         }
         if (customerId > 0) {
-            customer = em.find(Customer.class, customerId);
+            customer =  find(customerId);
         } else {
             return null;
         }
@@ -164,5 +164,10 @@ public class CustomerManager implements CustomerManagerLocal,CustomerManagerRemo
     @Override
     public void persist(Customer c) {
         em.persist(c);
+    }
+    
+    @Override 
+    public Customer find(long customerId){
+        return em.find(Customer.class, customerId);
     }
 }

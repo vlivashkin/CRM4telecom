@@ -26,4 +26,6 @@ public interface CustomerManagerLocal {
     List<Customer> search(Map<String, String> parameter);
 
     void persist(Customer c);
+    
+    Customer find(long customerId);
 }

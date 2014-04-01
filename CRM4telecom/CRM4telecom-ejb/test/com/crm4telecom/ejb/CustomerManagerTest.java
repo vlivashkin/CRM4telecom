@@ -26,7 +26,18 @@ import org.junit.Test;
 public class CustomerManagerTest {
 
     @EJB
-    private CustomerManagerLocal instance = new CustomerManager();
+    private CustomerManagerLocal instance = new CustomerManager() {
+        @Override
+        public void persist(Customer c) {
+            System.out.println("Persits Customer");
+        }
+        @Override 
+        public Customer find(long customerId){
+            
+            return null; 
+        }
+
+    };
 
     public CustomerManagerTest() {
     }
@@ -43,8 +54,11 @@ public class CustomerManagerTest {
     public void testGetCustomer() throws Exception {
         System.out.println("testGetCustomer");
         System.out.println("Expected: null");
-        System.out.println("Actual :" +instance.getCustomer((long) -1));
+        System.out.println("Actual :" + instance.getCustomer((long) -1));
         assertEquals(null, instance.getCustomer((long) -1));
+        System.out.println("Expected: null");
+        System.out.println("Actual :" + instance.getCustomer((long)1));
+        assertEquals(null, instance.getCustomer((long) 1));
         try {
             instance.getCustomer(null);
             fail("should've thrown an exception");
@@ -57,6 +71,7 @@ public class CustomerManagerTest {
 
     @Test
     public void testCreateCustomer() {
+        Customer c = new Customer();
         System.out.println("testCreateCustomer");
         try {
             instance.createCustomer(null);

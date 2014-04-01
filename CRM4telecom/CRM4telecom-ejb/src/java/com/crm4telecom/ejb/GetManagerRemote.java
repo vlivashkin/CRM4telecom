@@ -1,13 +1,14 @@
+
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Employee;
 import com.crm4telecom.jpa.Product;
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.persistence.Query;
 
-@Local
-public interface GetManagerLocal {
+@Remote
+public interface GetManagerRemote {
 
     public Product getProduct(String product);
 
@@ -19,7 +20,4 @@ public interface GetManagerLocal {
 
     public List<String> completeEmployee(String rawEmployee);
     
-    Product create(String sqlQuery,String product);
-    
-    Employee find(long employeeId);
 }
