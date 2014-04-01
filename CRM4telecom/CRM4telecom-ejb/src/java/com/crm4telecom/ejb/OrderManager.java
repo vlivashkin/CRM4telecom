@@ -23,19 +23,19 @@ public class OrderManager implements OrderManagerLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @EJB
     private IpFillingLocal ipFilling;
 
     @Override
     public Order createOrder(Order order) {
         Date date = new Date();
-        
+
         order.setOrderDate(date);
         order.setStatus(OrderStatus.NEW);
         order.setProcessStep(OrderStep.PRE_CONFIRM);
         em.persist(order);
-        
+
         OrderProcessing op = new OrderProcessing();
         op.setOrderId(order.getOrderId());
         op.setStartDate(date);
@@ -231,55 +231,52 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public void toNextStep(Order order) {
-        OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
+        if (order.getStatus() != OrderStatus.CLOSED
+                && order.getStatus() != OrderStatus.CANCELLED) {
+            OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
 
-        if (nextStep != order.getProcessStep()) {
-            OrderProcessing newStep = new OrderProcessing();
+            if (nextStep != order.getProcessStep()) {
+                OrderProcessing newStep = new OrderProcessing();
 
-            // update end date for previous step in OrderProcessing
-            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
-            Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
-            OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
-            oldStep.setEndDate(new Date());
-            em.merge(oldStep);
+                // update end date for previous step in OrderProcessing
+                String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
+                Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+                OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
+                oldStep.setEndDate(new Date());
+                em.merge(oldStep);
 
-            // create new step in OrderProcessing
-            newStep.setOrderId(order.getOrderId());
-            newStep.setStartDate(new Date());
-            newStep.setStepEvent(nextStep);
-            em.persist(newStep);
+                // create new step in OrderProcessing
+                newStep.setOrderId(order.getOrderId());
+                newStep.setStartDate(new Date());
+                newStep.setStepEvent(nextStep);
+                em.persist(newStep);
 
-            // update information about current step in order
-            order.setProcessStep(nextStep);
-            order.setStatus(nextStep.getStatus());
-            em.merge(order);
+                // update information about current step in order
+                order.setStatus(order.getProcessStep().getStatus());
+                order.setProcessStep(nextStep);
+                em.merge(order);
 
-            // use new ip
-            if (nextStep == OrderStep.DONE) {
-                String name = order.getProduct().getName();
-                if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
-                    ipFilling.fillData(order.getCustomer());
+                // use new ip
+                if (nextStep == OrderStep.POST_CONFIRM) {
+                    String name = order.getProduct().getName();
+                    if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
+                        ipFilling.fillData(order.getCustomer());
+                    }
                 }
-            }
 
-            // send email 'status changed'
-            /*MailManager mm = new MailManager();
-            mm.statusChangedEmail(order, getOrderSteps(order));*/
+                // send email 'status changed'
+                /*MailManager mm = new MailManager();
+                mm.statusChangedEmail(order, getOrderSteps(order));*/
+            }
         }
     }
 
     @Override
-    public void cancelOrder(Order order
-    ) {
-        if (order.getStatus() != OrderStatus.CLOSED) {
-            order.setStatus(OrderStatus.CLOSED);
+    public void cancelOrder(Order order) {
+        if (order.getStatus() != OrderStatus.CLOSED
+                && order.getStatus() != OrderStatus.CANCELLED) {
+            order.setStatus(OrderStatus.CANCELLED);
             em.merge(order);
-
-            OrderProcessing op = new OrderProcessing();
-            op.setOrderId(order.getOrderId());
-            op.setStartDate(new Date());
-            op.setStepEvent(OrderStep.CANCEL);
-            em.persist(op);
         }
     }
 }

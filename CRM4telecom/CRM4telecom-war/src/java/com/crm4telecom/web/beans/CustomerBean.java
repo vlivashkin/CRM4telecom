@@ -134,12 +134,14 @@ public class CustomerBean implements Serializable {
     }
     
     public long getBalance() {
-    //    Services service = new Services();
-    //    Billing port = service.getBillingPort();
-    //    long result = port.getBalance(customer.getCustomerId());
-
-    //    System.out.println("balance " + result);
-
-        return 12; //result;
+//        Services service = new Services();
+//        Billing port = service.getBillingPort();
+//        long result = port.getBalance(customer.getCustomerId());
+//
+//        System.out.println("balance " + result);
+//
+//        return result;
+        
+          return 10;
     }
 }

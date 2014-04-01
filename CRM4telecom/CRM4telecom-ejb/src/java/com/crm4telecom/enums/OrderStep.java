@@ -2,7 +2,7 @@ package com.crm4telecom.enums;
 
 public enum OrderStep {
 
-    PRE_CONFIRM("Pre-confirm", OrderStatus.NEW) {
+    PRE_CONFIRM("Pre-confirm", OrderStatus.OPENED) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     if (flag) {
@@ -24,31 +24,19 @@ public enum OrderStep {
                     return POST_CONFIRM;
                 }
             },
-    POST_CONFIRM("Post-confirm", OrderStatus.OPENED) {
+    POST_CONFIRM("Post-confirm", OrderStatus.CLOSED) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-                    return DONE;
-                }
-            },
-    DONE("Done", OrderStatus.CLOSED) {
-                @Override
-                public OrderStep nextStep(Boolean flag) {
-                    return this;
-                }
-            },
-    CANCEL("Cancel order", OrderStatus.CLOSED) {
-                @Override
-                public OrderStep nextStep(Boolean flag) {
-                    return this;
+                    return POST_CONFIRM;
                 }
             };
 
     private final String label;
-    private final OrderStatus status;
+    private final OrderStatus doneStatus;
 
-    private OrderStep(String label, OrderStatus status) {
+    private OrderStep(String label, OrderStatus doneStatus) {
         this.label = label;
-        this.status = status;
+        this.doneStatus = doneStatus;
     }
 
     public String getLabel() {
@@ -56,7 +44,7 @@ public enum OrderStep {
     }
 
     public OrderStatus getStatus() {
-        return status;
+        return doneStatus;
     }
 
     public abstract OrderStep nextStep(Boolean flag);
