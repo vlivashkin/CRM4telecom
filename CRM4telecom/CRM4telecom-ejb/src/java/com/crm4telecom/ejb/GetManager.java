@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class GetManager implements GetManagerLocal,GetManagerRemote {
+public class GetManager implements GetManagerLocal, GetManagerRemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -20,9 +20,7 @@ public class GetManager implements GetManagerLocal,GetManagerRemote {
     public Product getProduct(String product) {
         if (product != null) {
             String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
-            return   create(sqlQuery,product);
-          //  Query query = em.createQuery(sqlQuery).setParameter("name", product);
-          //  return (Product) query.getResultList().get(0);
+            return create(sqlQuery, product);
         } else {
             throw new NullPointerException();
         }
@@ -39,12 +37,16 @@ public class GetManager implements GetManagerLocal,GetManagerRemote {
 
     @Override
     public Employee getEmployee(Long employeeId) {
-        if( employeeId != null){
-        return find(employeeId);
-        }else {
+        if (employeeId != null) {
+            if (employeeId > 0) {
+                return find(employeeId);
+            } else {
+                return null;
+            }
+        } else {
             throw new NullPointerException();
         }
-        
+
     }
 
     @Override
@@ -96,15 +98,15 @@ public class GetManager implements GetManagerLocal,GetManagerRemote {
             return query.getResultList();
         }
     }
-    
+
     @Override
-    public Product create(String sqlQuery,String product){
-        Query query =         em.createQuery(sqlQuery).setParameter("name", product);
+    public Product create(String sqlQuery, String product) {
+        Query query = em.createQuery(sqlQuery).setParameter("name", product);
         return (Product) query.getResultList().get(0);
     }
-    
-    @Override 
-    public Employee find(long employeeId){
+
+    @Override
+    public Employee find(long employeeId) {
         return em.find(Employee.class, employeeId);
     }
 
