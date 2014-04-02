@@ -55,7 +55,7 @@
                                 <h:outputText value="#{customerBean.customer.phoneNumber}"/>
 
                                 <h:outputLabel value="Balance:"/>
-                                <h:outputText value="#{customerBean.balance}"/>
+                                <h:outputText value="#{customerBean.customer.balance}"/>
                             </p:panelGrid>     
                         </div>
                         <div class="col-md-6">
@@ -101,18 +101,13 @@
 
                                 <p:column>
                                     <f:facet name="header">Name</f:facet>
-                                    <h:outputText value="#{market.market.name}"/>
+                                    <h:outputText value="#{market.name}"/>
                                 </p:column>     
 
                                 <p:column>
-                                    <f:facet name="header">Start date</f:facet>
-                                    <h:outputText value="#{market.startDate.toString}"/>
-                                </p:column>
-
-                                <p:column>
-                                    <f:facet name="header">End date</f:facet>
-                                    <h:outputText value="#{market.endDate.toString}"/>
-                                </p:column>     
+                                    <f:facet name="header">Description</f:facet>
+                                    <h:outputText value="#{market.description}"/>
+                                </p:column> 
                             </p:dataTable>
                         </div>
                     </div>

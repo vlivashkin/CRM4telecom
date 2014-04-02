@@ -265,8 +265,12 @@ public class OrderManager implements OrderManagerLocal {
                 }
 
                 // send email 'status changed'
-                /*MailManager mm = new MailManager();
-                mm.statusChangedEmail(order, getOrderSteps(order));*/
+                try {
+                    MailManager mm = new MailManager();
+                    mm.statusChangedEmail(order, getOrderSteps(order));
+                } catch(Exception e) {
+                    System.err.println("Mail didn't send. Exception:\n" + e);
+                }
             }
         }
     }
