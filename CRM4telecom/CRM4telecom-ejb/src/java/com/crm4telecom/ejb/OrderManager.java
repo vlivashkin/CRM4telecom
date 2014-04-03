@@ -6,6 +6,7 @@ import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -268,7 +270,7 @@ public class OrderManager implements OrderManagerLocal {
                 try {
                     MailManager mm = new MailManager();
                     mm.statusChangedEmail(order, getOrderSteps(order));
-                } catch(Exception e) {
+                } catch(MessagingException e) {
                     System.err.println("Mail didn't send. Exception:\n" + e);
                 }
             }

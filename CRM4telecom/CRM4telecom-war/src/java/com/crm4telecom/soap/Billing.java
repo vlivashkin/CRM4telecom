@@ -20,27 +20,36 @@ public class Billing {
     }
 
     @WebMethod(operationName = "addMoney")
-    public long addMoney(@WebParam(name = "id") long id, @WebParam(name = "cash") long cash) {
+    public String addMoney(@WebParam(name = "id") long id, @WebParam(name = "cash") long cash) {
         Customer customer = cm.getCustomer(id);
-        Long balance = customer.getBalance();
+        if (customer != null) {
+            Long balance = customer.getBalance();
 
-        customer.setBalance(balance + cash);
-        cm.modifyCustomer(customer);
-        
-        return customer.getBalance();
+            customer.setBalance(balance + cash);
+            cm.modifyCustomer(customer);
+
+            return Result.ACCEPT.getLabel();
+        }
+
+        return Result.CLIENT_NOT_FOUND.getLabel();
     }
 
     @WebMethod(operationName = "withdraw")
-    public long withdraw(@WebParam(name = "id") long id, @WebParam(name = "cash") long cash) {
+    public String withdraw(@WebParam(name = "id") long id, @WebParam(name = "cash") long cash) {
         Customer customer = cm.getCustomer(id);
-        Long balance = customer.getBalance();
+        if (customer != null) {
+            Long balance = customer.getBalance();
 
-        if (balance >= cash) {
-            customer.setBalance(customer.getBalance() - cash);
-            cm.modifyCustomer(customer);
+            if (balance >= cash) {
+                customer.setBalance(customer.getBalance() - cash);
+                cm.modifyCustomer(customer);
+
+                return Result.ACCEPT.getLabel();
+            }
+
+            return Result.DECLINE.getLabel();
         }
-
-        return customer.getBalance();
+        return Result.CLIENT_NOT_FOUND.getLabel();
     }
 
 }

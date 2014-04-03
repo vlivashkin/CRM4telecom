@@ -2,6 +2,7 @@ package com.crm4telecom.mail;
 
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
 import javax.mail.*;
@@ -22,7 +23,7 @@ public class MailManager {
     private final String host = "smtp.gmail.com";
     private final Integer port = 587;
             
-    public void statusChangedEmail(Order order, List<OrderProcessing> steps) {
+    public void statusChangedEmail(Order order, List<OrderProcessing> steps) throws MessagingException {
         String subject = "Order #" + order.getOrderId();
 
         VelocityEngine ve = new VelocityEngine();
