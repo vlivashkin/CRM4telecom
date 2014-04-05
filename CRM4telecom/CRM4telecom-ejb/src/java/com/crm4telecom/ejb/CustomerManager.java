@@ -47,12 +47,16 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public List<Market> getMarkets(Customer customer) {
+        
         if( customer != null){
         String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
+
         Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
         return query.getResultList();
         }else{
-            throw new NullPointerException();
+            //throw new NullPointerException();
+            throw new IllegalArgumentException("Customer cannot be null");
+            //SEPA: Поменять на IllegalArgumentException, вывести сообщение в лог
         }
     }
 
