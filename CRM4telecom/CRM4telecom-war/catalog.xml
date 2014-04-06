@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/CRM4telecom-war/services?wsdl" uri="src/conf/xml-resources/web-service-references/services/wsdl/localhost_8080/CRM4telecom-war/services.wsdl"/>
     <system systemId="http://localhost:8080/CRM4telecom-war/services?xsd=1" uri="src/conf/xml-resources/web-service-references/services/wsdl/localhost_8080/CRM4telecom-war/services.xsd_1.xsd"/>
+    <system systemId="file:/C:/schema.wsdl" uri="src/conf/xml-resources/web-service-references/schema/wsdl/schema.wsdl"/>
+    <system systemId="file:/C:/services.xsd" uri="src/conf/xml-resources/web-service-references/schema/wsdl/services.xsd"/>
 </catalog>
