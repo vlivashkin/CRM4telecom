@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "EQUIPMENT_HISTORY", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "EQUIPMENT_HISTORY", catalog = "")
 public class EquipmentHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

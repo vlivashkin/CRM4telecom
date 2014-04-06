@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "BALANCE_HISTORY", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "BALANCE_HISTORY", catalog = "")
 public class BalanceHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

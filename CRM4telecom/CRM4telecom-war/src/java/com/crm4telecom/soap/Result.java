@@ -6,7 +6,7 @@ public enum Result {
     DECLINE("DECLINE"),
     CLIENT_NOT_FOUND("CLIENT_NOT_FOUND");
 
-    private String label;
+    private final String label;
 
     private Result(String label) {
         this.label = label;

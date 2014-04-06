@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "STATIC_IP", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "STATIC_IP", catalog = "")
 public class StaticIp implements Serializable {
 
     private static final long serialVersionUID = 1L;

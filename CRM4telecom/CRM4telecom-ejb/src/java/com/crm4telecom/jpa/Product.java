@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "")
 public class MarketProducts implements Serializable {
 
     private static final long serialVersionUID = 1L;

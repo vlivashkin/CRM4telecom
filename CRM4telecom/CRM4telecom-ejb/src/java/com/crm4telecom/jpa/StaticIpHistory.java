@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "STATIC_IP_HISTORY", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "STATIC_IP_HISTORY", catalog = "")
 public class StaticIpHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

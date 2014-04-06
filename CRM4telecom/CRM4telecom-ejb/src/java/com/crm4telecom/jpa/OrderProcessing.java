@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Order_Processing", catalog = "", schema = "CRM4TELECOM")
+@Table(name = "Order_Processing", catalog = "")
 public class OrderProcessing implements Serializable {
 
     private static final long serialVersionUID = 1L;
