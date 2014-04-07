@@ -26,36 +26,43 @@
     <ui:define name="content">
         <p:tabView>
             <p:tab title="Info">
-                <h:form>
+                <h:form id="infoform">
                     <div class="row">
                         <div class="col-md-6">
                             <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-                                <h:outputLabel value="First name:"/>
+                                <h:outputLabel value="First name:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.firstName}"/>
 
-                                <h:outputLabel value="Last name:"/>
+                                <h:outputLabel value="Last name:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.lastName}"/>
 
-                                <h:outputLabel value="Status:"/>
+                                <h:outputLabel value="Status:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.status.label}"/>
 
-                                <h:outputLabel value="E-mail:"/>
+                                <h:outputLabel value="E-mail:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.email}"/>
 
-                                <h:outputLabel value="Street:"/>
+                                <h:outputLabel value="Street:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.street}"/>
 
-                                <h:outputLabel value="Building:"/>
+                                <h:outputLabel value="Building:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.building}"/>
 
-                                <h:outputLabel value="Flat:"/>
+                                <h:outputLabel value="Flat:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.flat}"/>
 
-                                <h:outputLabel value="Phone number:"/>
+                                <h:outputLabel value="Phone number:" style="float: right"/>
                                 <h:outputText value="#{customerBean.customer.phoneNumber}"/>
 
-                                <h:outputLabel value="Balance:"/>
-                                <h:outputText value="#{customerBean.customer.balance}"/>
+                                <h:outputLabel value="Balance:" style="float: right"/>
+                                <h:panelGroup>
+                                    <h:outputText value="#{customerBean.customer.balance}"/>
+                                    <p:commandButton value="Synchronize" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerBean.syncBalance()}"/> 
+                                    <p:commandButton value="Update" style="float: right; margin-right: 10px" icon="ui-icon-arrowrefresh-1-s" >
+                                        <f:ajax render="infoform" />
+                                    </p:commandButton>
+                                </h:panelGroup>
+
                             </p:panelGrid>     
                         </div>
                         <div class="col-md-6">

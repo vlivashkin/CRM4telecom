@@ -5,6 +5,8 @@ import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
+import com.crm4telecom.soapui.Billing;
+import com.crm4telecom.soapui.Services;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
@@ -133,15 +135,12 @@ public class CustomerBean implements Serializable {
         return cm.getMarkets(customer);
     }
     
-    public long getBalance() {
-//        Services service = new Services();
-//        Billing port = service.getBillingPort();
-//        long result = port.getBalance(customer.getCustomerId());
-//
-//        System.out.println("balance " + result);
-//
-//        return result;
-        
-          return 10;
+    public void syncBalance() {
+        Services service = new Services();
+        Billing port = service.getBillingPort();
+        Long result = port.getBalance(customer.getCustomerId());
+
+        customer.setBalance(result);
+        cm.modifyCustomer(customer);
     }
 }

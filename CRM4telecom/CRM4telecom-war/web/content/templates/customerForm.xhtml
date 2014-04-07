@@ -73,7 +73,7 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="phoneNumber" value="Phone Number:" />  
             <div class="col-sm-4">
-                <p:inputText id="phoneNumber" value="#{customerBean.cv.phoneNumber}" label="Phone Number"/>  
+                <p:inputMask id="phoneNumber" value="#{customerBean.cv.phoneNumber}" mask="+7 (999) 999 99 99" label="Phone Number"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="phoneNumber" />

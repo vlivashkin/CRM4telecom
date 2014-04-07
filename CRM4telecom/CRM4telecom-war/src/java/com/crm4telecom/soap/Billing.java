@@ -14,9 +14,13 @@ public class Billing {
     private CustomerManagerLocal cm;
 
     @WebMethod(operationName = "getBalance")
-    public long getBalance(@WebParam(name = "id") long id) {
-
-        return cm.getCustomer(id).getBalance();
+    public String getBalance(@WebParam(name = "id") long id) {
+        Customer customer = cm.getCustomer(id);
+        if (customer != null) {
+            return customer.getBalance().toString();
+        } else {
+            return Result.CLIENT_NOT_FOUND.getLabel();
+        }
     }
 
     @WebMethod(operationName = "addMoney")
@@ -28,7 +32,7 @@ public class Billing {
             customer.setBalance(balance + cash);
             cm.modifyCustomer(customer);
 
-            return Result.ACCEPT.getLabel();
+            return Result.ACCEPT.getLabel() + ": old " + balance + ", new " + customer.getBalance();
         }
 
         return Result.CLIENT_NOT_FOUND.getLabel();
@@ -41,10 +45,10 @@ public class Billing {
             Long balance = customer.getBalance();
 
             if (balance >= cash) {
-                customer.setBalance(customer.getBalance() - cash);
+                customer.setBalance(balance - cash);
                 cm.modifyCustomer(customer);
 
-                return Result.ACCEPT.getLabel();
+                return Result.ACCEPT.getLabel()  + ": old " + balance + ", new " + customer.getBalance();
             }
 
             return Result.DECLINE.getLabel();

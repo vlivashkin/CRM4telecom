@@ -121,7 +121,8 @@ pre{
 }
 
 .index-button {
-    width: 120px;
+    width: 150px;
+    font-size: 17px !important;
 }
 
 table div.ui-selectcheckboxmenu {

@@ -31,28 +31,28 @@
                     <div class="col-md-6">
                         <h:form>
                             <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-                                <h:outputLabel value="Status:"/>
+                                <h:outputLabel value="Status:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.status.label}"/>
 
-                                <h:outputLabel value="Date:"/>
+                                <h:outputLabel value="Date:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.orderDate}"/>
 
-                                <h:outputLabel value="Type:"/>
+                                <h:outputLabel value="Type:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.orderType.label}"/>
                                 
-                                <h:outputLabel value="Priority:"/>
+                                <h:outputLabel value="Priority:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.priority.label}"/>
 
-                                <h:outputLabel value="Employee:"/>
+                                <h:outputLabel value="Employee:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.employee}"/>
 
-                                <h:outputLabel value="Customer:"/>
+                                <h:outputLabel value="Customer:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.customer}"/>
 
-                                <h:outputLabel value="Product:"/>
+                                <h:outputLabel value="Product:" style="float: right"/>
                                 <h:outputText value="#{orderBean.order.product}"/>
 
-                                <h:outputLabel value="Tech support:"/>
+                                <h:outputLabel value="Tech support:" style="float: right"/>
                                 <h:panelGroup>
                                     <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.techSupport}" disabled="true"/>
                                     <h:outputText value=" #{orderBean.order.techSupport}"/>
