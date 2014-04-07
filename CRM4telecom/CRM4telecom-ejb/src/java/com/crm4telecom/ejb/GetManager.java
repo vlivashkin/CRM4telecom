@@ -9,10 +9,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 @Stateless
 public class GetManager implements GetManagerLocal, GetManagerRemote {
 
+    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -94,7 +97,9 @@ public class GetManager implements GetManagerLocal, GetManagerRemote {
                 query.setParameter("second", split[1].toLowerCase());
             }
             query.setMaxResults(10);
-
+            if (log.isInfoEnabled()) {
+                log.info("Make query for autocomlete : " + sqlQuery);
+            }
             return query.getResultList();
         }
     }

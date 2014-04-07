@@ -11,11 +11,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 @ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
 
+    private final Logger log = Logger.getLogger(getClass().getName());
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
@@ -45,7 +47,9 @@ public class UserBean implements Serializable {
 
     public String login() throws ServletException {
         boolean result = um.login(uname, password);
-        System.out.println("login " + result + ": " + uname + ", " + password);
+        if (log.isInfoEnabled()) {
+                log.info("Login to system by login : " + uname);
+            }
         if (result) {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);

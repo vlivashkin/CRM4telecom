@@ -48,7 +48,6 @@ public class OrderSearchBean implements Serializable {
 
     public void setCustomer(String customer) {
         this.customer = customer;
-        System.out.println(this.customer);
     }
 
     public String getManager() {

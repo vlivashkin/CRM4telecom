@@ -10,10 +10,13 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import org.apache.log4j.Logger;
 
 @ManagedBean
 @SessionScoped
 public class OrderCommentBean implements Serializable {
+
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     @EJB
     private OrderManagerLocal om;
@@ -55,8 +58,9 @@ public class OrderCommentBean implements Serializable {
             comments.add(comment);
             json = gson.toJson(comments);
             order.setComments(json);
-            System.out.println(json);
-            System.out.println(order.toString());
+            if (log.isInfoEnabled()) {
+                log.info("Add comment : " + comments + " to order : "+ order);
+            }
             om.modifyOrder(order);
             text = "";
         }
