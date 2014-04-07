@@ -1,4 +1,3 @@
-
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
@@ -38,7 +37,7 @@ public class CustomerManagerTest {
     public static void tearDownClass() {
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetCustomer_shouldThrowNullPointerException_whenCustomerIsNull() {
         instance.getCustomer(null);
     }
@@ -54,13 +53,13 @@ public class CustomerManagerTest {
         assertEquals("testLastName", instance.getCustomer(l1).getLastName());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCreateCustomer_shouldThrowNullPointerException_whenCustomerIsNull() {
         instance.createCustomer(null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetMarkets_shouldThrowNullPointerException_whenCustomerIsNull() {
-            instance.getMarkets(null);
+        instance.getMarkets(null);
     }
 }

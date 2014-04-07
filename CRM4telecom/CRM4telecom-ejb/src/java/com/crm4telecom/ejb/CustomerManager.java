@@ -9,10 +9,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
+import org.apache.log4j.Logger;
 @Stateless
 public class CustomerManager implements CustomerManagerLocal {
 
+    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -21,7 +24,7 @@ public class CustomerManager implements CustomerManagerLocal {
         if (customer != null) {
             persist(customer);
         } else {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Customer can't be null");
         }
     }
 
@@ -34,7 +37,7 @@ public class CustomerManager implements CustomerManagerLocal {
     public Customer getCustomer(Long customerId) {
         Customer customer;
         if (customerId == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("CustomerId can't be null");
         }
         if (customerId > 0) {
             customer =  find(customerId);
@@ -54,9 +57,7 @@ public class CustomerManager implements CustomerManagerLocal {
         Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
         return query.getResultList();
         }else{
-            //throw new NullPointerException();
             throw new IllegalArgumentException("Customer cannot be null");
-            //SEPA: Поменять на IllegalArgumentException, вывести сообщение в лог
         }
     }
 
@@ -101,7 +102,9 @@ public class CustomerManager implements CustomerManagerLocal {
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
-        System.out.println(sqlQuery);
+        if ( log.isInfoEnabled() ){
+        log.info("Make query in Customer table "+sqlQuery);
+        }
         return query.getResultList();
     }
 
@@ -157,10 +160,12 @@ public class CustomerManager implements CustomerManagerLocal {
             while (it.hasNext()) {
                 Map.Entry pairs = (Map.Entry) it.next();
                 sqlQuery += "  LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";
-                System.out.println(pairs.getKey() + " = " + pairs.getValue());
                 it.remove();
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
+        }
+        if ( log.isInfoEnabled() ){
+        log.info("Make query in Customer table "+sqlQuery);
         }
         return em.createQuery(sqlQuery).getResultList();
     }

@@ -5,9 +5,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 public class MD5 {
 
+     private static final Logger log = Logger.getLogger (MD5.class) ;
     public static String getHash(String password, String salt) {
         MessageDigest md5;
         StringBuffer hexString = new StringBuffer();
@@ -23,7 +26,9 @@ public class MD5 {
                 hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
             }
         } catch (NoSuchAlgorithmException e) {
-            return e.toString();
+            if (log.isEnabledFor(Priority.ERROR)) {
+                log.error("Can't find md5 algoritm , so " + e.toString());
+            }
         }
         return hexString.toString();
     }

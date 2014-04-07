@@ -19,7 +19,7 @@ public class UserManagerTest {
         instance = new UserManager();
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testLogin_shouldThrowNullPointerException_whenLoginOrPasswordIsNull() {
         instance.login(null, null);
     }

@@ -7,6 +7,8 @@ import java.io.StringWriter;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -15,6 +17,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
+    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
     private final String from = "crm4telecom@gmail.com";
     private final String password = "crm4telecom2Q";
 
@@ -22,7 +25,7 @@ public class MailManager {
     private final Boolean startTLS = true;
     private final String host = "smtp.gmail.com";
     private final Integer port = 587;
-            
+
     public void statusChangedEmail(Order order, List<OrderProcessing> steps) throws MessagingException {
         String subject = "Order #" + order.getOrderId();
 
@@ -71,7 +74,9 @@ public class MailManager {
             Transport.send(message);
             System.out.println("Sent message \"" + subject + "\" to " + to);
         } catch (MessagingException e) {
-            System.err.println(e);
+            if (log.isEnabledFor(Priority.ERROR)) {
+                log.error("Can't send email message " + to);
+            }
         }
     }
 }

@@ -19,9 +19,13 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal {
+
+    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
 
     @PersistenceContext
     private EntityManager em;
@@ -133,7 +137,9 @@ public class OrderManager implements OrderManagerLocal {
         Query query = em.createQuery(sqlQuery, Order.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
-        System.out.println(sqlQuery);
+        if (log.isInfoEnabled()) {
+            log.info("Make query in Order table " + sqlQuery);
+        }
         return query.getResultList();
     }
 
@@ -201,7 +207,11 @@ public class OrderManager implements OrderManagerLocal {
         if (sqlQuery.endsWith("AND")) {
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
         }
-        System.out.println(sqlQuery);
+
+        if (log.isInfoEnabled()) {
+            log.info("Make query in Order table " + sqlQuery);
+        }
+
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();
     }
@@ -210,15 +220,17 @@ public class OrderManager implements OrderManagerLocal {
     public List<String> completeOrder(String rawOrder) {
         List<String> orders = new ArrayList<>();
         String raw = rawOrder.trim();
-
+        Long id = 1L;
         if (raw.matches("^\\d+$")) {
-            Long id = Long.parseLong(raw);
+            id = Long.parseLong(raw);
             Order ord = em.find(Order.class, id);
             if (ord != null) {
                 orders.add(ord.toString());
             }
         } else {
-            System.out.println("stroka " + raw);
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("Can't find order by  " + Long.toString(id) + " in Orders table");
+            }
         }
 
         return orders;
@@ -270,8 +282,11 @@ public class OrderManager implements OrderManagerLocal {
                 try {
                     MailManager mm = new MailManager();
                     mm.statusChangedEmail(order, getOrderSteps(order));
-                } catch(MessagingException e) {
-                    System.err.println("Mail didn't send. Exception:\n" + e);
+                } catch (MessagingException e) {
+                    if (log.isEnabledFor(Priority.ERROR) ) {
+                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step "+ getOrderSteps(order) + " at address "+ order.getCustomer().getEmail() );
+                    }
+
                 }
             }
         }

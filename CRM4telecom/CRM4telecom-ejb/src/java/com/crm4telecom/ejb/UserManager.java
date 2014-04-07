@@ -39,13 +39,12 @@ public class UserManager implements UserManagerLocal {
                 Users user = (Users) query.getResultList().get(0);
                 String pass = user.getPassword();
                 String salt = user.getSalt();
-                System.out.println(salt);
                 return pass != null && pass.equals(MD5.getHash(password, salt));
             } else {
                 return false;
             }
         } else {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Login and password can't be null");
         }
 
     }

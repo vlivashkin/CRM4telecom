@@ -43,7 +43,7 @@ public class GetManagerTest {
     public static void tearDownClass() {
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetProduct_shouldThrowNullPointerException_whenProductIsNull() {
         instance.getProduct(null);
     }
@@ -54,7 +54,7 @@ public class GetManagerTest {
         assertEquals("testDescription", instance.getProduct("test").getDescription());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetEmployee_shouldThrowNullPointerException_whenEmployeeIdIsNull() {
         instance.getEmployee(null);
     }

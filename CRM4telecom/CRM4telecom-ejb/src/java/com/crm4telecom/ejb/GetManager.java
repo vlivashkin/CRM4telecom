@@ -22,7 +22,7 @@ public class GetManager implements GetManagerLocal, GetManagerRemote {
             String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
             return create(sqlQuery, product);
         } else {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Product can't be null");
         }
 
     }
@@ -44,7 +44,7 @@ public class GetManager implements GetManagerLocal, GetManagerRemote {
                 return null;
             }
         } else {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("EmployeeId can't be null");
         }
 
     }
