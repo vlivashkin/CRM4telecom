@@ -7,10 +7,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 @Stateless
 public class IpFilling extends FillingDatabase implements IpFillingLocal {
 
+     private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -23,9 +27,14 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
             StaticIp ip = ipList.get(0);
             ip.setCustomerId(customer);
             em.persist(ip);
-            System.out.println("New ip: " + ip.getIp());
+            
+            if (log.isInfoEnabled()) {
+                log.info("Customer : "+customer + " now get ip address : "+ ip.getIp() );
+            }
         } else {
-            System.out.println("No free ip's!");
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("All ip adresses is locked, so customer : "+customer+" can't get new ip address");
+            }
         }
     }
 }

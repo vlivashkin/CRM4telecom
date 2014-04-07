@@ -53,7 +53,6 @@ public class MD5 {
         }
         salt = salthash.toString();
         l.add(salthash.toString());
-        System.out.println("salt == " + salt);
         String ss = salt + password;
         md5.reset();
 

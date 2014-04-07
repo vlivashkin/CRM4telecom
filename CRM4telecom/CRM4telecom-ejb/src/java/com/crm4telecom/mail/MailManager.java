@@ -72,10 +72,12 @@ public class MailManager {
             message.setSubject(subject);
             message.setContent(text, "text/html");
             Transport.send(message);
-            System.out.println("Sent message \"" + subject + "\" to " + to);
+             if (log.isInfoEnabled()) {
+                log.info("Send message because changing order : " + subject + " to " + to);
+            }
         } catch (MessagingException e) {
             if (log.isEnabledFor(Priority.ERROR)) {
-                log.error("Can't send email message " + to);
+                log.error("Can't send email message " + to+ " order : "+ subject);
             }
         }
     }
