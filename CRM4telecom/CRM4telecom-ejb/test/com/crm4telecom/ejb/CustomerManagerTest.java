@@ -29,7 +29,6 @@ public class CustomerManagerTest {
                 c.setLastName("testLastName");
                 return c;
             }
-
         };
     }
 
