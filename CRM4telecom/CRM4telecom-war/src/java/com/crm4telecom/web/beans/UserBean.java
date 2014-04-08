@@ -48,8 +48,8 @@ public class UserBean implements Serializable {
     public String login() throws ServletException {
         boolean result = um.login(uname, password);
         if (log.isInfoEnabled()) {
-                log.info("Login to system by login : " + uname);
-            }
+            log.info("Login to system by login : " + uname);
+        }
         if (result) {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);

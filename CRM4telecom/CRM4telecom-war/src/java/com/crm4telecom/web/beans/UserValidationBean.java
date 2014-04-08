@@ -5,11 +5,11 @@ import com.crm4telecom.jpa.Users;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import javax.validation.constraints.Size;
 
 @ManagedBean
-@SessionScoped
+@Dependent
 public class UserValidationBean implements Serializable {
 
     @Size(min = 1, max = 30)

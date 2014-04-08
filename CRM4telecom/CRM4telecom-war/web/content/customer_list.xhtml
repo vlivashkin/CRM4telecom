@@ -4,19 +4,23 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:define name="windowTitle">
+    <ui:define name="metadata">
+
+    </ui:define>
+    
+    <ui:define name="title">
         CRM4telecom | Customers
     </ui:define>
 
-    <ui:define name="navHierarhy">
+    <ui:define name="navbar">
         <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true"/>
     </ui:define>
-
+    <a href="customer_info.xhtml"></a>
     <ui:define name="header">
         <h1>
             <h:outputText value="List of Customers" />
             <h:form>
-                <p:commandButton value="Add customer" action="#{customerBean.toAddCustomer}" icon="ui-icon-plus"/>
+                <p:commandButton value="Add customer" action="#{navigationBean.toAddCustomer}" icon="ui-icon-plus"/>
             </h:form>
         </h1>
     </ui:define>
@@ -29,11 +33,11 @@
         </p:fieldset>
 
         <h:form id="tableForm">  
-            <p:dataTable var="customer" value="#{customerBean.customers}" paginator="true" rows="5"  
+            <p:dataTable var="customer" value="#{customerSearchBean.lazyModel}" paginator="true" rows="5"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerBean.customer}" id="customerTable" lazy="true">  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerSearchBean.selected}" id="customerTable" lazy="true">  
 
-                <p:ajax event="rowSelect" listener="#{customerBean.onRowSelect}" />
+                <p:ajax event="rowSelect"  listener="#{customerSearchBean.onRowSelect}" />
 
                 <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
                     <h:outputText value="#{customer.customerId}" />  

@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Order id:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{orderBean.search.order}">
+                        <p:inputText value="#{orderSearchBean.order}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Employee:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{orderBean.search.employee}">
+                        <p:inputText value="#{orderSearchBean.employee}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -25,8 +25,8 @@
                 <div class="form-group" style="height: 30px">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Priorities:"/>
                     <div class="col-sm-9">
-                        <p:selectCheckboxMenu value="#{orderBean.search.selectedPriorities}" label="Priorities" panelStyle="width:220px">  
-                            <f:selectItems value="#{orderBean.priorities}"/>  
+                        <p:selectCheckboxMenu value="#{orderSearchBean.selectedPriorities}" label="Priorities" panelStyle="width:220px">  
+                            <f:selectItems value="#{resourcesBean.priorities}"/>  
                             <f:ajax event="change" render=":tableForm" />
                         </p:selectCheckboxMenu>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Customer:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{orderBean.search.customer}" >
+                        <p:inputText value="#{orderSearchBean.customer}" >
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <h:outputLabel styleClass="col-sm-2 control-label" value="from:"/>
                                     <div class="col-sm-10">
-                                         <p:calendar id="fromDate" maxdate="#{orderBean.search.toDate}" value="#{orderBean.search.fromDate}" >
+                                         <p:calendar id="fromDate" maxdate="#{orderSearchBean.toDate}" value="#{orderSearchBean.fromDate}" >
                                             <f:ajax event="dateSelect" render=":tableForm" />
                                             <f:ajax event="change" render=":tableForm" />
                                             <f:ajax event="dateSelect" render="toDate" />
@@ -62,7 +62,7 @@
                                 <div class="row">
                                     <h:outputLabel styleClass="col-sm-2 control-label" value="to:"/>
                                     <div class="col-sm-10">
-                                        <p:calendar id="toDate" value="#{orderBean.search.toDate}"  mindate="#{orderBean.search.fromDate}" >
+                                        <p:calendar id="toDate" value="#{orderSearchBean.toDate}"  mindate="#{orderSearchBean.fromDate}" >
                                             <f:ajax event="dateSelect" render=":tableForm" />
                                             <f:ajax event="change" render=":tableForm" />
                                             <f:ajax event="dateSelect" render="fromDate" />
@@ -77,8 +77,8 @@
                 <div class="form-group" style="height: 30px">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Statuses:"/>
                     <div class="col-sm-9">
-                        <p:selectCheckboxMenu value="#{orderBean.search.selectedStatuses}" label="Statuses" panelStyle="width:220px">  
-                            <f:selectItems value="#{orderBean.statuses}"/>  
+                        <p:selectCheckboxMenu value="#{orderSearchBean.selectedStatuses}" label="Statuses" panelStyle="width:220px">  
+                            <f:selectItems value="#{resourcesBean.statuses}"/>  
                             <f:ajax event="change" render=":tableForm" />
                         </p:selectCheckboxMenu>
                     </div>

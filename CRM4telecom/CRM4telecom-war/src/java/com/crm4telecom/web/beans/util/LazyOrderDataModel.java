@@ -2,7 +2,7 @@ package com.crm4telecom.web.beans.util;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.jpa.Order;
-import com.crm4telecom.web.beans.OrderSearchBean;
+import com.crm4telecom.web.beans.OrderListBean;
 import com.crm4telecom.web.util.StringUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,12 +14,12 @@ import org.primefaces.model.SortOrder;
 
 public class LazyOrderDataModel extends LazyDataModel<Order> {
 
-    private OrderManagerLocal om;
+    private final OrderManagerLocal om;
     private List<Order> datasource;
-    public OrderSearchBean search;
+    public OrderListBean search;
     public Map<String, List<String>> parametrs;
 
-    public void setSearch(OrderSearchBean search) {
+    public void setSearch(OrderListBean search) {
         if (parametrs == null) {
             parametrs = new HashMap();
         }

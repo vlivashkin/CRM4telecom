@@ -1,17 +1,28 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
+import com.crm4telecom.jpa.Order;
+import com.crm4telecom.web.beans.util.LazyOrderDataModel;
+import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
+import org.primefaces.model.LazyDataModel;
 
 @ManagedBean
-@SessionScoped
-public class OrderSearchBean implements Serializable {
+@RequestScoped
+public class OrderListBean implements Serializable, ISearchBean<Order> {
+
+    @EJB
+    private OrderManagerLocal om;
+
+    private LazyOrderDataModel lazyModel;
+    private List<Order> orders;
+    private Order selected;
 
     String order;
     String customer;
@@ -22,16 +33,26 @@ public class OrderSearchBean implements Serializable {
     Date fromDate;
     Date toDate;
 
-    @EJB
-    private OrderManagerLocal om;
-
-    public OrderManagerLocal getOm() {
-        return om;
-    }
-
+    @Override
     @PostConstruct
     public void init() {
+        lazyModel = new LazyOrderDataModel(om);
+    }
 
+    @Override
+    public LazyDataModel<Order> getLazyModel() {
+        lazyModel.setSearch(this);
+        return lazyModel;
+    }
+
+    @Override
+    public Order getSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(Order selected) {
+        this.selected = selected;
     }
 
     public String getOrder() {
@@ -98,4 +119,17 @@ public class OrderSearchBean implements Serializable {
         this.toDate = toDate;
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Order> getCustomers() {
+        return orders;
+    }
+
+    @Override
+    public void onRowSelect() {
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_info", "id", selected.getOrderId().toString());
+    }
 }

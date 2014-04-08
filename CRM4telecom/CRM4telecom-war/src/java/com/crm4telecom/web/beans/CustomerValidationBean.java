@@ -4,26 +4,26 @@ import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @ManagedBean
-@SessionScoped
+@Dependent
 public class CustomerValidationBean implements Serializable {
 
-    @Size(min=1, max=30)
+    @Size(min = 1, max = 30)
     String firstName;
 
-    @Size(min=1, max=30)
+    @Size(min = 1, max = 30)
     String lastName;
 
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",  message = "Invalid email address")
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email address")
     String email;
 
-    @Size(min=1, max=30)
+    @Size(min = 1, max = 30)
     String street;
 
     Long building;
@@ -37,28 +37,18 @@ public class CustomerValidationBean implements Serializable {
     @Enumerated(EnumType.STRING)
     CustomerStatus status;
 
-    public void init() {
-        firstName = null;
-        lastName = null;
-        email = null;
-        street = null;
-        building = null;
-        flat = null;
-        balance = null;
-        phoneNumber = null;
-        status = null;
-    }
-    
     public void init(Customer customer) {
-        firstName = customer.getFirstName();
-        lastName = customer.getLastName();
-        email = customer.getEmail();
-        street = customer.getStreet();
-        building = customer.getBuilding();
-        flat = customer.getFlat();
-        balance = customer.getBalance();
-        phoneNumber = customer.getPhoneNumber();
-        status = customer.getStatus();
+        if (customer != null) {
+            firstName = customer.getFirstName();
+            lastName = customer.getLastName();
+            email = customer.getEmail();
+            street = customer.getStreet();
+            building = customer.getBuilding();
+            flat = customer.getFlat();
+            balance = customer.getBalance();
+            phoneNumber = customer.getPhoneNumber();
+            status = customer.getStatus();
+        }
     }
 
     public void fillCustomer(Customer customer) {

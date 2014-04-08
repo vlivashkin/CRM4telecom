@@ -3,15 +3,25 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="windowTitle">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui">
+    <ui:define name="metadata">
+        <f:metadata>
+            <o:viewParam name="id" value="#{customerBean.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="title">
         CRM4telecom | Client #{customerBean.customer.customerId}
     </ui:define>
 
-    <ui:define name="navHierarhy">
+    <ui:define name="navbar">
         <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Customer #{customerBean.customer}" action="customer_info?faces-redirect=true" />
+        <p:menuitem value="Customer #{customerBean.customer}" action="customer_info">
+            <f:param name="faces-redirect" value="true" />
+            <f:param name="id" value="#{customerBean.customer.customerId.toString()}" />
+        </p:menuitem>
     </ui:define>
 
     <ui:define name="header">
@@ -58,7 +68,7 @@
                                 <h:panelGroup>
                                     <h:outputText value="#{customerBean.customer.balance}"/>
                                     <p:commandButton value="Synchronize" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerBean.syncBalance()}"/> 
-                                    <p:commandButton value="Update" style="float: right; margin-right: 10px" icon="ui-icon-arrowrefresh-1-s" >
+                                    <p:commandButton value="Update" style="float: right; margin-right: 10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerBean.updBalance()}" >
                                         <f:ajax render="infoform" />
                                     </p:commandButton>
                                 </h:panelGroup>
@@ -125,7 +135,7 @@
                             Orders
                         </f:facet>
 
-                        <p:ajax event="rowSelect" listener="#{orderBean.onRowSelect}" />
+                        <p:ajax event="rowSelect" listener="#{orderSearchBean.onRowSelect}" />
 
                         <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
                             <h:outputText value="#{order.orderId}" />  
@@ -152,7 +162,10 @@
                         </p:column>
 
                         <f:facet name="footer">  
-                            <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerBean.toAddOrder}" />
+                            <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="order_add">
+                                <f:param name="faces-redirect" value="true" />
+                                <f:param name="customerId" value="#{customerBean.customer.customerId}" />
+                            </p:commandButton>
                         </f:facet>
                     </p:dataTable>
                 </h:form>

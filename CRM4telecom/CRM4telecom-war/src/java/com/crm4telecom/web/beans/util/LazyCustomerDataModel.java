@@ -2,7 +2,7 @@ package com.crm4telecom.web.beans.util;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
-import com.crm4telecom.web.beans.CustomerSearchBean;
+import com.crm4telecom.web.beans.CustomerListBean;
 import com.crm4telecom.web.util.StringUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
         this.cm = cm;
     }
 
-    public void setSearch(CustomerSearchBean search) {
+    public void setSearch(CustomerListBean search) {
         if (parameters == null) {
             parameters = new HashMap();
         }

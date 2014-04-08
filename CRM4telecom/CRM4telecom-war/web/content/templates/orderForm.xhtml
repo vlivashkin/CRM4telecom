@@ -8,19 +8,19 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="customer" value="Customer:" />  
             <div class="col-sm-4">
-                <p:autoComplete id="customer" value="#{orderBean.validation.customer}"   
+                <p:autoComplete id="customer" value="#{orderBean.ov.customer}"   
                                 completeMethod="#{orderValidationBean.completeCustomer}"/> 
             </div>
             <div class="col-sm-4">
                 <p:message for="customer" />
             </div>
         </div>
-        <c:if test="#{orderBean.validation.isNewOrder()}">
+        <c:if test="#{orderBean.ov.isNewOrder()}">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
                 <div class="col-sm-4">
-                    <p:selectOneMenu id="type" value="#{orderBean.validation.type}">
-                        <f:selectItems value="#{orderBean.types}" var="type"
+                    <p:selectOneMenu id="type" value="#{orderBean.ov.type}">
+                        <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
                     </p:selectOneMenu>
                 </div>
@@ -32,8 +32,8 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="priority" value="Priority:" /> 
             <div class="col-sm-4">
-                <p:selectOneMenu id="priority" value="#{orderBean.validation.priority}">
-                    <f:selectItems value="#{orderBean.priorities}" var="priority"
+                <p:selectOneMenu id="priority" value="#{orderBean.ov.priority}">
+                    <f:selectItems value="#{resourcesBean.priorities}" var="priority"
                                    itemValue="#{priority}" itemLabel="#{priority.label}"/>
                 </p:selectOneMenu>
             </div>
@@ -42,9 +42,9 @@
             </div>
         </div>
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="managerId" value="Employee:" />  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee:" />  
             <div class="col-sm-4">
-                <p:autoComplete id="employee" value="#{orderBean.validation.employee}"   
+                <p:autoComplete id="employee" value="#{orderBean.ov.employee}"   
                                 completeMethod="#{orderValidationBean.completeEmployee}"/>  
             </div>
             <div class="col-sm-4">
@@ -54,8 +54,8 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" />  
             <div class="col-sm-4">
-                <p:selectOneMenu id="product" value="#{orderBean.validation.product}">
-                    <f:selectItems value="#{orderBean.product}" var="product"
+                <p:selectOneMenu id="product" value="#{orderBean.ov.product}">
+                    <f:selectItems value="#{resourcesBean.product}" var="product"
                                    itemValue="#{product}" itemLabel="#{product}"/>
                 </p:selectOneMenu>
             </div>
@@ -64,11 +64,11 @@
             </div>
         </div>
 
-        <c:if test="#{orderBean.validation.isNewOrder()}">
+        <c:if test="#{orderBean.ov.isNewOrder()}">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="techSupport" value="Tech support flag:" />  
                 <div class="col-sm-4">
-                    <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.validation.technicalSupportFlag}"/>   
+                    <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.ov.technicalSupportFlag}"/>   
                 </div>
                 <div class="col-sm-4">
                     <p:message for="techSupport" />

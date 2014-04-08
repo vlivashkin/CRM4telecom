@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import org.apache.log4j.Logger;
 
 @ManagedBean
-@SessionScoped
+@Dependent
 public class OrderCommentBean implements Serializable {
 
     private final Logger log = Logger.getLogger(getClass().getName());

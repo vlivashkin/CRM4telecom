@@ -6,7 +6,6 @@ import com.crm4telecom.enums.OrderStep;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="First Name:"/>
                     <div class="col-sm-9">
-                        <p:inputText  value="#{customerBean.search.firstName}">
+                        <p:inputText  value="#{customerSearchBean.firstName}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Last Name:"/>
                     <div class="col-sm-9">
-                        <p:inputText  value="#{customerBean.search.lastName}">
+                        <p:inputText  value="#{customerSearchBean.lastName}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Email:"/>
                     <div class="col-sm-9">
-                        <p:inputText  value="#{customerBean.search.email}">
+                        <p:inputText  value="#{customerSearchBean.email}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Balance:"/>
                     <div class="col-sm-9">
-                        <p:inputText  value="#{customerBean.search.balance}">
+                        <p:inputText  value="#{customerSearchBean.balance}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Street:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{customerBean.search.street}">
+                        <p:inputText value="#{customerSearchBean.street}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Building:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{customerBean.search.building}">
+                        <p:inputText value="#{customerSearchBean.building}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Flat:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{customerBean.search.flat}">
+                        <p:inputText value="#{customerSearchBean.flat}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label" value="Phone number:"/>
                     <div class="col-sm-9">
-                        <p:inputText value="#{customerBean.search.phoneNumber}">
+                        <p:inputText value="#{customerSearchBean.phoneNumber}">
                             <f:ajax event="change" render=":tableForm" />
                         </p:inputText>
                     </div>

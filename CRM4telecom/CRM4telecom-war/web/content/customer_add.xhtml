@@ -4,11 +4,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:define name="windowTitle">
+    <ui:define name="metadata">
+        
+    </ui:define>
+
+    <ui:define name="title">
         CRM4telecom | Add new Customer
     </ui:define>
 
-    <ui:define name="navHierarhy">
+    <ui:define name="navbar">
         <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
         <p:menuitem value="Add new Customer" action="customer_add?faces-redirect=true" />
