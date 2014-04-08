@@ -283,7 +283,7 @@ public class OrderManager implements OrderManagerLocal {
                     mm.statusChangedEmail(order, getOrderSteps(order));
                 } catch (MessagingException e) {
                     if (log.isEnabledFor(Priority.ERROR) ) {
-                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step "+ getOrderSteps(order) + " at address "+ order.getCustomer().getEmail() + " so it cause " + e.toString());
+                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step "+ getOrderSteps(order) + " at address "+ order.getCustomer().getEmail(), e);
                     }
 
                 }

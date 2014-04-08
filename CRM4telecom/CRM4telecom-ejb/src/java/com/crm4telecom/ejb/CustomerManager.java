@@ -15,7 +15,6 @@ public class CustomerManager implements CustomerManagerLocal {
 
     private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
 
-    
     @PersistenceContext
     private EntityManager em;
 
@@ -23,6 +22,7 @@ public class CustomerManager implements CustomerManagerLocal {
     public void createCustomer(Customer customer) {
         if (customer != null) {
             persist(customer);
+            
         } else {
             throw new IllegalArgumentException("Customer can't be null");
         }

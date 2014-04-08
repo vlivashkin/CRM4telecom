@@ -2,9 +2,13 @@ package com.crm4telecom.mail;
 
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
 import javax.mail.*;
 import javax.mail.internet.*;
 import org.apache.log4j.Logger;
@@ -17,7 +21,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
-    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+    private final Logger log = Logger.getLogger(getClass().getName());
     private final String from = "crm4telecom@gmail.com";
     private final String password = "crm4telecom2Q";
 
@@ -26,8 +30,8 @@ public class MailManager {
     private final String host = "smtp.gmail.com";
     private final Integer port = 587;
 
-    public void statusChangedEmail(Order order, List<OrderProcessing> steps) throws MessagingException {
-        String subject = "Order #" + order.getOrderId();
+    public void statusChangedEmail(final Order order, List<OrderProcessing> steps) throws MessagingException {
+        final String subject = "Order #" + order.getOrderId();
 
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
@@ -42,14 +46,19 @@ public class MailManager {
         context.put("orderId", order.getOrderId());
         context.put("status", order.getStatus());
         context.put("steps", steps);
-
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
+        
         t.merge(context, writer);
-
-        send(order.getCustomer().getEmail(), subject, writer.toString());
+        Timer time = new Timer();
+        AsynchronousMailSend a = null;
+        if ( a == null) {
+            a = new AsynchronousMailSend();
+        }
+        a.fill(order.getCustomer().getEmail(), subject, writer.toString());
+        time.schedule(a,2000);
     }
 
-    public void send(String to, String subject, String text) {
+    public void send(String to, String subject, String text) throws MessagingException {
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.auth", auth.toString());
         properties.setProperty("mail.smtp.starttls.enable", startTLS.toString());
@@ -64,21 +73,16 @@ public class MailManager {
                     }
                 });
 
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress("illusionww@gmail.com"));
-            message.setSubject(subject);
-            message.setContent(text, "text/html");
-            Transport.send(message);
-             if (log.isInfoEnabled()) {
-                log.info("Send message because changing order : " + subject + " to " + to);
-            }
-        } catch (MessagingException e) {
-            if (log.isEnabledFor(Priority.ERROR)) {
-                log.error("Can't send email message " + to+ " order : "+ subject);
-            }
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress("illusionww@gmail.com"));
+        message.setSubject(subject);
+        message.setContent(text, "text/html");
+             Transport.send(message);
+        if (log.isInfoEnabled()) {
+            log.info("Send message because changing order : " + subject + " to " + to);
         }
+        throw new MessagingException();
     }
 }
