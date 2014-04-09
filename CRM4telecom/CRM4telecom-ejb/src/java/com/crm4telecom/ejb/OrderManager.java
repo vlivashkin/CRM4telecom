@@ -24,7 +24,7 @@ import org.apache.log4j.Priority;
 @Stateless
 public class OrderManager implements OrderManagerLocal {
 
-    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -248,16 +248,20 @@ public class OrderManager implements OrderManagerLocal {
                 && order.getStatus() != OrderStatus.CANCELLED) {
             OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
 
+            // update end date for previous step in OrderProcessing
+            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
+            Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+            OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
+            oldStep.setEndDate(new Date());
+            em.merge(oldStep);
+
+            // update status
+            order.setStatus(order.getProcessStep().getStatus());
+            em.merge(order);
+            
             if (nextStep != order.getProcessStep()) {
                 OrderProcessing newStep = new OrderProcessing();
-
-                // update end date for previous step in OrderProcessing
-                String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
-                Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
-                OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
-                oldStep.setEndDate(new Date());
-                em.merge(oldStep);
-
+                
                 // create new step in OrderProcessing
                 newStep.setOrderId(order.getOrderId());
                 newStep.setStartDate(new Date());
@@ -265,7 +269,6 @@ public class OrderManager implements OrderManagerLocal {
                 em.persist(newStep);
 
                 // update information about current step in order
-                order.setStatus(order.getProcessStep().getStatus());
                 order.setProcessStep(nextStep);
                 em.merge(order);
 
@@ -282,8 +285,8 @@ public class OrderManager implements OrderManagerLocal {
                     MailManager mm = new MailManager();
                     mm.statusChangedEmail(order, getOrderSteps(order));
                 } catch (MessagingException e) {
-                    if (log.isEnabledFor(Priority.ERROR) ) {
-                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step "+ getOrderSteps(order) + " at address "+ order.getCustomer().getEmail(), e);
+                    if (log.isEnabledFor(Priority.ERROR)) {
+                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
                     }
 
                 }
