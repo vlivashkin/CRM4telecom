@@ -8,32 +8,32 @@
                 xmlns:o="http://omnifaces.org/ui">
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewParam name="id" value="#{orderBean.id}" />
+            <f:viewParam name="id" value="#{orderInfoBean.id}" />
         </f:metadata>
     </ui:define>
     
     <ui:define name="title">
-        CRM4telecom | Order #{orderBean.order}
+        CRM4telecom | Order #{orderInfoBean.order}
     </ui:define>
 
     <ui:define name="navbar">
         <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" /> 
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Order #{orderBean.order}" action="order_info?faces-redirect=true" /> 
+        <p:menuitem value="Order #{orderInfoBean.order}" action="order_info?faces-redirect=true" /> 
     </ui:define>
 
     <ui:define name="header">
         <h1>
-            <h:outputText value="Order #{orderBean.order}" />
+            <h:outputText value="Order #{orderInfoBean.order}" />
             <h:form id="headerstatus">
-                <h:outputLabel value="#{orderBean.order.status.label}" styleClass="customer-status #{orderBean.order.status.color}" />
+                <h:outputLabel value="#{orderInfoBean.order.status.label}" styleClass="customer-status #{orderInfoBean.order.status.color}" />
             </h:form>
         </h1>
     </ui:define>
 
     <ui:define name="content">
          <f:metadata>
-            <o:viewParam name="id" value="#{orderBean.order}" />
+            <o:viewParam name="id" value="#{orderInfoBean.order}" />
         </f:metadata>
         
         <p:tabView id="tabPanel">
@@ -43,37 +43,37 @@
                         <h:form>
                             <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
                                 <h:outputLabel value="Status:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.status.label}"/>
+                                <h:outputText value="#{orderInfoBean.order.status.label}"/>
 
                                 <h:outputLabel value="Date:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.orderDate}"/>
+                                <h:outputText value="#{orderInfoBean.order.orderDate}"/>
 
                                 <h:outputLabel value="Type:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.orderType.label}"/>
+                                <h:outputText value="#{orderInfoBean.order.orderType.label}"/>
 
                                 <h:outputLabel value="Priority:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.priority.label}"/>
+                                <h:outputText value="#{orderInfoBean.order.priority.label}"/>
 
                                 <h:outputLabel value="Employee:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.employee}"/>
+                                <h:outputText value="#{orderInfoBean.order.employee}"/>
 
                                 <h:outputLabel value="Customer:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.customer}"/>
+                                <h:outputText value="#{orderInfoBean.order.customer}"/>
 
                                 <h:outputLabel value="Product:" style="float: right"/>
-                                <h:outputText value="#{orderBean.order.product}"/>
+                                <h:outputText value="#{orderInfoBean.order.product}"/>
 
                                 <h:outputLabel value="Tech support:" style="float: right"/>
                                 <h:panelGroup>
-                                    <p:selectBooleanCheckbox id="techSupport" value="#{orderBean.order.techSupport}" disabled="true"/>
-                                    <h:outputText value=" #{orderBean.order.techSupport}"/>
+                                    <p:selectBooleanCheckbox id="techSupport" value="#{orderInfoBean.order.techSupport}" disabled="true"/>
+                                    <h:outputText value=" #{orderInfoBean.order.techSupport}"/>
                                 </h:panelGroup>                                            
                             </p:panelGrid>   
                         </h:form>
                     </div>
                     <div class="col-md-6">
                         <h:form id="statusform">
-                            <p:dataTable value="#{orderBean.orderSteps}" var="orderProcessing">
+                            <p:dataTable value="#{orderInfoBean.orderSteps}" var="orderProcessing">
                                 <f:facet name="header">
                                     Process:
                                 </f:facet>
@@ -95,8 +95,8 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    <p:commandButton value="To next step" update=":tabPanel:statusform :headerstatus" disabled="#{orderBean.closed}" action="#{orderBean.nextStep}" />
-                                    <p:commandButton value="Cancel Order" update=":tabPanel:statusform :headerstatus" action="#{orderBean.cancelOrder}" />
+                                    <p:commandButton value="To next step" update=":tabPanel:statusform :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                                    <p:commandButton value="Cancel Order" update=":tabPanel:statusform :headerstatus" action="#{orderInfoBean.cancelOrder}" />
                                 </f:facet>
                             </p:dataTable>
                         </h:form>
@@ -109,7 +109,7 @@
 
                     <ui:include src="./templates/orderForm.xhtml" />
 
-                    <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderBean.modify()}" />
+                    <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderInfoBean.modify()}" />
                     <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
                         <f:ajax render="editform" />
                     </p:commandButton>
@@ -118,7 +118,7 @@
         </p:tabView>
 
         <h:form id="comments">
-            <p:dataGrid var="comment" value="#{orderBean.comment.comments}" columns="1"  
+            <p:dataGrid var="comment" value="#{orderInfoBean.comment.comments}" columns="1"  
                         rows="5" paginator="true"  
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                         rowsPerPageTemplate="5,10,15">  
@@ -128,8 +128,8 @@
                 </p:panel> 
 
                 <f:facet name="footer">  
-                    <p:inputTextarea rows="2" cols="33" value="#{orderBean.comment.text}" placeholder="Type your comment here..." style="width: calc(100% - 110px)"/> 
-                    <p:commandButton value="Comment" action="#{orderBean.comment.addComment}" update=":comments" style="float: right"/>
+                    <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" placeholder="Type your comment here..." style="width: calc(100% - 110px)"/> 
+                    <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":comments" style="float: right"/>
                 </f:facet>
             </p:dataGrid>  
         </h:form>

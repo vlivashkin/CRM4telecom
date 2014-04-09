@@ -2,7 +2,7 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0">
     <managed-bean>
-        <managed-bean-name>customerBean</managed-bean-name>
+        <managed-bean-name>customerInfoBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.CustomerInfoBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
@@ -12,12 +12,12 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>customerSearchBean</managed-bean-name>
+        <managed-bean-name>customerListBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.CustomerListBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>orderBean</managed-bean-name>
+        <managed-bean-name>orderInfoBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderInfoBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
@@ -27,7 +27,7 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>orderSearchBean</managed-bean-name>
+        <managed-bean-name>orderListBean</managed-bean-name>
         <managed-bean-class>com.crm4telecom.web.beans.OrderListBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>

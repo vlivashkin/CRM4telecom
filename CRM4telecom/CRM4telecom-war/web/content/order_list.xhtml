@@ -33,11 +33,11 @@
         </p:fieldset>   
 
         <h:form id="tableForm">
-            <p:dataTable var="order" value="#{orderSearchBean.lazyModel}" paginator="true" rows="10" 
+            <p:dataTable var="order" value="#{orderListBean.lazyModel}" paginator="true" rows="10" 
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderSearchBean.selected}" id="orderTable" lazy="true">  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selected}" id="orderTable" lazy="true">  
 
-                <p:ajax event="rowSelect" listener="#{orderSearchBean.onRowSelect}" />
+                <p:ajax event="rowSelect" listener="#{orderListBean.onRowSelect}" />
 
                 <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
                     <h:outputText value="#{order.orderId}" />  

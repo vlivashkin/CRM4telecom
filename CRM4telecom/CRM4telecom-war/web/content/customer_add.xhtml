@@ -30,7 +30,7 @@
 
             <ui:include src="./templates/customerForm.xhtml" />
 
-            <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerBean.create()}"/>
+            <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerInfoBean.create()}"/>
             <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="customer_list?faces-redirect=true" />
         </h:form>
     </ui:define>

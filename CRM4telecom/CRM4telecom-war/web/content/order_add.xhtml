@@ -6,7 +6,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewParam name="customer" value="#{orderBean.ov.customerId}" />
+            <f:viewParam name="customer" value="#{orderInfoBean.ov.customerId}" />
         </f:metadata>
     </ui:define>
 
@@ -32,7 +32,7 @@
 
             <ui:include src="./templates/orderForm.xhtml" />
 
-            <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{orderBean.create()}" />
+            <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{orderInfoBean.create()}" />
             <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
         </h:form>
     </ui:define>
