@@ -24,7 +24,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
-    private ScheduledExecutorService service = null;
+    private static ScheduledExecutorService service = null;
     private final Logger log = Logger.getLogger(getClass().getName());
     private final String from = "crm4telecom@gmail.com";
     private final String password = "crm4telecom2Q";
