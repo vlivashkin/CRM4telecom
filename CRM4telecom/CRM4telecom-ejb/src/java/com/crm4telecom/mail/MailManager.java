@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import javax.mail.*;
@@ -23,7 +24,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
-    private ExecutorService service = null;
+    private ScheduledExecutorService service = null;
     private final Logger log = Logger.getLogger(getClass().getName());
     private final String from = "crm4telecom@gmail.com";
     private final String password = "crm4telecom2Q";
@@ -50,75 +51,69 @@ public class MailManager {
         context.put("status", order.getStatus());
         context.put("steps", steps);
         final StringWriter writer = new StringWriter();
-
         t.merge(context, writer);
         if (service == null) {
-            service = Executors.newFixedThreadPool(6);
+            service = Executors.newScheduledThreadPool(6);
         }
         if (arrf == null) {
 
             arrf = new FutureArray();
-            arrf.arrfuture[0] = service.submit(new Runnable() {
+            arrf.arrfuture[0] = service.scheduleAtFixedRate(new Runnable() {
 
                 @Override
                 public void run() {
-                    while (true) {
-                        int i = 1;
-                        while (i < arrf.arrfuture.length) {
-                            if (arrf.arrfuture[i] != null) {
-                                try {
-                                    arrf.arrfuture[i].get(2,TimeUnit.SECONDS);
-                                } catch (Exception ex) {
-                                    if (arrf.attempt[i] != 3) {
-                                        if (log.isEnabledFor(Priority.WARN)) {
-                                            log.warn("Can't send email attempt :" + (arrf.attempt[i]+1));
-                                        }
-                                        final int j = i;
-                                        arrf.arrfuture[i] = service.submit(new Callable<Boolean>() {
-                                            @Override
-                                            public Boolean call() throws Exception {
-                                                MailManager m = new MailManager();
-                                                m.send(arrf.email[j],arrf.subject[j],arrf.text[j]);
-                                                return true;
-                                            }
-                                        }
-                                        );
-
-                                        arrf.attempt[i]++;
-                                    } else {
-                                        if (log.isEnabledFor(Priority.ERROR)) {
-                                            log.error("Can't send email. Address : "+ arrf.email[i]+ " order"+ arrf.subject[i]);
-                                        }
-                                        arrf.arrfuture[i] = null;
+                    //    while (true) {
+                    int i = 1;
+                    while (i < arrf.arrfuture.length) {
+                        if (arrf.arrfuture[i] != null) {
+                            try {
+                                boolean flag = (boolean) arrf.arrfuture[i].get(5, TimeUnit.SECONDS);
+                                if (flag == true) {
+                                    if (log.isInfoEnabled()) {
+                                        log.info("Send message because changing order : " + arrf.subject[i] + " to " + arrf.email[i]);
                                     }
+                                    arrf.arrfuture[i] = null;
+                                }
+
+                            } catch (Exception ex) {
+                                if (arrf.attempt[i] != 3) {
+                                    if (log.isEnabledFor(Priority.WARN)) {
+                                        log.warn("Can't send email attempt :" + (arrf.attempt[i] + 1) + ex.toString());
+                                    }
+                                    final int j = i;
+                                    arrf.arrfuture[i] = service.submit(new Callable<Boolean>() {
+                                        @Override
+                                        public Boolean call() throws Exception {
+                                            MailManager m = new MailManager();
+                                            m.send(arrf.email[j], arrf.subject[j], arrf.text[j]);
+                                            return true;
+                                        }
+                                    }
+                                    );
+
+                                    arrf.attempt[i]++;
+                                } else {
+                                    if (log.isEnabledFor(Priority.ERROR)) {
+                                        log.error("Can't send email. Address : " + arrf.email[i] + " order" + arrf.subject[i]);
+                                    }
+                                    arrf.arrfuture[i] = null;
                                 }
                             }
-                            i++;
                         }
-
-//                        try {
-//                            this.wait(1000);
-//                        } catch (InterruptedException ex) {
-//                            if (log.isEnabledFor(Priority.ERROR)) {
-//                                log.error("Wait in thread which wait for new future task was interrupted");
-//                            }
-//
-//                        }
-
+                        i++;
                     }
                 }
-            }
+            }, 0, 2, TimeUnit.SECONDS
             );
-
         }
-        Future<Boolean> f = service.submit(new Callable<Boolean>() {
+        Future<Boolean> f = service.schedule(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 MailManager m = new MailManager();
                 m.send(order.getCustomer().getEmail(), subject, writer.toString());
                 return true;
             }
-        }
+        }, 100, TimeUnit.MILLISECONDS
         );
         int i = 1;
         boolean flag = true;
@@ -133,11 +128,6 @@ public class MailManager {
             }
             i++;
         }
-
-//        try {
-//            arrf.arrfuture[1].get();
-//        } catch( Exception ex) {
-//            java.util.logging.Logger.getLogger(MailManager.class.getName()).log(Level.SEVERE, null, ex);
     }
 
     public void send(String to, String subject, String text) throws MessagingException {
@@ -161,12 +151,9 @@ public class MailManager {
                 new InternetAddress("illusionww@gmail.com"));
         message.setSubject(subject);
         message.setContent(text, "text/html");
-        //  Transport.send(message);
-        if (log.isInfoEnabled()) {
-            log.info("Send message because changing order : " + subject + " to " + to);
-        }
-        throw new MessagingException();
+        Transport.send(message);
 
+     //   throw new MessagingException();
     }
 
     private static class FutureArray {
