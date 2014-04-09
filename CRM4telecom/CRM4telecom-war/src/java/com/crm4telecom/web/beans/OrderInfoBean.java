@@ -70,18 +70,18 @@ public class OrderInfoBean implements Serializable {
         Order orderNew = new Order();
         ov.fillOrder(orderNew);
         om.createOrder(orderNew);
-
         order = orderNew;
 
         JSFHelper helper = new JSFHelper();
-        helper.redirect("order_info");
+        helper.redirect("order_info", "id", order.getOrderId().toString());
     }
 
     public void modify() {
         ov.fillOrder(order);
         om.modifyOrder(order);
+        
         JSFHelper helper = new JSFHelper();
-        helper.redirect("order_info");
+        helper.redirect("order_info", "id", order.getOrderId().toString());
     }
 
     public List<String> completeOrder(String order) {

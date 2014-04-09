@@ -61,8 +61,15 @@ public class OrderValidationBean implements Serializable {
         }
     }
 
+    public Long getCustomerId() {
+        return customerId;
+    }
+
     public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+        if (customerId != null) {
+            this.customerId = customerId;
+            customer = StringUtils.toString(cm.getCustomer(customerId));
+        }
     }
 
     public void fillOrder(Order order) {
