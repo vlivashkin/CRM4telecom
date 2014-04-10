@@ -27,7 +27,7 @@ public class MD5 {
             }
         } catch (NoSuchAlgorithmException e) {
             if (log.isEnabledFor(Priority.ERROR)) {
-                log.error("Can't find md5 algoritm , so " + e.toString());
+                log.error("Can't find md5 algoritm , so ", e);
             }
         }
         return hexString.toString();
