@@ -38,7 +38,7 @@ public final class AuthenticationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         if (path.contains("login")) {
-            if (login != null && um.getlogins().contains(login)) {
+            if (login != null && um.getLogins().contains(login)) {
                 res.sendRedirect("/CRM4telecom/content/index.xhtml");
             } else {
                 chain.doFilter(request, response);
@@ -48,7 +48,7 @@ public final class AuthenticationFilter implements Filter {
                 if (path.contains("user") && !userType.equals("ADMIN")) {
                     res.sendRedirect("/CRM4telecom/login.xhtml");
                 } else {
-                    if (um.getlogins().contains(login)) {
+                    if (um.getLogins().contains(login)) {
                         chain.doFilter(request, response);
                     } else {
                         res.sendRedirect("/CRM4telecom/login.xhtml");

@@ -56,8 +56,15 @@ public class UserManager implements UserManagerLocal {
     }
 
     @Override
-    public List<String> getlogins() {
+    public List<String> getLogins() {
         String sqlQuery = "SELECT u.login FROM Users u ";
+        Query query = em.createQuery(sqlQuery);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Users> getUsers() {
+        String sqlQuery = "SELECT u FROM Users u ";
         Query query = em.createQuery(sqlQuery);
         return query.getResultList();
     }

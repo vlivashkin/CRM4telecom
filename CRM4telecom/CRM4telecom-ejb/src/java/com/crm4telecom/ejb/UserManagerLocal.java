@@ -9,7 +9,9 @@ public interface UserManagerLocal {
 
     Users login(String login, String password);
 
-    List<String> getlogins();
+    List<String> getLogins();
+    
+    List<Users> getUsers();
 
     void create(Users u);
 }

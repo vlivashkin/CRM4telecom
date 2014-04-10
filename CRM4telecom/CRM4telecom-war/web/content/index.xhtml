@@ -27,8 +27,8 @@
     <ui:define name="content">
         <h1>Common info</h1>
         <p style="font-family: Courier New">
-            Number of customers:<br/>
-            Number of orders:<br/>
+            Number of customers: #{resourcesBean.customersCount}<br/>
+            Number of orders: #{resourcesBean.ordersCount}<br/>
             bla bla<br/>
             bla bla<br/>
             bla bla<br/>
@@ -46,6 +46,7 @@
             <h1>Admin actions</h1>
             <h:form>
                 <center>
+                    <p:commandButton value="Users" styleClass="index-button" action="user_list?faces-redirect=true" />
                     <p:commandButton value="Add user" styleClass="index-button" action="user_add?faces-redirect=true" />
                 </center>
             </h:form>

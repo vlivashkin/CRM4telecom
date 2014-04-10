@@ -1,6 +1,8 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
+import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderType;
@@ -14,6 +16,12 @@ import javax.enterprise.context.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class ResourcesBean implements Serializable {
+
+    @EJB
+    private CustomerManagerLocal cm;
+
+    @EJB
+    private OrderManagerLocal om;
 
     @EJB
     private GetManagerLocal gm;
@@ -33,8 +41,16 @@ public class ResourcesBean implements Serializable {
     public List<String> getProduct() {
         return gm.getProductList();
     }
-     
+
     public UserType[] getUserTypes() {
         return UserType.values();
+    }
+
+    public Long getCustomersCount() {
+        return cm.getCustomersCount();
+    }
+
+    public Long getOrdersCount() {
+        return om.getOrdersCount();
     }
 }

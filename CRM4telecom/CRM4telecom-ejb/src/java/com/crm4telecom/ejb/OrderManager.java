@@ -3,6 +3,7 @@ package com.crm4telecom.ejb;
 import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderStep;
+import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
@@ -161,6 +162,13 @@ public class OrderManager implements OrderManagerLocal {
             log.info("Make query in Order table " + sqlQuery);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public Long getOrdersCount() {
+        String sqlQuery = "SELECT COUNT(c) FROM Orders c";
+        Query query = em.createQuery(sqlQuery, Order.class);
+        return (Long) query.getSingleResult();
     }
 
     @Override
