@@ -28,6 +28,7 @@ public final class AuthenticationFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String login = (String) req.getSession().getAttribute("login");
+        String userType = (String) req.getSession().getAttribute("userType");
         StringBuffer requestURL = req.getRequestURL();
         if (req.getQueryString() != null) {
             requestURL.append("?").append(req.getQueryString());
@@ -44,7 +45,7 @@ public final class AuthenticationFilter implements Filter {
             }
         } else {
             if (login != null) {
-                if (path.contains("user") && !login.equals("admin")) {
+                if (path.contains("user") && !userType.equals("ADMIN")) {
                     res.sendRedirect("/CRM4telecom/login.xhtml");
                 } else {
                     if (um.getlogins().contains(login)) {

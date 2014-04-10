@@ -53,6 +53,7 @@ public class UserBean implements Serializable {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);
             session.setAttribute("login", uname);
+            session.setAttribute("userType", user.getType().name());
             return "/content/index.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Username or password is incorrect", "Please Try Again"));
