@@ -97,7 +97,28 @@ public class OrderManager implements OrderManagerLocal {
                                 sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
                             }
                         } else {
-                            sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                            if (check.compareTo("employeeId") == 0) {
+                                Pattern p = Pattern.compile("[0-9]{1,}");
+                                Pattern p1 = Pattern.compile("#[0-9]{1,}");
+                                Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
+                                Matcher m2 = p2.matcher(val.get(0));
+                                Matcher m1 = p1.matcher(val.get(0));
+                                Matcher m = p.matcher(val.get(0));
+
+                                if (m2.matches()) {
+                                    sqlQuery += " LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                }
+
+                                if (m.matches()) {
+                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                                }
+                                if (m1.matches()) {
+                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
+                                }
+
+                            } else {
+                                sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                            }
                         }
                     } else {
                         if (check.compareTo("fromDate") == 0) {
@@ -187,7 +208,27 @@ public class OrderManager implements OrderManagerLocal {
                                 sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
                             }
                         } else {
-                            sqlQuery += " LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                            if (check.compareTo("employeeId") == 0) {
+                                Pattern p = Pattern.compile("[0-9]{1,}");
+                                Pattern p1 = Pattern.compile("#[0-9]{1,}");
+                                Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
+                                Matcher m2 = p2.matcher(val.get(0));
+                                Matcher m1 = p1.matcher(val.get(0));
+                                Matcher m = p.matcher(val.get(0));
+
+                                if (m2.matches()) {
+                                    sqlQuery += " LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                }
+
+                                if (m.matches()) {
+                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0) + "') AND";
+                                }
+                                if (m1.matches()) {
+                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
+                                }
+                            } else {
+                                sqlQuery += " LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
+                            }
                         }
                     } else {
                         if (check.compareTo("fromDate") == 0) {
@@ -258,10 +299,10 @@ public class OrderManager implements OrderManagerLocal {
             // update status
             order.setStatus(order.getProcessStep().getStatus());
             em.merge(order);
-            
+
             if (nextStep != order.getProcessStep()) {
                 OrderProcessing newStep = new OrderProcessing();
-                
+
                 // create new step in OrderProcessing
                 newStep.setOrderId(order.getOrderId());
                 newStep.setStartDate(new Date());
