@@ -13,9 +13,9 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true"/>
+        <p:menuitem value="List of Customers" immediate="true" onclick="location.reload();" />
     </ui:define>
-    <a href="customer_info.xhtml"></a>
+
     <ui:define name="header">
         <h1>
             <h:outputText value="List of Customers" />

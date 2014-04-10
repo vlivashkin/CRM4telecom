@@ -84,6 +84,11 @@ public class OrderInfoBean implements Serializable {
         helper.redirect("order_info", "id", order.getOrderId().toString());
     }
 
+    public void toCustomer() {
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("customer_info", "id", order.getCustomer().getCustomerId().toString());
+    }
+        
     public List<String> completeOrder(String order) {
         return om.completeOrder(order);
     }

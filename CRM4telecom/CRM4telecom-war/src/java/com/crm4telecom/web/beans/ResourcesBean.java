@@ -9,10 +9,10 @@ import java.util.List;
 import javax.ejb.EJB;
 
 public class ResourcesBean implements Serializable {
-    
+
     @EJB
     private GetManagerLocal gm;
-    
+
     public OrderPriority[] getPriorities() {
         return OrderPriority.values();
     }
@@ -28,5 +28,4 @@ public class ResourcesBean implements Serializable {
     public List<String> getProduct() {
         return gm.getProductList();
     }
-
 }

@@ -121,8 +121,8 @@ pre{
 }
 
 .index-button {
-    width: 150px;
-    font-size: 17px !important;
+    width: 145px;
+    font-size: 16px !important;
 }
 
 table div.ui-selectcheckboxmenu {
@@ -143,4 +143,9 @@ table div.ui-selectcheckboxmenu {
 
 .ui-panel-content {
     padding: 0 !important;
+}
+
+button {
+    margin-left: 5px;
+    margin-right: 5px;
 }

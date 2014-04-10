@@ -15,9 +15,9 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Orders" action="order_list?faces-redirect=true" /> 
+        <p:menuitem value="List of Orders" immediate="true" action="order_list?faces-redirect=true" /> 
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Order #{orderInfoBean.order}" action="order_info?faces-redirect=true" /> 
+        <p:menuitem value="Order #{orderInfoBean.order}" immediate="true" onclick="location.reload();" />
     </ui:define>
 
     <ui:define name="header">
@@ -56,7 +56,7 @@
                                 <h:outputText value="#{orderInfoBean.order.employee}"/>
 
                                 <h:outputLabel value="Customer:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.customer}"/>
+                                <h:commandLink value="#{orderInfoBean.order.customer}" action="#{orderInfoBean.toCustomer}"/>
 
                                 <h:outputLabel value="Product:" style="float: right"/>
                                 <h:outputText value="#{orderInfoBean.order.product}"/>

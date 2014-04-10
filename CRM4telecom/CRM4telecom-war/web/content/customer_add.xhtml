@@ -13,9 +13,9 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" action="customer_list?faces-redirect=true" />
+        <p:menuitem value="List of Customers" immediate="true" action="customer_list?faces-redirect=true" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Add new Customer" action="customer_add?faces-redirect=true" />
+        <p:menuitem value="Add new Customer" immediate="true" onclick="location.reload();" />
     </ui:define>
 
     <ui:define name="header">
