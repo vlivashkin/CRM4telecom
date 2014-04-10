@@ -6,12 +6,12 @@ import java.io.StringWriter;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
+import java.util.concurrent.TimeoutException;
 import javax.mail.*;
 import javax.mail.internet.*;
 import org.apache.log4j.Logger;
@@ -24,113 +24,47 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class MailManager {
 
-    private static ScheduledExecutorService service = null;
-    private final Logger log = Logger.getLogger(getClass().getName());
-    private final String from = "crm4telecom@gmail.com";
-    private final String password = "crm4telecom2Q";
-    private FutureArray arrf = null;
-    private final Boolean auth = true;
-    private final Boolean startTLS = true;
-    private final String host = "smtp.gmail.com";
-    private final Integer port = 587;
+    private final static int poolSize = 10;
+    private final static ScheduledExecutorService service = Executors.newScheduledThreadPool(poolSize);
+    private final static Logger log = Logger.getLogger(MailManager.class);
+    private final static String from = "crm4telecom@gmail.com";
+    private final static String password = "crm4telecom2Q";
+    private final static Boolean auth = true;
+    private final static Boolean startTLS = true;
+    private final static String host = "smtp.gmail.com";
+    private final static Integer port = 587;
+    private final static int maxAttemp = 3;
+    private volatile Future<Boolean> gg;
+    private static String email;
+    private static String text;
+    private static String subject;
+
+    static StringWriter writer;
 
     public void statusChangedEmail(final Order order, List<OrderProcessing> steps) throws MessagingException {
-        final String subject = "Order #" + order.getOrderId();
-
+        subject = "Order #" + order.getOrderId();
+        email = order.getCustomer().getEmail();
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.setProperty("directive.set.null.allowed", true);
         ve.init();
         Template t = ve.getTemplate("com/crm4telecom/mail/mailtemplate.vm");
-
         VelocityContext context = new VelocityContext();
         context.put("firstName", order.getCustomer().getFirstName());
         context.put("lastName", order.getCustomer().getLastName());
         context.put("orderId", order.getOrderId());
         context.put("status", order.getStatus());
         context.put("steps", steps);
-        final StringWriter writer = new StringWriter();
+        writer = new StringWriter();
         t.merge(context, writer);
-        if (service == null) {
-            service = Executors.newScheduledThreadPool(6);
-        }
-        if (arrf == null) {
-
-            arrf = new FutureArray();
-            arrf.arrfuture[0] = service.scheduleAtFixedRate(new Runnable() {
-
-                @Override
-                public void run() {
-                    //    while (true) {
-                    int i = 1;
-                    while (i < arrf.arrfuture.length) {
-                        if (arrf.arrfuture[i] != null) {
-                            try {
-                                boolean flag = (boolean) arrf.arrfuture[i].get(5, TimeUnit.SECONDS);
-                                if (flag == true) {
-                                    if (log.isInfoEnabled()) {
-                                        log.info("Send message because changing order : " + arrf.subject[i] + " to " + arrf.email[i]);
-                                    }
-                                    arrf.arrfuture[i] = null;
-                                }
-
-                            } catch (Exception ex) {
-                                if (arrf.attempt[i] != 3) {
-                                    if (log.isEnabledFor(Priority.WARN)) {
-                                        log.warn("Can't send email attempt :" + (arrf.attempt[i] + 1) + ex.toString());
-                                    }
-                                    final int j = i;
-                                    arrf.arrfuture[i] = service.submit(new Callable<Boolean>() {
-                                        @Override
-                                        public Boolean call() throws Exception {
-                                            MailManager m = new MailManager();
-                                            m.send(arrf.email[j], arrf.subject[j], arrf.text[j]);
-                                            return true;
-                                        }
-                                    }
-                                    );
-
-                                    arrf.attempt[i]++;
-                                } else {
-                                    if (log.isEnabledFor(Priority.ERROR)) {
-                                        log.error("Can't send email. Address : " + arrf.email[i] + " order" + arrf.subject[i]);
-                                    }
-                                    arrf.arrfuture[i] = null;
-                                }
-                            }
-                        }
-                        i++;
-                    }
-                }
-            }, 0, 2, TimeUnit.SECONDS
-            );
-        }
-        Future<Boolean> f = service.schedule(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                MailManager m = new MailManager();
-                m.send(order.getCustomer().getEmail(), subject, writer.toString());
-                return true;
-            }
-        }, 100, TimeUnit.MILLISECONDS
-        );
-        int i = 1;
-        boolean flag = true;
-        while (i < arrf.arrfuture.length && flag) {
-            if (arrf.arrfuture[i] == null) {
-                arrf.arrfuture[i] = f;
-                arrf.email[i] = order.getCustomer().getEmail();
-                arrf.subject[i] = subject;
-                arrf.text[i] = writer.toString();
-                arrf.attempt[i] = 0;
-                flag = false;
-            }
-            i++;
-        }
+        service.schedule(new SendChecker(
+                service.schedule(new EmailSender(0), 0, TimeUnit.MILLISECONDS)),
+                100, TimeUnit.MILLISECONDS);
     }
 
-    public void send(String to, String subject, String text) throws MessagingException {
+    public static boolean send(String to, String subject, String text) throws Exception {
+
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.auth", auth.toString());
         properties.setProperty("mail.smtp.starttls.enable", startTLS.toString());
@@ -153,7 +87,8 @@ public class MailManager {
         message.setContent(text, "text/html");
         Transport.send(message);
 
-     //   throw new MessagingException();
+        //   throw new MessagingException();
+        return true;
     }
 
     private static class FutureArray {
@@ -163,5 +98,64 @@ public class MailManager {
         public String[] text = new String[6];
         public String[] subject = new String[6];
         public int[] attempt = new int[6];
+    }
+
+    private static class EmailSender implements Callable {
+
+        private final int attemp;
+
+        public EmailSender(int attemp) {
+            this.attemp = attemp;
+        }
+
+        @Override
+        public ScheduledFuture call() throws MessagingException, Exception {
+            boolean sent = send(email, subject, writer.toString());
+
+            if (sent) {
+                return null;
+            }
+            if (attemp >= maxAttemp) {
+                throw new RuntimeException("Amount of attemps more than maxAttemp");
+            }
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("Can't send email attemp : " + (attemp + 1));
+            }
+            return service.schedule(new SendChecker(
+                    service.schedule(new EmailSender(attemp + 1), 100, TimeUnit.MILLISECONDS)),
+                    3000, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private static class SendChecker implements Runnable {
+
+        private final Future<Boolean> itemToCheck;
+
+        public SendChecker(Future<Boolean> itemToCheck) {
+            this.itemToCheck = itemToCheck;
+        }
+
+        @Override
+        public void run() {
+            try {
+                boolean b = false;
+                if (b = itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
+                    if (log.isInfoEnabled()) {
+                        log.info("Send message because changing order : " + subject + " to " + email);
+                    }
+                }
+            } catch (InterruptedException ex) {
+                if (log.isEnabledFor(Priority.ERROR)) {
+                    log.error("Can't check sending email because process was interrupted");
+                }
+            } catch (ExecutionException ex) {
+                if (log.isEnabledFor(Priority.ERROR)) {
+                    log.error("Cant send email." + ex.toString());
+                }
+            } catch (TimeoutException ex) {
+                service.schedule(new SendChecker(itemToCheck), 300, TimeUnit.MILLISECONDS);
+            }
+        }
+
     }
 }
