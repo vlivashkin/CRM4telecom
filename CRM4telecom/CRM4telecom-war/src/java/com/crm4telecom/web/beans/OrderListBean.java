@@ -10,12 +10,12 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 
 @ManagedBean
-@RequestScoped
-public class OrderListBean implements Serializable, ISearchBean<Order> {
+@ViewScoped
+public class OrderListBean implements Serializable, IListBean<Order> {
 
     @EJB
     private OrderManagerLocal om;

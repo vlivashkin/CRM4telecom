@@ -1,10 +1,11 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.UserManagerLocal;
+import com.crm4telecom.enums.UserType;
+import com.crm4telecom.jpa.Users;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -17,18 +18,16 @@ import org.apache.log4j.Logger;
 @SessionScoped
 public class UserBean implements Serializable {
 
+    @EJB
+    private UserManagerLocal um;
+
     private final Logger log = Logger.getLogger(getClass().getName());
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
-
-    @EJB
-    private UserManagerLocal um;
-
-    @PostConstruct
-    public void init() {
-    }
-
+    
+    private Users user;
+    
     public String getUname() {
         return uname;
     }
@@ -46,11 +45,11 @@ public class UserBean implements Serializable {
     }
 
     public String login() throws ServletException {
-        boolean result = um.login(uname, password);
+        user = um.login(uname, password);
         if (log.isInfoEnabled()) {
             log.info("Login to system by login : " + uname);
         }
-        if (result) {
+        if (user != null) {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);
             session.setAttribute("login", uname);
@@ -62,7 +61,7 @@ public class UserBean implements Serializable {
     }
 
     public Boolean getIsAdmin() {
-        return uname.equals("admin");
+        return user.getType().equals(UserType.ADMIN);
     }
 
     public String logout() {

@@ -14,8 +14,8 @@ import org.apache.log4j.Priority;
 @Stateless
 public class UserManager implements UserManagerLocal {
 
-    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
-    
+    private final Logger log = Logger.getLogger(getClass().getName());
+
     @PersistenceContext
     private EntityManager em;
 
@@ -27,14 +27,14 @@ public class UserManager implements UserManagerLocal {
             u.setSalt(l.get(0));
             em.persist(u);
         } catch (NoSuchAlgorithmException ex) {
-            if ( log.isEnabledFor(Priority.ERROR)){
-                  log.error("NO MD5 algoritm  ",ex);
-        }
+            if (log.isEnabledFor(Priority.ERROR)) {
+                log.error("NO MD5 algoritm  ", ex);
+            }
         }
     }
 
     @Override
-    public boolean login(String login, String password) {
+    public Users login(String login, String password) {
         if (login != null && password != null) {
             String sqlQuery = "SELECT u FROM Users u WHERE u.login = :login";
 
@@ -43,14 +43,16 @@ public class UserManager implements UserManagerLocal {
                 Users user = (Users) query.getResultList().get(0);
                 String pass = user.getPassword();
                 String salt = user.getSalt();
-                return pass != null && pass.equals(MD5.getHash(password, salt));
+                if (pass != null && pass.equals(MD5.getHash(password, salt))) {
+                    return user;
+                }
             } else {
-                return false;
+                return null;
             }
         } else {
             throw new IllegalArgumentException("Login and password can't be null");
         }
-
+        return null;
     }
 
     @Override

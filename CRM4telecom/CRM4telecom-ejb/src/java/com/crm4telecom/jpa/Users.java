@@ -1,8 +1,11 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.UserType;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,10 +32,9 @@ public class Users implements Serializable {
     @Size(max = 50)
     @Column(name = "SALT", length = 50)
     private String salt;
-
-    @Size(max = 30)
-    @Column(length = 30)
-    private String type;
+    
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
     @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")
     @ManyToOne
@@ -69,11 +71,11 @@ public class Users implements Serializable {
         this.salt = salt;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 

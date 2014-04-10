@@ -329,7 +329,6 @@ public class OrderManager implements OrderManagerLocal {
                     if (log.isEnabledFor(Priority.ERROR)) {
                         log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
                     }
-
                 }
             }
         }

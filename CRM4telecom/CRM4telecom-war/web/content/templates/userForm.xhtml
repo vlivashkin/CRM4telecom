@@ -26,7 +26,10 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" />  
             <div class="col-sm-4">
-                <p:inputText id="type" value="#{userValidationBean.type}"/>
+                <p:selectOneMenu id="type" value="#{userValidationBean.type}">
+                    <f:selectItems value="#{resourcesBean.userTypes}" var="userType"
+                                   itemValue="#{userType}" itemLabel="#{userType.label}"/>
+                </p:selectOneMenu>
             </div>
             <div class="col-sm-4">
                 <p:message for="type" />
@@ -35,7 +38,8 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee ID:" />  
             <div class="col-sm-4">
-                <p:inputText id="employee" value="#{userValidationBean.employeeid}"/>
+                <p:autoComplete id="employee" value="#{userValidationBean.employee}"   
+                                completeMethod="#{userValidationBean.completeEmployee}"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="employee" />

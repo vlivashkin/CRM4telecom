@@ -1,16 +1,27 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.UserManagerLocal;
+import com.crm4telecom.enums.UserType;
 import com.crm4telecom.jpa.Users;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 @ManagedBean
 @Dependent
 public class UserValidationBean implements Serializable {
+
+    @EJB
+    UserManagerLocal um;
+
+    @EJB
+    GetManagerLocal gm;
 
     @Size(min = 1, max = 30)
     private String login;
@@ -18,53 +29,57 @@ public class UserValidationBean implements Serializable {
     @Size(min = 1, max = 30)
     private String password;
 
-    @Size(min = 1, max = 30)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
     @Size(min = 1, max = 30)
-    private String employeeid;
+    private String employee;
 
-    @EJB
-    UserManagerLocal um;
-    private Users u;
+    private Long employeeId;
 
     public String getLogin() {
         return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getEmployeeid() {
-        return employeeid;
     }
 
     public void setLogin(String login) {
         this.login = login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setType(String type) {
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
         this.type = type;
     }
 
-    public void setEmployeeid(String employeeid) {
-        this.employeeid = employeeid;
+    public String getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(String employee) {
+        employeeId = Long.parseLong(employee.substring(1, employee.indexOf(" ")));
+        this.employee = employee;
+    }
+
+    public List<String> completeEmployee(String query) {
+        return gm.completeEmployee(query);
     }
 
     public String create() {
-        u = new Users();
+        Users u = new Users();
         u.setLogin(login);
         u.setPassword(password);
         u.setType(type);
+        u.setEmployeeId(gm.getEmployee(employeeId));
         um.create(u);
         return "index?faces-redirect=true";
     }

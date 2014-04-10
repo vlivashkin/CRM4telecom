@@ -1,9 +1,8 @@
 package com.crm4telecom.web.beans;
 
-import javax.annotation.PostConstruct;
 import org.primefaces.model.LazyDataModel;
 
-public interface ISearchBean<T> {
+public interface IListBean<T> {
 
     public void init();
 

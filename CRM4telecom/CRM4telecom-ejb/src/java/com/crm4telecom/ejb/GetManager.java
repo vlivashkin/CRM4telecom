@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 @Stateless
-public class GetManager implements GetManagerLocal, GetManagerRemote {
+public class GetManager implements GetManagerLocal {
 
     private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
     

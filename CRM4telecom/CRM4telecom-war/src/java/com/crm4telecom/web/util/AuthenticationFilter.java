@@ -10,14 +10,11 @@ import javax.servlet.http.*;
 @WebFilter("/content/*")
 public final class AuthenticationFilter implements Filter {
 
-    private FilterConfig filterConfig = null;
-
     @EJB
     private UserManagerLocal um;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        this.filterConfig = filterConfig;
     }
 
     @Override
@@ -31,7 +28,6 @@ public final class AuthenticationFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String login = (String) req.getSession().getAttribute("login");
-        String password = (String) req.getSession().getAttribute("password");
         StringBuffer requestURL = req.getRequestURL();
         if (req.getQueryString() != null) {
             requestURL.append("?").append(req.getQueryString());

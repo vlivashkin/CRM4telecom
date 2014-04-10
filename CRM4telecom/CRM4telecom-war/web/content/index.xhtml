@@ -25,19 +25,32 @@
     </ui:define>
 
     <ui:define name="content">
-        <center>
-            <h:form>
-                <h1>Common actions</h1>
+        <h1>Common info</h1>
+        <p style="font-family: Courier New">
+            Number of customers:<br/>
+            Number of orders:<br/>
+            bla bla<br/>
+            bla bla<br/>
+            bla bla<br/>
+        </p>
 
+        <h1>Common actions</h1>
+        <h:form>
+            <center>
                 <p:commandButton value="Customers" styleClass="index-button" action="customer_list?faces-redirect=true"/>
                 <p:commandButton value="Add customer" styleClass="index-button" action="customer_add?faces-redirect=true"/>
                 <p:commandButton value="Orders" styleClass="index-button" action="order_list?faces-redirect=true"/>
-
-                <c:if test="#{userBean.isAdmin}">
-                    <h1>Admin actions</h1>
+            </center>
+        </h:form>
+        <c:if test="#{userBean.isAdmin}">
+            <h1>Admin actions</h1>
+            <h:form>
+                <center>
                     <p:commandButton value="Add user" styleClass="index-button" action="user_add?faces-redirect=true" />
-                </c:if>
+                </center>
             </h:form>
-        </center>
+        </c:if>
+
+
     </ui:define>
 </ui:composition>

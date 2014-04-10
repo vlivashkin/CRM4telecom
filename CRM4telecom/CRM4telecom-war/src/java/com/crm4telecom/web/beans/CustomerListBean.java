@@ -5,18 +5,16 @@ import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 
 @ManagedBean
-@RequestScoped
-public class CustomerListBean implements Serializable, ISearchBean<Customer> {
+@ViewScoped
+public class CustomerListBean implements Serializable, IListBean<Customer> {
 
     @EJB
     private CustomerManagerLocal cm;

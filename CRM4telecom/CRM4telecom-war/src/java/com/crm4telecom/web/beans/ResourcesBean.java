@@ -4,10 +4,15 @@ import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderType;
+import com.crm4telecom.enums.UserType;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 
+@ManagedBean
+@RequestScoped
 public class ResourcesBean implements Serializable {
 
     @EJB
@@ -27,5 +32,9 @@ public class ResourcesBean implements Serializable {
 
     public List<String> getProduct() {
         return gm.getProductList();
+    }
+     
+    public UserType[] getUserTypes() {
+        return UserType.values();
     }
 }

@@ -45,7 +45,7 @@
             <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee:" />  
             <div class="col-sm-4">
                 <p:autoComplete id="employee" value="#{orderInfoBean.ov.employee}"   
-                                completeMethod="#{orderValidationBean.completeEmployee}"/>  
+                                completeMethod="#{orderInfoBean.ov.completeEmployee}"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="employee" />
