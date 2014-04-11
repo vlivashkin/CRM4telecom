@@ -1,0 +1,54 @@
+<ui:composition template="./mainTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="metadata">
+
+    </ui:define>
+
+    <ui:define name="title">
+        CRM4Telecom | Info
+    </ui:define>
+
+    <ui:define name="navbar">
+
+    </ui:define>
+
+    <ui:define name="header">
+
+    </ui:define> 
+
+    <ui:define name="content">
+        <p:tabView id="tabPanel">
+            <p:tab title="Info">
+                <div class="row" style="height: auto; position: relative">
+                    <div class="col-md-6" style="display: table-cell; vertical-align: middle; height: 100%">
+                        <h:form id="leftcolumn">
+                            <ui:insert name="leftcolumn" />
+                        </h:form>
+                    </div>
+                    <div class="col-md-6" style="height: 100%">
+                        <h:form id="rightcolumn">
+                            <ui:insert name="rightcolumn" />
+                        </h:form>
+                    </div>
+                </div>
+
+                <h:form id="infofooter">
+                    <ui:insert name="infofooter" />
+                </h:form>
+            </p:tab>
+            <p:tab title="Edit">
+                <h:form id="editform">
+                    <ui:insert name="editform" />
+                </h:form>
+            </p:tab>
+        </p:tabView>
+
+        <h:form id="footer">
+            <ui:insert name="footer" />
+        </h:form>
+    </ui:define>
+</ui:composition>

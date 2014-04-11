@@ -17,6 +17,8 @@ import org.primefaces.model.LazyDataModel;
 @ViewScoped
 public class OrderListBean implements Serializable, IListBean<Order> {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private OrderManagerLocal om;
 

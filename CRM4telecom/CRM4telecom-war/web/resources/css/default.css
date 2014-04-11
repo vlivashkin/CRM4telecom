@@ -149,3 +149,10 @@ button {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.statistic {
+    font-family: Courier New;
+    -webkit-column-count:3; /* Chrome, Safari, Opera */
+    -moz-column-count:3; /* Firefox */
+    column-count:3;
+}

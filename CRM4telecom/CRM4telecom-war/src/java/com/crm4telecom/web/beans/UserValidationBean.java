@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 @Dependent
 public class UserValidationBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     UserManagerLocal um;
 

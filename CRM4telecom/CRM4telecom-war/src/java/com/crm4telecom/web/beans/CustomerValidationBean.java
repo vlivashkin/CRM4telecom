@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @Dependent
 public class CustomerValidationBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Size(min = 1, max = 30)
     String firstName;
 

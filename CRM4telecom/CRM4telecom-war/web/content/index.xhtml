@@ -1,4 +1,4 @@
-<ui:composition template="./templates/masterLayout.xhtml"
+<ui:composition template="./templates/mainTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -26,13 +26,13 @@
 
     <ui:define name="content">
         <h1>Common info</h1>
-        <p style="font-family: Courier New">
+        <div class="container statistic">
             Number of customers: #{resourcesBean.customersCount}<br/>
             Number of orders: #{resourcesBean.ordersCount}<br/>
             bla bla<br/>
             bla bla<br/>
             bla bla<br/>
-        </p>
+        </div>    
 
         <h1>Common actions</h1>
         <h:form>
@@ -40,6 +40,7 @@
                 <p:commandButton value="Customers" styleClass="index-button" action="customer_list?faces-redirect=true"/>
                 <p:commandButton value="Add customer" styleClass="index-button" action="customer_add?faces-redirect=true"/>
                 <p:commandButton value="Orders" styleClass="index-button" action="order_list?faces-redirect=true"/>
+                <p:commandButton value="Add order" styleClass="index-button" action="order_add?faces-redirect=true"/>
             </center>
         </h:form>
         <c:if test="#{userBean.isAdmin}">

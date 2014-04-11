@@ -17,6 +17,8 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ResourcesBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private CustomerManagerLocal cm;
 

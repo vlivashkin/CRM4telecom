@@ -18,6 +18,8 @@ import javax.persistence.Enumerated;
 @Dependent
 public class OrderValidationBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private CustomerManagerLocal cm;
 

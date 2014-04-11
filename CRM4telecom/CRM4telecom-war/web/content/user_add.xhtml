@@ -1,4 +1,4 @@
-<ui:composition template="./templates/masterLayout.xhtml"
+<ui:composition template="./templates/mainTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -26,7 +26,7 @@
         <h:form id="editform">
             <p:messages />
 
-            <ui:include src="./templates/userForm.xhtml" />
+            <ui:include src="./frames/userForm.xhtml" />
 
             <p:commandButton value="Save" icon="ui-icon-check" action="#{userValidationBean.create()}" />
             <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />

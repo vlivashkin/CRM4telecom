@@ -16,6 +16,8 @@ import org.primefaces.model.LazyDataModel;
 @ViewScoped
 public class CustomerListBean implements Serializable, IListBean<Customer> {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private CustomerManagerLocal cm;
 

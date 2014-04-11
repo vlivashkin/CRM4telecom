@@ -1,4 +1,4 @@
-<ui:composition template="./templates/masterLayout.xhtml"
+<ui:composition template="./templates/infoTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -9,7 +9,7 @@
             <f:viewParam name="id" value="#{orderInfoBean.id}" />
         </f:metadata>
     </ui:define>
-    
+
     <ui:define name="title">
         CRM4telecom | Order #{orderInfoBean.order}
     </ui:define>
@@ -29,108 +29,95 @@
         </h1>
     </ui:define>
 
-    <ui:define name="content">
-         <f:metadata>
-            <f:viewParam name="id" value="#{orderInfoBean.order}" />
-        </f:metadata>
-        
-        <p:tabView id="tabPanel">
-            <p:tab title="Info">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h:form>
-                            <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-                                <h:outputLabel value="Status:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.status.label}"/>
+    <ui:define name="leftcolumn">
+        <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
+            <h:outputLabel value="Status:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.status.label}"/>
 
-                                <h:outputLabel value="Date:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.orderDate}"/>
+            <h:outputLabel value="Date:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.orderDate}"/>
 
-                                <h:outputLabel value="Type:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.orderType.label}"/>
+            <h:outputLabel value="Type:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.orderType.label}"/>
 
-                                <h:outputLabel value="Priority:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.priority.label}"/>
+            <h:outputLabel value="Priority:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.priority.label}"/>
 
-                                <h:outputLabel value="Employee:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.employee}"/>
+            <h:outputLabel value="Employee:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.employee}"/>
 
-                                <h:outputLabel value="Customer:" style="float: right"/>
-                                <h:commandLink value="#{orderInfoBean.order.customer}" action="#{orderInfoBean.toCustomer}"/>
+            <h:outputLabel value="Customer:" style="float: right"/>
+            <h:commandLink value="#{orderInfoBean.order.customer}" action="#{orderInfoBean.toCustomer}"/>
 
-                                <h:outputLabel value="Product:" style="float: right"/>
-                                <h:outputText value="#{orderInfoBean.order.product}"/>
+            <h:outputLabel value="Product:" style="float: right"/>
+            <h:outputText value="#{orderInfoBean.order.product}"/>
 
-                                <h:outputLabel value="Tech support:" style="float: right"/>
-                                <h:panelGroup>
-                                    <p:selectBooleanCheckbox id="techSupport" value="#{orderInfoBean.order.techSupport}" disabled="true"/>
-                                    <h:outputText value=" #{orderInfoBean.order.techSupport}"/>
-                                </h:panelGroup>                                            
-                            </p:panelGrid>   
-                        </h:form>
-                    </div>
-                    <div class="col-md-6">
-                        <h:form id="statusform">
-                            <p:dataTable value="#{orderInfoBean.orderSteps}" var="orderProcessing">
-                                <f:facet name="header">
-                                    Process:
-                                </f:facet>
+            <h:outputLabel value="Tech support:" style="float: right"/>
+            <h:panelGroup>
+                <p:selectBooleanCheckbox id="techSupport" value="#{orderInfoBean.order.techSupport}" disabled="true"/>
+                <h:outputText value=" #{orderInfoBean.order.techSupport}"/>
+            </h:panelGroup>                                            
+        </p:panelGrid>   
+    </ui:define>
 
-                                <p:column headerText="Step Name">
-                                    <h:outputText value="#{orderProcessing.stepEvent.label}"/>
-                                </p:column>
+    <ui:define name="rightcolumn">
+        <p:dataTable value="#{orderInfoBean.orderSteps}" var="orderProcessing">
+            <f:facet name="header">
+                Process:
+            </f:facet>
 
-                                <p:column headerText="Description">
-                                    <h:outputText value="#{orderProcessing.description}"/>
-                                </p:column> 
+            <p:column headerText="Step Name">
+                <h:outputText value="#{orderProcessing.stepEvent.label}"/>
+            </p:column>
 
-                                <p:column headerText="Start Date">
-                                    <h:outputText value="#{orderProcessing.startDateShort}"/>
-                                </p:column>   
+            <p:column headerText="Description">
+                <h:outputText value="#{orderProcessing.description}"/>
+            </p:column> 
 
-                                <p:column headerText="End Date">
-                                    <h:outputText value="#{orderProcessing.endDateShort}"/>
-                                </p:column>
+            <p:column headerText="Start Date">
+                <h:outputText value="#{orderProcessing.startDateShort}"/>
+            </p:column>   
 
-                                <f:facet name="footer">
-                                    <p:commandButton value="To next step" update=":tabPanel:statusform :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
-                                    <p:commandButton value="Cancel Order" update=":tabPanel:statusform :headerstatus" action="#{orderInfoBean.cancelOrder}" />
-                                </f:facet>
-                            </p:dataTable>
-                        </h:form>
-                    </div>
-                </div>
-            </p:tab>
-            <p:tab title="Edit">
-                <h:form id="editform">
-                    <p:messages />  
+            <p:column headerText="End Date">
+                <h:outputText value="#{orderProcessing.endDateShort}"/>
+            </p:column>
 
-                    <ui:include src="./templates/orderForm.xhtml" />
+            <f:facet name="footer">
+                <p:commandButton value="To next step" update=":tabPanel:rightcolumn :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                <p:commandButton value="Cancel Order" update=":tabPanel:rightcolumn :headerstatus" action="#{orderInfoBean.cancelOrder}" />
+            </f:facet>
+        </p:dataTable>
+    </ui:define>
 
-                    <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderInfoBean.modify()}" />
-                    <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
-                        <f:ajax render="editform" />
-                    </p:commandButton>
-                </h:form>
-            </p:tab>       
-        </p:tabView>
+    <ui:define name="infofooter">
 
-        <h:form id="comments">
-            <p:dataGrid var="comment" value="#{orderInfoBean.comment.comments}" columns="1"  
-                        rows="5" paginator="true"  
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                        rowsPerPageTemplate="5,10,15">  
+    </ui:define>
 
-                <p:panel header="#{comment.owner} commented at #{comment.date}" style="text-align:center">  
-                    <pre>#{comment.text}</pre>  
-                </p:panel> 
+    <ui:define name="editform">
+        <p:messages />  
 
-                <f:facet name="footer">  
-                    <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" placeholder="Type your comment here..." style="width: calc(100% - 110px)"/> 
-                    <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":comments" style="float: right"/>
-                </f:facet>
-            </p:dataGrid>  
-        </h:form>
+        <ui:include src="./frames/orderForm.xhtml" />
 
+        <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderInfoBean.modify()}" />
+        <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+            <f:ajax render="editform" />
+        </p:commandButton>
+    </ui:define>
+
+    <ui:define name="footer">
+        <p:dataGrid var="comment" value="#{orderInfoBean.comment.comments}" columns="1"  
+                    rows="5" paginator="true"  
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                    rowsPerPageTemplate="5,10,15">  
+
+            <p:panel header="#{comment.owner} commented at #{comment.date}" style="text-align:center">  
+                <pre>#{comment.text}</pre>  
+            </p:panel> 
+
+            <f:facet name="footer">  
+                <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" placeholder="Type your comment here..." style="width: calc(100% - 110px)"/> 
+                <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":footer" style="float: right"/>
+            </f:facet>
+        </p:dataGrid>   
     </ui:define>
 </ui:composition>

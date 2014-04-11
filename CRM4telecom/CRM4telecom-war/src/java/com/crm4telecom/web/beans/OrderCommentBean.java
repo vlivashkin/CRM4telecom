@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 @Dependent
 public class OrderCommentBean implements Serializable {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private static final long serialVersionUID = 1L;
 
     @EJB
     private OrderManagerLocal om;
@@ -25,6 +25,8 @@ public class OrderCommentBean implements Serializable {
     private List<Comment> comments;
     private String text;
 
+    private final Logger log = Logger.getLogger(getClass().getName());
+    
     public void init(Order order) {
         this.order = order;
         if (order != null && order.getComments() != null) {

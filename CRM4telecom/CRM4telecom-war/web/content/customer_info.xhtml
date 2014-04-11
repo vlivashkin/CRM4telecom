@@ -1,4 +1,4 @@
-<ui:composition template="./templates/masterLayout.xhtml"
+<ui:composition template="./templates/infoTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -29,152 +29,149 @@
         </h1>
     </ui:define>
 
-    <ui:define name="content">
-        <p:tabView>
-            <p:tab title="Info">
-                <h:form id="infoform">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-                                <h:outputLabel value="First name:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.firstName}"/>
+    <ui:define name="leftcolumn">
+        <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
+            <h:outputLabel value="First name:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.firstName}"/>
 
-                                <h:outputLabel value="Last name:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.lastName}"/>
+            <h:outputLabel value="Last name:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.lastName}"/>
 
-                                <h:outputLabel value="Status:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.status.label}"/>
+            <h:outputLabel value="Status:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.status.label}"/>
 
-                                <h:outputLabel value="E-mail:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.email}"/>
+            <h:outputLabel value="E-mail:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.email}"/>
 
-                                <h:outputLabel value="Street:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.street}"/>
+            <h:outputLabel value="Street:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.street}"/>
 
-                                <h:outputLabel value="Building:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.building}"/>
+            <h:outputLabel value="Building:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.building}"/>
 
-                                <h:outputLabel value="Flat:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.flat}"/>
+            <h:outputLabel value="Flat:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.flat}"/>
 
-                                <h:outputLabel value="Phone number:" style="float: right"/>
-                                <h:outputText value="#{customerInfoBean.customer.phoneNumber}"/>
+            <h:outputLabel value="Phone number:" style="float: right"/>
+            <h:outputText value="#{customerInfoBean.customer.phoneNumber}"/>
 
-                                <h:outputLabel value="Balance:" style="float: right"/>
-                                <h:panelGroup>
-                                    <h:outputText value="#{customerInfoBean.customer.balance}"/>
-                                    <p:commandButton value="Synchronize" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"/> 
-                                    <p:commandButton value="Update" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.updBalance()}" >
-                                        <f:ajax render="infoform" />
-                                    </p:commandButton>
-                                </h:panelGroup>
+            <h:outputLabel value="Balance:" style="float: right"/>
+            <h:panelGroup>
+                <h:outputText value="#{customerInfoBean.customer.balance}"/>
+                <p:commandButton value="Synchronize" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
+                    <f:ajax render="leftcolumn" />
+                </p:commandButton>
+                <p:commandButton value="Update" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.updBalance()}" >
+                    <f:ajax render="leftcolumn" />
+                </p:commandButton>
+            </h:panelGroup>
+        </p:panelGrid>
+    </ui:define>
+    
+    <ui:define name="rightcolumn">
+        <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
+            <f:facet name="header">
+                Phone numbers
+            </f:facet>
 
-                            </p:panelGrid>     
-                        </div>
-                        <div class="col-md-6">
-                            <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
-                                <f:facet name="header">
-                                    Phone numbers
-                                </f:facet>
+            <p:column headerText="Phone number">
+                <h:outputText value="#{phone.phoneNumber}"/>
+            </p:column>
 
-                                <p:column headerText="Phone number">
-                                    <h:outputText value="#{phone.phoneNumber}"/>
-                                </p:column>
+            <p:column headerText="Status">
+                <h:outputText value="#{phone.status}"/>
+            </p:column>
+        </p:dataTable>
 
-                                <p:column headerText="Status">
-                                    <h:outputText value="#{phone.status}"/>
-                                </p:column>
-                            </p:dataTable>
+        <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
+            <f:facet name="header">
+                Statical IP
+            </f:facet>
 
-                            <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
-                                <f:facet name="header">
-                                    Statical IP
-                                </f:facet>
+            <p:column headerText="Statical IP">
+                <f:facet name="header">IP</f:facet>
+                <h:outputText value="#{ip.ip}"/>
+            </p:column>
 
-                                <p:column headerText="Statical IP">
-                                    <f:facet name="header">IP</f:facet>
-                                    <h:outputText value="#{ip.ip}"/>
-                                </p:column>
+            <p:column headerText="Statical IP">
+                <f:facet name="header">Status</f:facet>
+                <h:outputText value="#{ip.status}"/>
+            </p:column>
+        </p:dataTable>
 
-                                <p:column headerText="Statical IP">
-                                    <f:facet name="header">Status</f:facet>
-                                    <h:outputText value="#{ip.status}"/>
-                                </p:column>
-                            </p:dataTable>
+        <p:dataTable value="#{customerInfoBean.markets}" var="market">
+            <f:facet name="header">
+                Markets
+            </f:facet>
 
-                            <p:dataTable value="#{customerInfoBean.markets}" var="market">
-                                <f:facet name="header">
-                                    Markets
-                                </f:facet>
+            <p:column>
+                <f:facet name="header">ID</f:facet>
+                <h:outputText value="#{market.marketId}"/>
+            </p:column>
 
-                                <p:column>
-                                    <f:facet name="header">ID</f:facet>
-                                    <h:outputText value="#{market.marketId}"/>
-                                </p:column>
+            <p:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText value="#{market.name}"/>
+            </p:column>     
 
-                                <p:column>
-                                    <f:facet name="header">Name</f:facet>
-                                    <h:outputText value="#{market.name}"/>
-                                </p:column>     
+            <p:column>
+                <f:facet name="header">Description</f:facet>
+                <h:outputText value="#{market.description}"/>
+            </p:column> 
+        </p:dataTable>
+    </ui:define>
 
-                                <p:column>
-                                    <f:facet name="header">Description</f:facet>
-                                    <h:outputText value="#{market.description}"/>
-                                </p:column> 
-                            </p:dataTable>
-                        </div>
-                    </div>
+    <ui:define name="infofooter">
+        <p:dataTable value="#{customerInfoBean.customer.ordersList}" var="order"
+                     selectionMode="single" selection="#{customerInfoBean.selectedOrder}" rowKey="#{order.orderId}">
+            <f:facet name="header">
+                Orders
+            </f:facet>
 
-                    <p:dataTable value="#{customerInfoBean.customer.ordersList}" var="order"
-                                 selectionMode="single" selection="#{customerInfoBean.selectedOrder}" rowKey="#{order.orderId}">
-                        <f:facet name="header">
-                            Orders
-                        </f:facet>
+            <p:ajax event="rowSelect" listener="#{customerInfoBean.toSelectedOrder}" />
 
-                        <p:ajax event="rowSelect" listener="#{customerInfoBean.toSelectedOrder}" />
+            <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
+                <h:outputText value="#{order.orderId}" />  
+            </p:column>  
 
-                        <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
-                            <h:outputText value="#{order.orderId}" />  
-                        </p:column>  
+            <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
+                <h:outputText value="#{order.orderDate}" />  
+            </p:column>  
 
-                        <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
-                            <h:outputText value="#{order.orderDate}" />  
-                        </p:column>  
+            <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
+                <h:outputText value="#{order.product}" />  
+            </p:column>
 
-                        <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
-                            <h:outputText value="#{order.product}" />  
-                        </p:column>
+            <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
+                <h:outputText value="#{order.priority}" />  
+            </p:column>  
 
-                        <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
-                            <h:outputText value="#{order.priority}" />  
-                        </p:column>  
+            <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
+                <h:outputText value="#{order.status}" />  
+            </p:column> 
 
-                        <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
-                            <h:outputText value="#{order.status}" />  
-                        </p:column> 
+            <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  
+                <h:outputText value="#{order.employee}" />  
+            </p:column>
 
-                        <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  
-                            <h:outputText value="#{order.employee}" />  
-                        </p:column>
+            <f:facet name="footer">  
+                <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerInfoBean.toAddOrder}" />
+            </f:facet>
+        </p:dataTable>
+    </ui:define>
 
-                        <f:facet name="footer">  
-                            <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerInfoBean.toAddOrder}" />
-                        </f:facet>
-                    </p:dataTable>
-                </h:form>
-            </p:tab>
-            <p:tab title="Edit">
-                <h:form id="editform">
-                    <p:messages />  
+    <ui:define name="editform">
+        <p:messages />  
 
-                    <ui:include src="./templates/customerForm.xhtml" />
+        <ui:include src="./frames/customerForm.xhtml" />
 
-                    <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerInfoBean.modify()}" />
-                    <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
-                        <f:ajax render="editform" />
-                    </p:commandButton>
-                </h:form>
-            </p:tab>
-        </p:tabView>
+        <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerInfoBean.modify()}" />
+        <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+            <f:ajax render="editform" />
+        </p:commandButton>
+    </ui:define>
+
+    <ui:define name="footer">
+
     </ui:define>
 </ui:composition>

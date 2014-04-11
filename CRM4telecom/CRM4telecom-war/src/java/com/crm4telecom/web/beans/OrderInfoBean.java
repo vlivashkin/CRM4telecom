@@ -17,6 +17,8 @@ import org.omnifaces.cdi.ViewScoped;
 @ViewScoped
 public class OrderInfoBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private OrderManagerLocal om;
 

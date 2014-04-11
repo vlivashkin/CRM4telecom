@@ -17,12 +17,13 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
-
+    
+    private static final long serialVersionUID = 1L;
+    
     @EJB
     private UserManagerLocal um;
 
     private final Logger log = Logger.getLogger(getClass().getName());
-    private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
     
