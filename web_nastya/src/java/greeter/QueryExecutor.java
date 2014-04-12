@@ -30,7 +30,7 @@ public class QueryExecutor {
         try {
             InitialContext context = new InitialContext();
             DataSource dataSource = (DataSource) context
-                    .lookup("jdbc/c4tRes");
+                    .lookup("crm_datasource");
             connection = dataSource.getConnection();
         } catch (NamingException e) {
             e.printStackTrace();
