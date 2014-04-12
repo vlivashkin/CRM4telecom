@@ -1,4 +1,4 @@
-package greeter;
+package com.crm4telecom.greeter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

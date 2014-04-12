@@ -4,11 +4,11 @@ import com.crm4telecom.ejb.UserManagerLocal;
 import com.crm4telecom.jpa.Users;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class UserListBean implements Serializable {
 

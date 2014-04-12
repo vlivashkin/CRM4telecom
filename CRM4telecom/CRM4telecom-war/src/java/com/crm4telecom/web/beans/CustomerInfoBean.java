@@ -10,12 +10,12 @@ import com.crm4telecom.soapui.Services;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class CustomerInfoBean implements Serializable {
 

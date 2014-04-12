@@ -8,13 +8,13 @@ import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.util.StringUtils;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@ManagedBean
+@Named
 @Dependent
 public class OrderValidationBean implements Serializable {
 

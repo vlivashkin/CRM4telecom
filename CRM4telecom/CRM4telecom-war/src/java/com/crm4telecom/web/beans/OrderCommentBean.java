@@ -7,12 +7,12 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import org.apache.log4j.Logger;
 
-@ManagedBean
+@Named
 @Dependent
 public class OrderCommentBean implements Serializable {
 

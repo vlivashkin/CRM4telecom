@@ -9,11 +9,11 @@ import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.UserType;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class ResourcesBean implements Serializable {
 

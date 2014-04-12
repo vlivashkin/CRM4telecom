@@ -6,13 +6,13 @@ import com.crm4telecom.web.beans.util.LazyCustomerDataModel;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.LazyDataModel;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class CustomerListBean implements Serializable, IListBean<Customer> {
 

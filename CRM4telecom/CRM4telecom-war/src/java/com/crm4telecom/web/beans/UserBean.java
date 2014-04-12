@@ -5,16 +5,16 @@ import com.crm4telecom.enums.UserType;
 import com.crm4telecom.jpa.Users;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
-@ManagedBean
+@Named
 @SessionScoped
 public class UserBean implements Serializable {
     

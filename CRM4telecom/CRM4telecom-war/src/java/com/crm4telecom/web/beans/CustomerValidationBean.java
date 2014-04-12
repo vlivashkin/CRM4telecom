@@ -3,14 +3,14 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@ManagedBean
+@Named
 @Dependent
 public class CustomerValidationBean implements Serializable {
 

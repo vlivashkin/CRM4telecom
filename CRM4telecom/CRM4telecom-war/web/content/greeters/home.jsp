@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:useBean id="greeter" class="greeter.QueryExecutor">
+        <jsp:useBean id="greeter" class="com.crm4telecom.greeter.QueryExecutor">
             <%
                 out.println(greeter.execute("select case when row_number() over (partition by region order by customer.street) = 1 then region else ' ' end region, customer.street, count(customer_id) as num from customer inner join streets_regions on customer.street = streets_regions.street where status != 'Off' group by region, customer.street"));
             %>

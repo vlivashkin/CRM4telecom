@@ -6,14 +6,14 @@ import com.crm4telecom.enums.UserType;
 import com.crm4telecom.jpa.Users;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
-@ManagedBean
+@Named
 @Dependent
 public class UserValidationBean implements Serializable {
 
