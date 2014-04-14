@@ -7,14 +7,14 @@ import com.crm4telecom.jpa.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
+import org.omnifaces.cdi.ViewScoped;
 
 @Named
-@Dependent
+@ViewScoped
 public class UserValidationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +69,7 @@ public class UserValidationBean implements Serializable {
 
     public void setEmployee(String employee) {
         employeeId = Long.parseLong(employee.substring(1, employee.indexOf(" ")));
+        System.err.println("employee: " + employee + " => # " + employeeId);
         this.employee = employee;
     }
 
@@ -81,6 +82,7 @@ public class UserValidationBean implements Serializable {
         u.setLogin(login);
         u.setPassword(password);
         u.setType(type);
+        System.err.println("employeeId: " +  employeeId);
         u.setEmployeeId(gm.getEmployee(employeeId));
         um.create(u);
         return "index?faces-redirect=true";
