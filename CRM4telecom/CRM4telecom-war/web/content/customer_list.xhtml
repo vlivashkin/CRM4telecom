@@ -22,7 +22,7 @@
 
     <ui:define name="headerbuttons">
         <div style="margin-top: -3px">
-            <p:commandButton value="Add customer" action="#{navigationBean.toAddCustomer}" icon="ui-icon-plus"/>
+            <p:commandButton value="Add customer" onclick="clk('customer_add', event)" icon="ui-icon-plus"/>
             <p:menuButton value="Reports">  
                 <p:menuitem value="Average price of services for different markets" action="report?faces-redirect=true&amp;id=avg_prices_for_markets" icon="ui-icon-document"/>  
                 <p:menuitem value="Number of customers per street and region" action="report?faces-redirect=true&amp;id=streets_num_of_customers" icon="ui-icon-document"/>  
