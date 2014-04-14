@@ -52,8 +52,8 @@
                                     <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
                                 </p:menuButton>
                                 <p:commandButton rendered="#{userBean.isLogged()}" immediate="true" icon="ui-icon-gear" styleClass="iconFix" action="#{userBean.logout}" />
-                                <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" />  
-                                <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="login?faces-redirect=true" />                             
+                                <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  
+                                <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="signin?faces-redirect=true" />                             
                             </f:facet> 
                         </p:menubar> 
                     </div>

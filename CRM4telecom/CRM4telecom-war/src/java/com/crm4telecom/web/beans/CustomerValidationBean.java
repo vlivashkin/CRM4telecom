@@ -1,8 +1,13 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
+import com.crm4telecom.jpa.Market;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EnumType;
@@ -15,7 +20,10 @@ import javax.validation.constraints.Size;
 public class CustomerValidationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
+    @EJB
+    private CustomerManagerLocal cm;
+
     @Size(min = 1, max = 30)
     String firstName;
 
@@ -28,6 +36,8 @@ public class CustomerValidationBean implements Serializable {
     @Size(min = 1, max = 30)
     String street;
 
+    List<String> markets;
+
     Long building;
 
     Long flat;
@@ -39,6 +49,8 @@ public class CustomerValidationBean implements Serializable {
     @Enumerated(EnumType.STRING)
     CustomerStatus status;
 
+    private Boolean newCustomer;
+    
     public void init(Customer customer) {
         if (customer != null) {
             firstName = customer.getFirstName();
@@ -50,6 +62,13 @@ public class CustomerValidationBean implements Serializable {
             balance = customer.getBalance();
             phoneNumber = customer.getPhoneNumber();
             status = customer.getStatus();
+
+            markets = new ArrayList<>();
+            for (Market temp : cm.getMarkets(customer)) {
+                markets.add(temp.getName());
+            }
+            
+            newCustomer = customer.getCustomerId() == null;
         }
     }
 
@@ -137,4 +156,17 @@ public class CustomerValidationBean implements Serializable {
         this.status = status;
     }
 
+    public List<String> getMarkets() {
+        return markets;
+    }
+
+    public void setMarkets(List<String> markets) {
+        this.markets = markets;
+    }
+
+    public Boolean isNewCustomer() {
+        if (newCustomer == null)
+            return true;
+        return newCustomer;
+    }
 }

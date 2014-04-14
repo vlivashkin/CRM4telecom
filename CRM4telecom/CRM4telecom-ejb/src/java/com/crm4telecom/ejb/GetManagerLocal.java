@@ -1,10 +1,10 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Employee;
+import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.Product;
 import java.util.List;
 import javax.ejb.Local;
-import javax.persistence.Query;
 
 @Local
 public interface GetManagerLocal {
@@ -13,6 +13,10 @@ public interface GetManagerLocal {
 
     public List<String> getProductList();
 
+    public Market getMarket(String market);
+    
+    public List<String> getMarketList();
+            
     public Employee getEmployee(Long employeeId);
 
     public List<String> completeCustomer(String rawCustomer);

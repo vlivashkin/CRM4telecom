@@ -8,6 +8,9 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <h:outputScript library="js" name="main.js"/>
+        
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="signin.css"/>
@@ -25,17 +28,17 @@
 
                         <f:facet name="options" >  
                             <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
-                                <p:menuitem value="List of customers" onclick="clk('customer_list')" immediate="true" icon="ui-icon-note"/>  
-                                <p:menuitem value="List of orders" onclick="clk('order_list')" immediate="true" icon="ui-icon-note"/>  
-                                <p:menuitem value="Add customer" onclick="clk('customer_add')" immediate="true" icon="ui-icon-plus"/> 
-                                <p:menuitem value="Add order" onclick="clk('order_add')" immediate="true" icon="ui-icon-plus"/>
+                                <p:menuitem value="List of customers" onclick="clk('content/customer_list')" immediate="true" icon="ui-icon-note"/>  
+                                <p:menuitem value="List of orders" onclick="clk('content/order_list')" immediate="true" icon="ui-icon-note"/>  
+                                <p:menuitem value="Add customer" onclick="clk('content/customer_add')" immediate="true" icon="ui-icon-plus"/> 
+                                <p:menuitem value="Add order" onclick="clk('content/order_add')" immediate="true" icon="ui-icon-plus"/>
                                 <p:separator />
                                 <c:if test="#{userBean.isAdmin}">
-                                    <p:menuitem value="List of users" onclick="clk('user_list')" immediate="true" icon="ui-icon-note"/>  
-                                    <p:menuitem value="Add user" onclick="clk('user_add')" immediate="true" icon="ui-icon-plus"/>
+                                    <p:menuitem value="List of users" onclick="clk('content/user_list')" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="Add user" onclick="clk('content/user_add')" immediate="true" icon="ui-icon-plus"/>
                                     <p:separator />  
                                 </c:if>
-                                <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
+                                <p:menuitem value="Main Page" onclick="clk('content/index')" icon="ui-icon-home"/>  
                             </p:menuButton>
                             <p:commandButton rendered="#{userBean.isLogged()}" immediate="true" icon="ui-icon-gear" styleClass="iconFix" action="#{userBean.logout}" />
                             <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" />  

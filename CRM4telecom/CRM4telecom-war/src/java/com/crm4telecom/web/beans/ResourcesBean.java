@@ -8,6 +8,7 @@ import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.UserType;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -18,7 +19,7 @@ import javax.inject.Named;
 public class ResourcesBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private CustomerManagerLocal cm;
 
@@ -40,8 +41,12 @@ public class ResourcesBean implements Serializable {
         return OrderType.values();
     }
 
-    public List<String> getProduct() {
+    public List<String> getProducts() {
         return gm.getProductList();
+    }
+
+    public List<String> getMarkets() {
+        return gm.getMarketList();
     }
 
     public UserType[] getUserTypes() {
@@ -54,5 +59,9 @@ public class ResourcesBean implements Serializable {
 
     public Long getOrdersCount() {
         return om.getOrdersCount();
+    }
+    
+    public Date getCurrentTime() {
+        return new Date();
     }
 }

@@ -2,6 +2,8 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
+import com.crm4telecom.jpa.MarketsCustomers;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -50,13 +52,24 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
+    public void addMarket(MarketsCustomers mc) {
+        em.persist(mc);
+    }
+
+    @Override
     public List<Market> getMarkets(Customer customer) {
 
         if (customer != null) {
-            String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
-
+            String sqlQuery = "SELECT c.marketsCustomersPK.marketId FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
             Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
-            return query.getResultList();
+
+            List<Long> market_ids = query.getResultList();
+            List<Market> markets = new ArrayList<>();
+            for (Long temp : market_ids) {
+                Query query2 = em.createQuery("SELECT u FROM Market u WHERE u.marketId = :id").setParameter("id", temp);
+                markets.add((Market) query2.getResultList().get(0));
+            }
+            return markets;
         } else {
             throw new IllegalArgumentException("Customer cannot be null");
         }

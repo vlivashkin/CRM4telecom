@@ -46,7 +46,7 @@ public class QueryExecutor {
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
             StringBuilder table = new StringBuilder();
-            table.append("<table border=1><thead><tr>");
+            table.append("<table class=\"table table-striped\"><thead><tr>");
             for (int col = 1; col <= resultSetMetaData.getColumnCount(); col++) {
                 table.append("<th>");
                 table.append(resultSetMetaData.getColumnName(col));

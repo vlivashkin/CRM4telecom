@@ -26,7 +26,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:outputText value="Last activity #{session.lastAccessedTime}" style="float: right">
+        <h:outputText value="Last activity #{resourcesBean.currentTime}" style="float: right">
             <f:convertDateTime pattern="d-M-yyyy" type="long" />
         </h:outputText>
 
@@ -36,36 +36,34 @@
             </div>
         </center>
 
-        <div class="container">
-            <p:accordionPanel multiple="true" activeIndex="0,1,2">  
-                <p:tab title="Common info" >
-                    Number of customers: #{resourcesBean.customersCount}<br/>
-                    Number of orders: #{resourcesBean.ordersCount}<br/>
-                    bla bla<br/>
-                    bla bla<br/>
-                    bla bla<br/>
-                </p:tab>
-                <p:tab title="Common actions">
+        <p:accordionPanel multiple="true" activeIndex="0,1,2">  
+            <p:tab title="Common info" >
+                Number of customers: #{resourcesBean.customersCount}<br/>
+                Number of orders: #{resourcesBean.ordersCount}<br/>
+                bla bla<br/>
+                bla bla<br/>
+                bla bla<br/>
+            </p:tab>
+            <p:tab title="Common actions">
+                <center>
+                    <h:form>
+                        <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list')" />
+                        <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add')" />
+                        <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list')" />
+                        <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add')" />
+                    </h:form>
+                </center>
+            </p:tab>
+            <c:if test="#{userBean.isAdmin}">
+                <p:tab title="Admin actions">
                     <center>
                         <h:form>
-                            <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list')" />
-                            <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add')" />
-                            <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list')" />
-                            <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add')" />
+                            <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list')" />
+                            <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add')" />
                         </h:form>
-                    </center>
+                    </center> 
                 </p:tab>
-                <c:if test="#{userBean.isAdmin}">
-                    <p:tab title="Admin actions">
-                        <center>
-                            <h:form>
-                                <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list')" />
-                                <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add')" />
-                            </h:form>
-                        </center> 
-                    </p:tab>
-                </c:if>
-            </p:accordionPanel>
-        </div>
+            </c:if>
+        </p:accordionPanel>
     </ui:define>
 </ui:composition>

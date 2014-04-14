@@ -1,9 +1,12 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.CustomerManagerLocal;
+import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
+import com.crm4telecom.jpa.MarketsCustomers;
+import com.crm4telecom.jpa.MarketsCustomersPK;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.soapui.Billing;
 import com.crm4telecom.soapui.Services;
@@ -20,10 +23,13 @@ import org.omnifaces.cdi.ViewScoped;
 public class CustomerInfoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private CustomerManagerLocal cm;
 
+    @EJB
+    private GetManagerLocal gm;
+    
     @Inject
     private CustomerValidationBean cv;
 
@@ -69,14 +75,24 @@ public class CustomerInfoBean implements Serializable {
 
         customer = customerNew;
 
+        for(String temp : cv.getMarkets()) {
+            Market market = gm.getMarket(temp);
+            MarketsCustomers mc = new MarketsCustomers();
+            MarketsCustomersPK mcpk = new MarketsCustomersPK();
+            mcpk.setCustomerId(customer.getCustomerId());
+            mcpk.setMarketId(market.getMarketId());
+            mc.setMarketsCustomersPK(mcpk);
+            cm.addMarket(mc);
+        }
+        
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
     }
 
     public void modify() {
         cv.fillCustomer(customer);
-        cm.modifyCustomer(customer);
-
+        cm.modifyCustomer(customer);       
+        
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
     }

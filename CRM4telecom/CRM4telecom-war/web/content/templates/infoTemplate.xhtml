@@ -21,36 +21,34 @@
     </ui:define> 
 
     <ui:define name="content">
-        <div id="content" class="container">
-            <p:tabView id="tabPanel">
-                <p:tab title="Info">
-                    <div class="row" style="height: auto; position: relative">
-                        <div class="col-md-6" style="display: table-cell; vertical-align: middle; height: 100%">
-                            <h:form id="leftcolumn">
-                                <ui:insert name="leftcolumn" />
-                            </h:form>
-                        </div>
-                        <div class="col-md-6" style="height: 100%">
-                            <h:form id="rightcolumn">
-                                <ui:insert name="rightcolumn" />
-                            </h:form>
-                        </div>
+        <p:tabView id="tabPanel">
+            <p:tab title="Info">
+                <div class="row" style="height: auto; position: relative">
+                    <div class="col-md-6" style="height: 100%">
+                        <h:form id="leftcolumn">
+                            <ui:insert name="leftcolumn" />
+                        </h:form>
                     </div>
+                    <div class="col-md-6" style="height: 100%">
+                        <h:form id="rightcolumn">
+                            <ui:insert name="rightcolumn" />
+                        </h:form>
+                    </div>
+                </div>
 
-                    <h:form id="infofooter">
-                        <ui:insert name="infofooter" />
-                    </h:form>
-                </p:tab>
-                <p:tab title="Edit">
-                    <h:form id="editform">
-                        <ui:insert name="editform" />
-                    </h:form>
-                </p:tab>
-            </p:tabView>
+                <h:form id="infofooter">
+                    <ui:insert name="infofooter" />
+                </h:form>
+            </p:tab>
+            <p:tab title="Edit">
+                <h:form id="editform">
+                    <ui:insert name="editform" />
+                </h:form>
+            </p:tab>
+        </p:tabView>
 
-            <h:form id="footer">
-                <ui:insert name="footer" />
-            </h:form>
-        </div>
+        <h:form id="footer">
+            <ui:insert name="footer" />
+        </h:form>
     </ui:define>
 </ui:composition>

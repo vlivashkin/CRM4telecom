@@ -2,6 +2,7 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Employee;
+import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,8 @@ import org.apache.log4j.Logger;
 @Stateless
 public class GetManager implements GetManagerLocal {
 
-    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
-    
+    private final Logger log = Logger.getLogger(getClass().getName());
+
     @PersistenceContext
     private EntityManager em;
 
@@ -27,12 +28,30 @@ public class GetManager implements GetManagerLocal {
         } else {
             throw new IllegalArgumentException("Product can't be null");
         }
-
     }
 
     @Override
     public List<String> getProductList() {
         String sqlQuery = "SELECT u.name FROM Product u";
+        Query query = em.createQuery(sqlQuery);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public Market getMarket(String market) {
+        if (market != null) {
+            String sqlQuery = "SELECT u FROM Market u WHERE u.name = :name";
+            Query query = em.createQuery(sqlQuery).setParameter("name", market);
+            return (Market) query.getResultList().get(0);
+        } else {
+            throw new IllegalArgumentException("Market can't be null");
+        }
+    }
+
+    @Override
+    public List<String> getMarketList() {
+        String sqlQuery = "SELECT u.name FROM Market u";
         Query query = em.createQuery(sqlQuery);
 
         return query.getResultList();
@@ -108,7 +127,7 @@ public class GetManager implements GetManagerLocal {
     public Product create(String sqlQuery, String product) {
         Query query = em.createQuery(sqlQuery).setParameter("name", product);
         return (Product) query.getResultList().get(0);
-    }
+}
 
     @Override
     public Employee find(long employeeId) {
