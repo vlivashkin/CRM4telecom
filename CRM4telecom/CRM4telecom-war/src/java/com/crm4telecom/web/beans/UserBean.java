@@ -82,10 +82,11 @@ public class UserBean implements Serializable {
         return false;
     }
 
-    public String logout() {
+    public void logout() {
         JSFHelper helper = new JSFHelper();
         HttpSession session = helper.getSession(false);
         session.invalidate();
-        return "/login.xhtml?faces-redirect=true";
+        
+        helper.redirect("index");
     }
 }
