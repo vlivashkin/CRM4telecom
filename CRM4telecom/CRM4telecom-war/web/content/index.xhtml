@@ -26,10 +26,6 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:outputText value="Last activity #{resourcesBean.currentTime}" style="float: right">
-            <f:convertDateTime pattern="d-M-yyyy" type="long" />
-        </h:outputText>
-
         <center>
             <div style="padding-top: 30px; padding-bottom: 10px">
                 <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:70px;" />
@@ -40,9 +36,6 @@
             <p:tab title="Common info" >
                 Number of customers: #{resourcesBean.customersCount}<br/>
                 Number of orders: #{resourcesBean.ordersCount}<br/>
-                bla bla<br/>
-                bla bla<br/>
-                bla bla<br/>
             </p:tab>
             <p:tab title="Common actions">
                 <center>

@@ -26,8 +26,7 @@
 
     <ui:define name="content">  
         <h:form id="tableForm">
-            <p:dataTable value="#{userListBean.users}" var="user">
-
+            <h:dataTable value="#{userListBean.users}" class="table table-striped" var="user">
                 <p:column headerText="Username">
                     <h:outputText value="#{user.login}"/>
                 </p:column>
@@ -39,7 +38,7 @@
                 <p:column headerText="Employee">
                     <h:outputText value="#{user.employeeId}"/>
                 </p:column>
-            </p:dataTable>
+            </h:dataTable>
         </h:form>
     </ui:define>
 

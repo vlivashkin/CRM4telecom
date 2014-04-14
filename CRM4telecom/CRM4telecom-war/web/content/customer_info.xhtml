@@ -29,38 +29,38 @@
     </ui:define>
 
     <ui:define name="leftcolumn">
-        <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-            <h:outputLabel value="First name:" style="float: right"/>
+        <p:panelGrid styleClass="noBorders" style="width: 100%;" columns="2">
+            <h:outputText value="First name:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.firstName}"/>
 
-            <h:outputLabel value="Last name:" style="float: right"/>
+            <h:outputText value="Last name:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.lastName}"/>
 
-            <h:outputLabel value="Status:" style="float: right"/>
+            <h:outputText value="Status:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.status.label}"/>
 
-            <h:outputLabel value="E-mail:" style="float: right"/>
+            <h:outputText value="E-mail:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.email}"/>
 
-            <h:outputLabel value="Street:" style="float: right"/>
+            <h:outputText value="Street:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.street}"/>
 
-            <h:outputLabel value="Building:" style="float: right"/>
+            <h:outputText value="Building:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.building}"/>
 
-            <h:outputLabel value="Flat:" style="float: right"/>
+            <h:outputText value="Flat:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.flat}"/>
 
-            <h:outputLabel value="Phone number:" style="float: right"/>
+            <h:outputText value="Phone number:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.phoneNumber}"/>
 
-            <h:outputLabel value="Balance:" style="float: right"/>
+            <h:outputText value="Balance:" styleClass="leftcolumn"/>
             <h:panelGroup>
                 <h:outputText value="#{customerInfoBean.customer.balance}"/>
-                <p:commandButton value="Synchronize" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
+                <p:commandButton value="Synchronize" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
                     <f:ajax render="leftcolumn" />
                 </p:commandButton>
-                <p:commandButton value="Update" style="float: right;" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.updBalance()}" >
+                <p:commandButton value="Update" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.updBalance()}" >
                     <f:ajax render="leftcolumn" />
                 </p:commandButton>
             </h:panelGroup>
@@ -68,36 +68,6 @@
     </ui:define>
 
     <ui:define name="rightcolumn">
-        <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
-            <f:facet name="header">
-                Phone numbers
-            </f:facet>
-
-            <p:column headerText="Phone number">
-                <h:outputText value="#{phone.phoneNumber}"/>
-            </p:column>
-
-            <p:column headerText="Status">
-                <h:outputText value="#{phone.status}"/>
-            </p:column>
-        </p:dataTable>
-
-        <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
-            <f:facet name="header">
-                Statical IP
-            </f:facet>
-
-            <p:column headerText="Statical IP">
-                <f:facet name="header">IP</f:facet>
-                <h:outputText value="#{ip.ip}"/>
-            </p:column>
-
-            <p:column headerText="Statical IP">
-                <f:facet name="header">Status</f:facet>
-                <h:outputText value="#{ip.status}"/>
-            </p:column>
-        </p:dataTable>
-
         <p:dataTable value="#{customerInfoBean.markets}" var="market">
             <f:facet name="header">
                 Markets
@@ -121,6 +91,40 @@
     </ui:define>
 
     <ui:define name="infofooter">
+        <div class="row">
+            <div class="col-md-6">
+                <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
+                    <f:facet name="header">
+                        Statical IP
+                    </f:facet>
+
+                    <p:column headerText="Statical IP">
+                        <f:facet name="header">IP</f:facet>
+                        <h:outputText value="#{ip.ip}"/>
+                    </p:column>
+
+                    <p:column headerText="Statical IP">
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="#{ip.status}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div class="col-md-6">
+                <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
+                    <f:facet name="header">
+                        Phone numbers
+                    </f:facet>
+
+                    <p:column headerText="Phone number">
+                        <h:outputText value="#{phone.phoneNumber}"/>
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <h:outputText value="#{phone.status}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
         <p:dataTable value="#{customerInfoBean.customer.ordersList}" var="order"
                      selectionMode="single" selection="#{customerInfoBean.selectedOrder}" rowKey="#{order.orderId}">
             <f:facet name="header">
@@ -164,7 +168,7 @@
 
         <ui:include src="./frames/customerForm.xhtml" />
 
-        <p:commandButton value="Save" update="editform" icon="ui-icon-check" validateClient="true" action="#{customerInfoBean.modify()}" />
+        <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{customerInfoBean.modify()}" />
         <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
             <f:ajax render="editform" />
         </p:commandButton>

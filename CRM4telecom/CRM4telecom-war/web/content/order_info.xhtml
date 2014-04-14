@@ -97,7 +97,7 @@
 
         <ui:include src="./frames/orderForm.xhtml" />
 
-        <p:commandButton value="Save" icon="ui-icon-check" validateClient="true" action="#{orderInfoBean.modify()}" />
+        <p:commandButton value="Save" icon="ui-icon-check" action="#{orderInfoBean.modify()}" />
         <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
             <f:ajax render="editform" />
         </p:commandButton>

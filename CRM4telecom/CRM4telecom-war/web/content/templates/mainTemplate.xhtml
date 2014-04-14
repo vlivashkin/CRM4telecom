@@ -30,7 +30,7 @@
     <h:body>
         <div id="header">
             <h:form id="headerForm">
-                <div class="ui-menu ui-menubar ui-widget-content ui-corner-all">
+                <div class="ui-menu ui-menubar ui-widget-content">
                     <div class="container">
                         <p:menubar style="border: none; background: none; padding: 0;">
                             <p:menuitem value="CRM4telecom" onclick="clk('index')" immediate="true" styleClass="header-logo"/>
@@ -51,7 +51,6 @@
                                     </c:if>
                                     <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
                                 </p:menuButton>
-                                <p:commandButton rendered="#{userBean.isLogged()}" immediate="true" icon="ui-icon-gear" styleClass="iconFix" action="#{userBean.logout}" />
                                 <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  
                                 <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="signin?faces-redirect=true" />                             
                             </f:facet> 
@@ -65,7 +64,7 @@
                     <div class="container">
                         <h1>
                             <ui:insert name="header" />
-                            <h:form id="headerstatus" style="margin-top: -3px">
+                            <h:form id="headerstatus">
                                 <ui:insert name="headerbuttons" />
                             </h:form>
                         </h1>

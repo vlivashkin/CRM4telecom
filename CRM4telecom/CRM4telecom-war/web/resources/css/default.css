@@ -174,3 +174,17 @@ h3 {
     box-shadow: none !important;
     border-bottom: 1px solid black !important;
 } 
+
+.striped dd:nth-child(4n+2) {
+    background-color: #F2F5F9;
+    border-left: 10px solid #F2F5F9;
+}
+
+.striped dt:nth-child(4n+1) {
+    background-color: #F2F5F9;
+}
+
+.leftcolumn {
+    float: right;
+    font-weight: bold;
+}

@@ -25,7 +25,7 @@ public class QueryExecutor {
         try {
             InitialContext context = new InitialContext();
             DataSource dataSource = (DataSource) context
-                    .lookup("jdbc/c4tRes");
+                    .lookup("jdbc/CRM4Telecom");
             connection = dataSource.getConnection();
         } catch (NamingException e) {
             e.printStackTrace();

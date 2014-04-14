@@ -24,16 +24,12 @@
         <p:tabView id="tabPanel">
             <p:tab title="Info">
                 <div class="row" style="height: auto; position: relative">
-                    <div class="col-md-6" style="height: 100%">
-                        <h:form id="leftcolumn">
-                            <ui:insert name="leftcolumn" />
-                        </h:form>
-                    </div>
-                    <div class="col-md-6" style="height: 100%">
-                        <h:form id="rightcolumn">
-                            <ui:insert name="rightcolumn" />
-                        </h:form>
-                    </div>
+                    <h:form id="leftcolumn" class="col-md-6">
+                        <ui:insert name="leftcolumn" />
+                    </h:form>
+                    <h:form id="rightcolumn" class="col-md-6">
+                        <ui:insert name="rightcolumn" />
+                    </h:form>
                 </div>
 
                 <h:form id="infofooter">
