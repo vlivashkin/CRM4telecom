@@ -6,8 +6,10 @@ $(document).keyup(function() {
     cntrlIsPressed = false;
 });
 var cntrlIsPressed = false;
-function clk(link) {
-    if (event != undefined && event.which === 2 || cntrlIsPressed) {
+function clk(link, e) {
+    if (e != undefined)
+        event = e;
+    if ((event != undefined && event.which === 2) || cntrlIsPressed) {
         if (link == "this")
             window.open(document.URL, '_blank');
         else

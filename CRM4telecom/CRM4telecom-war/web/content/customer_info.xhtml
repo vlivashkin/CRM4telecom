@@ -15,9 +15,9 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" immediate="true" onclick="clk('customer_list')" />
+        <p:menuitem value="List of Customers" immediate="true" onclick="clk('customer_list', event)" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Customer #{customerInfoBean.customer}" immediate="true" onclick="clk('this');" />
+        <p:menuitem value="Customer #{customerInfoBean.customer}" immediate="true" onclick="clk('this', event);" />
     </ui:define>
 
     <ui:define name="header">

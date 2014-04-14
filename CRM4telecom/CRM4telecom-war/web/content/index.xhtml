@@ -40,10 +40,10 @@
             <p:tab title="Common actions">
                 <center>
                     <h:form>
-                        <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list')" />
-                        <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add')" />
-                        <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list')" />
-                        <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add')" />
+                        <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list', event)" />
+                        <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add', event)" />
+                        <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list', event)" />
+                        <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add', event)" />
                     </h:form>
                 </center>
             </p:tab>
@@ -51,8 +51,8 @@
                 <p:tab title="Admin actions">
                     <center>
                         <h:form>
-                            <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list')" />
-                            <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add')" />
+                            <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list', event)" />
+                            <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add', event)" />
                         </h:form>
                     </center> 
                 </p:tab>

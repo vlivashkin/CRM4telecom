@@ -33,23 +33,23 @@
                 <div class="ui-menu ui-menubar ui-widget-content">
                     <div class="container">
                         <p:menubar style="border: none; background: none; padding: 0;">
-                            <p:menuitem value="CRM4telecom" onclick="clk('index')" immediate="true" styleClass="header-logo"/>
+                            <p:menuitem value="CRM4telecom" onclick="clk('index', event)" immediate="true" styleClass="header-logo"/>
 
                             <ui:insert name="navbar" />
 
                             <f:facet name="options" >  
                                 <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
-                                    <p:menuitem value="List of customers" onclick="clk('customer_list')" immediate="true" icon="ui-icon-note"/>  
-                                    <p:menuitem value="List of orders" onclick="clk('order_list')" immediate="true" icon="ui-icon-note"/>  
-                                    <p:menuitem value="Add customer" onclick="clk('customer_add')" immediate="true" icon="ui-icon-plus"/> 
-                                    <p:menuitem value="Add order" onclick="clk('order_add')" immediate="true" icon="ui-icon-plus"/>
+                                    <p:menuitem value="List of customers" onclick="clk('customer_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="List of orders" onclick="clk('order_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="Add customer" onclick="clk('customer_add', event)" immediate="true" icon="ui-icon-plus"/> 
+                                    <p:menuitem value="Add order" onclick="clk('order_add', event)" immediate="true" icon="ui-icon-plus"/>
                                     <p:separator />
                                     <c:if test="#{userBean.isAdmin}">
-                                        <p:menuitem value="List of users" onclick="clk('user_list')" immediate="true" icon="ui-icon-note"/>  
-                                        <p:menuitem value="Add user" onclick="clk('user_add')" immediate="true" icon="ui-icon-plus"/>
+                                        <p:menuitem value="List of users" onclick="clk('user_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                        <p:menuitem value="Add user" onclick="clk('user_add', event)" immediate="true" icon="ui-icon-plus"/>
                                         <p:separator />  
                                     </c:if>
-                                    <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
+                                    <p:menuitem value="Main Page" onclick="clk('index', event)" icon="ui-icon-home"/>  
                                 </p:menuButton>
                                 <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  
                                 <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="signin?faces-redirect=true" />                             
