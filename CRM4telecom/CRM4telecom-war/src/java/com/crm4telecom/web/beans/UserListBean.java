@@ -1,7 +1,7 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.UserManagerLocal;
-import com.crm4telecom.jpa.Users;
+import com.crm4telecom.jpa.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,17 +17,17 @@ public class UserListBean implements Serializable {
     @EJB
     private UserManagerLocal um;
 
-    private Users selected;
+    private User selected;
 
-    public Users getSelected() {
+    public User getSelected() {
         return selected;
     }
 
-    public void setSelected(Users selected) {
+    public void setSelected(User selected) {
         this.selected = selected;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return um.getUsers();
     }
 }

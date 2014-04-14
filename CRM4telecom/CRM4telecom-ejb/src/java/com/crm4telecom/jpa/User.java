@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "Users")
 @Table(catalog = "")
-public class Users implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,10 +40,10 @@ public class Users implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(String login) {
+    public User(String login) {
         this.login = login;
     }
 
@@ -96,10 +96,10 @@ public class Users implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Users)) {
+        if (!(object instanceof User)) {
             return false;
         }
-        Users other = (Users) object;
+        User other = (User) object;
         return this.login.equals(other.login);
     }
 

@@ -13,17 +13,20 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Orders" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="List of Orders" immediate="true" onclick="clk('this')" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="List of Orders" />
-            <h:form>  
-                <p:commandButton value="Add Order" action="order_add?faces-redirect=true"/>  
-            </h:form>
-        </h1>
+        <h:outputText value="List of Orders" />
     </ui:define> 
+
+    <ui:define name="headerbuttons">
+        <p:commandButton value="Add Order" onclick="clk('order_add')"/>  
+        <p:menuButton value="Reports" >  
+            <p:menuitem value="Average processing time of engineer appoint" action="report?faces-redirect=true&amp;id=len_of_eng_app" icon="ui-icon-document"/>  
+            <p:menuitem value="Number of orders per month" action="report?faces-redirect=true&amp;id=months_num_of_orders" icon="ui-icon-document"/>  
+        </p:menuButton> 
+    </ui:define>
 
     <ui:define name="content">
         <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">

@@ -1,6 +1,6 @@
 package com.crm4telecom.ejb;
 
-import com.crm4telecom.jpa.Users;
+import com.crm4telecom.jpa.User;
 import com.crm4telecom.util.MD5;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -20,7 +20,7 @@ public class UserManager implements UserManagerLocal {
     private EntityManager em;
 
     @Override
-    public void create(Users u) {
+    public void create(User u) {
         try {
             List<String> l = MD5.getSaltPassword(u.getPassword(), u.getLogin());
             u.setPassword(l.get(1));
@@ -34,13 +34,13 @@ public class UserManager implements UserManagerLocal {
     }
 
     @Override
-    public Users login(String login, String password) {
+    public User login(String login, String password) {
         if (login != null && password != null) {
             String sqlQuery = "SELECT u FROM Users u WHERE u.login = :login";
 
             Query query = em.createQuery(sqlQuery).setParameter("login", login);
             if (query.getResultList().size() > 0) {
-                Users user = (Users) query.getResultList().get(0);
+                User user = (User) query.getResultList().get(0);
                 String pass = user.getPassword();
                 String salt = user.getSalt();
                 if (pass != null && pass.equals(MD5.getHash(password, salt))) {
@@ -63,7 +63,7 @@ public class UserManager implements UserManagerLocal {
     }
 
     @Override
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         String sqlQuery = "SELECT u FROM Users u ";
         Query query = em.createQuery(sqlQuery);
         return query.getResultList();

@@ -7,22 +7,25 @@
     <ui:define name="metadata">
 
     </ui:define>
-    
+
     <ui:define name="title">
         CRM4telecom | Customers
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="List of Customers" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="List of Customers" />
-            <h:form>
-                <p:commandButton value="Add customer" action="#{navigationBean.toAddCustomer}" icon="ui-icon-plus"/>
-            </h:form>
-        </h1>
+        <h:outputText value="List of Customers" />
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+        <p:commandButton value="Add customer" action="#{navigationBean.toAddCustomer}" icon="ui-icon-plus"/>
+        <p:menuButton value="Reports">  
+            <p:menuitem value="Average price of services for different markets" action="report?faces-redirect=true&amp;id=avg_prices_for_markets" icon="ui-icon-document"/>  
+            <p:menuitem value="Number of customers per street and region" action="report?faces-redirect=true&amp;id=streets_num_of_customers" icon="ui-icon-document"/>  
+        </p:menuButton> 
     </ui:define>
 
     <ui:define name="content">
@@ -33,11 +36,11 @@
         </p:fieldset>
 
         <h:form id="tableForm">  
-            <p:dataTable var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="5"  
+            <p:dataTable var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="10"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selected}" id="customerTable" lazy="true">  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selected}"  id="customerTable" lazy="true">  
 
-                <p:ajax event="rowSelect"  listener="#{customerListBean.onRowSelect}" />
+                <p:ajax event="rowSelect" update=":tableForm" oncomplete="afterLoad();"/>   
 
                 <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
                     <h:outputText value="#{customer.customerId}" />  
@@ -58,7 +61,13 @@
                 <p:column headerText="Phone number" sortBy="phoneNumber" filterBy="#{customer.phoneNumber}">  
                     <h:outputText value="#{customer.phoneNumber}" />  
                 </p:column> 
-            </p:dataTable>  
-        </h:form>  
+            </p:dataTable> 
+
+            <script id="clk_exec" lang="javascript">
+                function afterLoad() {
+                    clk('customer_info?id=#{customerListBean.selected.customerId.toString()}#');
+                }
+            </script>
+        </h:form> 
     </ui:define>
 </ui:composition>

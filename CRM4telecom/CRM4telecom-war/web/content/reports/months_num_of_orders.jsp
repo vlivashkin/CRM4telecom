@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Number of orders per month</h1>
+        <h2>Number of orders per month</h2>
         <jsp:useBean id="greeter" class="com.crm4telecom.report.QueryExecutor">
             <%
                 out.println(greeter.execute("select extract(year from order_date)||'_'||extract(month from order_date) as year_month, order_type, count(order_id)  NUM_OF_ORDERS from orders group by extract(year from order_date)||'_'||extract(month from order_date), order_type"));

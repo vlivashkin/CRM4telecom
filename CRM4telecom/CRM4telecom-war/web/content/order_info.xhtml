@@ -15,18 +15,17 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Orders" immediate="true" action="order_list?faces-redirect=true" /> 
+        <p:menuitem value="List of Orders" immediate="true" onclick="clk('order_list')" /> 
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Order #{orderInfoBean.order}" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="Order #{orderInfoBean.order}" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="Order #{orderInfoBean.order}" />
-            <h:form id="headerstatus">
-                <h:outputLabel value="#{orderInfoBean.order.status.label}" styleClass="customer-status #{orderInfoBean.order.status.color}" />
-            </h:form>
-        </h1>
+        <h:outputText value="Order #{orderInfoBean.order}" />
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+        <h:outputLabel value="#{orderInfoBean.order.status.label}" styleClass="customer-status #{orderInfoBean.order.status.color}" />
     </ui:define>
 
     <ui:define name="leftcolumn">

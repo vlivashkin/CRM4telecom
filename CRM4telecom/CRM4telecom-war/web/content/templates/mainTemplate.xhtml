@@ -4,51 +4,78 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:insert name="metadata" />
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <h:outputScript library="js" name="main.js"/>
+        
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="signin.css"/>
 
         <title>
             <ui:insert name="title">
                 CRM4telecom
             </ui:insert>
         </title>
+
+
     </h:head>
 
     <h:body>
-        <div id="header" class="container-fluid">
+        <div id="header">
             <h:form id="headerForm">
-                <p:menubar>  
-                    <p:menuitem value="CRM4telecom" action="index?faces-redirect=true" immediate="true" styleClass="header-logo" />
+                <div class="ui-menu ui-menubar ui-widget-content ui-corner-all">
+                    <div class="container">
+                        <p:menubar style="border: none; background: none; padding: 0;">
+                            <p:menuitem value="CRM4telecom" onclick="clk('index')" immediate="true" styleClass="header-logo"/>
 
-                    <ui:insert name="navbar" />
+                            <ui:insert name="navbar" />
 
-                    <f:facet name="options">  
-                        <p:menuButton id="navigation" value="Go to..." style="margin-right:10px">  
-                            <p:menuitem value="List of customers" action="customer_list?faces-redirect=true" immediate="true" icon="ui-icon-note"/>  
-                            <p:menuitem value="List of orders" action="order_list?faces-redirect=true" immediate="true" icon="ui-icon-note"/>  
-                            <p:menuitem value="Add customer" action="customer_add?faces-redirect=true" immediate="true" icon="ui-icon-plus"/> 
-                            <p:menuitem value="Add order" action="order_add?faces-redirect=true" immediate="true" icon="ui-icon-plus"/>
-                            <p:separator />  
-                            <p:menuitem value="Main Page" action="index?faces-redirect=true" icon="ui-icon-home"/>  
-                        </p:menuButton>
-                        <p:commandButton value="Logout #{userBean.uname}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" />  
-                    </f:facet>  
-                </p:menubar> 
+                            <f:facet name="options" >  
+                                <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
+                                    <p:menuitem value="List of customers" onclick="clk('customer_list')" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="List of orders" onclick="clk('order_list')" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="Add customer" onclick="clk('customer_add')" immediate="true" icon="ui-icon-plus"/> 
+                                    <p:menuitem value="Add order" onclick="clk('order_add')" immediate="true" icon="ui-icon-plus"/>
+                                    <p:separator />
+                                    <c:if test="#{userBean.isAdmin}">
+                                        <p:menuitem value="List of users" onclick="clk('user_list')" immediate="true" icon="ui-icon-note"/>  
+                                        <p:menuitem value="Add user" onclick="clk('user_add')" immediate="true" icon="ui-icon-plus"/>
+                                        <p:separator />  
+                                    </c:if>
+                                    <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
+                                </p:menuButton>
+                                <p:commandButton rendered="#{userBean.isLogged()}" immediate="true" icon="ui-icon-gear" styleClass="iconFix" action="#{userBean.logout}" />
+                                <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" />  
+                                <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="login?faces-redirect=true" />                             
+                            </f:facet> 
+                        </p:menubar> 
+                    </div>
+                </div>
             </h:form>
 
-            <ui:insert name="header" />
+            <c:if test='#{not view.viewId.equals("/content/index.xhtml")}'>
+                <div style="border-bottom: 1px solid #AFAFAF; margin-bottom: 8px;">
+                    <div class="container">
+                        <h1>
+                            <ui:insert name="header" />
+                            <h:form id="headerstatus" style="margin-top: -3px">
+                                <ui:insert name="headerbuttons" />
+                            </h:form>
+                        </h1>
+                    </div>
+                </div>
+            </c:if>
         </div>
 
-        <div id="content" class="container-fluid">
-            <ui:insert name="content">Content</ui:insert>
+        <div class="container">
+            <ui:insert name="content" />
         </div>
-
     </h:body>
-
 </html>

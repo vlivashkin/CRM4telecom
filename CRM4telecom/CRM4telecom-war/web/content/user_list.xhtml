@@ -13,20 +13,18 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Users" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="List of Users" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="List of Users" />
-            <h:form>  
-                <p:commandButton value="Add User" action="user_add?faces-redirect=true"/>  
-            </h:form>
-        </h1>
+        <h:outputText value="List of Users" />
     </ui:define> 
 
-    <ui:define name="content">  
+    <ui:define name="headerbuttons">
+        <p:commandButton value="Add User" action="user_add?faces-redirect=true"/>  
+    </ui:define>
 
+    <ui:define name="content">  
         <h:form id="tableForm">
             <p:dataTable value="#{userListBean.users}" var="user">
 

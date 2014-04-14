@@ -17,12 +17,16 @@
     </ui:define>
 
     <ui:define name="navbar">
-
+        <p:menuitem value="Report" immediate="true" onclick="clk('this')" />
     </ui:define>
 
     <ui:define name="header">
-
+        <h:outputText value="Report" />
     </ui:define> 
+
+    <ui:define name="headerbuttons">
+
+    </ui:define>
 
     <ui:define name="content">
         <o:resourceInclude path="./reports/#{reportBean.param}.jsp" />

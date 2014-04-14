@@ -2,10 +2,6 @@
     HEADER
 */
 
-#header {
-    margin-top: 5px;
-}
-
 .header-logo {  
     font-family: Georgia, serif;
     font-size:  16px;
@@ -21,7 +17,6 @@
 }
 
 h1 {
-    border-bottom: 1px solid #AFAFAF; 
     font-size:  22px  !important;
     font-weight: bold !important;
     color: #D20005 !important;
@@ -156,3 +151,25 @@ button {
     -moz-column-count:3; /* Firefox */
     column-count:3;
 }
+
+.iconFix .ui-icon {
+    margin-left: -9px !important;
+    margin-top: -9px !important;
+}
+
+h3 a {
+    font-size:  22px  !important;
+    font-weight: bold !important;
+    color: #D20005 !important;
+    text-align: left !important;
+    margin-top: 10px !important;
+    padding: 5px 5px 5px 2.2em !important;
+    background: none !important;
+    border-bottom: 1px solid black;
+}
+
+h3 {
+    background: none !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid black !important;
+} 

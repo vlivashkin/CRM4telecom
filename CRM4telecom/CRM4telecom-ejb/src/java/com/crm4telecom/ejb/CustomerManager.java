@@ -10,10 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+
 @Stateless
 public class CustomerManager implements CustomerManagerLocal {
 
-    private final Logger log = Logger.getLogger ( getClass ().getName () ) ;
+    private final Logger log = Logger.getLogger(getClass().getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -22,7 +23,7 @@ public class CustomerManager implements CustomerManagerLocal {
     public void createCustomer(Customer customer) {
         if (customer != null) {
             persist(customer);
-            
+
         } else {
             throw new IllegalArgumentException("Customer can't be null");
         }
@@ -40,7 +41,7 @@ public class CustomerManager implements CustomerManagerLocal {
             throw new IllegalArgumentException("CustomerId can't be null");
         }
         if (customerId > 0) {
-            customer =  find(customerId);
+            customer = find(customerId);
         } else {
             return null;
         }
@@ -50,13 +51,13 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public List<Market> getMarkets(Customer customer) {
-        
-        if( customer != null){
-        String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
 
-        Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
-        return query.getResultList();
-        }else{
+        if (customer != null) {
+            String sqlQuery = "SELECT c FROM MarketsCustomers c WHERE c.marketsCustomersPK.customerId = :customerId";
+
+            Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
+            return query.getResultList();
+        } else {
             throw new IllegalArgumentException("Customer cannot be null");
         }
     }
@@ -102,8 +103,8 @@ public class CustomerManager implements CustomerManagerLocal {
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
-        if ( log.isInfoEnabled() ){
-        log.info("Make query in Customer table "+sqlQuery);
+        if (log.isInfoEnabled()) {
+            log.info("Make query in Customer table " + sqlQuery);
         }
         return query.getResultList();
     }
@@ -164,19 +165,19 @@ public class CustomerManager implements CustomerManagerLocal {
             }
             sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
         }
-        if ( log.isInfoEnabled() ){
-        log.info("Make query in Customer table "+sqlQuery);
+        if (log.isInfoEnabled()) {
+            log.info("Make query in Customer table " + sqlQuery);
         }
         return em.createQuery(sqlQuery).getResultList();
     }
-    
+
     @Override
     public void persist(Customer c) {
         em.persist(c);
     }
-    
-    @Override 
-    public Customer find(long customerId){
+
+    @Override
+    public Customer find(long customerId) {
         return em.find(Customer.class, customerId);
     }
 }

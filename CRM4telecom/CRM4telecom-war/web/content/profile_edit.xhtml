@@ -9,15 +9,15 @@
     </ui:define>
 
     <ui:define name="title">
-        CRM4Telecom | Add user
+        CRM4Telecom | Edit profile
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="Add User" immediate="true" onclick="clk('this');" /> 
+        <p:menuitem value="Edit profile" immediate="true" onclick="clk('this')" /> 
     </ui:define>
 
     <ui:define name="header">
-        <h:outputText value="Add new User" />
+        <h:outputText value="Edit profile" />
     </ui:define> 
 
     <ui:define name="headerbuttons">
@@ -25,13 +25,13 @@
     </ui:define>
 
     <ui:define name="content">
-            <h:form id="editform">
-                <p:messages />
+        <h:form id="editform">
+            <p:messages />
 
-                <ui:include src="./frames/userForm.xhtml" />
+            <ui:include src="./frames/userForm.xhtml" />
 
-                <p:commandButton value="Save" icon="ui-icon-check" action="#{userValidationBean.create()}" />
-                <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />
-            </h:form>
+            <p:commandButton value="Save" icon="ui-icon-check" action="#{userValidationBean.create()}" />
+            <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />
+        </h:form>
     </ui:define>
 </ui:composition>

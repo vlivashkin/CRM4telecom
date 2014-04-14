@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="signin.css"/>
+
+        <title>CRM4telecom | Sign in</title>
+
+    </h:head>
+
+    <h:body>
+        <h:form id="headerForm">
+            <div class="ui-menu ui-menubar ui-widget-content ui-corner-all">
+                <div class="container">
+                    <p:menubar style="border: none; background: none; padding: 0;">
+                        <p:menuitem value="CRM4telecom" onclick="clk('index')" immediate="true" styleClass="header-logo"/>
+
+                        <f:facet name="options" >  
+                            <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
+                                <p:menuitem value="List of customers" onclick="clk('customer_list')" immediate="true" icon="ui-icon-note"/>  
+                                <p:menuitem value="List of orders" onclick="clk('order_list')" immediate="true" icon="ui-icon-note"/>  
+                                <p:menuitem value="Add customer" onclick="clk('customer_add')" immediate="true" icon="ui-icon-plus"/> 
+                                <p:menuitem value="Add order" onclick="clk('order_add')" immediate="true" icon="ui-icon-plus"/>
+                                <p:separator />
+                                <c:if test="#{userBean.isAdmin}">
+                                    <p:menuitem value="List of users" onclick="clk('user_list')" immediate="true" icon="ui-icon-note"/>  
+                                    <p:menuitem value="Add user" onclick="clk('user_add')" immediate="true" icon="ui-icon-plus"/>
+                                    <p:separator />  
+                                </c:if>
+                                <p:menuitem value="Main Page" onclick="clk('index')" icon="ui-icon-home"/>  
+                            </p:menuButton>
+                            <p:commandButton rendered="#{userBean.isLogged()}" immediate="true" icon="ui-icon-gear" styleClass="iconFix" action="#{userBean.logout}" />
+                            <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" />  
+                            <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="login?faces-redirect=true" />                             
+                        </f:facet> 
+                    </p:menubar> 
+                </div>
+            </div>
+        </h:form>
+
+        <center>
+            <div style="padding-top: 30px; padding-bottom: 15px">
+                <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:70px;" />
+            </div>
+        </center>
+
+        <div class="container" style="margin-top: 50px;">
+            <h:form id="loginForm" class="form-signin">
+                <h2 class="form-signin-heading" style="margin-top: 0px;">Sign in</h2>
+                <p:messages />
+                <p:inputText styleClass="form-control username" placeholder="Username" id="username" value="#{userBean.uname}" required="true" requiredMessage="Please enter your username" />
+                <p:password styleClass="form-control password" placeholder="Password" id="password" value="#{userBean.password}" required="true" requiredMessage="Please enter your password" />
+                <p:commandButton value="Sign in" update="loginForm" action="#{userBean.login}" />
+            </h:form>
+        </div>
+    </h:body>
+</html>

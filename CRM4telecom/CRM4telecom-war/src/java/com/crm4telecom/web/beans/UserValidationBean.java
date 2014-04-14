@@ -3,7 +3,7 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.UserManagerLocal;
 import com.crm4telecom.enums.UserType;
-import com.crm4telecom.jpa.Users;
+import com.crm4telecom.jpa.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -77,7 +77,7 @@ public class UserValidationBean implements Serializable {
     }
 
     public String create() {
-        Users u = new Users();
+        User u = new User();
         u.setLogin(login);
         u.setPassword(password);
         u.setType(type);

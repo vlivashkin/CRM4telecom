@@ -3,7 +3,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="metadata">
 
     </ui:define>
@@ -17,42 +18,54 @@
     </ui:define>
 
     <ui:define name="header">
-        <center>
-            <div style="padding: 20px">
-                <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:70px;" />
-            </div>
-        </center>
+
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+
     </ui:define>
 
     <ui:define name="content">
-        <h1>Common info</h1>
-        <div class="container statistic">
-            Number of customers: #{resourcesBean.customersCount}<br/>
-            Number of orders: #{resourcesBean.ordersCount}<br/>
-            bla bla<br/>
-            bla bla<br/>
-            bla bla<br/>
-        </div>    
+        <h:outputText value="Last activity #{session.lastAccessedTime}" style="float: right">
+            <f:convertDateTime pattern="d-M-yyyy" type="long" />
+        </h:outputText>
 
-        <h1>Common actions</h1>
-        <h:form>
-            <center>
-                <p:commandButton value="Customers" styleClass="index-button" action="customer_list?faces-redirect=true"/>
-                <p:commandButton value="Add customer" styleClass="index-button" action="customer_add?faces-redirect=true"/>
-                <p:commandButton value="Orders" styleClass="index-button" action="order_list?faces-redirect=true"/>
-                <p:commandButton value="Add order" styleClass="index-button" action="order_add?faces-redirect=true"/>
-            </center>
-        </h:form>
-        <c:if test="#{userBean.isAdmin}">
-            <h1>Admin actions</h1>
-            <h:form>
-                <center>
-                    <p:commandButton value="Users" styleClass="index-button" action="user_list?faces-redirect=true" />
-                    <p:commandButton value="Add user" styleClass="index-button" action="user_add?faces-redirect=true" />
-                </center>
-            </h:form>
-        </c:if>
+        <center>
+            <div style="padding-top: 30px; padding-bottom: 10px">
+                <h:outputText value="CRM4telecom" style="color:black; font-family: Georgia, serif; font-size:70px;" />
+            </div>
+        </center>
 
-
+        <div class="container">
+            <p:accordionPanel multiple="true" activeIndex="0,1,2">  
+                <p:tab title="Common info" >
+                    Number of customers: #{resourcesBean.customersCount}<br/>
+                    Number of orders: #{resourcesBean.ordersCount}<br/>
+                    bla bla<br/>
+                    bla bla<br/>
+                    bla bla<br/>
+                </p:tab>
+                <p:tab title="Common actions">
+                    <center>
+                        <h:form>
+                            <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list')" />
+                            <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add')" />
+                            <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list')" />
+                            <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add')" />
+                        </h:form>
+                    </center>
+                </p:tab>
+                <c:if test="#{userBean.isAdmin}">
+                    <p:tab title="Admin actions">
+                        <center>
+                            <h:form>
+                                <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list')" />
+                                <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add')" />
+                            </h:form>
+                        </center> 
+                    </p:tab>
+                </c:if>
+            </p:accordionPanel>
+        </div>
     </ui:define>
 </ui:composition>

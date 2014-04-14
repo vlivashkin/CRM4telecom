@@ -15,18 +15,17 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" immediate="true" action="customer_list?faces-redirect=true" />
+        <p:menuitem value="List of Customers" immediate="true" onclick="clk('customer_list')" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Customer #{customerInfoBean.customer}" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="Customer #{customerInfoBean.customer}" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="Customer #{customerInfoBean.customer}" />
-            <h:form id="headerstatus">
-                <h:outputLabel value="#{customerInfoBean.customer.status.label}" styleClass="customer-status #{customerInfoBean.customer.status.color}" />
-            </h:form>
-        </h1>
+        <h:outputText value="Customer #{customerInfoBean.customer}" />
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+        <h:outputLabel value="#{customerInfoBean.customer.status.label}" styleClass="customer-status #{customerInfoBean.customer.status.color}" />
     </ui:define>
 
     <ui:define name="leftcolumn">
@@ -67,7 +66,7 @@
             </h:panelGroup>
         </p:panelGrid>
     </ui:define>
-    
+
     <ui:define name="rightcolumn">
         <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
             <f:facet name="header">

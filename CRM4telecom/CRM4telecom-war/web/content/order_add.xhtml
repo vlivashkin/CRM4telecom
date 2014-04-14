@@ -15,15 +15,17 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Orders" immediate="true" action="order_list?faces-redirect=true" />
+        <p:menuitem value="List of Orders" immediate="true" onclick="clk('order_list')" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Add new Order" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="Add new Order" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="Add new Order" />
-        </h1>
+        <h:outputText value="Add new Order" />
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+
     </ui:define>
 
     <ui:define name="content">

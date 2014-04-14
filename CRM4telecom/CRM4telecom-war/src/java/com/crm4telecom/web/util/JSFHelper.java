@@ -7,6 +7,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.omnifaces.util.Faces;
 
 /**
  * Provides some useful routines for working with JSF context and session.
@@ -71,12 +72,14 @@ public class JSFHelper {
     }
 
     public void redirect(String nav) {
+        Faces.getFlash().setRedirect(true);
         NavigationHandler handler = getApplication().getNavigationHandler();
         nav += "?faces-redirect=true";
         handler.handleNavigation(getFacesContext(), null, nav);
     }
 
     public void redirect(String nav, String... params) {
+        Faces.getFlash().setRedirect(true);
         NavigationHandler handler = getApplication().getNavigationHandler();
         nav += "?faces-redirect=true&";
         for (int i = 0; i < params.length - 1; i += 2) {

@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="metadata">
-        
+
     </ui:define>
 
     <ui:define name="title">
@@ -13,15 +13,17 @@
     </ui:define>
 
     <ui:define name="navbar">
-        <p:menuitem value="List of Customers" immediate="true" action="customer_list?faces-redirect=true" />
+        <p:menuitem value="List of Customers" immediate="true" onclick="clk('customer_list');" />
         <p:menuitem value="&gt;" disabled="true" />
-        <p:menuitem value="Add new Customer" immediate="true" onclick="location.reload();" />
+        <p:menuitem value="Add new Customer" immediate="true" onclick="clk('this');" />
     </ui:define>
 
     <ui:define name="header">
-        <h1>
-            <h:outputText value="Add new Customer" />
-        </h1>
+        <h:outputText value="Add new Customer" />
+    </ui:define>
+
+    <ui:define name="headerbuttons">
+        
     </ui:define>
 
     <ui:define name="content">

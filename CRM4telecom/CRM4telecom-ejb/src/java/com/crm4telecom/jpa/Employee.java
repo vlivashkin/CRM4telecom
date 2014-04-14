@@ -44,7 +44,7 @@ public class Employee implements Serializable {
     private List<OrderProcessing> orderProcessingList;
 
     @OneToMany(mappedBy = "employeeId")
-    private List<Users> usersList;
+    private List<User> usersList;
 
     public Employee() {
     }
@@ -103,11 +103,11 @@ public class Employee implements Serializable {
     }
 
     @XmlTransient
-    public List<Users> getUsersList() {
+    public List<User> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<Users> usersList) {
+    public void setUsersList(List<User> usersList) {
         this.usersList = usersList;
     }
 
