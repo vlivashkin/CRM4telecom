@@ -34,11 +34,10 @@ public class MailManager {
     private final static String host = "smtp.gmail.com";
     private final static Integer port = 587;
     private final static int maxAttemp = 3;
-    private static String subject;
-    private static StringWriter writer;
+    
+     
 
     public void statusChangedEmail(final Order order, List<OrderProcessing> steps) throws MessagingException {
-        subject = "Order #" + order.getOrderId();
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
@@ -49,16 +48,16 @@ public class MailManager {
         context.put("firstName", order.getCustomer().getFirstName());
         context.put("lastName", order.getCustomer().getLastName());
         context.put("orderId", order.getOrderId());
-        context.put("status", order.getStatus());
+        context.put("step", order.getProcessStep().toString());
         context.put("steps", steps);
-        writer = new StringWriter();
+        StringWriter writer = new StringWriter();
         t.merge(context, writer);
         service.schedule(new SendChecker(
-                service.schedule(new EmailSender(0,order.getCustomer().getEmail(),subject,writer.toString()), 0, TimeUnit.MILLISECONDS),order.getCustomer().getEmail(),subject,writer.toString()),
+                service.schedule(new EmailSender(0,order.getCustomer().getEmail(),"Order #" + order.getOrderId(),writer.toString()), 0, TimeUnit.MILLISECONDS),order.getCustomer().getEmail(),"Order #" + order.getOrderId(),writer.toString()),
                 100, TimeUnit.MILLISECONDS);
     }
 
-    public static boolean send(String to, String subject, String text) throws Exception {
+    public static boolean send( String to,final String subject,final String text) throws Exception {
 
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.auth", auth.toString());
@@ -81,18 +80,8 @@ public class MailManager {
         message.setSubject(subject);
         message.setContent(text, "text/html");
         Transport.send(message);
-
         //   throw new MessagingException();
-        return false;
-    }
-
-    private static class FutureArray {
-
-        public Future[] arrfuture = new Future[6];
-        public String[] email = new String[6];
-        public String[] text = new String[6];
-        public String[] subject = new String[6];
-        public int[] attempt = new int[6];
+        return true;
     }
 
     private static class EmailSender implements Callable {
@@ -102,7 +91,7 @@ public class MailManager {
         private final String subject;
         private final String text;
         
-        public EmailSender(int attemp,String email,String subject, String text) {
+        public  EmailSender(int attemp,String email,String subject, String text) {
             this.attemp = attemp;
             this.email = email;
             this.subject = subject;
@@ -111,7 +100,7 @@ public class MailManager {
 
         @Override
         public ScheduledFuture call() throws MessagingException, Exception {
-            boolean sent = send(email, subject, writer.toString());
+            boolean sent = send(this.email, this.subject, this.text);
 
             if (sent) {
                 return null;
@@ -123,7 +112,7 @@ public class MailManager {
                 log.warn("Can't send email attemp : " + (attemp + 1));
             }
             return service.schedule(new SendChecker(
-                    service.schedule(new EmailSender(attemp + 1,email,subject,text), 100, TimeUnit.MILLISECONDS),email,subject,text),
+                    service.schedule(new EmailSender(this.attemp + 1,this.email,this.subject,this.text), 100, TimeUnit.MILLISECONDS),this.email,this.subject,this.text),
                     3000, TimeUnit.MILLISECONDS);
         }
     }
@@ -145,10 +134,9 @@ public class MailManager {
         @Override
         public void run() {
             try {
-                boolean b = false;
-                if (b = itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
+                if ( itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
                     if (log.isInfoEnabled()) {
-                        log.info("Send message because changing order : " + subject + " to " + email);
+                        log.info("Send message because changing order : " + this.subject + " to " + this.email);
                     }
                 }
             } catch (InterruptedException ex) {
@@ -160,7 +148,7 @@ public class MailManager {
                     log.error("Cant send email." , ex);
                 }
             } catch (TimeoutException ex) {
-                service.schedule(new SendChecker(itemToCheck,email,subject,text), 300, TimeUnit.MILLISECONDS);
+                service.schedule(new SendChecker(this.itemToCheck,this.email,this.subject,this.text), 300, TimeUnit.MILLISECONDS);
             }
         }
 
