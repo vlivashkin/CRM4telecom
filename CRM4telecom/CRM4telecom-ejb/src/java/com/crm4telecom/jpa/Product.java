@@ -1,10 +1,13 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.ProductProperties;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -42,8 +45,8 @@ public class Product implements Serializable {
     private Long baselinePrice;
 
     @Size(max = 30)
-    @Column(length = 30)
-    private String properties;
+    @Enumerated(EnumType.STRING)
+    private ProductProperties properties;
 
     @OneToMany(mappedBy = "productId")
     private List<Order> ordersList;
@@ -103,11 +106,11 @@ public class Product implements Serializable {
         this.baselinePrice = baselinePrice;
     }
 
-    public String getProperties() {
+    public ProductProperties getProperties() {
         return properties;
     }
 
-    public void setProperties(String properties) {
+    public void setProperties(ProductProperties properties) {
         this.properties = properties;
     }
 

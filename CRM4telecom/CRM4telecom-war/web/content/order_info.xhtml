@@ -66,12 +66,8 @@
             </f:facet>
 
             <p:column headerText="Step Name">
-                <h:outputText value="#{orderProcessing.stepEvent.label}"/>
+                <h:outputText value="#{orderProcessing.stepName.label}"/>
             </p:column>
-
-            <p:column headerText="Description">
-                <h:outputText value="#{orderProcessing.description}"/>
-            </p:column> 
 
             <p:column headerText="Start Date">
                 <h:outputText value="#{orderProcessing.startDateShort}"/>
