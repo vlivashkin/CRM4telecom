@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Order_Processing", catalog = "")
+@Table(name = "ORDER_PROCESSING", catalog = "", schema = "CRM4TELECOM")
 public class OrderProcessing implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,19 +27,8 @@ public class OrderProcessing implements Serializable {
     @Id
     @GeneratedValue(generator = "SEC_STEP_ID", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "SEC_STEP_ID", sequenceName = "SEC_STEP_ID", allocationSize = 1)
-    @Column(name = "STEP_ID")
+    @Column(name = "STEP_ID", nullable = false, precision = 19, scale = 0)
     private Long stepId;
-
-    @Column(name = "STEP_NAME")
-    @Enumerated(EnumType.STRING)
-    private OrderStep stepEvent;
-
-    @Column(name = "DESCRIPTION")
-    private String description;
-
-    @Column(name = "START_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
 
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +38,17 @@ public class OrderProcessing implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateHard;
 
+    @Column(name = "ORDER_ID")
+    private Long orderId;
+
+    @Column(name = "START_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
+
+    @Column(name = "STEP_NAME")
+    @Enumerated(EnumType.STRING)
+    private OrderStep stepName;
+
     @JoinColumn(name = "EQUIPMENT_ID", referencedColumnName = "EQUIPMENT_ID")
     @ManyToOne
     private Equipment equipmentId;
@@ -57,46 +57,19 @@ public class OrderProcessing implements Serializable {
     @ManyToOne
     private Employee employeeId;
 
-    @Column(name = "ORDER_ID")
-    private Long orderId;
-
     public OrderProcessing() {
+    }
+
+    public OrderProcessing(Long stepId) {
+        this.stepId = stepId;
     }
 
     public Long getStepId() {
         return stepId;
     }
 
-    public OrderStep getStepEvent() {
-        return stepEvent;
-    }
-
-    public void setStepEvent(OrderStep stepEvent) {
-        this.stepEvent = stepEvent;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public String getStartDateShort() {
-        if (startDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
-            return dateFormat.format(startDate);
-        }
-        return null;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
     }
 
     public Date getEndDate() {
@@ -123,28 +96,52 @@ public class OrderProcessing implements Serializable {
         this.endDateHard = endDateHard;
     }
 
-    public Equipment getEquipmentId() {
-        return equipmentId;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public String getStartDateShort() {
+        if (startDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+            return dateFormat.format(startDate);
+        }
+        return null;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public OrderStep getStepName() {
+        return stepName;
+    }
+
+    public void setStepName(OrderStep stepName) {
+        this.stepName = stepName;
+    }
+
+    public Equipment getEquipmentId() {
+        return equipmentId;
     }
 
     public void setEquipmentId(Equipment equipmentId) {
         this.equipmentId = equipmentId;
     }
 
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
+
     public void setEmployeeId(Employee employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long order) {
-        this.orderId = order;
     }
 
     @Override

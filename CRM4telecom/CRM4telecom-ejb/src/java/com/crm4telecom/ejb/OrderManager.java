@@ -45,7 +45,7 @@ public class OrderManager implements OrderManagerLocal {
         OrderProcessing op = new OrderProcessing();
         op.setOrderId(order.getOrderId());
         op.setStartDate(date);
-        op.setStepEvent(OrderStep.PRE_CONFIRM);
+        op.setStepName(OrderStep.PRE_CONFIRM);
         em.persist(op);
 
         return order;
@@ -314,7 +314,7 @@ public class OrderManager implements OrderManagerLocal {
                 // create new step in OrderProcessing
                 newStep.setOrderId(order.getOrderId());
                 newStep.setStartDate(new Date());
-                newStep.setStepEvent(nextStep);
+                newStep.setStepName(nextStep);
                 em.persist(newStep);
 
                 // update information about current step in order

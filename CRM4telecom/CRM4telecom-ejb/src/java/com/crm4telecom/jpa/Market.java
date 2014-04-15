@@ -9,23 +9,21 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(catalog = "")
+@Table(catalog = "", schema = "CRM4TELECOM")
 public class Market implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @NotNull
-    @Column(name = "MARKET_ID", nullable = false, precision = 38, scale = 0)
+    @Column(name = "MARKET_ID")
     private Long marketId;
 
-    @Size(max = 30)
-    @Column(length = 30)
-    private String name;
+    @Size(max = 200)
+    private String description;
 
     @Size(max = 30)
-    @Column(length = 30)
-    private String description;
+    private String name;
 
     public Market() {
     }
@@ -42,20 +40,20 @@ public class Market implements Serializable {
         this.marketId = marketId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

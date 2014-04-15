@@ -1,33 +1,33 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(catalog = "")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @NotNull
-    @Column(name = "PRODUCT_ID", nullable = false, precision = 38, scale = 0)
+    @Column(name = "PRODUCT_ID", nullable = false, precision = 22, scale = 0)
     private Long productId;
 
+    @Size(max = 30)
     @Column(length = 30)
     private String name;
 
-    @Column(length = 30)
+    @Size(max = 300)
+    @Column(length = 300)
     private String description;
 
     @Column(name = "SALES_PERIOD_START")
@@ -40,6 +40,10 @@ public class Product implements Serializable {
 
     @Column(name = "BASELINE_PRICE")
     private Long baselinePrice;
+
+    @Size(max = 30)
+    @Column(length = 30)
+    private String properties;
 
     @OneToMany(mappedBy = "productId")
     private List<Order> ordersList;
@@ -99,7 +103,14 @@ public class Product implements Serializable {
         this.baselinePrice = baselinePrice;
     }
 
-    @XmlTransient
+    public String getProperties() {
+        return properties;
+    }
+
+    public void setProperties(String properties) {
+        this.properties = properties;
+    }
+
     public List<Order> getOrdersList() {
         return ordersList;
     }
