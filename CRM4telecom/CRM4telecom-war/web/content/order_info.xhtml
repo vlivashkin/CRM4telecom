@@ -33,7 +33,7 @@
         <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
             <h:outputText value="Product:" styleClass="leftcolumn"/>
             <h:outputText value="#{orderInfoBean.order.product}"/>
-            
+
             <h:outputText value="Descriprtion:" styleClass="leftcolumn"/>
             <h:outputText value="#{orderInfoBean.order.product.description}"/>
 
@@ -104,19 +104,20 @@
     </ui:define>
 
     <ui:define name="footer">
-        <p:dataGrid var="comment" value="#{orderInfoBean.comment.comments}" columns="1"  
-                    rows="5" paginator="true"  
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                    rowsPerPageTemplate="5,10,15">  
+        <p:dataGrid id="commentbox" var="comment" value="#{orderInfoBean.comment.comments}" columns="1">  
 
             <p:panel header="#{comment.owner} commented at #{comment.date}" style="text-align:center">  
                 <pre>#{comment.text}</pre>  
             </p:panel> 
 
             <f:facet name="footer">  
-                <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" style="width: calc(100% - 110px)"/> 
+                <p:inputTextarea id="commentinput" rows="2" cols="33" value="#{orderInfoBean.comment.text}" style="width: calc(100% - 110px)"/> 
                 <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":footer" style="float: right"/>
             </f:facet>
-        </p:dataGrid>   
+        </p:dataGrid>  
+
+        <script type="text/javascript">
+            $('#footer\\:commentbox\\:commentinput').attr('placeholder', 'Type your comment here...');
+        </script> 
     </ui:define>
 </ui:composition>

@@ -8,9 +8,9 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
+
         <h:outputScript library="js" name="main.js"/>
-        
+
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="signin.css"/>
@@ -62,7 +62,14 @@
                 <p:inputText styleClass="form-control username" id="username" value="#{userBean.uname}" required="true" requiredMessage="Please enter your username" />
                 <p:password styleClass="form-control password" id="password" value="#{userBean.password}" required="true" requiredMessage="Please enter your password" />
                 <p:commandButton value="Sign in" update="loginForm" action="#{userBean.login}" />
+
+                <script type="text/javascript">
+                    $('#loginForm\\:username').attr('placeholder', 'Username');
+                    $('#loginForm\\:password').attr('placeholder', 'Password');
+                </script> 
             </h:form>
         </div>
+
+
     </h:body>
 </html>

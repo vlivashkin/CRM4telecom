@@ -79,8 +79,10 @@ public class OrderValidationBean implements Serializable {
         order.setEmployee(gm.getEmployee(employeeId));
         order.setProduct(gm.getProduct(product));
         order.setPriority(priority);
-        order.setOrderType(type);
-        order.setTechSupport(technicalSupportFlag);
+        if (isNewOrder()) {
+            order.setOrderType(type);
+            order.setTechSupport(technicalSupportFlag);
+        }
     }
 
     public String getCustomer() {

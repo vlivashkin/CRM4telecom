@@ -15,20 +15,6 @@
                 <p:message for="customer" />
             </div>
         </div>
-        <c:if test="#{orderInfoBean.ov.isNewOrder()}">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
-                <div class="col-sm-4">
-                    <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
-                        <f:selectItems value="#{resourcesBean.types}" var="type"
-                                       itemValue="#{type}" itemLabel="#{type.label}"/>
-                    </p:selectOneMenu>
-                </div>
-                <div class="col-sm-4">
-                    <p:message for="type" /> 
-                </div>
-            </div>
-        </c:if>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="priority" value="Priority:" /> 
             <div class="col-sm-4">
@@ -65,6 +51,19 @@
         </div>
 
         <c:if test="#{orderInfoBean.ov.isNewOrder()}">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
+                <div class="col-sm-4">
+                    <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
+                        <f:selectItems value="#{resourcesBean.types}" var="type"
+                                       itemValue="#{type}" itemLabel="#{type.label}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="col-sm-4">
+                    <p:message for="type" /> 
+                </div>
+            </div>
+
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="techSupport" value="Tech support flag:" />  
                 <div class="col-sm-4">
