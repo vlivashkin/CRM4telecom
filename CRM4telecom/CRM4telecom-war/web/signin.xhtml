@@ -59,8 +59,8 @@
             <h:form id="loginForm" class="form-signin">
                 <h2 class="form-signin-heading" style="margin-top: 0px;">Sign in</h2>
                 <p:messages />
-                <p:inputText styleClass="form-control username" placeholder="Username" id="username" value="#{userBean.uname}" required="true" requiredMessage="Please enter your username" />
-                <p:password styleClass="form-control password" placeholder="Password" id="password" value="#{userBean.password}" required="true" requiredMessage="Please enter your password" />
+                <p:inputText styleClass="form-control username" id="username" value="#{userBean.uname}" required="true" requiredMessage="Please enter your username" />
+                <p:password styleClass="form-control password" id="password" value="#{userBean.password}" required="true" requiredMessage="Please enter your password" />
                 <p:commandButton value="Sign in" update="loginForm" action="#{userBean.login}" />
             </h:form>
         </div>

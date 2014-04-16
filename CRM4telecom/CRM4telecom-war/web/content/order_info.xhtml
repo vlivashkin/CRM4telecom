@@ -114,7 +114,7 @@
             </p:panel> 
 
             <f:facet name="footer">  
-                <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" placeholder="Type your comment here..." style="width: calc(100% - 110px)"/> 
+                <p:inputTextarea rows="2" cols="33" value="#{orderInfoBean.comment.text}" style="width: calc(100% - 110px)"/> 
                 <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":footer" style="float: right"/>
             </f:facet>
         </p:dataGrid>   
