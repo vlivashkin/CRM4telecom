@@ -270,7 +270,7 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public List<String> completeOrder(String rawOrder) {
-        List<String> orders = new ArrayList<>();
+        List<String> orders = new ArrayList<String>();
         String raw = rawOrder.trim();
         Long id = 1L;
         if (raw.matches("^\\d+$")) {
