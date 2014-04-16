@@ -1,9 +1,12 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.enums.IpStatus;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +27,8 @@ public class StaticIp implements Serializable {
     @Column(nullable = false, length = 30)
     private String ip;
 
-    @Size(max = 30)
-    @Column(length = 30)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private IpStatus status;
 
     @Size(max = 30)
     @Column(name = "STATUS_COMMENT", length = 30)
@@ -54,11 +56,11 @@ public class StaticIp implements Serializable {
         this.ip = ip;
     }
 
-    public String getStatus() {
+    public IpStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(IpStatus status) {
         this.status = status;
     }
 

@@ -20,7 +20,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(catalog = "")
@@ -78,10 +77,10 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<PhoneNumber> phoneNumberList;
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<StaticIp> staticIpList;
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<Order> ordersList;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
@@ -192,7 +191,6 @@ public class Customer implements Serializable {
         this.balance = balance;
     }
 
-    @XmlTransient
     public List<PhoneNumber> getPhoneNumberList() {
         return phoneNumberList;
     }
@@ -201,7 +199,6 @@ public class Customer implements Serializable {
         this.phoneNumberList = phoneNumberList;
     }
 
-    @XmlTransient
     public List<StaticIp> getStaticIpList() {
         return staticIpList;
     }
@@ -210,7 +207,6 @@ public class Customer implements Serializable {
         this.staticIpList = staticIpList;
     }
 
-    @XmlTransient
     public List<Order> getOrdersList() {
         return ordersList;
     }

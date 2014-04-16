@@ -46,13 +46,14 @@
         </div>
 
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="building" value="Building:" />  
-            <div class="col-sm-2">
-                <p:inputText id="building" value="#{customerInfoBean.cv.building}" label="Building"/>  
-            </div>
-            <h:outputLabel styleClass="col-sm-2 control-label" for="flat" value="Flat:" />  
-            <div class="col-sm-2">
-                <p:inputText id="flat" value="#{customerInfoBean.cv.flat}" label="Flat"/>  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="building" value="" />  
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <h:outputLabel styleClass="control-label input-group-addon" for="building" value="Building:" />  
+                    <p:inputText id="building" value="#{customerInfoBean.cv.building}" label="Building"/>  
+                    <h:outputLabel styleClass="control-label input-group-addon" for="flat" value="Flat:" />  
+                    <p:inputText id="flat" value="#{customerInfoBean.cv.flat}" label="Flat"/>  
+                </div>
             </div>
             <div class="col-sm-4">
                 <p:message for="building" />

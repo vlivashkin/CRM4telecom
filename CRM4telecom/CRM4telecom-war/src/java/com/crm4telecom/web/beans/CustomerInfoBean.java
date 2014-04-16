@@ -29,7 +29,7 @@ public class CustomerInfoBean implements Serializable {
 
     @EJB
     private GetManagerLocal gm;
-    
+
     @Inject
     private CustomerValidationBean cv;
 
@@ -75,7 +75,7 @@ public class CustomerInfoBean implements Serializable {
 
         customer = customerNew;
 
-        for(String temp : cv.getMarkets()) {
+        for (String temp : cv.getMarkets()) {
             Market market = gm.getMarket(temp);
             MarketsCustomers mc = new MarketsCustomers();
             MarketsCustomersPK mcpk = new MarketsCustomersPK();
@@ -84,15 +84,15 @@ public class CustomerInfoBean implements Serializable {
             mc.setMarketsCustomersPK(mcpk);
             cm.addMarket(mc);
         }
-        
+
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
     }
 
     public void modify() {
         cv.fillCustomer(customer);
-        cm.modifyCustomer(customer);       
-        
+        cm.modifyCustomer(customer);
+
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
     }

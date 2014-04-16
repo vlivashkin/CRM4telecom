@@ -15,10 +15,23 @@ import org.apache.log4j.Logger;
 @Stateless
 public class GetManager implements GetManagerLocal {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(getClass().getName());
 
     @PersistenceContext
     private EntityManager em;
+
+    @Override
+    public Product getProduct(Long productId) {
+        if (productId != null) {
+            if (productId > 0) {
+                return em.find(Product.class, productId);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException("ProductId can't be null");
+        }
+    }
 
     @Override
     public Product getProduct(String product) {
@@ -68,7 +81,6 @@ public class GetManager implements GetManagerLocal {
         } else {
             throw new IllegalArgumentException("EmployeeId can't be null");
         }
-
     }
 
     @Override
@@ -127,7 +139,7 @@ public class GetManager implements GetManagerLocal {
     public Product create(String sqlQuery, String product) {
         Query query = em.createQuery(sqlQuery).setParameter("name", product);
         return (Product) query.getResultList().get(0);
-}
+    }
 
     @Override
     public Employee find(long employeeId) {

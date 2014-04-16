@@ -30,28 +30,31 @@
 
     <ui:define name="leftcolumn">
         <p:panelGrid styleClass="noBorders" style="width: 100%" columns="2">
-            <h:outputLabel value="Status:" style="float: right"/>
-            <h:outputText value="#{orderInfoBean.order.status.label}"/>
+            <h:outputText value="Product:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.product}"/>
+            
+            <h:outputText value="Descriprtion:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.product.description}"/>
 
-            <h:outputLabel value="Date:" style="float: right"/>
-            <h:outputText value="#{orderInfoBean.order.orderDate}"/>
-
-            <h:outputLabel value="Type:" style="float: right"/>
+            <h:outputText value="Type:" styleClass="leftcolumn"/>
             <h:outputText value="#{orderInfoBean.order.orderType.label}"/>
 
-            <h:outputLabel value="Priority:" style="float: right"/>
-            <h:outputText value="#{orderInfoBean.order.priority.label}"/>
-
-            <h:outputLabel value="Employee:" style="float: right"/>
-            <h:outputText value="#{orderInfoBean.order.employee}"/>
-
-            <h:outputLabel value="Customer:" style="float: right"/>
+            <h:outputText value="Customer:" styleClass="leftcolumn"/>
             <h:commandLink value="#{orderInfoBean.order.customer}" action="#{orderInfoBean.toCustomer}"/>
 
-            <h:outputLabel value="Product:" style="float: right"/>
-            <h:outputText value="#{orderInfoBean.order.product}"/>
+            <h:outputText value="Status:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.status.label}"/>
 
-            <h:outputLabel value="Tech support:" style="float: right"/>
+            <h:outputText value="Start Date:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.orderDate}"/>
+
+            <h:outputText value="Priority:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.priority.label}"/>
+
+            <h:outputText value="Employee:" styleClass="leftcolumn"/>
+            <h:outputText value="#{orderInfoBean.order.employee}"/>
+
+            <h:outputText value="Tech support:" styleClass="leftcolumn"/>
             <h:panelGroup>
                 <p:selectBooleanCheckbox id="techSupport" value="#{orderInfoBean.order.techSupport}" disabled="true"/>
                 <h:outputText value=" #{orderInfoBean.order.techSupport}"/>

@@ -25,7 +25,7 @@ public class OrderCommentBean implements Serializable {
     private List<Comment> comments;
     private String text;
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(getClass().getName());
     
     public void init(Order order) {
         this.order = order;

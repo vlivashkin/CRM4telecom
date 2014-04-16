@@ -9,7 +9,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,10 +24,7 @@ public class UserBean implements Serializable {
     @EJB
     private UserManagerLocal um;
 
-    @Inject
-    private UserValidationBean uv;
-
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(getClass().getName());
     private String uname;
     private String password;
 

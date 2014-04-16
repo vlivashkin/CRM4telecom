@@ -9,6 +9,8 @@ import javax.ejb.Local;
 @Local
 public interface GetManagerLocal {
 
+    public Product getProduct(Long productId);
+    
     public Product getProduct(String product);
 
     public List<String> getProductList();

@@ -42,17 +42,11 @@
             <h:outputText value="E-mail:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.email}"/>
 
-            <h:outputText value="Street:" styleClass="leftcolumn"/>
-            <h:outputText value="#{customerInfoBean.customer.street}"/>
-
-            <h:outputText value="Building:" styleClass="leftcolumn"/>
-            <h:outputText value="#{customerInfoBean.customer.building}"/>
-
-            <h:outputText value="Flat:" styleClass="leftcolumn"/>
-            <h:outputText value="#{customerInfoBean.customer.flat}"/>
-
             <h:outputText value="Phone number:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.phoneNumber}"/>
+
+            <h:outputText value="Address:" styleClass="leftcolumn"/>
+            <h:outputText value="#{customerInfoBean.customer.street}, #{customerInfoBean.customer.building}, #{customerInfoBean.customer.flat}"/>
 
             <h:outputText value="Balance:" styleClass="leftcolumn"/>
             <h:panelGroup>

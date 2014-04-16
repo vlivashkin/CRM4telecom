@@ -1,9 +1,10 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.ejb.filling.IpFillingLocal;
+import com.crm4telecom.ejb.filling.PhoneFillingLocal;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderStep;
-import com.crm4telecom.jpa.Customer;
+import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
@@ -32,6 +33,9 @@ public class OrderManager implements OrderManagerLocal {
 
     @EJB
     private IpFillingLocal ipFilling;
+    
+    @EJB
+    private PhoneFillingLocal phoneFilling;
 
     @Override
     public Order createOrder(Order order) {
@@ -321,11 +325,13 @@ public class OrderManager implements OrderManagerLocal {
                 order.setProcessStep(nextStep);
                 em.merge(order);
 
-                // use new ip
+                // use new ip/phone
                 if (nextStep == OrderStep.POST_CONFIRM) {
-                    String name = order.getProduct().getName();
-                    if (name.equals("IPoEUnlim100") || name.equals("IPoEUnlim60") || name.equals("IPoEBasic80")) {
+                    ProductProperties properties = order.getProduct().getProperties();
+                    if (properties.equals(ProductProperties.IP)) {
                         ipFilling.fillData(order.getCustomer());
+                    } else if (properties.equals(ProductProperties.PHONE)) {
+                        phoneFilling.fillData(order.getCustomer());
                     }
                 }
 

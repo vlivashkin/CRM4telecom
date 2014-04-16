@@ -19,7 +19,7 @@ import javax.persistence.Enumerated;
 public class OrderValidationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private CustomerManagerLocal cm;
 
@@ -142,8 +142,9 @@ public class OrderValidationBean implements Serializable {
     }
 
     public Boolean isNewOrder() {
-        if (newOrder == null)
+        if (newOrder == null) {
             return true;
+        }
         return newOrder;
     }
 }

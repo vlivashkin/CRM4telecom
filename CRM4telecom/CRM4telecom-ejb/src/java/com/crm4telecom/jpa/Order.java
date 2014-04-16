@@ -2,8 +2,6 @@ package com.crm4telecom.jpa;
 
 import com.crm4telecom.enums.*;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -188,8 +186,6 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-        return "#" + orderId + " " + dateFormat.format(orderDate);
+        return "#" + orderId + ": " + orderType.getLabel() + " " + productId.getName();
     }
-
 }

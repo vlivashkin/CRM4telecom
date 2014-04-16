@@ -45,7 +45,7 @@ public class GetManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetProduct_shouldThrowNullPointerException_whenProductIsNull() {
-        instance.getProduct(null);
+        instance.getProduct((String)null);
     }
 
     @Test

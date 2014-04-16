@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class CustomerManager implements CustomerManagerLocal {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private transient final Logger log = Logger.getLogger(getClass().getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -191,6 +191,8 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public Customer find(long customerId) {
-        return em.find(Customer.class, customerId);
+        Customer customer = em.find(Customer.class, customerId);
+        em.refresh(customer);
+        return customer;
     }
 }
