@@ -64,7 +64,7 @@ public class CustomerManager implements CustomerManagerLocal {
             Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
 
             List<Long> market_ids = query.getResultList();
-            List<Market> markets = new ArrayList<>();
+            List<Market> markets = new ArrayList<Market>();
             for (Long temp : market_ids) {
                 Query query2 = em.createQuery("SELECT u FROM Market u WHERE u.marketId = :id").setParameter("id", temp);
                 markets.add((Market) query2.getResultList().get(0));

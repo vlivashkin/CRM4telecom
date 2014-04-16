@@ -63,7 +63,7 @@ public class CustomerValidationBean implements Serializable {
             phoneNumber = customer.getPhoneNumber();
             status = customer.getStatus();
 
-            markets = new ArrayList<>();
+            markets = new ArrayList<String>();
             for (Market temp : cm.getMarkets(customer)) {
                 markets.add(temp.getName());
             }

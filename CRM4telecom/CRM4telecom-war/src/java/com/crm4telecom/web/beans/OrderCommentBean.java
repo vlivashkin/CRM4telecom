@@ -34,7 +34,7 @@ public class OrderCommentBean implements Serializable {
             String json = order.getComments().replace("\'", "\"");
             comments = gson.fromJson(json, List.class);
         } else {
-            comments = new ArrayList<>();
+            comments = new ArrayList<Comment>();
         }
     }
 
