@@ -92,7 +92,7 @@ public class OrderManager implements OrderManagerLocal {
                             Matcher m = p.matcher(val.get(0));
 
                             if (m2.matches()) {
-                                sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                sqlQuery += " ( LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
                             }
 
                             if (m.matches()) {
@@ -111,7 +111,7 @@ public class OrderManager implements OrderManagerLocal {
                                 Matcher m = p.matcher(val.get(0));
 
                                 if (m2.matches()) {
-                                    sqlQuery += " LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                    sqlQuery += "( LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
                                 }
 
                                 if (m.matches()) {
@@ -211,7 +211,7 @@ public class OrderManager implements OrderManagerLocal {
                             Matcher m2 = p2.matcher(val.get(0));
 
                             if (m2.matches()) {
-                                sqlQuery += " LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                sqlQuery += " ( LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "') )  AND";
                             }
                             if (m.matches()) {
                                 sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
@@ -229,7 +229,7 @@ public class OrderManager implements OrderManagerLocal {
                                 Matcher m = p.matcher(val.get(0));
 
                                 if (m2.matches()) {
-                                    sqlQuery += " LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "')  AND";
+                                    sqlQuery += " ( LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
                                 }
 
                                 if (m.matches()) {
