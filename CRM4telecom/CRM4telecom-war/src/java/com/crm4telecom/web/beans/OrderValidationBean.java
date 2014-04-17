@@ -28,9 +28,11 @@ public class OrderValidationBean implements Serializable {
 
     private String customer;
     private String employee;
-
+    private String product;
+    
     private Long customerId;
     private Long employeeId;
+    private Long productId;
 
     @Enumerated(EnumType.STRING)
     private OrderType type;
@@ -38,7 +40,7 @@ public class OrderValidationBean implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
 
-    private String product;
+    
 
     private Boolean technicalSupportFlag;
 
@@ -77,7 +79,7 @@ public class OrderValidationBean implements Serializable {
     public void fillOrder(Order order) {
         order.setCustomer(cm.getCustomer(customerId));
         order.setEmployee(gm.getEmployee(employeeId));
-        order.setProduct(gm.getProduct(product));
+        order.setProduct(gm.getProduct(productId));
         order.setPriority(priority);
         if (isNewOrder()) {
             order.setOrderType(type);
@@ -108,6 +110,7 @@ public class OrderValidationBean implements Serializable {
     }
 
     public void setProduct(String product) {
+        productId = Long.parseLong(product.substring(1, product.indexOf(" ")));
         this.product = product;
     }
 

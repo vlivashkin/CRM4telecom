@@ -8,6 +8,7 @@ import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.UserType;
+import com.crm4telecom.jpa.Product;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ResourcesBean implements Serializable {
         return OrderType.values();
     }
 
-    public List<String> getProducts() {
+    public List<Product> getProducts() {
         return gm.getProductList();
     }
 

@@ -40,9 +40,17 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" />  
             <div class="col-sm-4">
-                <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}">
+                <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}" var="p">
                     <f:selectItems value="#{resourcesBean.products}" var="product"
                                    itemValue="#{product}" itemLabel="#{product}"/>
+
+                    <p:column>  
+                        #{p.name}  
+                    </p:column>  
+
+                    <p:column>  
+                        #{p.baselinePrice}
+                    </p:column> 
                 </p:selectOneMenu>
             </div>
             <div class="col-sm-4">
@@ -57,6 +65,7 @@
                     <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
                         <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
+
                     </p:selectOneMenu>
                 </div>
                 <div class="col-sm-4">

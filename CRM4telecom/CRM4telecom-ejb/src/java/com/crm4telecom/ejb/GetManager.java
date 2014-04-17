@@ -45,8 +45,8 @@ public class GetManager implements GetManagerLocal {
     }
 
     @Override
-    public List<String> getProductList() {
-        String sqlQuery = "SELECT u.name FROM Product u";
+    public List<Product> getProductList() {
+        String sqlQuery = "SELECT u FROM Product u";
         Query query = em.createQuery(sqlQuery);
 
         return query.getResultList();

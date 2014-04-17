@@ -13,7 +13,7 @@ public interface GetManagerLocal {
     
     public Product getProduct(String product);
 
-    public List<String> getProductList();
+    public List<Product> getProductList();
 
     public Market getMarket(String market);
     
