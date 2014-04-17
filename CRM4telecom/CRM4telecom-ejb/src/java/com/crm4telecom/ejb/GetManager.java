@@ -1,5 +1,6 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Employee;
 import com.crm4telecom.jpa.Market;
@@ -111,17 +112,7 @@ public class GetManager implements GetManagerLocal {
             }
             return list;
         } else {
-            String[] split = raw.split(" ");
-            String sqlQuery
-                    = "SELECT c "
-                    + "FROM " + clazz.getName().substring(clazz.getName().lastIndexOf('.')+1) + " c "
-                    + "WHERE (LOWER(c.firstName) LIKE LOWER('%" + split[0] + "%') "
-                    + "or LOWER(c.lastName) LIKE LOWER('%" + split[0] + "%'))";
-            if (split.length > 1) {
-                sqlQuery
-                        += " and (LOWER(c.firstName) LIKE LOWER('%" + split[1] + "%')) "
-                        + "or LOWER(c.lastName) LIKE LOWER('%" + split[1] + "%')))";
-            }
+            String sqlQuery = SearchQuery.getCompleteQuery(clazz, rawString);
             Query query = em.createQuery(sqlQuery);
             query.setMaxResults(10);
             if (log.isInfoEnabled()) {

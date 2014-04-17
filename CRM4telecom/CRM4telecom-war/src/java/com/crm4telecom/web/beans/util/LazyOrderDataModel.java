@@ -40,16 +40,16 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
         if (StringUtils.isValidString(search.getCustomer())) {
             List<String> l = new ArrayList();
             l.add(search.getCustomer());
-            parameters.put("customerId", l);
+            parameters.put("customer", l);
         } else {
-            parameters.remove("customerId");
+            parameters.remove("customer");
         }
         if (StringUtils.isValidString(search.getEmployee())) {
             List<String> l = new ArrayList();
             l.add(search.getEmployee());
-            parameters.put("employeeId", l);
+            parameters.put("employee", l);
         } else {
-            parameters.remove("employeeId");
+            parameters.remove("employee");
         }
         if (search.getFromDate() != null) {
             List<String> date = new ArrayList();
