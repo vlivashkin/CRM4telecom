@@ -28,24 +28,23 @@ public class CustomerValidationBean implements Serializable {
 
     @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This first name is too long.")
-    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
+    @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String firstName;
 
     @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This last name is too long.")
-    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
+    @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String lastName;
 
     @Size(max = 30, message = "This email is too long.")
     @Pattern(regexp = "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email address")
     String email;
 
-    @Pattern(regexp = "^$|^+7 ([0-9]{3}) [0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Invalid phone number")
     String phoneNumber;
 
     @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This street name is too long.")
-    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
+    @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String street;
 
     List<String> markets;

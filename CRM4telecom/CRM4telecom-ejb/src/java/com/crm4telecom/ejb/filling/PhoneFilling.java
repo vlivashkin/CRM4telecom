@@ -42,13 +42,13 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
 
     @Override
     protected void getDataAndFree(Customer customer) {
-        String sqlQuery = "SELECT i FROM PhoneNumber i WHERE i.customerId = " + customer.getCustomerId();
-        Query query = em.createQuery(sqlQuery);
+        String sqlQuery = "SELECT i FROM PhoneNumber i WHERE i.customerId = :customer";
+        Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
         List<PhoneNumber> ipList = query.getResultList();
         if (ipList.size() > 0) {
             PhoneNumber phoneNumber = ipList.get(0);
             phoneNumber.setCustomerId(null);
-            phoneNumber.setStatus(null);
+            phoneNumber.setStatus(IpStatus.UNPLUGGED);
             em.merge(phoneNumber);
 
             if (log.isInfoEnabled()) {

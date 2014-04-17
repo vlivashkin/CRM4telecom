@@ -123,16 +123,20 @@
                 <h:outputText value="#{order.orderDate}" />  
             </p:column>  
 
+            <p:column headerText="Type" sortBy="orderType" filterBy="#{order.orderType}">  
+                <h:outputText value="#{order.orderType.label}" />  
+            </p:column> 
+
             <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
                 <h:outputText value="#{order.product}" />  
             </p:column>
 
             <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
-                <h:outputText value="#{order.priority}" />  
+                <h:outputText value="#{order.priority.label}" />  
             </p:column>  
 
             <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
-                <h:outputText value="#{order.status}" />  
+                <h:outputText value="#{order.status.label}" />  
             </p:column> 
 
             <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  

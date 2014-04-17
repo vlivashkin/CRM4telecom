@@ -27,8 +27,6 @@
 
     <ui:define name="content">
         <h:form id="editform">
-            <p:messages />  
-
             <ui:include src="./frames/customerForm.xhtml" />
 
             <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{customerInfoBean.create()}"/>

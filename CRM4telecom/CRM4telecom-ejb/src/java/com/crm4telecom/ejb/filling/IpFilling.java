@@ -42,13 +42,13 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
 
     @Override
     protected void getDataAndFree(Customer customer) {
-        String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = " + customer.getCustomerId();
-        Query query = em.createQuery(sqlQuery);
+        String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = :customer";
+        Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
         List<StaticIp> ipList = query.getResultList();
         if (ipList.size() > 0) {
             StaticIp ip = ipList.get(0);
             ip.setCustomerId(null);
-            ip.setStatus(null);
+            ip.setStatus(IpStatus.UNPLUGGED);
             em.merge(ip);
 
             if (log.isInfoEnabled()) {

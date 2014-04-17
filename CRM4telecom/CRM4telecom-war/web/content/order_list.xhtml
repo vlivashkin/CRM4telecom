@@ -56,17 +56,21 @@
                 <p:column headerText="Date" sortBy="orderDate" >  
                     <h:outputText value="#{order.orderDate}" />  
                 </p:column>  
+                
+                <p:column headerText="Type" sortBy="orderType" >  
+                    <h:outputText value="#{order.orderType.label}" />  
+                </p:column>                
 
                 <p:column headerText="Product" sortBy="productId" >  
                     <h:outputText value="#{order.product}" />  
                 </p:column>
 
                 <p:column headerText="Priority" sortBy="priority" >  
-                    <h:outputText value="#{order.priority}" />  
+                    <h:outputText value="#{order.priority.label}" />  
                 </p:column>  
 
                 <p:column headerText="Status" sortBy="status" >  
-                    <h:outputText value="#{order.status}" />  
+                    <h:outputText value="#{order.status.label}" />  
                 </p:column> 
 
                 <p:column headerText="Employee" sortBy="employeeId" >  
