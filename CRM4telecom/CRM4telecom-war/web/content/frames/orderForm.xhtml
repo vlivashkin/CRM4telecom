@@ -9,7 +9,8 @@
             <h:outputLabel styleClass="col-sm-2 control-label" for="customer" value="Customer:" />  
             <div class="col-sm-4">
                 <p:autoComplete id="customer" value="#{orderInfoBean.ov.customer}"   
-                                completeMethod="#{orderValidationBean.completeCustomer}"/> 
+                                completeMethod="#{orderValidationBean.completeCustomer}"
+                                forceSelection="true" required="true" requiredMessage="You can't leave this empty."/> 
             </div>
             <div class="col-sm-4">
                 <p:message for="customer" />
@@ -70,7 +71,8 @@
             <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee:" />  
             <div class="col-sm-4">
                 <p:autoComplete id="employee" value="#{orderInfoBean.ov.employee}"   
-                                completeMethod="#{orderInfoBean.ov.completeEmployee}"/>  
+                                completeMethod="#{orderInfoBean.ov.completeEmployee}"
+                                forceSelection="true" required="true" requiredMessage="You can't leave this empty."/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="employee" />

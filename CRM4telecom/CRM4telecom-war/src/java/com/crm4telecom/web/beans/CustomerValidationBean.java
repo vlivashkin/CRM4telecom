@@ -12,10 +12,8 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Named
 @Dependent
@@ -26,12 +24,10 @@ public class CustomerValidationBean implements Serializable {
     @EJB
     private CustomerManagerLocal cm;
 
-    @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This first name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String firstName;
 
-    @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This last name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String lastName;
@@ -42,14 +38,12 @@ public class CustomerValidationBean implements Serializable {
 
     String phoneNumber;
 
-    @NotBlank(message = "You can't leave this empty.")
     @Size(max = 30, message = "This street name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String street;
 
     List<String> markets;
 
-    @NotNull(message = "You can't leave this empty.")
     Long building;
 
     Long flat;

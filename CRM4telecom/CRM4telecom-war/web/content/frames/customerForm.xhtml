@@ -8,7 +8,7 @@
         <div class="form-group ">
             <h:outputLabel styleClass="col-sm-2 control-label" for="firstName" value="First Name:" />
             <div class="col-sm-6">
-                <p:inputText id="firstName" value="#{customerInfoBean.cv.firstName}" label="First Name"/>  
+                <p:inputText id="firstName" value="#{customerInfoBean.cv.firstName}" label="First Name" required="true"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="firstName" />
@@ -18,7 +18,7 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="lastName" value="Last Name:" />  
             <div class="col-sm-6">
-                <p:inputText id="lastName" value="#{customerInfoBean.cv.lastName}" label="Last Name"/>  
+                <p:inputText id="lastName" value="#{customerInfoBean.cv.lastName}" label="Last Name" required="true"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="lastName" /> 
@@ -28,7 +28,7 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="street" value="Street:" />  
             <div class="col-sm-6">
-                <p:inputText id="street" value="#{customerInfoBean.cv.street}" label="Street"/>  
+                <p:inputText id="street" value="#{customerInfoBean.cv.street}" label="Street" required="true"/>  
             </div>
             <div class="col-sm-4">
                 <p:message for="street" />
@@ -40,7 +40,7 @@
             <div class="col-sm-6">
                 <div class="input-group">
                     <h:outputLabel styleClass="control-label input-group-addon" for="building" value="Building:" />  
-                    <p:inputText id="building" value="#{customerInfoBean.cv.building}" label="Building"/>  
+                    <p:inputText id="building" value="#{customerInfoBean.cv.building}" label="Building" required="true"/>  
                     <h:outputLabel styleClass="control-label input-group-addon" for="flat" value="Flat:" />  
                     <p:inputText id="flat" value="#{customerInfoBean.cv.flat}" label="Flat"/>  
                 </div>

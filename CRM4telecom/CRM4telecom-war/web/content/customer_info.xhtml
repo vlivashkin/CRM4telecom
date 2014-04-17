@@ -59,10 +59,10 @@
             <h:panelGroup>
                 <h:outputText value="#{customerInfoBean.customer.balance}"/>
                 <p:commandButton value="Synchronize" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
-                    <f:ajax render="leftcolumn" />
+                    <f:ajax event="click" render="leftcolumn" />
                 </p:commandButton>
                 <p:commandButton value="Update" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.updBalance()}" >
-                    <f:ajax render="leftcolumn" />
+                    <f:ajax event="click" render="leftcolumn" />
                 </p:commandButton>
             </h:panelGroup>
         </p:panelGrid>
@@ -150,8 +150,6 @@
     </ui:define>
 
     <ui:define name="editform">
-        <p:messages />  
-
         <ui:include src="./frames/customerForm.xhtml" />
 
         <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{customerInfoBean.modify()}" />
