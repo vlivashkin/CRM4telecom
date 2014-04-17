@@ -20,7 +20,7 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
     private EntityManager em;
 
     @Override
-    protected void getDataAndFill(Customer customer) {
+    protected void getDataAndAlloc(Customer customer) {
         String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId IS NULL";
         Query query = em.createQuery(sqlQuery);
         List<StaticIp> ipList = query.getResultList();
@@ -28,14 +28,35 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
             StaticIp ip = ipList.get(0);
             ip.setCustomerId(customer);
             ip.setStatus(IpStatus.ACTIVE);
-            em.persist(ip);
-            
+            em.merge(ip);
+
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now get ip address : " + ip.getIp());
             }
         } else {
             if (log.isEnabledFor(Priority.WARN)) {
                 log.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
+            }
+        }
+    }
+
+    @Override
+    protected void getDataAndFree(Customer customer) {
+        String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = " + customer.getCustomerId();
+        Query query = em.createQuery(sqlQuery);
+        List<StaticIp> ipList = query.getResultList();
+        if (ipList.size() > 0) {
+            StaticIp ip = ipList.get(0);
+            ip.setCustomerId(null);
+            ip.setStatus(null);
+            em.merge(ip);
+
+            if (log.isInfoEnabled()) {
+                log.info("Customer : " + customer + " now free ip address : " + ip.getIp());
+            }
+        } else {
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("No ip of " + customer);
             }
         }
     }

@@ -34,8 +34,6 @@ public class MailManager {
     private final static String host = "smtp.gmail.com";
     private final static Integer port = 587;
     private final static int maxAttemp = 3;
-    
-     
 
     public void statusChangedEmail(final Order order, List<OrderProcessing> steps) throws MessagingException {
         VelocityEngine ve = new VelocityEngine();
@@ -53,11 +51,11 @@ public class MailManager {
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
         service.schedule(new SendChecker(
-                service.schedule(new EmailSender(0,order.getCustomer().getEmail(),"Order #" + order.getOrderId(),writer.toString()), 0, TimeUnit.MILLISECONDS),order.getCustomer().getEmail(),"Order #" + order.getOrderId(),writer.toString()),
+                service.schedule(new EmailSender(0, order.getCustomer().getEmail(), "Order #" + order.getOrderId(), writer.toString()), 0, TimeUnit.MILLISECONDS), order.getCustomer().getEmail(), "Order #" + order.getOrderId(), writer.toString()),
                 100, TimeUnit.MILLISECONDS);
     }
 
-    public static boolean send( String to,final String subject,final String text) throws Exception {
+    public static boolean send(String to, final String subject, final String text) throws Exception {
 
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.auth", auth.toString());
@@ -76,7 +74,7 @@ public class MailManager {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress("illusionww@gmail.com"));
+                new InternetAddress(to));
         message.setSubject(subject);
         message.setContent(text, "text/html");
         Transport.send(message);
@@ -90,8 +88,8 @@ public class MailManager {
         private final String email;
         private final String subject;
         private final String text;
-        
-        public  EmailSender(int attemp,String email,String subject, String text) {
+
+        public EmailSender(int attemp, String email, String subject, String text) {
             this.attemp = attemp;
             this.email = email;
             this.subject = subject;
@@ -112,7 +110,7 @@ public class MailManager {
                 log.warn("Can't send email attemp : " + (attemp + 1));
             }
             return service.schedule(new SendChecker(
-                    service.schedule(new EmailSender(this.attemp + 1,this.email,this.subject,this.text), 100, TimeUnit.MILLISECONDS),this.email,this.subject,this.text),
+                    service.schedule(new EmailSender(this.attemp + 1, this.email, this.subject, this.text), 100, TimeUnit.MILLISECONDS), this.email, this.subject, this.text),
                     3000, TimeUnit.MILLISECONDS);
         }
     }
@@ -124,7 +122,7 @@ public class MailManager {
         private final String subject;
         private final String text;
 
-        public SendChecker(Future<Boolean> itemToCheck,String email,String subject, String text) {
+        public SendChecker(Future<Boolean> itemToCheck, String email, String subject, String text) {
             this.itemToCheck = itemToCheck;
             this.email = email;
             this.subject = subject;
@@ -134,21 +132,21 @@ public class MailManager {
         @Override
         public void run() {
             try {
-                if ( itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
+                if (itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
                     if (log.isInfoEnabled()) {
                         log.info("Send message because changing order : " + this.subject + " to " + this.email);
                     }
                 }
             } catch (InterruptedException ex) {
                 if (log.isEnabledFor(Priority.ERROR)) {
-                    log.error("Can't check sending email because process was interrupted",ex);
+                    log.error("Can't check sending email because process was interrupted", ex);
                 }
             } catch (ExecutionException ex) {
                 if (log.isEnabledFor(Priority.ERROR)) {
-                    log.error("Cant send email." , ex);
+                    log.error("Cant send email.", ex);
                 }
             } catch (TimeoutException ex) {
-                service.schedule(new SendChecker(this.itemToCheck,this.email,this.subject,this.text), 300, TimeUnit.MILLISECONDS);
+                service.schedule(new SendChecker(this.itemToCheck, this.email, this.subject, this.text), 300, TimeUnit.MILLISECONDS);
             }
         }
 

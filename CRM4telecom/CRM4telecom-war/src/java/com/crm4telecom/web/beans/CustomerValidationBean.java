@@ -12,8 +12,10 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Named
 @Dependent
@@ -24,33 +26,42 @@ public class CustomerValidationBean implements Serializable {
     @EJB
     private CustomerManagerLocal cm;
 
-    @Size(min = 1, max = 30)
+    @NotBlank(message = "You can't leave this empty.")
+    @Size(max = 30, message = "This first name is too long.")
+    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
     String firstName;
 
-    @Size(min = 1, max = 30)
+    @NotBlank(message = "You can't leave this empty.")
+    @Size(max = 30, message = "This last name is too long.")
+    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
     String lastName;
 
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email address")
+    @Size(max = 30, message = "This email is too long.")
+    @Pattern(regexp = "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email address")
     String email;
 
-    @Size(min = 1, max = 30)
+    @Pattern(regexp = "^$|^+7 ([0-9]{3}) [0-9]{3}-[0-9]{2}-[0-9]{2}$", message = "Invalid phone number")
+    String phoneNumber;
+
+    @NotBlank(message = "You can't leave this empty.")
+    @Size(max = 30, message = "This street name is too long.")
+    @Pattern(regexp = "^[A-Za-z\\.]*$", message = "You can use only characters")
     String street;
 
     List<String> markets;
 
+    @NotNull(message = "You can't leave this empty.")
     Long building;
 
     Long flat;
 
     Long balance;
 
-    String phoneNumber;
-
     @Enumerated(EnumType.STRING)
     CustomerStatus status;
 
     private Boolean newCustomer;
-    
+
     public void init(Customer customer) {
         if (customer != null) {
             firstName = customer.getFirstName();
@@ -67,7 +78,7 @@ public class CustomerValidationBean implements Serializable {
             for (Market temp : cm.getMarkets(customer)) {
                 markets.add(temp.getName());
             }
-            
+
             newCustomer = customer.getCustomerId() == null;
         }
     }
@@ -165,8 +176,9 @@ public class CustomerValidationBean implements Serializable {
     }
 
     public Boolean isNewCustomer() {
-        if (newCustomer == null)
+        if (newCustomer == null) {
             return true;
+        }
         return newCustomer;
     }
 }

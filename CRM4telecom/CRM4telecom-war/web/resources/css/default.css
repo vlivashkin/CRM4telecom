@@ -73,6 +73,8 @@ pre{
 
 .ui-selectcheckboxmenu-trigger,
 .ui-selectonemenu-trigger {
+    -moz-box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
     box-sizing: content-box !important;
 }
 
@@ -187,4 +189,14 @@ h3 {
 .leftcolumn {
     float: right;
     font-weight: bold;
+}
+
+.ui-datalist-content {
+    border: none;
+}
+
+.ui-datalist ul {
+    padding-left: 0px;
+    margin-bottom: 0;
+    list-style-type: none;
 }

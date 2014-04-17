@@ -5,14 +5,22 @@ import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.web.util.JSFHelper;
 import com.crm4telecom.web.util.StringUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.Constraint;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Named
 @Dependent
@@ -26,10 +34,16 @@ public class OrderValidationBean implements Serializable {
     @EJB
     private GetManagerLocal gm;
 
+    @NotBlank(message = "You can't leave this empty.")
+    @Pattern(regexp = "^#[0-9]+ [A-Za-z]+ [A-Za-z]+$", message = "Invalid customer")
     private String customer;
+
+    @NotBlank(message = "You can't leave this empty.")
+    @Pattern(regexp = "^#[0-9]+ [A-Za-z]+ [A-Za-z]+$", message = "Invalid employee")
     private String employee;
+
     private String product;
-    
+
     private Long customerId;
     private Long employeeId;
     private Long productId;
@@ -39,8 +53,6 @@ public class OrderValidationBean implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
-
-    
 
     private Boolean technicalSupportFlag;
 

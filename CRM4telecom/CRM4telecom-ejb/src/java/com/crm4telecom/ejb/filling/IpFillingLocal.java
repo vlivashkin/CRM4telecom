@@ -5,5 +5,8 @@ import javax.ejb.Local;
 
 @Local
 public interface IpFillingLocal {
-    public void fillData(Customer customer);
+
+    public void allocateItem(Customer customer);
+
+    public void freeItem(Customer customer);
 }

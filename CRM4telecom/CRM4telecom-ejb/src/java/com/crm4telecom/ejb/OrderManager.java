@@ -5,6 +5,7 @@ import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.ejb.filling.PhoneFillingLocal;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderStep;
+import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
@@ -34,7 +35,7 @@ public class OrderManager implements OrderManagerLocal {
 
     @EJB
     private IpFillingLocal ipFilling;
-    
+
     @EJB
     private PhoneFillingLocal phoneFilling;
 
@@ -74,7 +75,7 @@ public class OrderManager implements OrderManagerLocal {
         if (log.isInfoEnabled()) {
             log.info("Make query in Order table " + sqlQuery);
         }
-        
+
         Query query = em.createQuery(sqlQuery, Order.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);
@@ -161,9 +162,17 @@ public class OrderManager implements OrderManagerLocal {
                 if (nextStep == OrderStep.POST_CONFIRM) {
                     ProductProperties properties = order.getProduct().getProperties();
                     if (properties.equals(ProductProperties.IP)) {
-                        ipFilling.fillData(order.getCustomer());
+                        if (order.getOrderType().equals(OrderType.CONNECT)) {
+                            ipFilling.allocateItem(order.getCustomer());
+                        } else {
+                            ipFilling.freeItem(order.getCustomer());
+                        }
                     } else if (properties.equals(ProductProperties.PHONE)) {
-                        phoneFilling.fillData(order.getCustomer());
+                        if (order.getOrderType().equals(OrderType.CONNECT)) {
+                            phoneFilling.allocateItem(order.getCustomer());
+                        } else {
+                            phoneFilling.freeItem(order.getCustomer());
+                        }
                     }
                 }
 

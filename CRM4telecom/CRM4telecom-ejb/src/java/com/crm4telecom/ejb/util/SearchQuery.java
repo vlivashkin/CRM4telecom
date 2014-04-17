@@ -131,8 +131,8 @@ public class SearchQuery {
                 .append(split[0]).append("%'))");
         if (split.length > 1) {
             sqlQuery.append(" and (LOWER(c.firstName) LIKE LOWER('%").append(split[1])
-                    .append("%')) " + "or LOWER(c.lastName) LIKE LOWER('%")
-                    .append(split[1]).append("%')))");
+                    .append("%') " + "or LOWER(c.lastName) LIKE LOWER('%")
+                    .append(split[1]).append("%'))");
         }
 
         return sqlQuery.toString();

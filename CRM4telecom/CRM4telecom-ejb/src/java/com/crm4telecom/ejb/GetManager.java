@@ -100,7 +100,7 @@ public class GetManager implements GetManagerLocal {
         }
         String raw = rawString.trim();
 
-        if (raw.matches("^#?\\d+$")) {
+        if (raw.matches("^#?\\d+")) {
             List<String> list = new ArrayList<String>();
             if (raw.startsWith("#")) {
                 raw = raw.substring(1);

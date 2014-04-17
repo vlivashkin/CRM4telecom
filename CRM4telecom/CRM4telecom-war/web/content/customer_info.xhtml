@@ -37,6 +37,12 @@
             <h:outputText value="Last name:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.lastName}"/>
 
+            <h:outputText value="Markets:" styleClass="leftcolumn"/>
+            <p:dataList id="marketsList" value="#{customerInfoBean.markets}" var="market" > 
+                <h:outputText value="#{market.marketId}, #{market.name}" style="font-weight: bold"/><br/>
+                <h:outputText value="#{market.description}"/>
+            </p:dataList>  
+
             <h:outputText value="Status:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.status.label}"/>
 
@@ -60,66 +66,47 @@
                 </p:commandButton>
             </h:panelGroup>
         </p:panelGrid>
+
+        <script>
+            if ($('#tabPanel\\:leftcolumn\\:marketsList_list li').length === 0) {
+                $("#tabPanel\\:leftcolumn\\:marketsList_list").append('<li>none</li>');
+            }
+        </script>   
     </ui:define>
 
     <ui:define name="rightcolumn">
-        <p:dataTable value="#{customerInfoBean.markets}" var="market">
+        <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
             <f:facet name="header">
-                Markets
+                Statical IP
             </f:facet>
 
-            <p:column>
-                <f:facet name="header">ID</f:facet>
-                <h:outputText value="#{market.marketId}"/>
+            <p:column headerText="Statical IP">
+                <f:facet name="header">IP</f:facet>
+                <h:outputText value="#{ip.ip}"/>
             </p:column>
 
-            <p:column>
-                <f:facet name="header">Name</f:facet>
-                <h:outputText value="#{market.name}"/>
-            </p:column>     
+            <p:column headerText="Statical IP">
+                <f:facet name="header">Status</f:facet>
+                <h:outputText value="#{ip.status}"/>
+            </p:column>
+        </p:dataTable>
 
-            <p:column>
-                <f:facet name="header">Description</f:facet>
-                <h:outputText value="#{market.description}"/>
-            </p:column> 
+        <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
+            <f:facet name="header">
+                Phone numbers
+            </f:facet>
+
+            <p:column headerText="Phone number">
+                <h:outputText value="#{phone.phoneNumber}"/>
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{phone.status}"/>
+            </p:column>
         </p:dataTable>
     </ui:define>
 
     <ui:define name="infofooter">
-        <div class="row">
-            <div class="col-md-6">
-                <p:dataTable value="#{customerInfoBean.customer.staticIpList}" var="ip">
-                    <f:facet name="header">
-                        Statical IP
-                    </f:facet>
-
-                    <p:column headerText="Statical IP">
-                        <f:facet name="header">IP</f:facet>
-                        <h:outputText value="#{ip.ip}"/>
-                    </p:column>
-
-                    <p:column headerText="Statical IP">
-                        <f:facet name="header">Status</f:facet>
-                        <h:outputText value="#{ip.status}"/>
-                    </p:column>
-                </p:dataTable>
-            </div>
-            <div class="col-md-6">
-                <p:dataTable value="#{customerInfoBean.customer.phoneNumberList}" var="phone">
-                    <f:facet name="header">
-                        Phone numbers
-                    </f:facet>
-
-                    <p:column headerText="Phone number">
-                        <h:outputText value="#{phone.phoneNumber}"/>
-                    </p:column>
-
-                    <p:column headerText="Status">
-                        <h:outputText value="#{phone.status}"/>
-                    </p:column>
-                </p:dataTable>
-            </div>
-        </div>
         <p:dataTable value="#{customerInfoBean.customer.ordersList}" var="order"
                      selectionMode="single" selection="#{customerInfoBean.selectedOrder}" rowKey="#{order.orderId}">
             <f:facet name="header">
