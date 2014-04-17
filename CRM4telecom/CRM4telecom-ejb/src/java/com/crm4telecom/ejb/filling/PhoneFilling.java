@@ -28,7 +28,7 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
             PhoneNumber phoneNumber = phoneList.get(0);
             phoneNumber.setCustomerId(customer);
             phoneNumber.setStatus(IpStatus.ACTIVE);
-            em.persist(phoneNumber);
+            em.merge(phoneNumber);
 
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now get phone number : " + phoneNumber.getPhoneNumber());
