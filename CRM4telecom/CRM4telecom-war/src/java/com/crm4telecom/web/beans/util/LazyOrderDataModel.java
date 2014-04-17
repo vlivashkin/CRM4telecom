@@ -17,32 +17,39 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
     private final OrderManagerLocal om;
     private List<Order> datasource;
     public OrderListBean search;
-    public Map<String, List<String>> parametrs;
+    public Map<String, List<String>> parameters;
 
     public void setSearch(OrderListBean search) {
-        if (parametrs == null) {
-            parametrs = new HashMap();
+        if (parameters == null) {
+            parameters = new HashMap();
         }
-        if (StringUtils.isValidString(search.getOrder())) {
+        if (StringUtils.isValidString(search.getFromID())) {
             List<String> l = new ArrayList();
-            l.add(search.getOrder());
-            parametrs.put("orderId", l);
+            l.add(search.getFromID());
+            parameters.put("fromOrderId", l);
         } else {
-            parametrs.remove("orderId");
+            parameters.remove("fromOrderId");
+        }
+        if (StringUtils.isValidString(search.getToID())) {
+            List<String> l = new ArrayList();
+            l.add(search.getToID());
+            parameters.put("toOrderId", l);
+        } else {
+            parameters.remove("toOrderId");
         }
         if (StringUtils.isValidString(search.getCustomer())) {
             List<String> l = new ArrayList();
             l.add(search.getCustomer());
-            parametrs.put("customerId", l);
+            parameters.put("customerId", l);
         } else {
-            parametrs.remove("customerId");
+            parameters.remove("customerId");
         }
         if (StringUtils.isValidString(search.getEmployee())) {
             List<String> l = new ArrayList();
             l.add(search.getEmployee());
-            parametrs.put("employeeId", l);
+            parameters.put("employeeId", l);
         } else {
-            parametrs.remove("employeeId");
+            parameters.remove("employeeId");
         }
         if (search.getFromDate() != null) {
             List<String> date = new ArrayList();
@@ -51,9 +58,9 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
             String m = search.getFromDate().toString().substring(4, 7).toUpperCase();
             String d = ts.toString().substring(8, 10);
             date.add(d + "-" + m + "-" + y);
-            parametrs.put("fromDate", date);
+            parameters.put("fromDate", date);
         } else {
-            parametrs.remove("fromDate");
+            parameters.remove("fromDate");
         }
         if (search.getToDate() != null) {
             List<String> date1 = new ArrayList();
@@ -62,19 +69,19 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
             String m = search.getToDate().toString().substring(4, 7).toUpperCase();
             String d = ts.toString().substring(8, 10);
             date1.add(d + "-" + m + "-" + y);
-            parametrs.put("toDate", date1);
+            parameters.put("toDate", date1);
         } else {
-            parametrs.remove("toDate");
+            parameters.remove("toDate");
         }
         if (search.getSelectedPriorities() != null && !search.getSelectedPriorities().isEmpty()) {
-            parametrs.put("priority", search.getSelectedPriorities());
+            parameters.put("priority", search.getSelectedPriorities());
         } else {
-            parametrs.remove("priority");
+            parameters.remove("priority");
         }
         if (search.getSelectedStatuses() != null && !search.getSelectedStatuses().isEmpty()) {
-            parametrs.put("status", search.getSelectedStatuses());
+            parameters.put("status", search.getSelectedStatuses());
         } else {
-            parametrs.remove("status");
+            parameters.remove("status");
         }
         this.search = search;
     }
@@ -102,9 +109,9 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
 
     @Override
     public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        setRowCount(om.getOrdersCount(filters, parametrs).intValue());
-        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters, parametrs);
-        parametrs.clear();
+        setRowCount(om.getOrdersCount(filters, parameters).intValue());
+        datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters, parameters);
+        parameters.clear();
         return datasource;
     }
 }

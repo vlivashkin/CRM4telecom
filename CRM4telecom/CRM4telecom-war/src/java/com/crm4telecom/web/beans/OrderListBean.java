@@ -18,13 +18,16 @@ import org.primefaces.model.LazyDataModel;
 public class OrderListBean implements Serializable, IListBean<Order> {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private OrderManagerLocal om;
 
     private LazyOrderDataModel lazyModel;
     private List<Order> orders;
     private Order selected;
+
+    private String fromID;
+    private String toID;
 
     String order;
     String customer;
@@ -55,6 +58,22 @@ public class OrderListBean implements Serializable, IListBean<Order> {
     @Override
     public void setSelected(Order selected) {
         this.selected = selected;
+    }
+
+    public String getFromID() {
+        return fromID;
+    }
+
+    public void setFromID(String fromID) {
+        this.fromID = fromID;
+    }
+
+    public String getToID() {
+        return toID;
+    }
+
+    public void setToID(String toID) {
+        this.toID = toID;
     }
 
     public String getOrder() {

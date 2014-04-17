@@ -25,6 +25,20 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
         if (parameters == null) {
             parameters = new HashMap();
         }
+        if (StringUtils.isValidString(search.getFromID())) {
+            List<String> l = new ArrayList();
+            l.add(search.getFromID());
+            parameters.put("fromCustomerId", l);
+        } else {
+            parameters.remove("fromCustomerId");
+        }
+        if (StringUtils.isValidString(search.getToID())) {
+            List<String> l = new ArrayList();
+            l.add(search.getToID());
+            parameters.put("toCustomerId", l);
+        } else {
+            parameters.remove("toCustomerId");
+        }
         if (StringUtils.isValidString(search.getLastName())) {
             List<String> l = new ArrayList();
             l.add(search.getLastName());
@@ -80,6 +94,11 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
             parameters.put("phoneNumber", l);
         } else {
             parameters.remove("phoneNumber");
+        }
+        if (search.getSelectedStatuses() != null && !search.getSelectedStatuses().isEmpty()) {
+            parameters.put("status", search.getSelectedStatuses());
+        } else {
+            parameters.remove("status");
         }
     }
 

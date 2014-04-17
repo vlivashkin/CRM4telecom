@@ -1,10 +1,10 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
@@ -77,48 +77,16 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT c FROM Customer c";
-        if (!parametrs.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String paramProperty : parametrs.keySet()) {
-                List<String> val = (List<String>) parametrs.get(paramProperty);
-                if (val.size() > 1) {
-                    sqlQuery += " ( ";
-                    for (String val1 : val) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
-                    }
-                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
-                    sqlQuery += " ) AND";
-                } else {
-                    sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-                }
-            }
-        }
-        if (filters != null && !filters.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String filterProperty : filters.keySet()) {
-                String filterValue = filters.get(filterProperty);
-                sqlQuery += "  LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\')  AND";
-            }
-        }
-        if (sqlQuery.endsWith("WHERE")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }
-        if (sqlQuery.endsWith("AND")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
-        }
-        if (sortField != null && !"".equals(sortField)) {
-            sqlQuery += " ORDER BY c." + sortField;
-        }
-        if ("DESCENDING".endsWith(sortOrder)) {
-            sqlQuery += " DESC";
-        }
-        Query query = em.createQuery(sqlQuery, Customer.class);
-        query.setFirstResult(first);
-        query.setMaxResults(pageSize);
+        SearchQuery sq = new SearchQuery();
+        String sqlQuery = sq.getSqlQuery("c FROM Customer c", parametrs);
+
         if (log.isInfoEnabled()) {
             log.info("Make query in Customer table " + sqlQuery);
         }
+        
+        Query query = em.createQuery(sqlQuery, Customer.class);
+        query.setFirstResult(first);
+        query.setMaxResults(pageSize);
         return query.getResultList();
     }
 
@@ -131,57 +99,11 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT COUNT(c) FROM Customer c";
-        if (!parametrs.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String paramProperty : parametrs.keySet()) {
-                List<String> val = (List<String>) parametrs.get(paramProperty);
-                if (val.size() > 1) {
-                    sqlQuery += " ( ";
-                    for (String val1 : val) {
-                        sqlQuery += "  LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
-                    }
-                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
-                    sqlQuery += " ) AND";
-                } else {
-                    sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-                }
-            }
-        }
-        if (filters != null && !filters.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String filterProperty : filters.keySet()) {
-                String filterValue = filters.get(filterProperty);
-                sqlQuery += "   LOWER( c." + filterProperty + ") like LOWER( \'%" + filterValue + "%\' ) AND";
-            }
-        }
-        if (sqlQuery.endsWith("WHERE")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }
-        if (sqlQuery.endsWith("AND")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
-        }
+        SearchQuery sq = new SearchQuery();
+        String sqlQuery = sq.getSqlQuery("COUNT(c) FROM Customer c", parametrs);
+
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
-    }
-
-    @Override
-    public List<Customer> search(Map<String, String> parameter) {
-        String sqlQuery = "SELECT c FROM Customer c     ";
-        if (!parameter.isEmpty()) {
-            sqlQuery += " WHERE";
-            Iterator it = parameter.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pairs = (Map.Entry) it.next();
-                sqlQuery += "  LOWER(c." + pairs.getKey() + ") REGEXP LOWER('" + pairs.getValue() + "') AND";
-                it.remove();
-            }
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
-        }
-        if (log.isInfoEnabled()) {
-            log.info("Make query in Customer table " + sqlQuery);
-        }
-        return em.createQuery(sqlQuery).getResultList();
     }
 
     @Override

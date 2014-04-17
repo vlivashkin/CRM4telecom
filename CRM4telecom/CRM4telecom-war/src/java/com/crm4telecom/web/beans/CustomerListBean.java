@@ -24,6 +24,10 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
     private LazyCustomerDataModel lazyModel;
     private List<Customer> customers;
     private Customer selected;
+   
+    List<String> selectedStatuses;
+    private String fromID;
+    private String toID;
     
     private String firstName;
     private String lastName;
@@ -57,6 +61,22 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
         this.selected = selected;
     }
 
+    public String getFromID() {
+        return fromID;
+    }
+
+    public void setFromID(String fromID) {
+        this.fromID = fromID;
+    }
+
+    public String getToID() {
+        return toID;
+    }
+
+    public void setToID(String toID) {
+        this.toID = toID;
+    }
+    
     public String getFirstName() {
         return firstName;
     }
@@ -129,6 +149,14 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
         this.status = status;
     }
 
+    public List<String> getSelectedStatuses() {
+        return selectedStatuses;
+    }
+
+    public void setSelectedStatuses(List<String> selectedStatuses) {
+        this.selectedStatuses = selectedStatuses;
+    }
+
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
@@ -136,7 +164,7 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
     public List<Customer> getCustomers() {
         return customers;
     }
-
+    
     @Override
     public void onRowSelect() {
         JSFHelper helper = new JSFHelper();

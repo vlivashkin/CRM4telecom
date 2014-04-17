@@ -3,6 +3,7 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
+import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.enums.OrderPriority;
 import com.crm4telecom.enums.OrderStatus;
 import com.crm4telecom.enums.OrderType;
@@ -33,8 +34,12 @@ public class ResourcesBean implements Serializable {
         return OrderPriority.values();
     }
 
-    public OrderStatus[] getStatuses() {
+    public OrderStatus[] getOrderStatuses() {
         return OrderStatus.values();
+    }
+
+    public CustomerStatus[] getCustomerStatuses() {
+        return CustomerStatus.values();
     }
 
     public OrderType[] getTypes() {
@@ -60,7 +65,7 @@ public class ResourcesBean implements Serializable {
     public Long getOrdersCount() {
         return om.getOrdersCount();
     }
-    
+
     public Date getCurrentTime() {
         return new Date();
     }

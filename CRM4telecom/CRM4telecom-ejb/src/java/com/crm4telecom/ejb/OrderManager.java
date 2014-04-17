@@ -1,5 +1,6 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.ejb.filling.PhoneFillingLocal;
 import com.crm4telecom.enums.OrderStatus;
@@ -68,103 +69,16 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT c FROM Orders c";
-        if (!parametrs.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String paramProperty : parametrs.keySet()) {
-                List<String> val = (List<String>) parametrs.get(paramProperty);
-                if (val.size() > 1) {
-                    sqlQuery += " ( ";
-                    for (String val1 : val) {
-                        sqlQuery += " LOWER(c." + paramProperty + ") REGEXP LOWER('" + val1 + "') OR";
-                    }
-                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
-                    sqlQuery += " ) AND";
-                } else {
-                    String check = (String) paramProperty;
-                    if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
-                        if (check.compareTo("customerId") == 0) {
-                            Pattern p = Pattern.compile("[0-9]{1,}");
-                            Pattern p1 = Pattern.compile("#[0-9]{1,}");
-                            Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
-                            Matcher m2 = p2.matcher(val.get(0));
-                            Matcher m1 = p1.matcher(val.get(0));
-                            Matcher m = p.matcher(val.get(0));
+        SearchQuery sq = new SearchQuery();
+        String sqlQuery = sq.getSqlQuery("c FROM Orders c", parametrs);
 
-                            if (m2.matches()) {
-                                sqlQuery += " ( LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
-                            }
-
-                            if (m.matches()) {
-                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
-                            }
-                            if (m1.matches()) {
-                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
-                            }
-                        } else {
-                            if (check.compareTo("employeeId") == 0) {
-                                Pattern p = Pattern.compile("[0-9]{1,}");
-                                Pattern p1 = Pattern.compile("#[0-9]{1,}");
-                                Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
-                                Matcher m2 = p2.matcher(val.get(0));
-                                Matcher m1 = p1.matcher(val.get(0));
-                                Matcher m = p.matcher(val.get(0));
-
-                                if (m2.matches()) {
-                                    sqlQuery += "( LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
-                                }
-
-                                if (m.matches()) {
-                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0) + "') AND";
-                                }
-                                if (m1.matches()) {
-                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
-                                }
-
-                            } else {
-                                sqlQuery += "   LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-                            }
-                        }
-                    } else {
-                        if (check.compareTo("fromDate") == 0) {
-                            sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)     AND";
-                        }
-                        if (check.compareTo("toDate") == 0) {
-                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP) +1   AND";
-                        }
-                    }
-                }
-            }
-        }
-
-        if (filters != null && !filters.isEmpty()) {
-            if (parametrs.isEmpty()) {
-                sqlQuery += " WHERE";
-            }
-            for (String filterProperty : filters.keySet()) {
-                String filterValue = filters.get(filterProperty);
-                sqlQuery += " LOWER(c." + filterProperty + ") like LOWER ( \'%" + filterValue + "%\' ) AND";
-            }
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - " AND".length());
-        }
-        if (sortField != null && !"".equals(sortField)) {
-            sqlQuery += " ORDER BY c." + sortField;
-        }
-        if ("DESCENDING".endsWith(sortOrder)) {
-            sqlQuery += " DESC";
-        }
-        if (sqlQuery.endsWith("WHERE")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }
-        if (sqlQuery.endsWith("AND")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
-        }
-        Query query = em.createQuery(sqlQuery, Order.class);
-        query.setFirstResult(first);
-        query.setMaxResults(pageSize);
         if (log.isInfoEnabled()) {
             log.info("Make query in Order table " + sqlQuery);
         }
+        
+        Query query = em.createQuery(sqlQuery, Order.class);
+        query.setFirstResult(first);
+        query.setMaxResults(pageSize);
         return query.getResultList();
     }
 
@@ -177,88 +91,8 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public Long getOrdersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = "SELECT COUNT(c) FROM Orders c       ";
-        if (filters != null && !filters.isEmpty()) {
-            sqlQuery += " WHERE";
-            for (String filterProperty : filters.keySet()) {
-                String filterValue = filters.get(filterProperty);
-                sqlQuery += " LOWER( c." + filterProperty + ") like LOWER ( \'%" + filterValue + "%\' )  AND";
-            }
-
-        }
-        if (!parametrs.isEmpty()) {
-            if (filters.isEmpty()) {
-                sqlQuery += " WHERE";
-            }
-            for (String paramProperty : parametrs.keySet()) {
-                List<String> val = (List<String>) parametrs.get(paramProperty);
-                if (val.size() > 1) {
-                    sqlQuery += " ( ";
-                    for (String val1 : val) {
-                        sqlQuery += "   LOWER( c." + paramProperty + "  ) REGEXP LOWER('" + val1 + "') OR";
-                    }
-                    sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "OR".length());
-                    sqlQuery += " ) AND";
-                } else {
-                    String check = (String) paramProperty;
-                    if (check.compareTo("fromDate") != 0 && check.compareTo("toDate") != 0) {
-                        if (check.compareTo("customerId") == 0) {
-                            Pattern p = Pattern.compile("[0-9]{1,}");
-                            Pattern p1 = Pattern.compile("#[0-9]{1,}");
-                            Matcher m1 = p1.matcher(val.get(0));
-                            Matcher m = p.matcher(val.get(0));
-                            Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
-                            Matcher m2 = p2.matcher(val.get(0));
-
-                            if (m2.matches()) {
-                                sqlQuery += " ( LOWER( c.customerId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.customerId.lastName ) REGEXP LOWER ('" + val.get(0) + "') )  AND";
-                            }
-                            if (m.matches()) {
-                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0) + "') AND";
-                            }
-                            if (m1.matches()) {
-                                sqlQuery += "  LOWER ( c.customerId.customerId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
-                            }
-                        } else {
-                            if (check.compareTo("employeeId") == 0) {
-                                Pattern p = Pattern.compile("[0-9]{1,}");
-                                Pattern p1 = Pattern.compile("#[0-9]{1,}");
-                                Pattern p2 = Pattern.compile("[a-zA-Z]{1,}");
-                                Matcher m2 = p2.matcher(val.get(0));
-                                Matcher m1 = p1.matcher(val.get(0));
-                                Matcher m = p.matcher(val.get(0));
-
-                                if (m2.matches()) {
-                                    sqlQuery += " ( LOWER( c.employeeId.firstName ) REGEXP LOWER ('" + val.get(0) + "') OR LOWER( c.employeeId.lastName ) REGEXP LOWER ('" + val.get(0) + "') ) AND";
-                                }
-
-                                if (m.matches()) {
-                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0) + "') AND";
-                                }
-                                if (m1.matches()) {
-                                    sqlQuery += "  LOWER ( c.employeeId.employeeId )  REGEXP LOWER ('" + val.get(0).substring(1) + "') AND";
-                                }
-                            } else {
-                                sqlQuery += " LOWER( c." + paramProperty + " ) REGEXP LOWER('" + val.get(0) + "')   AND";
-                            }
-                        }
-                    } else {
-                        if (check.compareTo("fromDate") == 0) {
-                            sqlQuery += " c.orderDate > CAST(CAST( '" + val.get(0) + "' AS DATE ) AS TIMESTAMP)  AND";
-                        }
-                        if (check.compareTo("toDate") == 0) {
-                            sqlQuery += " c.orderDate < CAST( CAST( '" + val.get(0) + "' AS DATE) AS TIMESTAMP) +1 AND";
-                        }
-                    }
-                }
-            }
-        }
-        if (sqlQuery.endsWith("WHERE")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "WHERE".length());
-        }
-        if (sqlQuery.endsWith("AND")) {
-            sqlQuery = sqlQuery.substring(0, sqlQuery.length() - "AND".length());
-        }
+        SearchQuery sq = new SearchQuery();
+        String sqlQuery = sq.getSqlQuery("COUNT(c) FROM Orders c", parametrs);
 
         if (log.isInfoEnabled()) {
             log.info("Make query in Order table " + sqlQuery);
@@ -302,7 +136,7 @@ public class OrderManager implements OrderManagerLocal {
             OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
 
             // update end date for previous step in OrderProcessing
-            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate = null ORDER BY o.startDate DESC";
+            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
             Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
             OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
             oldStep.setEndDate(new Date());

@@ -32,37 +32,45 @@
     </ui:define>
 
     <ui:define name="content">
-        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">  
+        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="false">  
             <div class="search-wrap">
                 <ui:include src="./frames/customerSearchForm.xhtml" />
             </div>
         </p:fieldset>
 
         <h:form id="tableForm">  
-            <p:dataTable var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="10"  
+            <p:dataTable id="customerTable" var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="10"  
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selected}"  id="customerTable" lazy="true">  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selected}" lazy="true">  
 
-               <p:ajax event="rowSelect" listener="#{customerListBean.onRowSelect}" />
+                <p:ajax event="rowSelect" listener="#{customerListBean.onRowSelect}" />
 
-                <p:column headerText="ID" sortBy="customerId" filterBy="#{customer.customerId}">  
+                <p:column headerText="ID">  
                     <h:outputText value="#{customer.customerId}" />  
                 </p:column>  
 
-                <p:column headerText="First Name" sortBy="firstName" filterBy="#{customer.firstName}">  
+                <p:column headerText="First Name">  
                     <h:outputText value="#{customer.firstName}" />  
                 </p:column>  
 
-                <p:column headerText="Last Name" sortBy="lastName" filterBy="#{customer.lastName}">  
+                <p:column headerText="Last Name">  
                     <h:outputText value="#{customer.lastName}" />  
-                </p:column>  
+                </p:column> 
 
-                <p:column headerText="Email" sortBy="email" filterBy="#{customer.email}">  
+                <p:column headerText="Status">  
+                    <h:outputText value="#{customer.status}" />  
+                </p:column> 
+
+                <p:column headerText="Email">  
                     <h:outputText value="#{customer.email}" />  
                 </p:column> 
 
-                <p:column headerText="Phone number" sortBy="phoneNumber" filterBy="#{customer.phoneNumber}">  
+                <p:column headerText="Phone number">  
                     <h:outputText value="#{customer.phoneNumber}" />  
+                </p:column> 
+
+                <p:column headerText="Address">  
+                    <h:outputText value="#{customer.street}, #{customer.building}, #{customer.flat}" />  
                 </p:column> 
             </p:dataTable> 
 

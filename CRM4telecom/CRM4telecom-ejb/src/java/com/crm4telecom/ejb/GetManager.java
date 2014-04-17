@@ -114,19 +114,15 @@ public class GetManager implements GetManagerLocal {
             String[] split = raw.split(" ");
             String sqlQuery
                     = "SELECT c "
-                    + "FROM " + clazz.getName() + " c "
-                    + "WHERE (LOWER(c.firstName) REGEXP :first "
-                    + "or LOWER(c.lastName) REGEXP :first)";
+                    + "FROM " + clazz.getName().substring(clazz.getName().lastIndexOf('.')+1) + " c "
+                    + "WHERE (LOWER(c.firstName) LIKE LOWER('%" + split[0] + "%') "
+                    + "or LOWER(c.lastName) LIKE LOWER('%" + split[0] + "%'))";
             if (split.length > 1) {
                 sqlQuery
-                        += " and (LOWER(c.firstName) REGEXP :second "
-                        + "or LOWER(c.lastName)  REGEXP :second)";
+                        += " and (LOWER(c.firstName) LIKE LOWER('%" + split[1] + "%')) "
+                        + "or LOWER(c.lastName) LIKE LOWER('%" + split[1] + "%')))";
             }
             Query query = em.createQuery(sqlQuery);
-            query.setParameter("first", split[0].toLowerCase());
-            if (split.length > 1) {
-                query.setParameter("second", split[1].toLowerCase());
-            }
             query.setMaxResults(10);
             if (log.isInfoEnabled()) {
                 log.info("Make query for autocomlete : " + sqlQuery);

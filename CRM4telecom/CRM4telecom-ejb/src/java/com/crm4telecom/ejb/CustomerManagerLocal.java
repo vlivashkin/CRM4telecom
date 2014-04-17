@@ -26,8 +26,6 @@ public interface CustomerManagerLocal {
 
     Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs);
 
-    List<Customer> search(Map<String, String> parameter);
-
     void persist(Customer c);
     
     Customer find(long customerId);

@@ -32,44 +32,44 @@
     </ui:define>
 
     <ui:define name="content">
-        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="true">
+        <p:fieldset legend="Search" toggleable="true" toggleSpeed="500" collapsed="false">
             <div class="search-wrap">
                 <ui:include src="./frames/orderSearchForm.xhtml" />
             </div>
         </p:fieldset>   
 
         <h:form id="tableForm">
-            <p:dataTable var="order" value="#{orderListBean.lazyModel}" paginator="true" rows="10" 
+            <p:dataTable id="orderTable" var="order" value="#{orderListBean.lazyModel}" paginator="true" rows="10" 
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selected}" id="orderTable" lazy="true">  
+                         rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selected}" lazy="true">  
 
                 <p:ajax event="rowSelect" listener="#{orderListBean.onRowSelect}" />
 
-                <p:column headerText="ID" sortBy="orderId" filterBy="#{order.orderId}">  
+                <p:column headerText="ID" sortBy="orderId">  
                     <h:outputText value="#{order.orderId}" />  
                 </p:column>  
 
-                <p:column headerText="Customer" sortBy="customerId" filterBy="#{order.customerId}">  
+                <p:column headerText="Customer" sortBy="customerId" >  
                     <h:outputText value="#{order.customer}" />  
                 </p:column>
 
-                <p:column headerText="Date" sortBy="orderDate" filterBy="#{order.orderDate}">  
+                <p:column headerText="Date" sortBy="orderDate" >  
                     <h:outputText value="#{order.orderDate}" />  
                 </p:column>  
 
-                <p:column headerText="Product" sortBy="productId" filterBy="#{order.product}">  
+                <p:column headerText="Product" sortBy="productId" >  
                     <h:outputText value="#{order.product}" />  
                 </p:column>
 
-                <p:column headerText="Priority" sortBy="priority" filterBy="#{order.priority}">  
+                <p:column headerText="Priority" sortBy="priority" >  
                     <h:outputText value="#{order.priority}" />  
                 </p:column>  
 
-                <p:column headerText="Status" sortBy="status" filterBy="#{order.status}">  
+                <p:column headerText="Status" sortBy="status" >  
                     <h:outputText value="#{order.status}" />  
                 </p:column> 
 
-                <p:column headerText="Employee" sortBy="employeeId" filterBy="#{order.employeeId}">  
+                <p:column headerText="Employee" sortBy="employeeId" >  
                     <h:outputText value="#{order.employee}" />  
                 </p:column> 
             </p:dataTable>  
