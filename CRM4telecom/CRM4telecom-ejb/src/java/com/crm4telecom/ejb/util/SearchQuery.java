@@ -88,7 +88,7 @@ public class SearchQuery {
                 if (!m.matches()) {
                     return " AND";
                 } else {
-                    return " LOWER(c." + entity + ".firstName) LIKE LOWER('%" + query + "%') OR LOWER(c." + entity + ".lastName) LIKE LOWER('%" + query + "%') AND";
+                    return " (LOWER(c." + entity + ".firstName) LIKE LOWER('%" + query + "%') OR LOWER(c." + entity + ".lastName) LIKE LOWER('%" + query + "%')) AND";
                 }
             } else {
                 query = query.substring(1);
