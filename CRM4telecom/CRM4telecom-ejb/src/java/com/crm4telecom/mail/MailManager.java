@@ -76,7 +76,7 @@ public class MailManager {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress("vladimir.ivashkin@gmail.com"));
+                new InternetAddress("illusionww@gmail.com"));
         message.setSubject(subject);
         message.setContent(text, "text/html");
         Transport.send(message);
