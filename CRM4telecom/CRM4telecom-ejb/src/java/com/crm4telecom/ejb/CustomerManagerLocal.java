@@ -18,13 +18,13 @@ public interface CustomerManagerLocal {
     
     List<Market> getMarkets(Customer customer);
 
-    List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs);
+    List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs);
 
     Customer getCustomer(Long customerId);
 
     Long getCustomersCount();
 
-    Long getCustomersCount(Map<String, String> filters, Map<String, List<String>> parametrs);
+    Long getCustomersCount(Map<String, Object> filters, Map<String, List<String>> parametrs);
 
     void persist(Customer c);
     

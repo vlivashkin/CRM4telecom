@@ -7,8 +7,8 @@
     <div class="form-horizontal">
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="customer" value="Customer:" />  
-            <div class="col-sm-4">
-                <p:autoComplete id="customer" value="#{orderInfoBean.ov.customer}"   
+            <div class="col-sm-6">
+                <p:autoComplete id="customer" value="#{orderInfoBean.ov.customer}" style="width: 100%"   
                                 completeMethod="#{orderValidationBean.completeCustomer}"
                                 forceSelection="true" required="true" requiredMessage="You can't leave this empty."/> 
             </div>
@@ -19,7 +19,7 @@
         <c:if test="#{orderInfoBean.ov.isNewOrder()}">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
                         <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
@@ -33,11 +33,10 @@
         </c:if>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" />  
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}" var="p">
                     <f:selectItems value="#{resourcesBean.products}" var="product"
                                    itemValue="#{product}" itemLabel="#{product}"/>
-
                     <p:column>  
                         #{p.toString()}  
                     </p:column>   
@@ -57,7 +56,7 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="priority" value="Priority:" /> 
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p:selectOneMenu id="priority" value="#{orderInfoBean.ov.priority}">
                     <f:selectItems value="#{resourcesBean.priorities}" var="priority"
                                    itemValue="#{priority}" itemLabel="#{priority.label}"/>
@@ -69,8 +68,8 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee:" />  
-            <div class="col-sm-4">
-                <p:autoComplete id="employee" value="#{orderInfoBean.ov.employee}"   
+            <div class="col-sm-6">
+                <p:autoComplete id="employee" value="#{orderInfoBean.ov.employee}" style="width: 100%"  
                                 completeMethod="#{orderInfoBean.ov.completeEmployee}"
                                 forceSelection="true" required="true" requiredMessage="You can't leave this empty."/>  
             </div>
@@ -81,8 +80,8 @@
         <c:if test="#{orderInfoBean.ov.isNewOrder()}">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="techSupport" value="Tech support flag:" />  
-                <div class="col-sm-4">
-                    <p:selectBooleanCheckbox id="techSupport" value="#{orderInfoBean.ov.technicalSupportFlag}"/>   
+                <div class="col-sm-6">
+                    <p:selectBooleanCheckbox id="techSupport" style="width: 100%" value="#{orderInfoBean.ov.technicalSupportFlag}"/>   
                 </div>
                 <div class="col-sm-4">
                     <p:message for="techSupport" />

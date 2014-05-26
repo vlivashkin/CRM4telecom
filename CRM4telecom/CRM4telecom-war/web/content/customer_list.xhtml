@@ -39,37 +39,37 @@
         </p:fieldset>
 
         <h:form id="tableForm">  
-            <p:dataTable id="customerTable" var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="10"  
+            <p:dataTable id="customerTable" var="customer" value="#{customerListBean.lazyModel}" paginator="true" rows="10" resizableColumns="true" liveResize="true" draggableColumns="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{customerListBean.selected}" lazy="true">  
 
                 <p:ajax event="rowSelect" listener="#{customerListBean.onRowSelect}" />
 
-                <p:column headerText="ID">  
+                <p:column headerText="ID" sortBy="#{customer.customerId}">  
                     <h:outputText value="#{customer.customerId}" />  
                 </p:column>  
 
-                <p:column headerText="First Name">  
+                <p:column headerText="First Name" sortBy="#{customer.firstName}">  
                     <h:outputText value="#{customer.firstName}" />  
                 </p:column>  
 
-                <p:column headerText="Last Name">  
+                <p:column headerText="Last Name" sortBy="#{customer.lastName}">  
                     <h:outputText value="#{customer.lastName}" />  
                 </p:column> 
 
-                <p:column headerText="Status">  
+                <p:column headerText="Status" sortBy="#{customer.status}">  
                     <h:outputText value="#{customer.status.label}" />  
                 </p:column> 
 
-                <p:column headerText="Email">  
+                <p:column headerText="Email" sortBy="#{customer.email}">  
                     <h:outputText value="#{customer.email}" />  
                 </p:column> 
 
-                <p:column headerText="Phone number">  
+                <p:column headerText="Phone number" sortBy="#{customer.phoneNumber}">  
                     <h:outputText value="#{customer.phoneNumber}" />  
                 </p:column> 
 
-                <p:column headerText="Address">  
+                <p:column headerText="Address" sortBy="#{customer.street}, #{customer.building}, #{customer.flat}">  
                     <h:outputText value="#{customer.street}, #{customer.building}, #{customer.flat}" />  
                 </p:column> 
             </p:dataTable> 

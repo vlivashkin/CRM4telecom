@@ -7,7 +7,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="login"  value="Login:" />  
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p:inputText id="login" value="#{userValidationBean.login}"/>
             </div>
             <div class="col-sm-4">
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="password" value="Password:" /> 
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p:password id="password" value="#{userValidationBean.password}"/>
             </div>
             <div class="col-sm-4">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" />  
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p:selectOneMenu id="type" value="#{userValidationBean.type}">
                     <f:selectItems value="#{resourcesBean.userTypes}" var="userType"
                                    itemValue="#{userType}" itemLabel="#{userType.label}"/>
@@ -37,8 +37,8 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="employee" value="Employee:" />  
-            <div class="col-sm-4">
-                <p:autoComplete id="employee" value="#{userValidationBean.employee}"   
+            <div class="col-sm-6">
+                <p:autoComplete id="employee" style="width: 100%" value="#{userValidationBean.employee}"   
                                 completeMethod="#{userValidationBean.completeEmployee}"/>  
             </div>
             <div class="col-sm-4">

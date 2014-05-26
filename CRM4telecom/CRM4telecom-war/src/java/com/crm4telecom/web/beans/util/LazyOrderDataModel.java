@@ -108,7 +108,7 @@ public class LazyOrderDataModel extends LazyDataModel<Order> {
     }
 
     @Override
-    public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+    public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         setRowCount(om.getOrdersCount(filters, parameters).intValue());
         datasource = om.getOrdersList(first, pageSize, sortField, sortOrder.name(), filters, parameters);
         parameters.clear();

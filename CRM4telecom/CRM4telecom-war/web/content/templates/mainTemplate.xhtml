@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
         <h:outputScript library="js" name="main.js"/>
-        
+
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="signin.css"/>
@@ -37,22 +37,24 @@
 
                             <ui:insert name="navbar" />
 
-                            <f:facet name="options" >  
-                                <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
-                                    <p:menuitem value="List of customers" onclick="clk('customer_list', event)" immediate="true" icon="ui-icon-note"/>  
-                                    <p:menuitem value="List of orders" onclick="clk('order_list', event)" immediate="true" icon="ui-icon-note"/>  
-                                    <p:menuitem value="Add customer" onclick="clk('customer_add', event)" immediate="true" icon="ui-icon-plus"/> 
-                                    <p:menuitem value="Add order" onclick="clk('order_add', event)" immediate="true" icon="ui-icon-plus"/>
-                                    <p:separator />
-                                    <c:if test="#{userBean.isAdmin}">
-                                        <p:menuitem value="List of users" onclick="clk('user_list', event)" immediate="true" icon="ui-icon-note"/>  
-                                        <p:menuitem value="Add user" onclick="clk('user_add', event)" immediate="true" icon="ui-icon-plus"/>
-                                        <p:separator />  
-                                    </c:if>
-                                    <p:menuitem value="Main Page" onclick="clk('index', event)" icon="ui-icon-home"/>  
-                                </p:menuButton>
-                                <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  
-                                <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="signin?faces-redirect=true" />                             
+                            <f:facet name="options">  
+                                <div>
+                                    <p:menuButton id="navigation" value="Go to..." style="margin-right:10px" rendered="#{userBean.isLogged()}">  
+                                        <p:menuitem value="List of customers" onclick="clk('customer_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                        <p:menuitem value="List of orders" onclick="clk('order_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                        <p:menuitem value="Add customer" onclick="clk('customer_add', event)" immediate="true" icon="ui-icon-plus"/> 
+                                        <p:menuitem value="Add order" onclick="clk('order_add', event)" immediate="true" icon="ui-icon-plus"/>
+                                        <p:separator />
+                                        <c:if test="#{userBean.isAdmin}">
+                                            <p:menuitem value="List of users" onclick="clk('user_list', event)" immediate="true" icon="ui-icon-note"/>  
+                                            <p:menuitem value="Add user" onclick="clk('user_add', event)" immediate="true" icon="ui-icon-plus"/>
+                                            <p:separator />  
+                                        </c:if>
+                                        <p:menuitem value="Main Page" onclick="clk('index', event)" icon="ui-icon-home"/>  
+                                    </p:menuButton>
+                                    <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  
+                                    <p:commandButton value="Login" rendered="#{not userBean.isLogged()}" icon="ui-icon-key" action="signin?faces-redirect=true" />                             
+                                </div>
                             </f:facet> 
                         </p:menubar> 
                     </div>

@@ -12,7 +12,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchQuery {
-
+    public static String getSearchQuery(String what, Map<String, List<String>> parameters, String sortField, String sortOrder) {
+        String query = getSearchQuery(what, parameters);
+        StringBuilder sqlQuery = new StringBuilder(query);
+        if (sortField != null){
+            sqlQuery.append(" ORDER BY c.").append(sortField);
+            if (null != sortOrder)
+                switch (sortOrder) {
+                case "ASCENDING":
+                    sqlQuery.append(" ASC");
+                    break;
+                case "DESCENDING":
+                    sqlQuery.append(" DESC");
+                    break;
+            }
+        }
+        return sqlQuery.toString();
+    }
+    
     public static String getSearchQuery(String what, Map<String, List<String>> parameters) {
         StringBuffer sqlQuery = new StringBuffer("SELECT ");
         sqlQuery.append(what);

@@ -120,7 +120,7 @@ public class LazyCustomerDataModel extends LazyDataModel<Customer> {
     }
 
     @Override
-    public List<Customer> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+    public List<Customer> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         setRowCount(cm.getCustomersCount(filters, parameters).intValue());
         datasource = cm.getCustomersList(first, pageSize, sortField, sortOrder.name(), filters, parameters);
 

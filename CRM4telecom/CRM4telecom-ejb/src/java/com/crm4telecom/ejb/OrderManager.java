@@ -69,8 +69,8 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = SearchQuery.getSearchQuery("c FROM Orders c", parametrs);
+    public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs) {
+        String sqlQuery = SearchQuery.getSearchQuery("c FROM Orders c", parametrs, sortField, sortOrder);
 
         if (log.isInfoEnabled()) {
             log.info("Make query in Order table " + sqlQuery);
@@ -90,7 +90,7 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public Long getOrdersCount(Map<String, String> filters, Map<String, List<String>> parametrs) {
+    public Long getOrdersCount(Map<String, Object> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = SearchQuery.getSearchQuery("COUNT(c) FROM Orders c", parametrs);
 
         if (log.isInfoEnabled()) {

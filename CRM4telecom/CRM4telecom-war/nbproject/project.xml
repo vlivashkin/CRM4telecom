@@ -10,7 +10,6 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>CRM4telecom-war</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <explicit-platform explicit-source-supported="true"/>
             <web-module-libraries>
                 <library dirs="100">
                     <file>${reference.CRM4telecom-ejb.dist}</file>
@@ -32,7 +31,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.primefaces-3.5.jar}</file>
+                    <file>${file.reference.primefaces-5.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

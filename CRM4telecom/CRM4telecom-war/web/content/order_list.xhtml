@@ -39,41 +39,43 @@
         </p:fieldset>   
 
         <h:form id="tableForm">
-            <p:dataTable id="orderTable" var="order" value="#{orderListBean.lazyModel}" paginator="true" rows="10" 
+            <p:dataTable id="orderTable" var="order" value="#{orderListBean.lazyModel}" paginator="true" rows="10" resizableColumns="true" liveResize="true" draggableColumns="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
                          rowsPerPageTemplate="5,10,15,20,30,50,100,200" selectionMode="single" selection="#{orderListBean.selected}" lazy="true">  
 
                 <p:ajax event="rowSelect" listener="#{orderListBean.onRowSelect}" />
 
-                <p:column headerText="ID" sortBy="orderId">  
+                <p:column headerText="ID" sortBy="#{order.orderId}">  
                     <h:outputText value="#{order.orderId}" />  
                 </p:column>  
 
-                <p:column headerText="Customer" sortBy="customerId" >  
+                <p:column headerText="Customer" sortBy="#{order.customerId}" >  
                     <h:outputText value="#{order.customer}" />  
                 </p:column>
 
-                <p:column headerText="Date" sortBy="orderDate" >  
-                    <h:outputText value="#{order.orderDate}" />  
+                <p:column headerText="Date" sortBy="#{order.orderDate}" >  
+                    <h:outputText value="#{order.orderDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                    </h:outputText>
                 </p:column>  
                 
-                <p:column headerText="Type" sortBy="orderType" >  
+                <p:column headerText="Type" sortBy="#{order.orderType}" >  
                     <h:outputText value="#{order.orderType.label}" />  
                 </p:column>                
 
-                <p:column headerText="Product" sortBy="productId" >  
+                <p:column headerText="Product" sortBy="#{order.product.productId}" >  
                     <h:outputText value="#{order.product}" />  
                 </p:column>
 
-                <p:column headerText="Priority" sortBy="priority" >  
+                <p:column headerText="Priority" sortBy="#{order.priority}" >  
                     <h:outputText value="#{order.priority.label}" />  
                 </p:column>  
 
-                <p:column headerText="Status" sortBy="status" >  
+                <p:column headerText="Status" sortBy="#{order.status}" >  
                     <h:outputText value="#{order.status.label}" />  
                 </p:column> 
 
-                <p:column headerText="Employee" sortBy="employeeId" >  
+                <p:column headerText="Employee" sortBy="#{order.employee.employeeId}" >  
                     <h:outputText value="#{order.employee}" />  
                 </p:column> 
             </p:dataTable>  
