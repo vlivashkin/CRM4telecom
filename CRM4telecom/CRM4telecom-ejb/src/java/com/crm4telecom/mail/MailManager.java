@@ -46,7 +46,7 @@ public class MailManager {
         context.put("firstName", order.getCustomer().getFirstName());
         context.put("lastName", order.getCustomer().getLastName());
         context.put("orderId", order.getOrderId());
-        context.put("step", order.getProcessStep().toString());
+        context.put("step", order.getProcessStep().getLabel());
         context.put("steps", steps);
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
