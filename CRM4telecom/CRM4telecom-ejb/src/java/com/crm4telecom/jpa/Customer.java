@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name="Customers")
 @Table(catalog = "")
 public class Customer implements Serializable {
 

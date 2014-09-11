@@ -77,10 +77,10 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = SearchQuery.getSearchQuery("c FROM Customer c", parametrs, sortField, sortOrder);
+        String sqlQuery = SearchQuery.getSearchQuery("c FROM Customers c", parametrs, sortField, sortOrder);
 
         if (log.isInfoEnabled()) {
-            log.info("Make query in Customer table " + sqlQuery);
+            log.info("Make query in Customers table " + sqlQuery);
         }
         
         Query query = em.createQuery(sqlQuery, Customer.class);
@@ -91,14 +91,14 @@ public class CustomerManager implements CustomerManagerLocal {
 
     @Override
     public Long getCustomersCount() {
-        String sqlQuery = "SELECT COUNT(c) FROM Customer c";
+        String sqlQuery = "SELECT COUNT(c) FROM Customers c";
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
     }
 
     @Override
     public Long getCustomersCount(Map<String, Object> filters, Map<String, List<String>> parametrs) {
-        String sqlQuery = SearchQuery.getSearchQuery("COUNT(c) FROM Customer c", parametrs);
+        String sqlQuery = SearchQuery.getSearchQuery("COUNT(c) FROM Customers c", parametrs);
 
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
