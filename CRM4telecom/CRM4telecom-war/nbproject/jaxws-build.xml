@@ -45,7 +45,7 @@
     </target>
     <target name="wsimport-client-schema" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/schema"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/schema" destdir="${build.generated.dir}/jax-wsCache/schema" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/schema/wsdl/schema.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="file:/C:/schema.wsdl" xnocompile="true" xendorsed="true" package="com.crm4telecom.soapui">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/schema" destdir="${build.generated.dir}/jax-wsCache/schema" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/schema/wsdl/schema.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="file:/C:/wsdl/schema.wsdl" xnocompile="true" xendorsed="true" package="com.crm4telecom.soapui">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/schema/wsdl/schema.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/schema"/>
         </wsimport>

@@ -7,7 +7,7 @@
   </services>
   <clients>
     <client name="schema">
-      <wsdl-url>file:/C:/schema.wsdl</wsdl-url>
+      <wsdl-url>file:/C:/wsdl/schema.wsdl</wsdl-url>
       <local-wsdl-file>schema.wsdl</local-wsdl-file>
       <package-name forceReplace="true">com.crm4telecom.soapui</package-name>
       <catalog-file>catalog.xml</catalog-file>
@@ -26,7 +26,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>file:/C:/schema.wsdl</wsimport-option-value>
+          <wsimport-option-value>file:/C:/wsdl/schema.wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
