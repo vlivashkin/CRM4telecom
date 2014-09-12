@@ -38,9 +38,6 @@ public class PhoneNumber implements Serializable {
     @ManyToOne(optional = false)
     private Customer customerId;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "phoneNumber1")
-    private PhoneNumbersHistory phoneNumbersHistory;
-
     public PhoneNumber() {
     }
 
@@ -78,14 +75,6 @@ public class PhoneNumber implements Serializable {
 
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
-    }
-
-    public PhoneNumbersHistory getPhoneNumbersHistory() {
-        return phoneNumbersHistory;
-    }
-
-    public void setPhoneNumbersHistory(PhoneNumbersHistory phoneNumbersHistory) {
-        this.phoneNumbersHistory = phoneNumbersHistory;
     }
 
     @Override

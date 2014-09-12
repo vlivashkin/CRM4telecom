@@ -34,9 +34,6 @@ public class StaticIp implements Serializable {
     @Column(name = "STATUS_COMMENT", length = 30)
     private String statusComment;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "staticIp")
-    private StaticIpHistory staticIpHistory;
-
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
     @ManyToOne
     private Customer customerId;
@@ -70,14 +67,6 @@ public class StaticIp implements Serializable {
 
     public void setStatusComment(String statusComment) {
         this.statusComment = statusComment;
-    }
-
-    public StaticIpHistory getStaticIpHistory() {
-        return staticIpHistory;
-    }
-
-    public void setStaticIpHistory(StaticIpHistory staticIpHistory) {
-        this.staticIpHistory = staticIpHistory;
     }
 
     public Customer getCustomerId() {
