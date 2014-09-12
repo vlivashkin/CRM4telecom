@@ -45,9 +45,6 @@ public class Equipment implements Serializable {
     @OneToMany(mappedBy = "equipmentId")
     private List<OrderProcessing> orderProcessingList;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "equipment")
-    private EquipmentHistory equipmentHistory;
-
     public Equipment() {
     }
 
@@ -112,13 +109,7 @@ public class Equipment implements Serializable {
         this.orderProcessingList = orderProcessingList;
     }
 
-    public EquipmentHistory getEquipmentHistory() {
-        return equipmentHistory;
-    }
-
-    public void setEquipmentHistory(EquipmentHistory equipmentHistory) {
-        this.equipmentHistory = equipmentHistory;
-    }
+    
 
     @Override
     public int hashCode() {

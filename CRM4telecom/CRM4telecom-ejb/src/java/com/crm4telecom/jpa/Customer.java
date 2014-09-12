@@ -83,8 +83,7 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<Order> ordersList;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
-    private BalanceHistory balanceHistory;
+  
 
     public Customer() {
     }
@@ -215,13 +214,7 @@ public class Customer implements Serializable {
         this.ordersList = ordersList;
     }
 
-    public BalanceHistory getBalanceHistory() {
-        return balanceHistory;
-    }
-
-    public void setBalanceHistory(BalanceHistory balanceHistory) {
-        this.balanceHistory = balanceHistory;
-    }
+    
 
     @Override
     public int hashCode() {
