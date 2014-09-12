@@ -15,8 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "PHONE_NUMBER", catalog = "")
+@Entity(name = "PHONE_NUMBERS")
+@Table(catalog = "")
 public class PhoneNumber implements Serializable {
 
     private static final long serialVersionUID = 1L;

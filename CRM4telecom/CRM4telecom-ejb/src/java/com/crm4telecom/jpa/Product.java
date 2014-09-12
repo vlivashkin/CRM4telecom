@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name="Products")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
