@@ -8,7 +8,7 @@ public enum OrderStep {
                     if (flag) {
                         return SEND_TO_TECH_SUPPORT;
                     } else {
-                        return ENGINEER_APPOINT;
+                        return TECHNITIAN_APPOINT;
                     }
                 }
             },
@@ -18,7 +18,7 @@ public enum OrderStep {
                     return POST_CONFIRM;
                 }
             },
-    ENGINEER_APPOINT("Engineer appoint", OrderStatus.OPENED) {
+    TECHNITIAN_APPOINT("Technitian appoint", OrderStatus.OPENED) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     return POST_CONFIRM;
