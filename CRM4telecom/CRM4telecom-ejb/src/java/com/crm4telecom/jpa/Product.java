@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity(name="Products")
+@Entity(name = "Products")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,8 +41,11 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriodEnd;
 
-    @Column(name = "BASELINE_PRICE")
-    private Long baselinePrice;
+    @Column(name = "INSTALATION_FEE")
+    private Long instalationFee;
+
+    @Column(name = "MONTHLY_PAYMENT")
+    private Long monthlyPayment;
 
     @Size(max = 30)
     @Enumerated(EnumType.STRING)
@@ -98,12 +101,20 @@ public class Product implements Serializable {
         this.salesPeriodEnd = salesPeriodEnd;
     }
 
-    public Long getBaselinePrice() {
-        return baselinePrice;
+    public Long getInstalationFee() {
+        return instalationFee;
     }
 
-    public void setBaselinePrice(Long baselinePrice) {
-        this.baselinePrice = baselinePrice;
+    public void setInstalationFee(Long instalationFee) {
+        this.instalationFee = instalationFee;
+    }
+
+    public Long getMonthlyPayment() {
+        return monthlyPayment;
+    }
+
+    public void setMonthlyPayment(Long monthlyPayment) {
+        this.monthlyPayment = monthlyPayment;
     }
 
     public ProductProperties getProperties() {
