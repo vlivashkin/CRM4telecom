@@ -17,3 +17,9 @@ CRM4telecom/CRM4telecom-ejb/src/conf/persistence.xml
 /CRM4telecom_stub/nbproject/private/
 /CRM4telecom_stub/CRM4telecom_stub-war/nbproject/private/
 /CRM4telecom_stub/CRM4telecom_stub-ejb/nbproject/private/
+/CRM4telecom_stub/CRM4telecom_stub-ejb/build/
+/CRM4telecom_stub/CRM4telecom_stub-ejb/dist/
+/CRM4telecom_stub/build/
+/CRM4telecom_stub/dist/
+/CRM4telecom_stub/CRM4telecom_stub-war/dist/
+/CRM4telecom_stub/CRM4telecom_stub-war/build/

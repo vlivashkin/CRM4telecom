@@ -5,6 +5,7 @@
  */
 package com.crm4telecom.stub.jpa;
 
+import com.crm4telecom.stub.enums.CustomerStatus;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -12,6 +13,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customers.findAll", query = "SELECT c FROM Customers c"),
     @NamedQuery(name = "Customers.findByCustomerId", query = "SELECT c FROM Customers c WHERE c.customerId = :customerId"),
-    @NamedQuery(name = "Customers.findByBalance", query = "SELECT c FROM Customers c WHERE c.balance = :balance")})
+    @NamedQuery(name = "Customers.findByBalance", query = "SELECT c FROM Customers c WHERE c.balance = :balance"),
+    @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customers c WHERE c.status = :status")})
 public class Customers implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -41,6 +45,18 @@ public class Customers implements Serializable {
     @Column(name = "CUSTOMER_ID")
     private BigDecimal customerId;
     private BigInteger balance;
+    
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
+
+    public CustomerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
+    }
+
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
