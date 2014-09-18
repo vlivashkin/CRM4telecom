@@ -1,81 +1,55 @@
 package com.crm4telecom.jpa;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-@Entity(name="Customers_Products")
-@Table(catalog = "")
+@Embeddable
 public class CustomersProducts implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CUSTOMER_ID")
+    private Long customerId;
 
-    @EmbeddedId
-    protected CustomerProductsPK customersProductsPK;
-
-    @Column(name = "START_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
-
-    @Column(name = "END_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
-
-    @Column(name = "PRICE")
-    private Long price;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRODUCT_ID")
+    private Long productId;
 
     public CustomersProducts() {
     }
 
-    public CustomersProducts(CustomerProductsPK customerProductsPK) {
-        this.customersProductsPK = customerProductsPK;
-    }
-
     public CustomersProducts(Long customerId, Long productId) {
-        this.customersProductsPK = new CustomerProductsPK(customerId, productId);
+        this.customerId = customerId;
+        this.productId = productId;
     }
 
-    public CustomerProductsPK getCustomerProductsPK() {
-        return customersProductsPK;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerProductsPK(CustomerProductsPK customerProductsPK) {
-        this.customersProductsPK = customerProductsPK;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (customersProductsPK != null ? customersProductsPK.hashCode() : 0);
+        hash += (customerId != null ? customerId.hashCode() : 0);
+        hash += (productId != null ? productId.hashCode() : 0);
         return hash;
     }
 
@@ -85,12 +59,15 @@ public class CustomersProducts implements Serializable {
             return false;
         }
         CustomersProducts other = (CustomersProducts) object;
-        return (this.customersProductsPK != null || other.customersProductsPK == null) && (this.customersProductsPK == null || this.customersProductsPK.equals(other.customersProductsPK));
+        if (!this.customerId.equals(other.customerId)) {
+            return false;
+        }
+        return this.productId.equals(other.productId);
     }
 
     @Override
     public String toString() {
-        return "com.crm4telecom.jpa.CustomerProducts[ customerProductsPK=" + customersProductsPK + " ]";
+        return "com.crm4telecom.jpa.CustomersProducts[ customerId=" + customerId + ", productId=" + productId + " ]";
     }
 
 }
