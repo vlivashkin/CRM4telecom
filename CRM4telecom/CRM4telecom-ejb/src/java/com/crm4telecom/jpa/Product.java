@@ -41,8 +41,8 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date salesPeriodEnd;
 
-    @Column(name = "ONETIME_PAYMENT")
-    private Long onetimePayment;
+    @Column(name = "INSTALATION_FEE")
+    private Long instalationFee;
 
     @Column(name = "MONTHLY_PAYMENT")
     private Long monthlyPayment;
@@ -101,12 +101,12 @@ public class Product implements Serializable {
         this.salesPeriodEnd = salesPeriodEnd;
     }
 
-    public Long getOnetimePayment() {
-        return onetimePayment;
+    public Long getInstalationFee() {
+        return instalationFee;
     }
 
-    public void setOnetimePayment(Long instalationFee) {
-        this.onetimePayment = instalationFee;
+    public void setInstalationFee(Long instalationFee) {
+        this.instalationFee = instalationFee;
     }
 
     public Long getMonthlyPayment() {
