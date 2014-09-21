@@ -11,6 +11,12 @@
     <message name="addMoneyResponse"/>
     <message name="withdraw"/>
     <message name="withdrawResponse"/>
+    <message name="addProduct"/>
+    <message name="addProductResponse"/>
+    <message name="addCustomer"/>
+    <message name="addCustomerResponse"/>
+    <message name="getStatuses"/>
+    <message name="getStatusesResponse"/>
     <portType name="Billing">
         <operation name="getBalance">
             <input message="tns:getBalance"/>
@@ -23,6 +29,18 @@
         <operation name="withdraw">
             <input message="tns:withdraw"/>
             <output message="tns:withdrawResponse"/>
+        </operation>
+        <operation name="addProduct">
+            <input message="tns:addProduct"/>
+            <output message="tns:addProductResponse"/>
+        </operation>
+        <operation name="addCustomer">
+            <input message="tns:addCustomer"/>
+            <output message="tns:addCustomerResponse"/>
+        </operation>
+        <operation name="getStatuses">
+            <input message="tns:getStatuses"/>
+            <output message="tns:getStatusesResponse"/>
         </operation>
     </portType>
     <binding name="BillingPortBinding" type="tns:Billing">
@@ -37,6 +55,18 @@
         <operation name="withdraw">
             <input></input>
             <output></output>
+        </operation>
+        <operation name="addProduct">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addCustomer">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getStatuses">
+            <input/>
+            <output/>
         </operation>
     </binding>
     <service name="services">

@@ -48,7 +48,7 @@ public class CustomerValidationBean implements Serializable {
 
     Long flat;
 
-    Long balance;
+    Double balance;
 
     @Enumerated(EnumType.STRING)
     CustomerStatus status;
@@ -136,11 +136,11 @@ public class CustomerValidationBean implements Serializable {
         this.flat = flat;
     }
 
-    public Long getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 

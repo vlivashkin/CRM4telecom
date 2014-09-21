@@ -72,7 +72,7 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date statusUpdateDate;
 
-    private Long balance;
+    private Double balance;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<PhoneNumber> phoneNumberList;
@@ -182,11 +182,11 @@ public class Customer implements Serializable {
         this.statusUpdateDate = statusUpdateDate;
     }
 
-    public Long getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 

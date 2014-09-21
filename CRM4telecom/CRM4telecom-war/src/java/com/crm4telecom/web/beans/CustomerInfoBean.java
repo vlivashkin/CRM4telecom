@@ -118,7 +118,7 @@ public class CustomerInfoBean implements Serializable {
     public void syncBalance() {
         Services service = new Services();
         Billing port = service.getBillingPort();
-        Long result = port.getBalance(customer.getCustomerId());
+        Double result = port.getBalance(customer.getCustomerId());
 
         customer.setBalance(result);
         cm.modifyCustomer(customer);
