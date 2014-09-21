@@ -21,9 +21,26 @@
 
   <xs:element name="getStatusesResponse" nillable="true" type="tns:getStatusesResponse"/>
 
+  <xs:element name="removeProduct" type="tns:removeProduct"/>
+
+  <xs:element name="removeProductResponse" type="tns:removeProductResponse"/>
+
   <xs:element name="withdraw" nillable="true" type="tns:withdraw"/>
 
   <xs:element name="withdrawResponse" nillable="true" type="tns:withdrawResponse"/>
+
+  <xs:complexType name="removeProduct">
+    <xs:sequence>
+      <xs:element name="customerID" type="xs:long" minOccurs="0"/>
+      <xs:element name="productName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeProductResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="getStatuses">
     <xs:sequence/>

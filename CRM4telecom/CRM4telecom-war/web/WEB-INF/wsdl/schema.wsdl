@@ -6,6 +6,12 @@
       <xsd:import namespace="http://soap.crm4telecom.com/" schemaLocation="services.xsd"/>
     </xsd:schema>
   </types>
+  <message name="removeProduct">
+    <part name="parameters" element="tns:removeProduct"/>
+  </message>
+  <message name="removeProductResponse">
+    <part name="parameters" element="tns:removeProductResponse"/>
+  </message>
   <message name="getStatuses">
     <part name="parameters" element="tns:getStatuses"/>
   </message>
@@ -43,6 +49,10 @@
     <part name="parameters" element="tns:addCustomerResponse"/>
   </message>
   <portType name="Billing">
+    <operation name="removeProduct">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/removeProductRequest" message="tns:removeProduct"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/removeProductResponse" message="tns:removeProductResponse"/>
+    </operation>
     <operation name="getStatuses">
       <input wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesRequest" message="tns:getStatuses"/>
       <output wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesResponse" message="tns:getStatusesResponse"/>
@@ -70,6 +80,15 @@
   </portType>
   <binding name="BillingPortBinding" type="tns:Billing">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="removeProduct">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="getStatuses">
       <soap:operation soapAction=""/>
       <input>

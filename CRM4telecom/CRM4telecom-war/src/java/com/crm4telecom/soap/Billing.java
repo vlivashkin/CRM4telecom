@@ -84,4 +84,13 @@ public class Billing {
         return null;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "removeProduct")
+    public String removeProduct(@WebParam(name = "customerID") Long customerID, @WebParam(name = "productName") String productName) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
 }

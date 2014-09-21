@@ -17,6 +17,8 @@
     <message name="addCustomerResponse"/>
     <message name="getStatuses"/>
     <message name="getStatusesResponse"/>
+    <message name="removeProduct"/>
+    <message name="removeProductResponse"/>
     <portType name="Billing">
         <operation name="getBalance">
             <input message="tns:getBalance"/>
@@ -42,6 +44,10 @@
             <input message="tns:getStatuses"/>
             <output message="tns:getStatusesResponse"/>
         </operation>
+        <operation name="removeProduct">
+            <input message="tns:removeProduct"/>
+            <output message="tns:removeProductResponse"/>
+        </operation>
     </portType>
     <binding name="BillingPortBinding" type="tns:Billing">
         <operation name="getBalance">
@@ -65,6 +71,10 @@
             <output/>
         </operation>
         <operation name="getStatuses">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeProduct">
             <input/>
             <output/>
         </operation>
