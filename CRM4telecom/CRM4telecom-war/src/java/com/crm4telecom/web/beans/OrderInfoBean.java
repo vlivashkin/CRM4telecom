@@ -1,7 +1,7 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
-import com.crm4telecom.enums.OrderStatus;
+import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.web.util.JSFHelper;

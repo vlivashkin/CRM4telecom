@@ -1,6 +1,6 @@
 package com.crm4telecom.jpa;
 
-import com.crm4telecom.enums.OrderStep;
+import com.crm4telecom.orchestrator.OrderStep;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;

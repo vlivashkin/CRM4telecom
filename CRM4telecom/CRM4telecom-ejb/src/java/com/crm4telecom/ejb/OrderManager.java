@@ -3,13 +3,15 @@ package com.crm4telecom.ejb;
 import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.ejb.filling.PhoneFillingLocal;
-import com.crm4telecom.enums.OrderStatus;
-import com.crm4telecom.enums.OrderStep;
+import com.crm4telecom.orchestrator.OrderStatus;
+import com.crm4telecom.orchestrator.OrderStep;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
+import com.crm4telecom.orchestrator.Task;
+import com.crm4telecom.orchestrator.TaskType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -130,17 +132,31 @@ public class OrderManager implements OrderManagerLocal {
 
     @Override
     public void toNextStep(Order order) {
+
         if (order.getStatus() != OrderStatus.CLOSED
-                && order.getStatus() != OrderStatus.CANCELLED) {
-            OrderStep nextStep = order.getProcessStep().nextStep(order.getTechSupport());
+                && order.getStatus() != OrderStatus.CANCELLED && order.getStatus() != OrderStatus.ERROR) {
+            OrderStep nextStep = order.getProcessStep();
+            Task task = order.getProcessStep().getTask();
+            if (task.getType().equals(TaskType.AUTO_TASK)) {
+                if (task.run()) {
+                    nextStep = order.getProcessStep().nextStep(order.getTechSupport());
+
+                } else {
+                    nextStep.getTask().doneStatus = OrderStatus.ERROR;
+                }
+
+            } else {
+                nextStep = order.getProcessStep().nextStep(order.getTechSupport());
+            }
 
             // update end date for previous step in OrderProcessing
-            String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
-            Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
-            OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
-            oldStep.setEndDate(new Date());
-            em.merge(oldStep);
-
+            if (nextStep.getStatus() != OrderStatus.ERROR) {
+                String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
+                Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+                OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
+                oldStep.setEndDate(new Date());
+                em.merge(oldStep);
+            }
             // update status
             order.setStatus(order.getProcessStep().getStatus());
             em.merge(order);
@@ -159,6 +175,7 @@ public class OrderManager implements OrderManagerLocal {
                 em.merge(order);
 
                 // use new ip/phone
+                //to run
                 if (nextStep == OrderStep.POST_CONFIRM) {
                     ProductProperties properties = order.getProduct().getProperties();
                     if (properties.equals(ProductProperties.IP)) {
@@ -185,6 +202,11 @@ public class OrderManager implements OrderManagerLocal {
                         log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
                     }
                 }
+
+            }
+            if(order.getProcessStep().getTask().getType().equals(TaskType.AUTO_TASK)&&order.getStatus() != OrderStatus.CLOSED
+                && order.getStatus() != OrderStatus.CANCELLED && order.getStatus() != OrderStatus.ERROR){
+                toNextStep(order);
             }
         }
     }

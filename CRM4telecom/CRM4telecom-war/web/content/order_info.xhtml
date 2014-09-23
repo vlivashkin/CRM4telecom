@@ -82,7 +82,12 @@
             </p:column>
 
             <f:facet name="footer">
-                <p:commandButton value="To next step" update=":tabPanel:rightcolumn :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                <c:if test="#{!orderInfoBean.order.isError()}">
+                    <p:commandButton value="To next step" update=":tabPanel:rightcolumn :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                </c:if>
+                <c:if test="#{orderInfoBean.order.isError()}">
+                    <p:commandButton value="Try again" update=":tabPanel:rightcolumn :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                </c:if>
                 <p:commandButton value="Cancel Order" update=":tabPanel:rightcolumn :headerstatus" action="#{orderInfoBean.cancelOrder}" />
             </f:facet>
         </p:dataTable>

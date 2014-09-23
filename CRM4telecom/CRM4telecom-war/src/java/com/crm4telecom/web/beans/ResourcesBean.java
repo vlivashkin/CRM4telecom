@@ -5,7 +5,7 @@ import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
 import com.crm4telecom.enums.OrderPriority;
-import com.crm4telecom.enums.OrderStatus;
+import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.UserType;
 import com.crm4telecom.jpa.Product;

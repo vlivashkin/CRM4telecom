@@ -1,5 +1,7 @@
 package com.crm4telecom.jpa;
 
+import com.crm4telecom.orchestrator.OrderStep;
+import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.enums.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -100,6 +102,11 @@ public class Order implements Serializable {
 
     public OrderStatus getStatus() {
         return status;
+    }
+
+    public Boolean isError() {
+
+        return (status == OrderStatus.ERROR);
     }
 
     public void setStatus(OrderStatus status) {
