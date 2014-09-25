@@ -103,7 +103,7 @@ public class OrderInfoBean implements Serializable {
     }
 
     public void nextStep() {
-        om.toNextStep(order);
+        om.tryNextStep(order);
     }
 
     public void cancelOrder() {

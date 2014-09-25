@@ -25,7 +25,7 @@ public interface OrderManagerLocal {
 
     List<String> completeOrder(String rawOrder);
 
-    void toNextStep(Order order);
+    void tryNextStep(Order order);
 
     void cancelOrder(Order order);
 }

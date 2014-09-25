@@ -5,8 +5,6 @@ import com.crm4telecom.ejb.filling.IpFillingLocal;
 import com.crm4telecom.ejb.filling.PhoneFillingLocal;
 import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.orchestrator.OrderStep;
-import com.crm4telecom.enums.OrderType;
-import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
@@ -16,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
@@ -131,82 +127,64 @@ public class OrderManager implements OrderManagerLocal {
     }
 
     @Override
-    public void toNextStep(Order order) {
+    public void tryNextStep(Order order) {
+        if (order.getStatus() != OrderStatus.CLOSED && order.getStatus() != OrderStatus.CANCELLED) {
+            OrderStep currentStep = order.getProcessStep();
+            Task task = currentStep.getTask();
+            if (task.getType().equals(TaskType.AUTO_TASK) && task.run() || task.getType().equals(TaskType.USER_TASK)) {
+                doneCurrentStep(order);
 
-        if (order.getStatus() != OrderStatus.CLOSED
-                && order.getStatus() != OrderStatus.CANCELLED) {
-            OrderStep nextStep = order.getProcessStep();
-            Task task = order.getProcessStep().getTask();
-            if (task.getType().equals(TaskType.AUTO_TASK)) {
-                if (task.run()) {
-                    nextStep = order.getProcessStep().nextStep(order.getTechSupport());
-
+                if (order.getStatus() != OrderStatus.CLOSED) {
+                    toNextStep(order);
+                    if (order.getProcessStep().getTask().getType().equals(TaskType.AUTO_TASK)) {
+                        tryNextStep(order);
+                    }
                 } else {
-                    nextStep.getTask().doneStatus = OrderStatus.ERROR;
+                    mailNotification(order);
                 }
-
             } else {
-                nextStep = order.getProcessStep().nextStep(order.getTechSupport());
-            }
-
-            // update end date for previous step in OrderProcessing
-            if (nextStep.getStatus() != OrderStatus.ERROR) {
-                String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
-                Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
-                OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
-                oldStep.setEndDate(new Date());
-                em.merge(oldStep);
-            }
-            // update status
-            order.setStatus(order.getProcessStep().getStatus());
-            em.merge(order);
-
-            if (nextStep != order.getProcessStep()) {
-                OrderProcessing newStep = new OrderProcessing();
-
-                // create new step in OrderProcessing
-                newStep.setOrderId(order.getOrderId());
-                newStep.setStartDate(new Date());
-                newStep.setStepName(nextStep);
-                em.persist(newStep);
-
-                // update information about current step in order
-                order.setProcessStep(nextStep);
+                order.setStatus(OrderStatus.ERROR);
                 em.merge(order);
-
-                // use new ip/phone
-                //to run
-                if (nextStep == OrderStep.POST_CONFIRM) {
-                    ProductProperties properties = order.getProduct().getProperties();
-                    if (properties.equals(ProductProperties.IP)) {
-                        if (order.getOrderType().equals(OrderType.CONNECT)) {
-                            ipFilling.allocateItem(order.getCustomer());
-                        } else {
-                            ipFilling.freeItem(order.getCustomer());
-                        }
-                    } else if (properties.equals(ProductProperties.PHONE)) {
-                        if (order.getOrderType().equals(OrderType.CONNECT)) {
-                            phoneFilling.allocateItem(order.getCustomer());
-                        } else {
-                            phoneFilling.freeItem(order.getCustomer());
-                        }
-                    }
-                }
-
-                // send email 'status changed'
-                try {
-                    MailManager mm = new MailManager();
-                    mm.statusChangedEmail(order, getOrderSteps(order));
-                } catch (MessagingException e) {
-                    if (log.isEnabledFor(Priority.ERROR)) {
-                        log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
-                    }
-                }
-
             }
-            if(order.getProcessStep().getTask().getType().equals(TaskType.AUTO_TASK)&&order.getStatus() != OrderStatus.CLOSED
-                && order.getStatus() != OrderStatus.CANCELLED && order.getStatus() != OrderStatus.ERROR){
-                toNextStep(order);
+
+        }
+    }
+
+    private void doneCurrentStep(Order order) {
+        String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
+        Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
+        OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
+        oldStep.setEndDate(new Date());
+        em.merge(oldStep);
+
+        OrderStep currentStep = order.getProcessStep();
+        order.setStatus(currentStep.getStatus());
+        em.merge(order);
+    }
+
+    private void toNextStep(Order order) {
+        OrderStep currentStep = order.getProcessStep();
+        OrderStep nextStep = currentStep.nextStep(order.getTechSupport());
+
+        // create new step in OrderProcessing
+        OrderProcessing newStep = new OrderProcessing();
+        newStep.setOrderId(order.getOrderId());
+        newStep.setStartDate(new Date());
+        newStep.setStepName(nextStep);
+        em.persist(newStep);
+
+        // update information about current step in order
+        order.setProcessStep(nextStep);
+        em.merge(order);
+    }
+
+    private void mailNotification(Order order) {
+        try {
+            MailManager mm = new MailManager();
+            mm.statusChangedEmail(order, getOrderSteps(order));
+        } catch (MessagingException e) {
+            if (log.isEnabledFor(Priority.ERROR)) {
+                log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
             }
         }
     }

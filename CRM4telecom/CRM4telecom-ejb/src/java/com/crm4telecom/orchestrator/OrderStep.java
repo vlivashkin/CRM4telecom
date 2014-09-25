@@ -47,7 +47,6 @@ public enum OrderStep {
             return true;
         }
     }) {
-
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     return POST_CONFIRM;
@@ -68,15 +67,15 @@ public enum OrderStep {
     }
 
     public Task getTask() {
-        return this.task;
+        return task;
     }
 
     public String getLabel() {
-        return this.task.label;
+        return task.getLabel();
     }
 
     public OrderStatus getStatus() {
-        return this.task.doneStatus;
+        return doneStatus;
     }
 
     public abstract OrderStep nextStep(Boolean flag);
