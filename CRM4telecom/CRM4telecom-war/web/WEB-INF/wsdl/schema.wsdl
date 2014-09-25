@@ -6,23 +6,11 @@
       <xsd:import namespace="http://soap.crm4telecom.com/" schemaLocation="services.xsd"/>
     </xsd:schema>
   </types>
-  <message name="removeProduct">
-    <part name="parameters" element="tns:removeProduct"/>
+  <message name="addMoney">
+    <part name="parameters" element="tns:addMoney"/>
   </message>
-  <message name="removeProductResponse">
-    <part name="parameters" element="tns:removeProductResponse"/>
-  </message>
-  <message name="getStatuses">
-    <part name="parameters" element="tns:getStatuses"/>
-  </message>
-  <message name="getStatusesResponse">
-    <part name="parameters" element="tns:getStatusesResponse"/>
-  </message>
-  <message name="withdraw">
-    <part name="parameters" element="tns:withdraw"/>
-  </message>
-  <message name="withdrawResponse">
-    <part name="parameters" element="tns:withdrawResponse"/>
+  <message name="addMoneyResponse">
+    <part name="parameters" element="tns:addMoneyResponse"/>
   </message>
   <message name="getBalance">
     <part name="parameters" element="tns:getBalance"/>
@@ -30,11 +18,23 @@
   <message name="getBalanceResponse">
     <part name="parameters" element="tns:getBalanceResponse"/>
   </message>
-  <message name="addMoney">
-    <part name="parameters" element="tns:addMoney"/>
+  <message name="addCustomer">
+    <part name="parameters" element="tns:addCustomer"/>
   </message>
-  <message name="addMoneyResponse">
-    <part name="parameters" element="tns:addMoneyResponse"/>
+  <message name="addCustomerResponse">
+    <part name="parameters" element="tns:addCustomerResponse"/>
+  </message>
+  <message name="removeProduct">
+    <part name="parameters" element="tns:removeProduct"/>
+  </message>
+  <message name="removeProductResponse">
+    <part name="parameters" element="tns:removeProductResponse"/>
+  </message>
+  <message name="withdraw">
+    <part name="parameters" element="tns:withdraw"/>
+  </message>
+  <message name="withdrawResponse">
+    <part name="parameters" element="tns:withdrawResponse"/>
   </message>
   <message name="addProduct">
     <part name="parameters" element="tns:addProduct"/>
@@ -42,63 +42,45 @@
   <message name="addProductResponse">
     <part name="parameters" element="tns:addProductResponse"/>
   </message>
-  <message name="addCustomer">
-    <part name="parameters" element="tns:addCustomer"/>
+  <message name="getStatuses">
+    <part name="parameters" element="tns:getStatuses"/>
   </message>
-  <message name="addCustomerResponse">
-    <part name="parameters" element="tns:addCustomerResponse"/>
+  <message name="getStatusesResponse">
+    <part name="parameters" element="tns:getStatusesResponse"/>
   </message>
   <portType name="Billing">
-    <operation name="removeProduct">
-      <input wsam:Action="http://soap.crm4telecom.com/Billing/removeProductRequest" message="tns:removeProduct"/>
-      <output wsam:Action="http://soap.crm4telecom.com/Billing/removeProductResponse" message="tns:removeProductResponse"/>
-    </operation>
-    <operation name="getStatuses">
-      <input wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesRequest" message="tns:getStatuses"/>
-      <output wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesResponse" message="tns:getStatusesResponse"/>
-    </operation>
-    <operation name="withdraw">
-      <input wsam:Action="http://soap.crm4telecom.com/Billing/withdrawRequest" message="tns:withdraw"/>
-      <output wsam:Action="http://soap.crm4telecom.com/Billing/withdrawResponse" message="tns:withdrawResponse"/>
+    <operation name="addMoney">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/addMoneyRequest" message="tns:addMoney"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/addMoneyResponse" message="tns:addMoneyResponse"/>
     </operation>
     <operation name="getBalance">
       <input wsam:Action="http://soap.crm4telecom.com/Billing/getBalanceRequest" message="tns:getBalance"/>
       <output wsam:Action="http://soap.crm4telecom.com/Billing/getBalanceResponse" message="tns:getBalanceResponse"/>
     </operation>
-    <operation name="addMoney">
-      <input wsam:Action="http://soap.crm4telecom.com/Billing/addMoneyRequest" message="tns:addMoney"/>
-      <output wsam:Action="http://soap.crm4telecom.com/Billing/addMoneyResponse" message="tns:addMoneyResponse"/>
+    <operation name="addCustomer">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/addCustomerRequest" message="tns:addCustomer"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/addCustomerResponse" message="tns:addCustomerResponse"/>
+    </operation>
+    <operation name="removeProduct">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/removeProductRequest" message="tns:removeProduct"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/removeProductResponse" message="tns:removeProductResponse"/>
+    </operation>
+    <operation name="withdraw">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/withdrawRequest" message="tns:withdraw"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/withdrawResponse" message="tns:withdrawResponse"/>
     </operation>
     <operation name="addProduct">
       <input wsam:Action="http://soap.crm4telecom.com/Billing/addProductRequest" message="tns:addProduct"/>
       <output wsam:Action="http://soap.crm4telecom.com/Billing/addProductResponse" message="tns:addProductResponse"/>
     </operation>
-    <operation name="addCustomer">
-      <input wsam:Action="http://soap.crm4telecom.com/Billing/addCustomerRequest" message="tns:addCustomer"/>
-      <output wsam:Action="http://soap.crm4telecom.com/Billing/addCustomerResponse" message="tns:addCustomerResponse"/>
+    <operation name="getStatuses">
+      <input wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesRequest" message="tns:getStatuses"/>
+      <output wsam:Action="http://soap.crm4telecom.com/Billing/getStatusesResponse" message="tns:getStatusesResponse"/>
     </operation>
   </portType>
   <binding name="BillingPortBinding" type="tns:Billing">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <operation name="removeProduct">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="getStatuses">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="withdraw">
+    <operation name="addMoney">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -116,7 +98,25 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="addMoney">
+    <operation name="addCustomer">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="removeProduct">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="withdraw">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -134,7 +134,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="addCustomer">
+    <operation name="getStatuses">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

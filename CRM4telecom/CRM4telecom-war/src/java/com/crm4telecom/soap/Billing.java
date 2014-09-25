@@ -15,13 +15,8 @@ public class Billing {
     private CustomerManagerLocal cm;
 
     @WebMethod(operationName = "getBalance")
-    public String getBalance(@WebParam(name = "id") long id) {
-        Customer customer = cm.getCustomer(id);
-        if (customer != null) {
-            return customer.getBalance().toString();
-        } else {
-            return Result.CLIENT_NOT_FOUND.getLabel();
-        }
+    public double getBalance(@WebParam(name = "id") long id) {
+        return 0.0;
     }
 
     @WebMethod(operationName = "addMoney")
