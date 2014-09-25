@@ -134,7 +134,7 @@ public class OrderManager implements OrderManagerLocal {
     public void toNextStep(Order order) {
 
         if (order.getStatus() != OrderStatus.CLOSED
-                && order.getStatus() != OrderStatus.CANCELLED && order.getStatus() != OrderStatus.ERROR) {
+                && order.getStatus() != OrderStatus.CANCELLED) {
             OrderStep nextStep = order.getProcessStep();
             Task task = order.getProcessStep().getTask();
             if (task.getType().equals(TaskType.AUTO_TASK)) {

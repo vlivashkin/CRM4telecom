@@ -2,15 +2,9 @@ package com.crm4telecom.orchestrator;
 
 public enum OrderStep {
 
-    PRE_CONFIRM(OrderStatus.OPENED, new UserTask("Pre-confirm") {
-        @Override
-        public boolean run() {
-            return true;
-        }
-    }) {
+    PRE_CONFIRM(OrderStatus.OPENED, new UserTask("Pre-confirm")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-
                     return SEND_TO_TECH_SUPPORT;
 
                 }
@@ -41,12 +35,7 @@ public enum OrderStep {
                     return BILLING;
                 }
             },
-    TECHNITIAN_APPOINT(OrderStatus.OPENED, new UserTask("Technitian appoint") {
-        @Override
-        public boolean run() {
-            return true;
-        }
-    }) {
+    TECHNITIAN_APPOINT(OrderStatus.OPENED, new UserTask("Technitian appoint")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     return BILLING;
@@ -64,12 +53,7 @@ public enum OrderStep {
                     return POST_CONFIRM;
                 }
             },
-    POST_CONFIRM(OrderStatus.CLOSED, new UserTask("Post-confirm") {
-        @Override
-        public boolean run() {
-            return true;
-        }
-    }) {
+    POST_CONFIRM(OrderStatus.CLOSED, new UserTask("Post-confirm")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     return POST_CONFIRM;
