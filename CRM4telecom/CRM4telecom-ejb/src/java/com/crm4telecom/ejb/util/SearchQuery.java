@@ -143,6 +143,7 @@ public class SearchQuery {
         String[] split = raw.split(" ");
         StringBuffer sqlQuery = new StringBuffer("SELECT c ").append("FROM ")
                 .append(clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1))
+                .append("s")
                 .append(" c " + "WHERE (LOWER(c.firstName) LIKE LOWER('%")
                 .append(split[0]).append("%') " + "or LOWER(c.lastName) LIKE LOWER('%")
                 .append(split[0]).append("%'))");
