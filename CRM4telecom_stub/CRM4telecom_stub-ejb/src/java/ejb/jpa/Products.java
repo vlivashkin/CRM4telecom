@@ -1,5 +1,6 @@
-package com.crm4telecom.stub.jpa;
+package ejb.jpa;
 
+import ejb.jpa.Customers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
