@@ -10,26 +10,30 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 public class SearchQuery {
+
     public static String getSearchQuery(String what, Map<String, List<String>> parameters, String sortField, String sortOrder) {
         String query = getSearchQuery(what, parameters);
         StringBuilder sqlQuery = new StringBuilder(query);
-        if (sortField != null){
+        if (sortField != null) {
             sqlQuery.append(" ORDER BY c.").append(sortField);
-            if (null != sortOrder)
+            if (null != sortOrder) {
                 switch (sortOrder) {
-                case "ASCENDING":
-                    sqlQuery.append(" ASC");
-                    break;
-                case "DESCENDING":
-                    sqlQuery.append(" DESC");
-                    break;
+                    case "ASCENDING":
+                        sqlQuery.append(" ASC");
+                        break;
+                    case "DESCENDING":
+                        sqlQuery.append(" DESC");
+                        break;
+                }
             }
         }
         return sqlQuery.toString();
     }
-    
+
     public static String getSearchQuery(String what, Map<String, List<String>> parameters) {
         StringBuffer sqlQuery = new StringBuffer("SELECT ");
         sqlQuery.append(what);
@@ -139,11 +143,11 @@ public class SearchQuery {
 
     public static String getCompleteQuery(Class clazz, String rawString) {
         String raw = rawString.trim();
-
         String[] split = raw.split(" ");
         StringBuffer sqlQuery = new StringBuffer("SELECT c ").append("FROM ")
-                .append(clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1))
-                .append("s")
+                //                .append(clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1))
+                //                .append("s")
+                .append(clazz.getName())
                 .append(" c " + "WHERE (LOWER(c.firstName) LIKE LOWER('%")
                 .append(split[0]).append("%') " + "or LOWER(c.lastName) LIKE LOWER('%")
                 .append(split[0]).append("%'))");
