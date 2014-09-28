@@ -55,7 +55,7 @@ public class GetManager implements GetManagerLocal {
     @Override
     public Market getMarket(String market) {
         if (market != null) {
-            String sqlQuery = "SELECT u FROM Market u WHERE u.name = :name";
+            String sqlQuery = "SELECT u FROM Markets u WHERE u.name = :name";
             Query query = em.createQuery(sqlQuery).setParameter("name", market);
             return (Market) query.getResultList().get(0);
         } else {
@@ -65,7 +65,7 @@ public class GetManager implements GetManagerLocal {
 
     @Override
     public List<String> getMarketList() {
-        String sqlQuery = "SELECT u.name FROM Market u";
+        String sqlQuery = "SELECT u.name FROM Markets u";
         Query query = em.createQuery(sqlQuery);
 
         return query.getResultList();

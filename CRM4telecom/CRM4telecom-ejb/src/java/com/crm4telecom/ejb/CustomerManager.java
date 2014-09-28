@@ -2,10 +2,7 @@ package com.crm4telecom.ejb;
 
 import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.jpa.Customer;
-import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
-import com.crm4telecom.jpa.Product;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
@@ -25,8 +22,7 @@ public class CustomerManager implements CustomerManagerLocal {
     @Override
     public void createCustomer(Customer customer) {
         if (customer != null) {
-            persist(customer);
-
+            em.persist(customer);
         } else {
             throw new IllegalArgumentException("Customer can't be null");
         }
@@ -38,60 +34,18 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
-    public Customer getCustomer(Long customerId) {
-        Customer customer;
-        if (customerId == null) {
-            throw new IllegalArgumentException("CustomerId can't be null");
-        }
-        if (customerId > 0) {
-            customer = find(customerId);
-        } else {
-            return null;
-        }
-
-        return customer;
-    }
-
-    @Override
     public void addMarket(MarketsCustomers mc) {
         em.persist(mc);
     }
 
     @Override
-    public List<Market> getMarkets(Customer customer) {
-
-        if (customer != null) {
-            
-            String sqlQuery = "SELECT c.marketsCustomersPK.marketId FROM Markets_Customers c WHERE c.marketsCustomersPK.customerId = :customerId";
-            Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
-
-            List<Long> market_ids = query.getResultList();
-            List<Market> markets = new ArrayList<Market>();
-            for (Long temp : market_ids) {
-                Query query2 = em.createQuery("SELECT u FROM Markets u WHERE u.marketId = :id").setParameter("id", temp);
-                markets.add((Market) query2.getResultList().get(0));
-            }
-            return markets;
-        } else {
-            throw new IllegalArgumentException("Customer cannot be null");
+    public Customer getCustomer(Long customerId) {
+        if (customerId == null) {
+            throw new IllegalArgumentException("CustomerId can't be null");
         }
-    }
-
-    @Override
-    public List<Product> getProducts(Customer customer) {
-
-        if (customer != null) {
-            long aa = customer.getCustomerId();
-            String sqlQuery = "Select p FROM Customers c,Customers_Products cp ,Products p WHERE  p.productId=cp.productId and c.customerId=:custId and cp.customerId=:custId ";
-            Query query = em.createQuery(sqlQuery).setParameter("custId",aa );
-            List<Product> products = new ArrayList<Product>();
-            products.addAll(query.getResultList());
-
-            return products;
-
-        } else {
-            throw new IllegalArgumentException("Customer cannot be null");
-        }
+        Customer customer = em.find(Customer.class, customerId);
+        em.refresh(customer);
+        return customer;
     }
 
     @Override
@@ -121,17 +75,5 @@ public class CustomerManager implements CustomerManagerLocal {
 
         Query query = em.createQuery(sqlQuery, Customer.class);
         return (Long) query.getSingleResult();
-    }
-
-    @Override
-    public void persist(Customer c) {
-        em.persist(c);
-    }
-
-    @Override
-    public Customer find(long customerId) {
-        Customer customer = em.find(Customer.class, customerId);
-        em.refresh(customer);
-        return customer;
     }
 }

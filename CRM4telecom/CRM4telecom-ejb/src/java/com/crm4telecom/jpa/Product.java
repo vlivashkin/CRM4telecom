@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +54,9 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "productId")
     private List<Order> ordersList;
+
+    @ManyToMany(mappedBy = "productsList")
+    private List<Customer> customersList;
 
     public Product() {
     }
@@ -131,6 +135,14 @@ public class Product implements Serializable {
 
     public void setOrdersList(List<Order> ordersList) {
         this.ordersList = ordersList;
+    }
+
+    public List<Customer> getCustomersList() {
+        return customersList;
+    }
+
+    public void setCustomersList(List<Customer> customersList) {
+        this.customersList = customersList;
     }
 
     @Override

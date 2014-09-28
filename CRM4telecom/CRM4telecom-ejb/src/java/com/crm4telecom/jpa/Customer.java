@@ -12,8 +12,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -83,7 +85,17 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<Order> ordersList;
 
-  
+    @JoinTable(name = "MARKETS_CUSTOMERS", joinColumns = {
+        @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID")})
+    @ManyToMany
+    private List<Market> marketsList;
+        
+    @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
+        @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
+    @ManyToMany
+    private List<Product> productsList;
 
     public Customer() {
     }
@@ -190,31 +202,25 @@ public class Customer implements Serializable {
         this.balance = balance;
     }
 
-    public List<PhoneNumber> getPhoneNumberList() {
+    public List<PhoneNumber> getPhoneNumbers() {
         return phoneNumberList;
     }
 
-    public void setPhoneNumberList(List<PhoneNumber> phoneNumberList) {
-        this.phoneNumberList = phoneNumberList;
-    }
-
-    public List<StaticIp> getStaticIpList() {
+    public List<StaticIp> getStaticIps() {
         return staticIpList;
     }
 
-    public void setStaticIpList(List<StaticIp> staticIpList) {
-        this.staticIpList = staticIpList;
-    }
-
-    public List<Order> getOrdersList() {
+    public List<Order> getOrders() {
         return ordersList;
     }
 
-    public void setOrdersList(List<Order> ordersList) {
-        this.ordersList = ordersList;
+    public List<Market> getMarkets() {
+        return marketsList;
     }
 
-    
+    public List<Product> getProducts() {
+        return productsList;
+    }
 
     @Override
     public int hashCode() {

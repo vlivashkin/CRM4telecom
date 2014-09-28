@@ -21,9 +21,6 @@ public class CustomerValidationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @EJB
-    private CustomerManagerLocal cm;
-
     @Size(max = 30, message = "This first name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
     String firstName;
@@ -67,8 +64,8 @@ public class CustomerValidationBean implements Serializable {
             phoneNumber = customer.getPhoneNumber();
             status = customer.getStatus();
 
-            markets = new ArrayList<String>();
-            for (Market temp : cm.getMarkets(customer)) {
+            markets = new ArrayList<>();
+            for (Market temp : customer.getMarkets()) {
                 markets.add(temp.getName());
             }
 
