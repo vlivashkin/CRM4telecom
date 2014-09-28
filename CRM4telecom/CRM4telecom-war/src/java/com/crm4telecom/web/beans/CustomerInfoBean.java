@@ -8,6 +8,7 @@ import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
 import com.crm4telecom.jpa.MarketsCustomersPK;
 import com.crm4telecom.jpa.Order;
+import com.crm4telecom.jpa.Product;
 import com.crm4telecom.soapui.Billing;
 import com.crm4telecom.soapui.Services;
 import com.crm4telecom.web.util.JSFHelper;
@@ -32,7 +33,7 @@ public class CustomerInfoBean implements Serializable {
 
     @Inject
     private CustomerValidationBean cv;
-
+    
     private Long id;
     private Customer customer;
     private Order selectedOrder;
@@ -115,6 +116,9 @@ public class CustomerInfoBean implements Serializable {
         return cm.getMarkets(customer);
     }
 
+    public List<Product> getProducts(){
+       return cm.getProducts(customer);
+    }
     public void syncBalance() {
         Services service = new Services();
         Billing port = service.getBillingPort();

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "Markets")
 @Table(catalog = "", schema = "CRM4TELECOM")
 public class Market implements Serializable {
 

@@ -1,6 +1,6 @@
-package ejb.beans;
+package com.crm4telecom.stub.beans;
 
-import ejb.jpa.Customers;
+import com.crm4telecom.stub.jpa.Customers;
 import java.util.List;
 import javax.ejb.Local;
 

@@ -4,6 +4,7 @@ import com.crm4telecom.ejb.util.SearchQuery;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
+import com.crm4telecom.jpa.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class CustomerManager implements CustomerManagerLocal {
     public List<Market> getMarkets(Customer customer) {
 
         if (customer != null) {
+            
             String sqlQuery = "SELECT c.marketsCustomersPK.marketId FROM Markets_Customers c WHERE c.marketsCustomersPK.customerId = :customerId";
             Query query = em.createQuery(sqlQuery).setParameter("customerId", customer.getCustomerId());
 
@@ -76,13 +78,30 @@ public class CustomerManager implements CustomerManagerLocal {
     }
 
     @Override
+    public List<Product> getProducts(Customer customer) {
+
+        if (customer != null) {
+            long aa = customer.getCustomerId();
+            String sqlQuery = "Select p FROM Customers c,Customers_Products cp ,Products p WHERE  p.productId=cp.productId and c.customerId=:custId and cp.customerId=:custId ";
+            Query query = em.createQuery(sqlQuery).setParameter("custId",aa );
+            List<Product> products = new ArrayList<Product>();
+            products.addAll(query.getResultList());
+
+            return products;
+
+        } else {
+            throw new IllegalArgumentException("Customer cannot be null");
+        }
+    }
+
+    @Override
     public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = SearchQuery.getSearchQuery("c FROM Customers c", parametrs, sortField, sortOrder);
 
         if (log.isInfoEnabled()) {
             log.info("Make query in Customers table " + sqlQuery);
         }
-        
+
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);

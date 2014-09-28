@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity(name="Customers_Products")
 @Table(catalog = "")
@@ -28,6 +29,13 @@ public class CustomersProducts implements Serializable {
 
     @Column(name = "PRICE")
     private Long price;
+    
+    @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
+    private Long customerId;
+    
+    @NotNull
+    @Column(name = "PRODUCT_ID", nullable = false, precision = 22, scale = 0)
+    private Long productId;
 
     public CustomersProducts() {
     }

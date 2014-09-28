@@ -1,6 +1,6 @@
-package ejb.beans;
+package com.crm4telecom.stub.beans;
 
-import ejb.jpa.Customers;
+import com.crm4telecom.stub.jpa.Customers;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class CustomerSessionBean implements CustomerSessionBeanLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "CRM4telecom_stub-ejbPU")
     private EntityManager em;
 
     @Override

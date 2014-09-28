@@ -104,6 +104,20 @@
                 <h:outputText value="#{phone.status}"/>
             </p:column>
         </p:dataTable>
+        
+        <p:dataTable value="#{customerInfoBean.products}" var="prod">
+            <f:facet name="header">
+                Products
+            </f:facet>
+
+            <p:column headerText="Product">
+                <h:outputText value="#{prod.name}"/>
+            </p:column>
+            <p:column headerText="salesPeriodEnd">
+                <h:outputText value="#{prod.salesPeriodEnd}"/>
+            </p:column>
+
+        </p:dataTable>
     </ui:define>
 
     <ui:define name="infofooter">

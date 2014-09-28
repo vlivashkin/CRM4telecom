@@ -1,7 +1,6 @@
 package com.crm4telecom.stub.beans;
 
-import ejb.beans.CustomerSessionBeanLocal;
-import ejb.jpa.Customers;
+import com.crm4telecom.stub.jpa.Customers;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
