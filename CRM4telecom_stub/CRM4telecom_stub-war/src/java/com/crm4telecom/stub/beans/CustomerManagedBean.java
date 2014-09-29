@@ -1,6 +1,7 @@
 package com.crm4telecom.stub.beans;
 
-import com.crm4telecom.stub.jpa.Customers;
+import ejb.jpa.Customers;
+import ejb.beans.CustomerManager;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -10,14 +11,14 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class CustomerManagedBean {
     @EJB
-    private CustomerSessionBeanLocal customerSessionBean;
+    private CustomerManager customerManager;
 
     public List<Customers> getCustomers() {
-        return customerSessionBean.getCustomers();
+        return customerManager.getCustomersList();
     }
            
     public void merge(Customers customer) {
-        customerSessionBean.merge(customer);
+        customerManager.merge(customer);
     }    
     
     public CustomerManagedBean() {

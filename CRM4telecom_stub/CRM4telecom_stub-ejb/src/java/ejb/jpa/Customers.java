@@ -1,4 +1,4 @@
-package com.crm4telecom.stub.jpa;
+package ejb.jpa;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,7 +31,7 @@ public class Customers implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CUSTOMER_ID")
-    private BigDecimal customerId;
+    private Long customerId;
     private Double balance;
     @Size(max = 30)
     private String status;
@@ -44,15 +44,15 @@ public class Customers implements Serializable {
     public Customers() {
     }
 
-    public Customers(BigDecimal customerId) {
+    public Customers(Long customerId) {
         this.customerId = customerId;
     }
 
-    public BigDecimal getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(BigDecimal customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 

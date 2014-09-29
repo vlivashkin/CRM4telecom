@@ -1,5 +1,6 @@
-package com.crm4telecom.stub.jpa;
+package ejb.jpa;
 
+import ejb.jpa.Customers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,7 +30,7 @@ public class Products implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRODUCT_ID")
-    private BigDecimal productId;
+    private Long productId;
     @Column(name = "ONETIME_PRICE")
     private BigInteger onetimePrice;
     @Column(name = "MONTHLY_PRICE")
@@ -40,15 +41,15 @@ public class Products implements Serializable {
     public Products() {
     }
 
-    public Products(BigDecimal productId) {
+    public Products(Long productId) {
         this.productId = productId;
     }
 
-    public BigDecimal getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(BigDecimal productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

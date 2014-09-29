@@ -86,7 +86,7 @@
 
   <xs:complexType name="getBalanceResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:string" minOccurs="0"/>
+      <xs:element name="return" type="xs:double"/>
     </xs:sequence>
   </xs:complexType>
 

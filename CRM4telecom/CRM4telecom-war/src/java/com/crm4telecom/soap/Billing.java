@@ -3,6 +3,7 @@ package com.crm4telecom.soap;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.jpa.Customer;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -56,7 +57,7 @@ public class Billing {
      * Web service operation
      */
     @WebMethod(operationName = "addProduct")
-    public String addProduct(@WebParam(name = "customerID") Long customerID, @WebParam(name = "productName") String productName) {
+    public String addProduct(@WebParam(name = "customerID") Long customerID, @WebParam(name = "productID") Long productID) {
         //TODO write your implementation code here:
         return null;
     }
@@ -74,7 +75,7 @@ public class Billing {
      * Web service operation
      */
     @WebMethod(operationName = "getStatuses")
-    public List getStatuses() {
+    public Map getStatuses() {
         //TODO write your implementation code here:
         return null;
     }
@@ -83,7 +84,7 @@ public class Billing {
      * Web service operation
      */
     @WebMethod(operationName = "removeProduct")
-    public String removeProduct(@WebParam(name = "customerID") Long customerID, @WebParam(name = "productName") String productName) {
+    public String removeProduct(@WebParam(name = "customerID") Long customerID, @WebParam(name = "productID") Long productID) {
         //TODO write your implementation code here:
         return null;
     }
