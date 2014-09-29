@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity(name = "Markets")
-@Table(catalog = "", schema = "CRM4TELECOM")
+@Table(catalog = "")
 public class Market implements Serializable {
 
     private static final long serialVersionUID = 1L;
