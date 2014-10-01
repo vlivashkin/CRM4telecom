@@ -8,8 +8,6 @@ import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
 import com.crm4telecom.jpa.MarketsCustomersPK;
 import com.crm4telecom.jpa.Order;
-import com.crm4telecom.soapui.Billing;
-import com.crm4telecom.soapui.Services;
 import com.crm4telecom.web.util.JSFHelper;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -111,12 +109,12 @@ public class CustomerInfoBean implements Serializable {
     }
 
     public void syncBalance() {
-        Services service = new Services();
-        Billing port = service.getBillingPort();
-        Double result = port.getBalance(customer.getCustomerId());
-
-        customer.setBalance(result);
-        cm.modifyCustomer(customer);
+//        Services service = new Services();
+//        Billing port = service.getBillingPort();
+//        Double result = port.getBalance(customer.getCustomerId());
+//
+//        customer.setBalance(result);
+//        cm.modifyCustomer(customer);
     }
 
     public void updBalance() {
