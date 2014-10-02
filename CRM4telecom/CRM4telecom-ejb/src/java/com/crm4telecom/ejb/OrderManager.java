@@ -45,12 +45,14 @@ public class OrderManager implements OrderManagerLocal {
         order.setStatus(OrderStatus.NEW);
         order.setProcessStep(OrderStep.PRE_CONFIRM);
         em.persist(order);
+        em.flush();
 
         OrderProcessing op = new OrderProcessing();
         op.setOrderId(order.getOrderId());
         op.setStartDate(date);
         op.setStepName(OrderStep.PRE_CONFIRM);
         em.persist(op);
+        em.flush();
 
         return order;
     }

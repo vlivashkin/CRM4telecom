@@ -73,7 +73,7 @@ public class OrderInfoBean implements Serializable {
         ov.fillOrder(orderNew);
         om.createOrder(orderNew);
         order = orderNew;
-
+        
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info", "id", order.getOrderId().toString());
     }
