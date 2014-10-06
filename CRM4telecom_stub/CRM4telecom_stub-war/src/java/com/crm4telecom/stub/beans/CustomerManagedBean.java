@@ -1,6 +1,6 @@
 package com.crm4telecom.stub.beans;
 
-import ejb.jpa.Customers;
+import ejb.jpa.Customer;
 import ejb.beans.CustomerManagerInterface;
 import java.util.List;
 import javax.ejb.EJB;
@@ -13,11 +13,11 @@ public class CustomerManagedBean {
     @EJB
     private CustomerManagerInterface customerManager;
 
-    public List<Customers> getCustomers() {
+    public List<Customer> getCustomers() {
         return customerManager.getCustomersList();
     }
            
-    public void merge(Customers customer) {
+    public void merge(Customer customer) {
         customerManager.merge(customer);
     }    
     

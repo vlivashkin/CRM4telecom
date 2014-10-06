@@ -5,8 +5,8 @@
  */
 package ejb.beans;
 
-import ejb.jpa.Customers;
-import ejb.jpa.Products;
+import ejb.jpa.Customer;
+import ejb.jpa.Product;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +26,8 @@ public class CustomerManager implements CustomerManagerInterface{
     private EntityManager em;
     
     //Names of Data Bases
-    private String customersBase = "Customers";
-    private String productsBase = "Products";
+    private String customersBase = "Customer";
+    private String productsBase = "Product";
     //
     
     
@@ -43,7 +43,7 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String addCustomer() {
-        Customers customer = new Customers();
+        Customer customer = new Customer();
         try {
             this.merge(customer);
             return "ok";
@@ -54,13 +54,13 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String addProduct(Long customerID, Long productID) {
-        Customers c = this.getCustomer(customerID);
+        Customer c = this.getCustomer(customerID);
         if (c == null){
             return "err";
         }
         
         List newList = c.getProductsList();
-        for(Products p : this.getProductsList()){
+        for(Product p : this.getProductsList()){
             if (p.getProductId() == productID){
                 newList.add(p);
                 this.merge(c);
@@ -72,13 +72,13 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String removeProduct(Long customerID, Long productID) {
-        Customers c = this.getCustomer(customerID);
+        Customer c = this.getCustomer(customerID);
         if (c == null){
             return "err";
         }
         
         List newList = c.getProductsList();
-        for(Products p : this.getProductsList()){
+        for(Product p : this.getProductsList()){
             if (p.getProductId() == productID){
                 newList.remove(p);
                 this.merge(c);
@@ -91,35 +91,35 @@ public class CustomerManager implements CustomerManagerInterface{
     @Override
     public double getBalance(Long customerID) {
         Query query = em.createQuery("SELECT c FROM " + customersBase + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
-        List<Customers> resultList = query.getResultList();
-        Customers customer = resultList.get(0);
+        List<Customer> resultList = query.getResultList();
+        Customer customer = resultList.get(0);
         return customer.getBalance();
     }
 
     @Override
     public Map<Long, String> getStatuses() {
-        List<Customers> list = this.getCustomersList();
+        List<Customer> list = this.getCustomersList();
         Map<Long, String> resultMap = new HashMap<Long, String>();
         
-        for(Customers c : list){
+        for(Customer c : list){
             resultMap.put(c.getCustomerId(), c.getStatus());
         }
         return resultMap;
     }
 
     @Override
-    public List<Customers> getCustomersList() {
+    public List<Customer> getCustomersList() {
         return em.createQuery("SELECT c FROM " + customersBase + " c").getResultList();
     }
 
     @Override
-    public List<Products> getProductsList() {
+    public List<Product> getProductsList() {
         return em.createQuery("SELECT c FROM " + productsBase + " c").getResultList();
     }
 
     @Override
-    public Customers getCustomer(Long customerID) {
-        for (Customers c : this.getCustomersList()){
+    public Customer getCustomer(Long customerID) {
+        for (Customer c : this.getCustomersList()){
             if (c.getCustomerId() == customerID)
                 return c;
         }
