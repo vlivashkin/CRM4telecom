@@ -3,10 +3,10 @@ package com.crm4telecom.stub.beans;
 import ejb.jpa.Customer;
 import ejb.beans.CustomerManagerInterface;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
@@ -17,15 +17,8 @@ public class CustomerManagedBean {
     @EJB
     private CustomerManagerInterface customerManager;
 
-    private List<Customer> customers;
-    
-    @PostConstruct
-    public void init() {
-        customers = customerManager.getCustomersList();
-    }
-    
     public List<Customer> getCustomers() {
-        return customers;
+        return customerManager.getCustomersList();
     }
            
     public void merge(Customer customer) {
@@ -33,7 +26,6 @@ public class CustomerManagedBean {
     }
     
     public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
         customerManager.setCustomers(customers);
     }
     
