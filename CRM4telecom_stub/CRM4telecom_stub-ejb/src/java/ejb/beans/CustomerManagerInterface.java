@@ -37,5 +37,7 @@ public interface CustomerManagerInterface {
     public double getBalance(Long customerID);
     
     Map<Long, String> getStatuses();
+
+    public void setCustomers(List<Customer> customers);
     
 }
