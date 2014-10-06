@@ -25,9 +25,9 @@ public class CustomerManager implements CustomerManagerInterface{
     @PersistenceContext
     private EntityManager em;
     
-    //Names of Data Bases
-    private String customersBase = "Customer";
-    private String productsBase = "Product";
+    //Names of Entities
+    private final String customersEntity = "Customer";
+    private final String productsEntity = "Product";
     //
     
     
@@ -61,7 +61,7 @@ public class CustomerManager implements CustomerManagerInterface{
         
         List newList = c.getProductsList();
         for(Product p : this.getProductsList()){
-            if (p.getProductId() == productID){
+            if (p.getProductId().equals(productID)){
                 newList.add(p);
                 this.merge(c);
                 return "suc";
@@ -79,7 +79,7 @@ public class CustomerManager implements CustomerManagerInterface{
         
         List newList = c.getProductsList();
         for(Product p : this.getProductsList()){
-            if (p.getProductId() == productID){
+            if (p.getProductId().equals(productID)){
                 newList.remove(p);
                 this.merge(c);
                 return "suc";
@@ -90,7 +90,7 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public double getBalance(Long customerID) {
-        Query query = em.createQuery("SELECT c FROM " + customersBase + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
+        Query query = em.createQuery("SELECT c FROM " + customersEntity + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
         List<Customer> resultList = query.getResultList();
         Customer customer = resultList.get(0);
         return customer.getBalance();
@@ -99,7 +99,7 @@ public class CustomerManager implements CustomerManagerInterface{
     @Override
     public Map<Long, String> getStatuses() {
         List<Customer> list = this.getCustomersList();
-        Map<Long, String> resultMap = new HashMap<Long, String>();
+        Map<Long, String> resultMap = new HashMap<>();
         
         for(Customer c : list){
             resultMap.put(c.getCustomerId(), c.getStatus());
@@ -109,21 +109,28 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public List<Customer> getCustomersList() {
-        return em.createQuery("SELECT c FROM " + customersBase + " c").getResultList();
+        return em.createQuery("SELECT c FROM " + customersEntity + " c").getResultList();
     }
 
     @Override
     public List<Product> getProductsList() {
-        return em.createQuery("SELECT c FROM " + productsBase + " c").getResultList();
+        return em.createQuery("SELECT c FROM " + productsEntity + " c").getResultList();
     }
 
     @Override
     public Customer getCustomer(Long customerID) {
         for (Customer c : this.getCustomersList()){
-            if (c.getCustomerId() == customerID)
+            if (c.getCustomerId().equals(customerID))
                 return c;
         }
         return null;
+    }
+
+    @Override
+    public void setCustomers(List<Customer> customers) {
+        for (Customer c : customers) {
+            em.merge(c);
+        }
     }
 
     

@@ -23,7 +23,11 @@ public class CustomerManagedBean {
            
     public void merge(Customer customer) {
         customerManager.merge(customer);
-    }    
+    }
+    
+    public void setCustomers(List<Customer> customers) {
+        customerManager.setCustomers(customers);
+    }
     
     public CustomerManagedBean() {
     }
