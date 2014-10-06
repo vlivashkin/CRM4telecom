@@ -1,7 +1,7 @@
 package com.crm4telecom.stub.beans;
 
 import ejb.jpa.Customers;
-import ejb.beans.CustomerManager;
+import ejb.beans.CustomerManagerInterface;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -11,7 +11,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class CustomerManagedBean {
     @EJB
-    private CustomerManager customerManager;
+    private CustomerManagerInterface customerManager;
 
     public List<Customers> getCustomers() {
         return customerManager.getCustomersList();
