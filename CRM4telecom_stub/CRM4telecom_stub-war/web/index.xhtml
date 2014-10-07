@@ -1,28 +1,27 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Customers' Balance Control Center</title>
-        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+<ui:composition template="templates/mainTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    </h:head>
-    <h:body>
-        <div class="container">
-            <f:view>
+    <ui:define name="title" >
+        Stub | List of Customers
+    </ui:define>
+    
+    <ui:define name="header" >
+        List of Customers. Change balance on left click.
+    </ui:define>
+    
+    <ui:define name="content" >
+        <f:view>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
 
-                <p:dataTable id="customers" var="customer" value="#{cmb.customers}" editable="true" editMode="cell" widgetVar="cellCustomers">
-                    <f:facet name="header">
-                        Balance Editing with Click
-                    </f:facet>
- 
+                <p:dataTable id="customers" var="customer" value="#{cmb.customers}" editable="true" editMode="cell" widgetVar="cellCustomers" stickyHeader="true">
                     <p:ajax event="cellEdit" listener="#{cmb.onCellEdit}" update=":form:msgs" />
  
-                    <p:column headerText="Customer id">
+                    <p:column headerText="ID">
                         <h:outputText value="#{customer.customerId}" />
                     </p:column>
  
@@ -30,11 +29,10 @@
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{customer.balance}" /></f:facet>
                             <f:facet name="input">
-                                <p:inputText id="input" value='#{customer.balance}' converterMessage=" NaN! Can't update!">
+                                <p:inputText id="input" value='#{customer.balance}' converterMessage=" NaN! Can't update!" style="width:96%">
                                     <f:validateDoubleRange/>
                                     <f:ajax event="blur" render="errmsg"/>
                                 </p:inputText>
-                                <h:message id="errmsg" for="input" style="color:red"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
@@ -44,8 +42,6 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
-            </f:view>
-        </div>
-    </h:body>
-</html>
-
+        </f:view>
+    </ui:define>
+</ui:composition>
