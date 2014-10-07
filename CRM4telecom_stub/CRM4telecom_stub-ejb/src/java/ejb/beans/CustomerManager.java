@@ -20,7 +20,7 @@ import javax.persistence.Query;
  * @author root
  */
 @Stateless
-public class CustomerManager implements CustomerManagerInterface{
+public class CustomerManager implements CustomerManagerInterface {
 
     @PersistenceContext
     private EntityManager em;

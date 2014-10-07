@@ -2,6 +2,7 @@ package com.crm4telecom.stub.beans;
 
 import ejb.jpa.Customer;
 import ejb.beans.CustomerManagerInterface;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,9 +14,10 @@ import org.primefaces.event.CellEditEvent;
 
 @ManagedBean(name = "cmb")
 @ViewScoped
-public class CustomerManagedBean {
+public class CustomerManagedBean implements Serializable {
     @EJB
     private CustomerManagerInterface customerManager;
+
     private List<Customer> customers;
     
     @PostConstruct
@@ -33,6 +35,9 @@ public class CustomerManagedBean {
     
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
+    }
+    
+    public void update() {
         customerManager.setCustomers(customers);
     }
     
@@ -47,5 +52,6 @@ public class CustomerManagedBean {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+        update();
     }
 }
