@@ -1,11 +1,14 @@
 package ejb.jpa;
 
+import ejb.beans.CustomerStatus;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -33,8 +36,11 @@ public class Customers implements Serializable {
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
     private Double balance;
+    
     @Size(max = 30)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
+    
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
@@ -64,11 +70,11 @@ public class Customers implements Serializable {
         this.balance = balance;
     }
 
-    public String getStatus() {
+    public CustomerStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CustomerStatus status) {
         this.status = status;
     }
 
