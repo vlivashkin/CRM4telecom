@@ -30,13 +30,17 @@ public interface CustomerManagerInterface {
     
     public String addCustomer();
     
+    public void withdraw(Long customerID, Double cash);
+    
+    public void setStatus(Long customerID, CustomerStatus status);
+    
     public String addProduct(Long customerID, Long productID);
     
     public String removeProduct(Long customerID, Long productID);
     
     public double getBalance(Long customerID);
     
-    Map<Long, String> getStatuses();
+    Map<Long, CustomerStatus> getStatuses();
 
     public void setCustomers(List<Customer> customers);
     
