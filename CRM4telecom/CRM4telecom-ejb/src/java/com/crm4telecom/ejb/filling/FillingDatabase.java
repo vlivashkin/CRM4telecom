@@ -4,15 +4,15 @@ import com.crm4telecom.jpa.Customer;
 
 public abstract class FillingDatabase {
 
-    public final void allocateItem(Customer customer) {
-        getDataAndAlloc(customer);
+    public final Boolean allocateItem(Customer customer) {
+        return getDataAndAlloc(customer);
     }
 
-    public final void freeItem(Customer customer) {
-        getDataAndFree(customer);
+    public final Boolean freeItem(Customer customer) {
+        return getDataAndFree(customer);
     }
 
-    protected abstract void getDataAndAlloc(Customer customer);
+    protected abstract Boolean getDataAndAlloc(Customer customer);
 
-    protected abstract void getDataAndFree(Customer customer);
+    protected abstract Boolean getDataAndFree(Customer customer);
 }

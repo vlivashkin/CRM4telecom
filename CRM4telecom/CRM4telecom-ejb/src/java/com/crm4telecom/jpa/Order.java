@@ -105,9 +105,13 @@ public class Order implements Serializable {
     }
 
     public Boolean isError() {
-
         return (status == OrderStatus.ERROR);
     }
+    
+     public Boolean isNew() {
+        return (status == OrderStatus.NEW);
+    }
+    
 
     public void setStatus(OrderStatus status) {
         this.status = status;

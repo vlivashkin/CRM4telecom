@@ -2,9 +2,10 @@ package com.crm4telecom.ejb.filling;
 
 import com.crm4telecom.jpa.Customer;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
-@Local
-public interface IpFillingLocal {
+@Remote
+public interface PhoneFillingRemote {
 
     public Boolean allocateItem(Customer customer);
 

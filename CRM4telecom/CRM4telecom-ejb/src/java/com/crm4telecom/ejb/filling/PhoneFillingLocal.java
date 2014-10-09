@@ -6,7 +6,7 @@ import javax.ejb.Local;
 @Local
 public interface PhoneFillingLocal {
 
-    public void allocateItem(Customer customer);
+    public Boolean allocateItem(Customer customer);
 
-    public void freeItem(Customer customer);
+    public Boolean freeItem(Customer customer);
 }

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 @Stateless
-public class IpFilling extends FillingDatabase implements IpFillingLocal {
+public class IpFilling extends FillingDatabase implements IpFillingLocal,IpFillingRemote {
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
@@ -20,7 +20,7 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
     private EntityManager em;
 
     @Override
-    protected void getDataAndAlloc(Customer customer) {
+    protected Boolean getDataAndAlloc(Customer customer) {
         String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId IS NULL";
         Query query = em.createQuery(sqlQuery);
         List<StaticIp> ipList = query.getResultList();
@@ -29,19 +29,23 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
             ip.setCustomerId(customer);
             ip.setStatus(IpStatus.ACTIVE);
             em.merge(ip);
+            em.flush();
 
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now get ip address : " + ip.getIp());
+                return true;
             }
         } else {
             if (log.isEnabledFor(Priority.WARN)) {
                 log.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
+                return false;
             }
         }
+        return false;
     }
 
     @Override
-    protected void getDataAndFree(Customer customer) {
+    protected Boolean getDataAndFree(Customer customer) {
         String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = :customer";
         Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
         List<StaticIp> ipList = query.getResultList();
@@ -50,14 +54,18 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal {
             ip.setCustomerId(null);
             ip.setStatus(IpStatus.UNPLUGGED);
             em.merge(ip);
+            em.flush();
 
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now free ip address : " + ip.getIp());
+                return true;
             }
         } else {
             if (log.isEnabledFor(Priority.WARN)) {
                 log.warn("No ip of " + customer);
+                return false;
             }
         }
+        return false;
     }
 }

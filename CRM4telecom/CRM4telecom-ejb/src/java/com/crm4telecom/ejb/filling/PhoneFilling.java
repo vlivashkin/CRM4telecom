@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 @Stateless
-public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
+public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal,PhoneFillingRemote {
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
@@ -20,8 +20,8 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
     private EntityManager em;
 
     @Override
-    protected void getDataAndAlloc(Customer customer) {
-        String sqlQuery = "SELECT i FROM PhoneNumber i WHERE i.customerId IS NULL";
+    protected Boolean getDataAndAlloc(Customer customer) {
+        String sqlQuery = "SELECT i FROM PHONE_NUMBERS i WHERE i.customerId IS NULL";
         Query query = em.createQuery(sqlQuery);
         List<PhoneNumber> phoneList = query.getResultList();
         if (phoneList.size() > 0) {
@@ -29,19 +29,23 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
             phoneNumber.setCustomerId(customer);
             phoneNumber.setStatus(IpStatus.ACTIVE);
             em.merge(phoneNumber);
+            em.flush();
 
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now get phone number : " + phoneNumber.getPhoneNumber());
+                return true;
             }
         } else {
             if (log.isEnabledFor(Priority.WARN)) {
                 log.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
             }
+            return false;
         }
+        return false;
     }
 
     @Override
-    protected void getDataAndFree(Customer customer) {
+    protected Boolean getDataAndFree(Customer customer) {
         String sqlQuery = "SELECT i FROM PhoneNumber i WHERE i.customerId = :customer";
         Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
         List<PhoneNumber> ipList = query.getResultList();
@@ -50,14 +54,18 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal {
             phoneNumber.setCustomerId(null);
             phoneNumber.setStatus(IpStatus.UNPLUGGED);
             em.merge(phoneNumber);
+            em.flush();
 
             if (log.isInfoEnabled()) {
                 log.info("Customer : " + customer + " now get out phone number: " + phoneNumber.getPhoneNumber());
+                return true;
             }
         } else {
             if (log.isEnabledFor(Priority.WARN)) {
                 log.warn("No phone numbers of " + customer);
             }
+            return false;
         }
+        return false;
     }
 }

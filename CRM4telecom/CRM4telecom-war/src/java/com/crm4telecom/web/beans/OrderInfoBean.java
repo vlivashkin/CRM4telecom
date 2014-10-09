@@ -1,6 +1,7 @@
 package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
+import com.crm4telecom.ejb.ProcessingLocal;
 import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
@@ -21,6 +22,8 @@ public class OrderInfoBean implements Serializable {
     
     @EJB
     private OrderManagerLocal om;
+    @EJB
+    private ProcessingLocal pl;
 
     @Inject
     private OrderValidationBean ov;
@@ -73,7 +76,7 @@ public class OrderInfoBean implements Serializable {
         ov.fillOrder(orderNew);
         om.createOrder(orderNew);
         order = orderNew;
-
+        
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info", "id", order.getOrderId().toString());
     }
@@ -92,21 +95,21 @@ public class OrderInfoBean implements Serializable {
     }
         
     public List<String> completeOrder(String order) {
-        return om.completeOrder(order);
+        return pl.completeOrder(order);
     }
 
     public List<OrderProcessing> getOrderSteps() {
         if (order != null) {
-            return om.getOrderSteps(order);
+            return pl.getOrderSteps(order);
         }
         return Collections.EMPTY_LIST;
     }
 
     public void nextStep() {
-        om.tryNextStep(order);
+        pl.tryNextStep(order);
     }
 
     public void cancelOrder() {
-        om.cancelOrder(order);
+        pl.cancelOrder(order);
     }
 }
