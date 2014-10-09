@@ -5,8 +5,8 @@
  */
 package ejb.beans;
 
-import ejb.jpa.Customers;
-import ejb.jpa.Products;
+import ejb.jpa.Customer;
+import ejb.jpa.Product;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +20,14 @@ import javax.persistence.Query;
  * @author root
  */
 @Stateless
-public class CustomerManager implements CustomerManagerInterface{
+public class CustomerManager implements CustomerManagerInterface {
 
     @PersistenceContext
     private EntityManager em;
     
-    //Names of Data Bases
-    private String customersBase = "Customers";
-    private String productsBase = "Products";
+    //Names of Entities
+    private final String customersEntity = "Customer";
+    private final String productsEntity = "Product";
     //
     
     
@@ -43,7 +43,7 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String addCustomer() {
-        Customers customer = new Customers();
+        Customer customer = new Customer();
         try {
             this.merge(customer);
             return "ok";
@@ -54,14 +54,14 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String addProduct(Long customerID, Long productID) {
-        Customers c = this.getCustomer(customerID);
+        Customer c = this.getCustomer(customerID);
         if (c == null){
             return "err";
         }
         
         List newList = c.getProductsList();
-        for(Products p : this.getProductsList()){
-            if (p.getProductId() == productID){
+        for(Product p : this.getProductsList()){
+            if (p.getProductId().equals(productID)){
                 newList.add(p);
                 this.merge(c);
                 return "suc";
@@ -72,14 +72,14 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public String removeProduct(Long customerID, Long productID) {
-        Customers c = this.getCustomer(customerID);
+        Customer c = this.getCustomer(customerID);
         if (c == null){
             return "err";
         }
         
         List newList = c.getProductsList();
-        for(Products p : this.getProductsList()){
-            if (p.getProductId() == productID){
+        for(Product p : this.getProductsList()){
+            if (p.getProductId().equals(productID)){
                 newList.remove(p);
                 this.merge(c);
                 return "suc";
@@ -90,42 +90,61 @@ public class CustomerManager implements CustomerManagerInterface{
 
     @Override
     public double getBalance(Long customerID) {
-        Query query = em.createQuery("SELECT c FROM " + customersBase + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
-        List<Customers> resultList = query.getResultList();
-        Customers customer = resultList.get(0);
+        Query query = em.createQuery("SELECT c FROM " + customersEntity + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
+        List<Customer> resultList = query.getResultList();
+        Customer customer = resultList.get(0);
         return customer.getBalance();
     }
 
     @Override
-    public Map<Long, String> getStatuses() {
-        List<Customers> list = this.getCustomersList();
-        Map<Long, String> resultMap = new HashMap<Long, String>();
+    public Map<Long, CustomerStatus> getStatuses() {
+        List<Customer> list = this.getCustomersList();
+        Map<Long, CustomerStatus> resultMap = new HashMap<>();
         
-        for(Customers c : list){
+        for(Customer c : list){
             resultMap.put(c.getCustomerId(), c.getStatus());
         }
         return resultMap;
     }
 
     @Override
-    public List<Customers> getCustomersList() {
-        return em.createQuery("SELECT c FROM " + customersBase + " c").getResultList();
+    public List<Customer> getCustomersList() {
+        return em.createQuery("SELECT c FROM " + customersEntity + " c").getResultList();
     }
 
     @Override
-    public List<Products> getProductsList() {
-        return em.createQuery("SELECT c FROM " + productsBase + " c").getResultList();
+    public List<Product> getProductsList() {
+        return em.createQuery("SELECT c FROM " + productsEntity + " c").getResultList();
     }
 
     @Override
-    public Customers getCustomer(Long customerID) {
-        for (Customers c : this.getCustomersList()){
-            if (c.getCustomerId() == customerID)
+    public Customer getCustomer(Long customerID) {
+        for (Customer c : this.getCustomersList()){
+            if (c.getCustomerId().equals(customerID))
                 return c;
         }
         return null;
     }
 
-    
+    @Override
+    public void setCustomers(List<Customer> customers) {
+        for (Customer c : customers) {
+            em.merge(c);
+        }
+    }
+
+    @Override
+    public void withdraw(Long customerID, Double cash) {
+        Customer target = getCustomer(customerID);
+        target.setBalance(target.getBalance() - cash);
+        this.merge(target);
+    }
+
+    @Override
+    public void setStatus(Long customerID, CustomerStatus status) {
+        Customer target = getCustomer(customerID);
+        target.setStatus(status);
+        this.merge(target);
+    }
     
 }
