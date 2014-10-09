@@ -1,4 +1,4 @@
-package ejb.jpa;
+package com.crm4telecom.stub.ejb.jpa;
 
 import java.io.Serializable;
 import java.math.BigInteger;

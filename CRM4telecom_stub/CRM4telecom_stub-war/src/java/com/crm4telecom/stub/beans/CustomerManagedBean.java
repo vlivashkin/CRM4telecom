@@ -1,7 +1,7 @@
 package com.crm4telecom.stub.beans;
 
-import ejb.jpa.Customer;
-import ejb.beans.CustomerManagerInterface;
+import com.crm4telecom.stub.ejb.jpa.Customer;
+import com.crm4telecom.stub.ejb.beans.CustomerManagerInterface;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;

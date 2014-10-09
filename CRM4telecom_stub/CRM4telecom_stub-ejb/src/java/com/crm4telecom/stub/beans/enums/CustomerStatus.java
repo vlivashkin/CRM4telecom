@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.beans;
+package com.crm4telecom.stub.beans.enums;
 
 /**
  *

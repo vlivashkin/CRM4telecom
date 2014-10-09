@@ -1,7 +1,8 @@
-package ejb.beans;
+package com.crm4telecom.stub.ejb.beans;
 
-import ejb.jpa.Customer;
-import ejb.jpa.Product;
+import com.crm4telecom.stub.beans.enums.CustomerStatus;
+import com.crm4telecom.stub.ejb.jpa.Customer;
+import com.crm4telecom.stub.ejb.jpa.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class SchedulerUnit implements SchedulerUnitInterface {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     
     final Runnable checker = new Runnable() {
+        @Override
         public void run() {
            withdrawMoney(checkStatuses());
         }

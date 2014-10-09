@@ -1,6 +1,6 @@
-package ejb.jpa;
+package com.crm4telecom.stub.ejb.jpa;
 
-import ejb.beans.CustomerStatus;
+import com.crm4telecom.stub.beans.enums.CustomerStatus;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.beans;
+package com.crm4telecom.stub.ejb.beans;
 
-import ejb.jpa.Customer;
-import ejb.jpa.Product;
+import com.crm4telecom.stub.beans.enums.CustomerStatus;
+import com.crm4telecom.stub.ejb.jpa.Customer;
+import com.crm4telecom.stub.ejb.jpa.Product;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
