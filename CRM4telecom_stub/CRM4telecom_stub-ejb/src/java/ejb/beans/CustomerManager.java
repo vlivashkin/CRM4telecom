@@ -97,9 +97,9 @@ public class CustomerManager implements CustomerManagerInterface{
     }
 
     @Override
-    public Map<Long, CustomerStatus> getStatuses() {
+    public Map<Long, String> getStatuses() {
         List<Customers> list = this.getCustomersList();
-        Map<Long, CustomerStatus> resultMap = new HashMap<Long, CustomerStatus>();
+        Map<Long, String> resultMap = new HashMap<Long, String>();
         
         for(Customers c : list){
             resultMap.put(c.getCustomerId(), c.getStatus());
@@ -124,20 +124,8 @@ public class CustomerManager implements CustomerManagerInterface{
                 return c;
         }
         return null;
-    }   
-
-    @Override
-    public void withdraw(Long customerID, Double cash) {
-        Customers target = getCustomer(customerID);
-        target.setBalance(target.getBalance() - cash);
-        this.merge(target);
     }
 
-    @Override
-    public void setStatus(Long customerID, CustomerStatus status) {
-        Customers target = getCustomer(customerID);
-        target.setStatus(status);
-        this.merge(target);
-    }
+    
     
 }

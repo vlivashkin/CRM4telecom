@@ -32,9 +32,9 @@ public class Products implements Serializable {
     @Column(name = "PRODUCT_ID")
     private Long productId;
     @Column(name = "ONETIME_PRICE")
-    private Double onetimePrice;
+    private BigInteger onetimePrice;
     @Column(name = "MONTHLY_PRICE")
-    private Double monthlyPrice;
+    private BigInteger monthlyPrice;
     @ManyToMany(mappedBy = "productsList")
     private List<Customers> customersList;
 
@@ -53,19 +53,19 @@ public class Products implements Serializable {
         this.productId = productId;
     }
 
-    public Double getOnetimePrice() {
+    public BigInteger getOnetimePrice() {
         return onetimePrice;
     }
 
-    public void setOnetimePrice(Double onetimePrice) {
+    public void setOnetimePrice(BigInteger onetimePrice) {
         this.onetimePrice = onetimePrice;
     }
 
-    public Double getMonthlyPrice() {
+    public BigInteger getMonthlyPrice() {
         return monthlyPrice;
     }
 
-    public void setMonthlyPrice(Double monthlyPrice) {
+    public void setMonthlyPrice(BigInteger monthlyPrice) {
         this.monthlyPrice = monthlyPrice;
     }
 
