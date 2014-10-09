@@ -41,10 +41,7 @@ public interface CustomerManagerInterface {
     public double getBalance(Long customerID);
     
     Map<Long, CustomerStatus> getStatuses();
-<<<<<<< HEAD
-=======
 
     public void setCustomers(List<Customer> customers);
->>>>>>> origin/master
     
 }

@@ -38,15 +38,9 @@ public class Customer implements Serializable {
     private Long customerId;
     private Double balance;
     
-<<<<<<< HEAD:CRM4telecom_stub/CRM4telecom_stub-ejb/src/java/ejb/jpa/Customers.java
-    @Size(max = 30)
     @Enumerated(EnumType.STRING)
     private CustomerStatus status;
     
-=======
-    @Enumerated(EnumType.STRING)
-    private CustomerStatus status;
->>>>>>> origin/master:CRM4telecom_stub/CRM4telecom_stub-ejb/src/java/ejb/jpa/Customer.java
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})

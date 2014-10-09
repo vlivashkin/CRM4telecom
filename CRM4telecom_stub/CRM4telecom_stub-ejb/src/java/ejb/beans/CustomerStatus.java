@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,10 +9,6 @@ package ejb.beans;
  *
  * @author root
  */
-=======
-package ejb.beans;
-
->>>>>>> origin/master
 public enum CustomerStatus {
 
     ACTIVE("Active", "bg-success"),
@@ -35,8 +30,4 @@ public enum CustomerStatus {
     public String getColor() {
         return color;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

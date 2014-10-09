@@ -98,13 +98,8 @@ public class CustomerManager implements CustomerManagerInterface {
 
     @Override
     public Map<Long, CustomerStatus> getStatuses() {
-<<<<<<< HEAD
-        List<Customers> list = this.getCustomersList();
-        Map<Long, CustomerStatus> resultMap = new HashMap<Long, CustomerStatus>();
-=======
         List<Customer> list = this.getCustomersList();
         Map<Long, CustomerStatus> resultMap = new HashMap<>();
->>>>>>> origin/master
         
         for(Customer c : list){
             resultMap.put(c.getCustomerId(), c.getStatus());
@@ -132,17 +127,6 @@ public class CustomerManager implements CustomerManagerInterface {
     }   
 
     @Override
-    public void withdraw(Long customerID, Double cash) {
-        Customers target = getCustomer(customerID);
-        target.setBalance(target.getBalance() - cash);
-        this.merge(target);
-    }
-
-    @Override
-<<<<<<< HEAD
-    public void setStatus(Long customerID, CustomerStatus status) {
-        Customers target = getCustomer(customerID);
-=======
     public void setCustomers(List<Customer> customers) {
         for (Customer c : customers) {
             em.merge(c);
@@ -159,7 +143,6 @@ public class CustomerManager implements CustomerManagerInterface {
     @Override
     public void setStatus(Long customerID, CustomerStatus status) {
         Customer target = getCustomer(customerID);
->>>>>>> origin/master
         target.setStatus(status);
         this.merge(target);
     }
