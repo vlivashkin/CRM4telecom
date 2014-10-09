@@ -1,8 +1,6 @@
 package ejb.jpa;
 
-import ejb.jpa.Customers;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
@@ -12,18 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@Table(name = "Products")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p"),
-    @NamedQuery(name = "Products.findByProductId", query = "SELECT p FROM Products p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Products.findByOnetimePrice", query = "SELECT p FROM Products p WHERE p.onetimePrice = :onetimePrice"),
-    @NamedQuery(name = "Products.findByMonthlyPrice", query = "SELECT p FROM Products p WHERE p.monthlyPrice = :monthlyPrice")})
-public class Products implements Serializable {
+    @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Product p"),
+    @NamedQuery(name = "Products.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
+    @NamedQuery(name = "Products.findByOnetimePrice", query = "SELECT p FROM Product p WHERE p.onetimePrice = :onetimePrice"),
+    @NamedQuery(name = "Products.findByMonthlyPrice", query = "SELECT p FROM Product p WHERE p.monthlyPrice = :monthlyPrice")})
+public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -36,12 +36,12 @@ public class Products implements Serializable {
     @Column(name = "MONTHLY_PRICE")
     private Double monthlyPrice;
     @ManyToMany(mappedBy = "productsList")
-    private List<Customers> customersList;
+    private List<Customer> customersList;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(Long productId) {
+    public Product(Long productId) {
         this.productId = productId;
     }
 
@@ -70,11 +70,11 @@ public class Products implements Serializable {
     }
 
     @XmlTransient
-    public List<Customers> getCustomersList() {
+    public List<Customer> getCustomersList() {
         return customersList;
     }
 
-    public void setCustomersList(List<Customers> customersList) {
+    public void setCustomersList(List<Customer> customersList) {
         this.customersList = customersList;
     }
 
@@ -88,10 +88,10 @@ public class Products implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Products)) {
+        if (!(object instanceof Product)) {
             return false;
         }
-        Products other = (Products) object;
+        Product other = (Product) object;
         if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
             return false;
         }

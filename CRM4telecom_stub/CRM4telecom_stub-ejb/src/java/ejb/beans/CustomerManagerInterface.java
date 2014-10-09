@@ -6,8 +6,8 @@
 package ejb.beans;
 
 import java.util.List;
-import ejb.jpa.Customers;
-import ejb.jpa.Products;
+import ejb.jpa.Customer;
+import ejb.jpa.Product;
 import java.util.Map;
 import javax.ejb.Local;
 
@@ -20,11 +20,11 @@ public interface CustomerManagerInterface {
     
     List<Object> getItems(String databaseName);
     
-    List<Customers> getCustomersList();
+    List<Customer> getCustomersList();
     
-    List<Products> getProductsList();
+    List<Product> getProductsList();
     
-    Customers getCustomer(Long customerID);
+    Customer getCustomer(Long customerID);
     
     public void merge(Object object);
     
@@ -41,5 +41,10 @@ public interface CustomerManagerInterface {
     public double getBalance(Long customerID);
     
     Map<Long, CustomerStatus> getStatuses();
+<<<<<<< HEAD
+=======
+
+    public void setCustomers(List<Customer> customers);
+>>>>>>> origin/master
     
 }

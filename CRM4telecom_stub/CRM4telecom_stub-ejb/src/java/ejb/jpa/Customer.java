@@ -2,7 +2,6 @@ package ejb.jpa;
 
 import ejb.beans.CustomerStatus;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,19 +14,21 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@Table(name = "Customers")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customers.findAll", query = "SELECT c FROM Customers c"),
-    @NamedQuery(name = "Customers.findByCustomerId", query = "SELECT c FROM Customers c WHERE c.customerId = :customerId"),
-    @NamedQuery(name = "Customers.findByBalance", query = "SELECT c FROM Customers c WHERE c.balance = :balance"),
-    @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customers c WHERE c.status = :status")})
-public class Customers implements Serializable {
+    @NamedQuery(name = "Customers.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customers.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "Customers.findByBalance", query = "SELECT c FROM Customer c WHERE c.balance = :balance"),
+    @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customer c WHERE c.status = :status")})
+public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -37,20 +38,25 @@ public class Customers implements Serializable {
     private Long customerId;
     private Double balance;
     
+<<<<<<< HEAD:CRM4telecom_stub/CRM4telecom_stub-ejb/src/java/ejb/jpa/Customers.java
     @Size(max = 30)
     @Enumerated(EnumType.STRING)
     private CustomerStatus status;
     
+=======
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
+>>>>>>> origin/master:CRM4telecom_stub/CRM4telecom_stub-ejb/src/java/ejb/jpa/Customer.java
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
     @ManyToMany
-    private List<Products> productsList;
+    private List<Product> productsList;
 
-    public Customers() {
+    public Customer() {
     }
 
-    public Customers(Long customerId) {
+    public Customer(Long customerId) {
         this.customerId = customerId;
     }
 
@@ -79,11 +85,11 @@ public class Customers implements Serializable {
     }
 
     @XmlTransient
-    public List<Products> getProductsList() {
+    public List<Product> getProductsList() {
         return productsList;
     }
 
-    public void setProductsList(List<Products> productsList) {
+    public void setProductsList(List<Product> productsList) {
         this.productsList = productsList;
     }
 
@@ -97,10 +103,10 @@ public class Customers implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customers)) {
+        if (!(object instanceof Customer)) {
             return false;
         }
-        Customers other = (Customers) object;
+        Customer other = (Customer) object;
         if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
             return false;
         }
