@@ -28,10 +28,6 @@ public class CustomerManagedBean implements Serializable {
     public List<Customer> getCustomers() {
         return customers;
     }
-           
-    public void merge(Customer customer) {
-        customerManager.merge(customer);
-    }
     
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;

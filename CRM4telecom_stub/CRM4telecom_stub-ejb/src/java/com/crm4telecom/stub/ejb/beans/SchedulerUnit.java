@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import static java.util.concurrent.TimeUnit.HOURS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -29,7 +30,7 @@ public class SchedulerUnit implements SchedulerUnitInterface {
         }
     };
     
-    final ScheduledFuture<?> withdrawHandle = scheduler.scheduleAtFixedRate(checker, 8, 8, HOURS);
+    final ScheduledFuture<?> withdrawHandle = scheduler.scheduleAtFixedRate(checker, 0, 30, SECONDS);
     
     @Override
     public void withdrawMoney(Map<Long, CustomerStatus> map) {

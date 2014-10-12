@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.crm4telecom.stub.ejb.beans;
 
 import com.crm4telecom.stub.beans.enums.CustomerStatus;
@@ -12,10 +7,6 @@ import com.crm4telecom.stub.ejb.jpa.Product;
 import java.util.Map;
 import javax.ejb.Local;
 
-/**
- *
- * @author Ilya Vasilyev
- */
 @Local
 public interface CustomerManagerInterface {
     
@@ -26,8 +17,6 @@ public interface CustomerManagerInterface {
     List<Product> getProductsList();
     
     Customer getCustomer(Long customerID);
-    
-    public void merge(Object object);
     
     public String addCustomer();
     

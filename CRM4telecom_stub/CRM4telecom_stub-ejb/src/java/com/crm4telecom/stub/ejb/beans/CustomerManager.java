@@ -37,16 +37,12 @@ public class CustomerManager implements CustomerManagerInterface {
         return em.createQuery("SELECT c FROM " + databaseName + " c").getResultList();
     }
 
-    @Override
-    public void merge(Object object) {
-        em.merge(object);
-    }
 
     @Override
     public String addCustomer() {
         Customer customer = new Customer();
         try {
-            this.merge(customer);
+            em.merge(customer);
             return "ok";
         } catch (Exception e){
             return("no");
@@ -64,7 +60,7 @@ public class CustomerManager implements CustomerManagerInterface {
         for(Product p : this.getProductsList()){
             if (p.getProductId().equals(productID)){
                 newList.add(p);
-                this.merge(c);
+                em.merge(c);
                 return "suc";
             }
         }
@@ -82,7 +78,7 @@ public class CustomerManager implements CustomerManagerInterface {
         for(Product p : this.getProductsList()){
             if (p.getProductId().equals(productID)){
                 newList.remove(p);
-                this.merge(c);
+                em.merge(c);
                 return "suc";
             }
         }
@@ -138,14 +134,16 @@ public class CustomerManager implements CustomerManagerInterface {
     public void withdraw(Long customerID, Double cash) {
         Customer target = getCustomer(customerID);
         target.setBalance(target.getBalance() - cash);
-        this.merge(target);
+        em.merge(target);
+        em.flush();
+        
     }
 
     @Override
     public void setStatus(Long customerID, CustomerStatus status) {
         Customer target = getCustomer(customerID);
         target.setStatus(status);
-        this.merge(target);
+        em.merge(target);
     }
     
 }
