@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/ilya/Рабочий%20стол/Development/WorkProjectCRM/CRM4telecom/CRM4telecom_stub/CRM4telecom_stub-war/web/WEB-INF/wsdl/schema.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/schema.wsdl"/>
+    <system systemId="file:/home/ilya/Рабочий%20стол/Development/WorkProjectCRM/CRM4telecom/CRM4telecom_stub/CRM4telecom_stub-war/web/WEB-INF/wsdl/services.xsd" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/services.xsd"/>
+</catalog>
