@@ -1,23 +1,14 @@
 package com.crm4telecom.orchestrator;
 
-import com.crm4telecom.ejb.OrderManager;
-import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.ejb.OrderManagerRemote;
-import com.crm4telecom.ejb.filling.IpFilling;
 import com.crm4telecom.ejb.filling.IpFillingRemote;
-import com.crm4telecom.ejb.filling.PhoneFilling;
 import com.crm4telecom.ejb.filling.PhoneFillingRemote;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
-import java.awt.BorderLayout;
-import java.util.logging.Level;
-import javax.ejb.EJB;
-import org.apache.log4j.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.rmi.PortableRemoteObject;
+
 
 public enum OrderStep {
 
