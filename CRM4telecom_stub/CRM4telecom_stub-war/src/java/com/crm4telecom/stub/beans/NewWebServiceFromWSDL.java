@@ -37,7 +37,7 @@ public class NewWebServiceFromWSDL {
         return cm.addCustomer();
     }
 
-    public java.lang.String removeProduct(java.lang.Long customerID, java.lang.String productName) {
+    public Boolean removeProduct(java.lang.Long customerID, java.lang.String productName) {
         //TODO implement this method
         return cm.removeProduct(customerID, customerID);
     }
@@ -52,7 +52,7 @@ public class NewWebServiceFromWSDL {
         }
     }
 
-    public java.lang.String addProduct(java.lang.Long customerID, java.lang.String productName) {
+    public Boolean addProduct(java.lang.Long customerID, java.lang.String productName) {
         //TODO implement this method
         return cm.addProduct(customerID, customerID);
     }
