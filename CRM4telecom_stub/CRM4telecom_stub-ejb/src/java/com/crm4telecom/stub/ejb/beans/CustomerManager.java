@@ -11,6 +11,7 @@ import com.crm4telecom.stub.ejb.jpa.Product;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -87,7 +88,7 @@ public class CustomerManager implements CustomerManagerInterface {
 
     @Override
     public double getBalance(Long customerID) {
-        Query query = em.createQuery("SELECT c FROM " + customersEntity + " c" + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
+        Query query = em.createQuery("SELECT c FROM " + customersEntity + " c " + "WHERE c.customerId = :customerID").setParameter("customerID", customerID);
         List<Customer> resultList = query.getResultList();
         Customer customer = resultList.get(0);
         return customer.getBalance();

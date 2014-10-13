@@ -7,7 +7,9 @@ package com.crm4telecom.stub.beans;
 
 import com.crm4telecom.stub.beans.enums.CustomerStatus;
 import com.crm4telecom.stub.ejb.beans.CustomerManager;
+import com.crm4telecom.stub.ejb.beans.CustomerManagerInterface;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.jws.WebService;
 
 /**
@@ -17,7 +19,8 @@ import javax.jws.WebService;
 @WebService(serviceName = "services", portName = "BillingPort", endpointInterface = "com.crm4telecom.soap.Billing", targetNamespace = "http://soap.crm4telecom.com/", wsdlLocation = "WEB-INF/wsdl/NewWebServiceFromWSDL/schema.wsdl")
 public class NewWebServiceFromWSDL {
 
-    CustomerManager cm; 
+    @EJB
+    CustomerManagerInterface cm; 
     
     public java.lang.String addMoney(double cash, long id) {
         //TODO implement this method
