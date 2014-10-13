@@ -51,10 +51,10 @@ public class CustomerManager implements CustomerManagerInterface {
     }
 
     @Override
-    public String addProduct(Long customerID, Long productID) {
+    public Boolean addProduct(Long customerID, Long productID) {
         Customer c = this.getCustomer(customerID);
         if (c == null){
-            return "err";
+            return false;
         }
         
         List newList = c.getProductsList();
@@ -62,17 +62,17 @@ public class CustomerManager implements CustomerManagerInterface {
             if (p.getProductId().equals(productID)){
                 newList.add(p);
                 em.merge(c);
-                return "suc";
+                return true;
             }
         }
-        return "err";
+        return false;
     }
 
     @Override
-    public String removeProduct(Long customerID, Long productID) {
+    public Boolean removeProduct(Long customerID, Long productID) {
         Customer c = this.getCustomer(customerID);
         if (c == null){
-            return "err";
+            return false;
         }
         
         List newList = c.getProductsList();
@@ -80,10 +80,10 @@ public class CustomerManager implements CustomerManagerInterface {
             if (p.getProductId().equals(productID)){
                 newList.remove(p);
                 em.merge(c);
-                return "suc";
+                return false;
             }
         }
-        return "err";
+        return false;
     }
 
     @Override
@@ -125,26 +125,40 @@ public class CustomerManager implements CustomerManagerInterface {
     }   
 
     @Override
-    public void setCustomers(List<Customer> customers) {
-        for (Customer c : customers) {
-            em.merge(c);
+    public Boolean setCustomers(List<Customer> customers) {
+        try{
+            for (Customer c : customers) {
+                em.merge(c);
+            }
+            return true;
+        } catch (Throwable e){
+            return false;
         }
     }
 
     @Override
-    public void withdraw(Long customerID, Double cash) {
-        Customer target = getCustomer(customerID);
-        target.setBalance(target.getBalance() - cash);
-        em.merge(target);
-        em.flush();
-        
+    public Boolean withdraw(Long customerID, Double cash) {
+        try{
+            Customer target = getCustomer(customerID);
+            target.setBalance(target.getBalance() - cash);
+            em.merge(target);
+            em.flush();
+            return true;
+        } catch (Throwable e){
+            return false;
+        }
     }
 
     @Override
-    public void setStatus(Long customerID, CustomerStatus status) {
-        Customer target = getCustomer(customerID);
-        target.setStatus(status);
-        em.merge(target);
+    public Boolean setStatus(Long customerID, CustomerStatus status) {
+        try{
+            Customer target = getCustomer(customerID);
+            target.setStatus(status);
+            em.merge(target);
+            return true;
+        } catch (Throwable e){
+            return false;
+        }
     }
     
 }

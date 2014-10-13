@@ -47,6 +47,7 @@ public class SchedulerUnit implements SchedulerUnitInterface {
 
     public SchedulerUnit() {
         startDelay = (24 - Calendar.HOUR_OF_DAY) * 60 - Calendar.MINUTE;
+        //scheduler.scheduleAtFixedRate(checker, 2, 2, SECONDS);
         scheduler.scheduleAtFixedRate(checker, startDelay, 24*60, MINUTES);
     } 
     @Override
