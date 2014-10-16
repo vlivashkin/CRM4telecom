@@ -18,7 +18,7 @@ public interface CustomerManagerInterface {
     
     Customer getCustomer(Long customerID);
     
-    public String addCustomer();
+    public Boolean addCustomer();
     
     public Boolean withdraw(Long customerID, Double cash);
     

@@ -40,13 +40,13 @@ public class CustomerManager implements CustomerManagerInterface {
 
 
     @Override
-    public String addCustomer() {
+    public Boolean addCustomer() {
         Customer customer = new Customer();
         try {
             em.merge(customer);
-            return "ok";
+            return true;
         } catch (Exception e){
-            return("no");
+            return false;
         }    
     }
 

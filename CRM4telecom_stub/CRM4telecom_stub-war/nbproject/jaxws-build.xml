@@ -10,26 +10,40 @@
                 JAX-WS WSGEN SECTION
                 ===================
             -->
-    <target name="wsgen-init" depends="init, -do-compile">
-        <mkdir dir="${build.generated.sources.dir}/jax-ws/resources/"/>
-        <mkdir dir="${build.classes.dir}"/>
-        <mkdir dir="${build.classes.dir}/META-INF"/>
-        <property name="j2ee.platform.wsgen.classpath" value="${libs.jaxws21.classpath}"/>
-        <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-        </taskdef>
-    </target>
-    <target name="wsgen-BillingWebService" depends="wsgen-init">
-        <copy todir="${build.classes.dir}/META-INF">
-            <fileset dir="${webinf.dir}" includes="wsit-com.crm4telecom.stub.beans.BillingWebService.xml"/>
-        </copy>
-        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="com.crm4telecom.stub.beans.BillingWebService" xendorsed="true">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-        </wsgen>
-    </target>
     <!--
                 ===================
                 JAX-WS WSIMPORT SECTION
                 ===================
             -->
+    <target name="wsimport-init" depends="init">
+        <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-service-WebServiceBilling" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling" destdir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling" wsdl="${basedir}/${conf-dir}xml-resources/web-services/WebServiceBilling/wsdl/schema.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/WebServiceBilling/wsdl/schema.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.web.dir}/WEB-INF/wsdl/WebServiceBilling">
+            <fileset dir="${basedir}/${conf-dir}xml-resources/web-services/WebServiceBilling/wsdl/"/>
+        </copy>
+    </target>
+    <target name="wsimport-service-clean-WebServiceBilling" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/crm4telecom/soap"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/service/WebServiceBilling"/>
+    </target>
+    <target name="wsimport-service-generate" depends="wsimport-service-WebServiceBilling"/>
 </project>

@@ -38,7 +38,7 @@
 
   <xs:complexType name="addCustomerResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:string" minOccurs="0"/>
+      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -112,7 +112,7 @@
 
   <xs:complexType name="addMoneyResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:string" minOccurs="0"/>
+      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -125,7 +125,7 @@
 
   <xs:complexType name="withdrawResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:string" minOccurs="0"/>
+      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
