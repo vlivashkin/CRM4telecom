@@ -42,7 +42,7 @@ public enum OrderStep {
 
         @Override
         public boolean run() {
-
+            Logger logger = Logger.getLogger(getClass().getName());
             Context ctx;
             OrderManagerRemote om = null;
             IpFillingRemote ipFillingRemote = null;
@@ -67,11 +67,13 @@ public enum OrderStep {
                     } else {
                         return phoneFillingRemote.freeItem(order.getCustomer());
                     }
+                }else if(properties.equals(ProductProperties.NONE)){
+                    return true;
                 }
             } catch (Throwable ex) {
-                System.out.println(ex.toString());
+                logger.severe(ex.toString());
+                return false;
             }
-
             return false;
         }
     }) {
@@ -98,7 +100,7 @@ public enum OrderStep {
                 om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
-                if(billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName())||billingWebService.withdraw(order.getProduct().getOnetimePayment(),order.getCustomerId())){
+                if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {
                     return true;
                 }
             } catch (NamingException ex) {
