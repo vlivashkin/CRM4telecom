@@ -31,7 +31,6 @@
                             <f:facet name="input">
                                 <p:inputText id="input" value='#{customer.balance}' converterMessage=" NaN! Can't update!" style="width:96%">
                                     <f:validateDoubleRange/>
-                                    <f:ajax event="blur" render="errmsg"/>
                                 </p:inputText>
                             </f:facet>
                         </p:cellEditor>

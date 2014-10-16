@@ -1,14 +1,18 @@
 package com.crm4telecom.orchestrator;
 
+import com.crm4telecom.billing.BillingWebService;
+import com.crm4telecom.billing.Services;
 import com.crm4telecom.ejb.OrderManagerRemote;
 import com.crm4telecom.ejb.filling.IpFillingRemote;
 import com.crm4telecom.ejb.filling.PhoneFillingRemote;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.jpa.Order;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
+import javax.naming.NamingException;
 
 public enum OrderStep {
 
@@ -85,7 +89,23 @@ public enum OrderStep {
     BILLING(OrderStatus.OPENED, new AutoTask("Billing") {
         @Override
         public boolean run() {
-            return true;
+            Context ctx;
+            OrderManagerRemote om = null;
+            Services service = new Services();
+            BillingWebService billingWebService = service.getBillingPort();
+            try {
+                ctx = new InitialContext();
+                om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                Long orderId = this.getOrderId();
+                Order order = om.getOrder(orderId);
+                if(billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName())||billingWebService.withdraw(order.getProduct().getOnetimePayment(),order.getCustomerId())){
+                    return true;
+                }
+            } catch (NamingException ex) {
+                Logger.getLogger(OrderStep.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            return false;
         }
     }) {
                 @Override
