@@ -23,7 +23,7 @@
                     <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
                         <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
-
+                        <p:ajax listener="#{orderInfoBean.updateConnectedOrder()}" update=":h" />
                     </p:selectOneMenu>
                 </div>
                 <div class="col-sm-4">
@@ -34,7 +34,8 @@
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" />  
             <div class="col-sm-6">
-                <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}" var="p">
+                <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}"
+                       var="p" editable="true" required="true" requiredMessage="You can't leave this empty.">
                     <f:selectItems value="#{resourcesBean.products}" var="product"
                                    itemValue="#{product}" itemLabel="#{product}"/>
                     <p:column>  
@@ -52,6 +53,7 @@
                     <p:column>  
                         #{p.monthlyPayment} rur
                     </p:column>
+                    <p:ajax listener="#{orderInfoBean.syncOS()}" update=":h" />
                 </p:selectOneMenu>
             </div>
             <div class="col-sm-4">

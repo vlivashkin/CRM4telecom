@@ -3,7 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"  
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="customer" value="#{orderInfoBean.ov.customerId}" />
@@ -29,11 +30,38 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="editform">
-            <ui:include src="./frames/orderForm.xhtml" />
+        <div class="col-sm-9" >
+            <h:form id="editform">
+                <ui:include src="./frames/orderForm.xhtml" />
 
-            <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{orderInfoBean.create()}" />
-            <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
-        </h:form>
+                <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{orderInfoBean.create()}" />
+                <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
+            </h:form>
+        </div>
+        <div class="col-sm-3">
+            <h:form id="h" >
+                <p:panelGrid id="summary" columns="3" rendered="#{orderInfoBean.connectedOrder}">
+                    <h:outputText />
+                    <h:outputText value="onetime" />
+                    <h:outputText value="monthly" />
+
+                    <h:outputText value="Installation Fee" />
+                    <h:inputText value="#{orderInfoBean.os.installationFee}" required="true">
+                        <f:validateLongRange />
+                        <p:ajax update="h" />
+                    </h:inputText>
+                    <h:outputText />
+
+                    <h:outputText value="#{orderInfoBean.os.product}" />
+                    <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+                    <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+
+                    <h:outputText value="Total" style="font-weight:bold"/>
+                    <h:outputText value="#{orderInfoBean.os.installationFee + orderInfoBean.os.onetimePrice}"  style="font-weight:bold"/>
+                    <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
+                </p:panelGrid>
+
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

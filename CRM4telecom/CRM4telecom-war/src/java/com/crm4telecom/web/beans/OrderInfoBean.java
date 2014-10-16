@@ -2,6 +2,7 @@ package com.crm4telecom.web.beans;
 
 import com.crm4telecom.ejb.OrderManagerLocal;
 import com.crm4telecom.ejb.ProcessingLocal;
+import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
@@ -30,7 +31,27 @@ public class OrderInfoBean implements Serializable {
 
     @Inject
     private OrderCommentBean oc;
+    
+    @Inject
+    private OrderSummBean os;
+    
+    boolean connectedOrder = true;
 
+    public boolean isConnectedOrder() {
+        return connectedOrder;
+    }
+
+    public OrderSummBean getOs() {
+        return os;
+    }
+    
+    public void syncOS() {
+        String product = ov.getProduct();
+        os.setProduct(product.substring(product.indexOf(' ') + 1));
+        os.setOnetimePrice(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment());
+        os.setMonthlyPrice(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment());
+    }
+    
     private Long id;
     private Order order;
 
@@ -111,5 +132,9 @@ public class OrderInfoBean implements Serializable {
 
     public void cancelOrder() {
         pl.cancelOrder(order);
+    }
+    
+    public void updateConnectedOrder() {
+        connectedOrder = ov.getType() == OrderType.CONNECT;
     }
 }

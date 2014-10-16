@@ -26,6 +26,14 @@ public class OrderValidationBean implements Serializable {
     @EJB
     private GetManagerLocal gm;
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public GetManagerLocal getGm() {
+        return gm;
+    }
+
     private String customer;
 
     private String employee;

@@ -42,4 +42,10 @@
         <error-code>404</error-code>
         <location>/error.xhtml</location>
     </error-page>
+    <ejb-local-ref>
+        <ejb-ref-name>GetManager</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>com.crm4telecom.ejb.GetManagerLocal</local>
+        <ejb-link>CRM4telecom-ejb.jar#GetManager</ejb-link>
+    </ejb-local-ref>
 </web-app>

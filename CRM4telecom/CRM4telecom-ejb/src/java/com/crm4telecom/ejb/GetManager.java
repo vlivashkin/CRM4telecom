@@ -37,7 +37,7 @@ public class GetManager implements GetManagerLocal {
     @Override
     public Product getProduct(String product) {
         if (product != null) {
-            String sqlQuery = "SELECT u FROM Products u WHERE u.name = :name";
+            String sqlQuery = "SELECT u FROM Product u WHERE u.name = :name";
             return create(sqlQuery, product);
         } else {
             throw new IllegalArgumentException("Product can't be null");
