@@ -38,28 +38,28 @@
                     <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
                 </div>
                 <div class="col-sm-3">
-                    <table class="table">
-                        <p:panelGrid id="h" columns="3" rendered="#{orderInfoBean.connectedOrder}">
-                            <h:outputText />
-                            <h:outputText value="onetime" style="font-weight:bold" />
-                            <h:outputText value="monthly" style="font-weight:bold" />
+                    <p:message for="installation-fee" id="hmsgs" />
+                    <p:panelGrid id="h" columns="3">
+                        <h:outputText />
+                        <h:outputText value="onetime" style="font-weight:bold" />
+                        <h:outputText value="monthly" style="font-weight:bold" />
 
-                            <h:outputText value="Installation Fee" />
-                            <h:inputText value="#{orderInfoBean.os.installationFee}" required="true">
-                                <f:validateLongRange />
-                                <p:ajax update="h" />
-                            </h:inputText>
-                            <h:outputText />
+                        <h:outputText value="Installation Fee" />
+                        <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
+                                     required="true" label="Installation Fee" converterMessage="Number required">
+                            <f:validateLongRange minimum="0" />
+                            <p:ajax update="h hmsgs" />
+                        </h:inputText>
+                        <h:outputText />
 
-                            <h:outputText value="#{orderInfoBean.os.product}" />
-                            <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
-                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+                        <h:outputText value="#{orderInfoBean.os.product}" />
+                        <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+                        <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
 
-                            <h:outputText value="Total" style="font-weight:bold"/>
-                            <h:outputText value="#{orderInfoBean.totalCost}"  style="font-weight:bold"/>
-                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
-                        </p:panelGrid>
-                    </table>
+                        <h:outputText value="Total" style="font-weight:bold"/>
+                        <h:outputText value="#{orderInfoBean.totalCost}"  style="font-weight:bold"/>
+                        <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
+                    </p:panelGrid>
                 </div>
             </h:form>
     </ui:define>

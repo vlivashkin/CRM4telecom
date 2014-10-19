@@ -36,7 +36,6 @@ public class OrderInfoBean implements Serializable {
     private OrderSummBean os;
     
     private boolean connectedOrder = true;
-    private Long totalCost = 0L;
 
     public boolean isConnectedOrder() {
         return connectedOrder;
@@ -55,8 +54,14 @@ public class OrderInfoBean implements Serializable {
     
     public Long getTotalCost() {
         if (os == null) return 0L;
-        totalCost = os.getOnetimePrice() + os.getInstallationFee();
-        return os.getInstallationFee() + os.getOnetimePrice();
+        Long installationFee = 0L, onetimePrice = 0L;
+        if (os.getInstallationFee() != null) {
+            installationFee = os.getInstallationFee();
+        }
+        if (os.getOnetimePrice() != null) {
+            onetimePrice = os.getOnetimePrice();
+        }
+        return installationFee + onetimePrice;
     }
     
     private Long id;
@@ -143,5 +148,9 @@ public class OrderInfoBean implements Serializable {
     
     public void updateConnectedOrder() {
         connectedOrder = ov.getType() == OrderType.CONNECT;
+    }
+    
+    public Boolean testOrderType() {
+        return ov.getType() == OrderType.CONNECT;
     }
 }
