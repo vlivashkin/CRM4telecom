@@ -23,7 +23,7 @@
                     <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
                         <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
-                        <p:ajax listener="#{orderInfoBean.updateConnectedOrder()}" update=":h" />
+                        <p:ajax listener="#{orderInfoBean.updateConnectedOrder()}" update="h" />
                     </p:selectOneMenu>
                 </div>
                 <div class="col-sm-4">
@@ -53,7 +53,7 @@
                     <p:column>  
                         #{p.monthlyPayment} rur
                     </p:column>
-                    <p:ajax listener="#{orderInfoBean.syncOS()}" update=":h" />
+                    <p:ajax listener="#{orderInfoBean.syncOS()}" update="h" />
                 </p:selectOneMenu>
             </div>
             <div class="col-sm-4">
@@ -96,15 +96,3 @@
         </c:if>
     </div>
 </ui:composition>
-
-
-
-
-
-
-
-
-
-
-
-

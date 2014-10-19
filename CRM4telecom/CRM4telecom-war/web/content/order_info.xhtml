@@ -108,11 +108,12 @@
                 <p:tab title="Edit">
                     <h:form id="editform">
                         <ui:include src="./frames/orderForm.xhtml" />
-
+                        <h:outputText id="h" />
                         <p:commandButton value="Save" icon="ui-icon-check" action="#{orderInfoBean.modify()}" />
                         <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
                             <f:ajax render="editform" />
                         </p:commandButton>
+
                     </h:form>
                 </p:tab>
             </c:if>
@@ -133,8 +134,7 @@
 
             <script type="text/javascript">
                 $('#footer\\:commentbox\\:commentinput').attr('placeholder', 'Type your comment here...');
-            </script> 
+            </script>
         </h:form>
-        <h:form id="h" />
     </ui:define>
 </ui:composition>

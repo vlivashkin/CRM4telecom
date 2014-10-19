@@ -28,6 +28,7 @@ public class OrderSummBean implements Serializable {
     }
 
     public Long getOnetimePrice() {
+        if (onetimePrice == 0) return 0L;
         return onetimePrice;
     }
 
@@ -48,6 +49,7 @@ public class OrderSummBean implements Serializable {
     }
 
     public Long getInstallationFee() {
+        if (installationFee == null) return 0L;
         return installationFee;
     }
 

@@ -35,7 +35,8 @@ public class OrderInfoBean implements Serializable {
     @Inject
     private OrderSummBean os;
     
-    boolean connectedOrder = true;
+    private boolean connectedOrder = true;
+    private Long totalCost = 0L;
 
     public boolean isConnectedOrder() {
         return connectedOrder;
@@ -50,6 +51,12 @@ public class OrderInfoBean implements Serializable {
         os.setProduct(product.substring(product.indexOf(' ') + 1));
         os.setOnetimePrice(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment());
         os.setMonthlyPrice(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment());
+    }
+    
+    public Long getTotalCost() {
+        if (os == null) return 0L;
+        totalCost = os.getOnetimePrice() + os.getInstallationFee();
+        return os.getInstallationFee() + os.getOnetimePrice();
     }
     
     private Long id;
