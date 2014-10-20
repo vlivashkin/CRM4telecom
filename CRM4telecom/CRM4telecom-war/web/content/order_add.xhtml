@@ -51,7 +51,7 @@
                                 <f:validateLongRange minimum="0" />
                                 <p:ajax update="h hmsgs" />
                             </h:inputText>
-                            <h:outputText />
+                            <h:outputText value="—" />
 
                             <h:outputText value="#{orderInfoBean.os.product}" />
                             <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
@@ -59,7 +59,7 @@
 
                             <h:outputText value="Total" style="font-weight:bold"/>
                             <h:outputText value="#{orderInfoBean.totalCost}"  style="font-weight:bold"/>
-                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
+                            <h:outputText value="#{orderInfoBean.totalMonthly}"  style="font-weight:bold"/>
                         </p:panelGrid>
                     </c:if>
                     <c:if test="#{!orderInfoBean.testOrderType()}" >

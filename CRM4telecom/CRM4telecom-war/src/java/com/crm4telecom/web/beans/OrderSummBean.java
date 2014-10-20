@@ -12,12 +12,12 @@ public class OrderSummBean implements Serializable {
     @EJB
     private GetManagerLocal gm;
     
-    private Long installationFee;
+    private String installationFee;
 
     private String product = "Product";
     
-    private Long onetimePrice = 0L;
-    private Long monthlyPrice = 0L;
+    private String onetimePrice = "0";
+    private String monthlyPrice = "0";
 
     public String getProduct() {
         return product;
@@ -27,19 +27,25 @@ public class OrderSummBean implements Serializable {
         this.product = product;
     }
 
-    public Long getOnetimePrice() {
-        return onetimePrice;
+    public String getOnetimePrice() {
+        if (onetimePrice == null) return "—";
+        Long value = Long.parseLong(onetimePrice);
+        if (value == 0) return "—";
+        return String.valueOf(value) + ".00";
     }
 
-    public void setOnetimePrice(Long onetimePrice) {
+    public void setOnetimePrice(String onetimePrice) {
         this.onetimePrice = onetimePrice;
     }
 
-    public Long getMonthlyPrice() {
-        return monthlyPrice;
+    public String getMonthlyPrice() {
+        if (onetimePrice == null) return "—";
+        Long value = Long.parseLong(monthlyPrice);
+        if (value == 0L) return "—";
+        return String.valueOf(value) + ".00";
     }
 
-    public void setMonthlyPrice(Long monthlyPrice) {
+    public void setMonthlyPrice(String monthlyPrice) {
         this.monthlyPrice = monthlyPrice;
     }
     
@@ -47,11 +53,11 @@ public class OrderSummBean implements Serializable {
         return gm;
     }
 
-    public Long getInstallationFee() {
+    public String getInstallationFee() {
         return installationFee;
     }
 
-    public void setInstallationFee(Long installationFee) {
+    public void setInstallationFee(String installationFee) {
         this.installationFee = installationFee;
     }
     

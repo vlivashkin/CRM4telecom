@@ -34,12 +34,6 @@ public class OrderInfoBean implements Serializable {
     
     @Inject
     private OrderSummBean os;
-    
-    private boolean connectedOrder = true;
-
-    public boolean isConnectedOrder() {
-        return connectedOrder;
-    }
 
     public OrderSummBean getOs() {
         return os;
@@ -48,20 +42,30 @@ public class OrderInfoBean implements Serializable {
     public void syncOS() {
         String product = ov.getProduct();
         os.setProduct(product.substring(product.indexOf(' ') + 1));
-        os.setOnetimePrice(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment());
-        os.setMonthlyPrice(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment());
+        os.setOnetimePrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment()));
+        os.setMonthlyPrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment()));
     }
     
-    public Long getTotalCost() {
-        if (os == null) return 0L;
+    public String getTotalCost() {
+        if (os == null) return "—";
         Long installationFee = 0L, onetimePrice = 0L;
-        if (os.getInstallationFee() != null) {
-            installationFee = os.getInstallationFee();
+        if (os.getInstallationFee() != null && !"—".equals(os.getInstallationFee())) {
+            installationFee = Long.parseLong(os.getInstallationFee().replace(".00", ""));
         }
-        if (os.getOnetimePrice() != null) {
-            onetimePrice = os.getOnetimePrice();
+        if (os.getOnetimePrice() != null && !"—".equals(os.getOnetimePrice())) {
+            onetimePrice = Long.parseLong(os.getOnetimePrice().replace(".00", ""));
         }
-        return installationFee + onetimePrice;
+        Long totalCost = installationFee + onetimePrice;
+        if (totalCost == 0L) return "—";
+        return String.valueOf(totalCost) + ".00";
+    }
+    
+    public String getTotalMonthly() {
+        if (os == null ||
+                os.getMonthlyPrice() == null || "—".equals(os.getMonthlyPrice())) {
+            return "0.00";
+        }
+        return os.getMonthlyPrice();
     }
     
     private Long id;
@@ -144,10 +148,6 @@ public class OrderInfoBean implements Serializable {
 
     public void cancelOrder() {
         pl.cancelOrder(order);
-    }
-    
-    public void updateConnectedOrder() {
-        connectedOrder = ov.getType() == OrderType.CONNECT;
     }
     
     public Boolean testOrderType() {
