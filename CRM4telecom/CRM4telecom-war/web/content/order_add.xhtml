@@ -38,28 +38,33 @@
                     <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
                 </div>
                 <div class="col-sm-3">
-                    <p:message for="installation-fee" id="hmsgs" />
-                    <p:panelGrid id="h" columns="3">
-                        <h:outputText />
-                        <h:outputText value="onetime" style="font-weight:bold" />
-                        <h:outputText value="monthly" style="font-weight:bold" />
+                    <c:if test="#{orderInfoBean.testOrderType()}">
+                        <p:message for="installation-fee" id="hmsgs" />
+                        <p:panelGrid id="h" columns="3">
+                            <h:outputText />
+                            <h:outputText value="onetime" style="font-weight:bold" />
+                            <h:outputText value="monthly" style="font-weight:bold" />
 
-                        <h:outputText value="Installation Fee" />
-                        <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
-                                     required="true" label="Installation Fee" converterMessage="Number required">
-                            <f:validateLongRange minimum="0" />
-                            <p:ajax update="h hmsgs" />
-                        </h:inputText>
-                        <h:outputText />
+                            <h:outputText value="Installation Fee" />
+                            <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
+                                         required="true" label="Installation Fee" converterMessage="Number required">
+                                <f:validateLongRange minimum="0" />
+                                <p:ajax update="h hmsgs" />
+                            </h:inputText>
+                            <h:outputText />
 
-                        <h:outputText value="#{orderInfoBean.os.product}" />
-                        <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
-                        <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+                            <h:outputText value="#{orderInfoBean.os.product}" />
+                            <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
 
-                        <h:outputText value="Total" style="font-weight:bold"/>
-                        <h:outputText value="#{orderInfoBean.totalCost}"  style="font-weight:bold"/>
-                        <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
-                    </p:panelGrid>
+                            <h:outputText value="Total" style="font-weight:bold"/>
+                            <h:outputText value="#{orderInfoBean.totalCost}"  style="font-weight:bold"/>
+                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}"  style="font-weight:bold"/>
+                        </p:panelGrid>
+                    </c:if>
+                    <c:if test="#{!orderInfoBean.testOrderType()}" >
+                        <ui:fragment id="h" />
+                    </c:if>
                 </div>
             </h:form>
     </ui:define>
