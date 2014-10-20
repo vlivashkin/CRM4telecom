@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity(name="Customers")
+@Entity(name = "Customers")
 @Table(catalog = "")
 public class Customer implements Serializable {
 
@@ -45,10 +45,6 @@ public class Customer implements Serializable {
     @Column(name = "LAST_NAME", nullable = false, length = 30)
     private String lastName;
 
-    @Size(min = 1, max = 30)
-    @Column(length = 30)
-    private String email;
-
     @NotNull
     @Size(min = 1, max = 30)
     @Column(nullable = false, length = 30)
@@ -65,6 +61,9 @@ public class Customer implements Serializable {
     @Size(max = 20)
     @Column(name = "PHONE_NUMBER", length = 20)
     private String phoneNumber;
+    
+    @Column(length = 30)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private CustomerStatus status;
@@ -89,7 +88,7 @@ public class Customer implements Serializable {
         @JoinColumn(name = "MARKET_ID", referencedColumnName = "MARKET_ID")})
     @ManyToMany
     private List<Market> marketsList;
-        
+
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
