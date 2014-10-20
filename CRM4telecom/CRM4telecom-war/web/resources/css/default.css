@@ -200,3 +200,19 @@ h3 {
     margin-bottom: 0;
     list-style-type: none;
 }
+
+.table {
+    border: 1px solid grey;
+    table-layout: fixed;
+}
+.table tr:first-child {
+    font-weight: bold;
+}
+.table tr:last-child {
+    font-weight: bold;
+    border-top: 1px solid grey !important;
+}
+.table td, .table tr {
+    border-style: none !important;
+    background-color: #d9edf7 !important;
+}
