@@ -18,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "Orders")
 @Table
@@ -49,6 +50,10 @@ public class Order implements Serializable {
     @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
+    
+    @NotNull
+    @Column(name = "INSTALLATION_FEE")
+    private Long installationFee;
 
     @JoinColumn(name = "CUSTOMER_ID")
     @ManyToOne
@@ -179,6 +184,14 @@ public class Order implements Serializable {
         this.productId = productId;
     }
 
+    public Long getInstallationFee() {
+        return installationFee;
+    }
+
+    public void setInstallationFee(Long installationFee) {
+        this.installationFee = installationFee;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

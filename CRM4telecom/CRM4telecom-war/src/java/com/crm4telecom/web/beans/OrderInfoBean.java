@@ -111,6 +111,11 @@ public class OrderInfoBean implements Serializable {
     public void create() {
         Order orderNew = new Order();
         ov.fillOrder(orderNew);
+        Long installationFee = 0L;
+        if (os != null && os.getInstallationFee() != null && !"—".equals(os.getInstallationFee())) {
+            installationFee = Long.parseLong(os.getInstallationFee().replace(".00", ""));
+        }
+        orderNew.setInstallationFee(installationFee);
         om.createOrder(orderNew);
         order = orderNew;
         
@@ -120,6 +125,11 @@ public class OrderInfoBean implements Serializable {
 
     public void modify() {
         ov.fillOrder(order);
+        Long installationFee = 0L;
+        if (os != null && os.getInstallationFee() != null && !"—".equals(os.getInstallationFee())) {
+            installationFee = Long.parseLong(os.getInstallationFee().replace(".00", ""));
+        }
+        order.setInstallationFee(installationFee);
         om.modifyOrder(order);
         
         JSFHelper helper = new JSFHelper();
