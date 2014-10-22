@@ -3,21 +3,15 @@ package com.crm4telecom.stub.ejb.beans;
 import com.crm4telecom.stub.beans.enums.CustomerStatus;
 import com.crm4telecom.stub.ejb.jpa.Customer;
 import com.crm4telecom.stub.ejb.jpa.Product;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MINUTES;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.enterprise.context.ApplicationScoped;
 
 @Singleton
 @Startup
@@ -52,7 +46,7 @@ public class SchedulerUnit implements SchedulerUnitInterface {
     } 
     @Override
     public void withdrawMoney(Map<Long, CustomerStatus> map) {
-        Double cash = 0.0;
+        Double cash;
         System.out.println("******** Start withdrawMoney");
         for(Entry<Long, CustomerStatus> elem : map.entrySet()){
             Customer target = cm.getCustomer(elem.getKey());
@@ -69,7 +63,7 @@ public class SchedulerUnit implements SchedulerUnitInterface {
     }
 
     @Override
-    public Map checkStatuses() {
+    public Map<Long, CustomerStatus> checkStatuses() {
         Map<Long, CustomerStatus> statusMap = cm.getStatuses();
         
         System.out.println("******** checkStatuses has got map");

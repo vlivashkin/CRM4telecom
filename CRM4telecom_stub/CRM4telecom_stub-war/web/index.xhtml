@@ -14,33 +14,37 @@
     </ui:define>
     
     <ui:define name="content" >
-        <f:view>
-            <h:form id="form">
-                <p:growl id="msgs" showDetail="true"/>
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
 
-                <p:dataTable id="customers" var="customer" value="#{cmb.customers}" editable="true" editMode="cell" widgetVar="cellCustomers" stickyHeader="true">
-                    <p:ajax event="cellEdit" listener="#{cmb.onCellEdit}" update=":form:msgs" />
- 
-                    <p:column headerText="ID">
-                        <h:outputText value="#{customer.customerId}" />
-                    </p:column>
- 
-                    <p:column headerText="Balance">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{customer.balance}" /></f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="input" value='#{customer.balance}' converterMessage=" NaN! Can't update!" style="width:96%">
-                                    <f:validateDoubleRange/>
-                                </p:inputText>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
- 
-                    <p:column headerText="Status">
-                        <h:outputText value="#{customer.status}" />
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </f:view>
+            <div class="text-center" >
+                <p:commandButton value="Force withdraw" actionListener="#{withdrawManager.forceWithdraw()}" />
+            </div>
+            
+            <br/>
+
+            <p:dataTable id="customers" var="customer" value="#{cmb.customers}" editable="true" editMode="cell" widgetVar="cellCustomers" stickyHeader="true">
+                <p:ajax event="cellEdit" listener="#{cmb.onCellEdit}" update=":form:msgs" />
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{customer.customerId}" />
+                </p:column>
+
+                <p:column headerText="Balance">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{customer.balance}" /></f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="input" value='#{customer.balance}' converterMessage=" NaN! Can't update!" style="width:96%">
+                                <f:validateDoubleRange/>
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Status">
+                    <h:outputText value="#{customer.status}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -7,6 +7,6 @@ public interface SchedulerUnitInterface {
     
     public void withdrawMoney(Map<Long, CustomerStatus> map);
     
-    public Map checkStatuses();
+    public Map<Long, CustomerStatus> checkStatuses();
  
 }
