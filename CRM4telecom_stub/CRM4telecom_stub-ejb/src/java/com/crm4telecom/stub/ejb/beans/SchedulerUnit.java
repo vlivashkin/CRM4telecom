@@ -56,8 +56,9 @@ public class SchedulerUnit implements SchedulerUnitInterface {
         System.out.println("******** Start withdrawMoney");
         for(Entry<Long, CustomerStatus> elem : map.entrySet()){
             Customer target = cm.getCustomer(elem.getKey());
+            cash = 0.0;
             for(Product p : target.getProductsList()){
-                cash += p.getMonthlyPrice();
+                cash += p.getMonthlyPrice()/30;
                 System.out.println("******** Customer " + target.getCustomerId() + " Cashes calculated " + cash);
             }
             cm.withdraw(elem.getKey(), cash);
