@@ -14,7 +14,9 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
+import org.omnifaces.model.ExtendedSelectItem;
 
 @Named
 @RequestScoped
@@ -30,6 +32,40 @@ public class ResourcesBean implements Serializable {
 
     @EJB
     private GetManagerLocal gm;
+    
+    private SelectItem headerProductItem;
+    
+    public class ProductHeader {
+        private String description = "Description";
+        private String onetimePayment = "Onetime payment";
+        private String monthlyPayment = "Montlhy payment";
+
+        @Override
+        public String toString() {
+            return "Name";
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getOnetimePayment() {
+            return onetimePayment;
+        }
+
+        public String getMonthlyPayment() {
+            return monthlyPayment;
+        }
+    }
+    
+    {
+        headerProductItem = new ExtendedSelectItem();
+        headerProductItem.setValue(new ProductHeader());        
+    }
+
+    public SelectItem getHeaderProductItem() {
+        return headerProductItem;
+    }
 
     public OrderPriority[] getPriorities() {
         return OrderPriority.values();

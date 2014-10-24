@@ -41,9 +41,15 @@ public class OrderInfoBean implements Serializable {
     
     public void syncOS() {
         String product = ov.getProduct();
-        os.setProduct(product.substring(product.indexOf(' ') + 1));
-        os.setOnetimePrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment()));
-        os.setMonthlyPrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment()));
+        if (product == null || "Name".equals(product)) {
+            os.setProduct("Product");
+            os.setMonthlyPrice(null);
+            os.setOnetimePrice(null);
+        } else {
+            os.setProduct(product.substring(product.indexOf(' ') + 1));
+            os.setOnetimePrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment()));
+            os.setMonthlyPrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment()));
+        }
     }
     
     public String getTotalCost() {

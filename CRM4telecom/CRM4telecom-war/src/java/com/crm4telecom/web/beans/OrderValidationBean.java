@@ -118,8 +118,13 @@ public class OrderValidationBean implements Serializable {
     }
 
     public void setProduct(String product) {
-        productId = Long.parseLong(product.substring(1, product.indexOf(" ")));
-        this.product = product;
+        if (product == null || "Name".equals(product)) {
+            productId = null;
+            this.product = null;
+        } else {
+            productId = Long.parseLong(product.substring(1, product.indexOf(" ")));
+            this.product = product;
+        }
     }
 
     public OrderPriority getPriority() {
