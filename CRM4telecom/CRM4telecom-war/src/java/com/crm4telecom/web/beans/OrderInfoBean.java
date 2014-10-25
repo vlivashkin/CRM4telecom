@@ -20,7 +20,7 @@ import org.omnifaces.cdi.ViewScoped;
 public class OrderInfoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private OrderManagerLocal om;
     @EJB
@@ -31,49 +31,10 @@ public class OrderInfoBean implements Serializable {
 
     @Inject
     private OrderCommentBean oc;
-    
+
     @Inject
     private OrderSummBean os;
 
-    public OrderSummBean getOs() {
-        return os;
-    }
-    
-    public void syncOS() {
-        String product = ov.getProduct();
-        if (product == null || "Name".equals(product)) {
-            os.setProduct("Product");
-            os.setMonthlyPrice(null);
-            os.setOnetimePrice(null);
-        } else {
-            os.setProduct(product.substring(product.indexOf(' ') + 1));
-            os.setOnetimePrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment()));
-            os.setMonthlyPrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment()));
-        }
-    }
-    
-    public String getTotalCost() {
-        if (os == null) return "—";
-        Long installationFee = 0L, onetimePrice = 0L;
-        if (os.getInstallationFee() != null && !"—".equals(os.getInstallationFee())) {
-            installationFee = Long.parseLong(os.getInstallationFee().replace(".00", ""));
-        }
-        if (os.getOnetimePrice() != null && !"—".equals(os.getOnetimePrice())) {
-            onetimePrice = Long.parseLong(os.getOnetimePrice().replace(".00", ""));
-        }
-        Long totalCost = installationFee + onetimePrice;
-        if (totalCost == 0L) return "—";
-        return String.valueOf(totalCost) + ".00";
-    }
-    
-    public String getTotalMonthly() {
-        if (os == null ||
-                os.getMonthlyPrice() == null || "—".equals(os.getMonthlyPrice())) {
-            return "0.00";
-        }
-        return os.getMonthlyPrice();
-    }
-    
     private Long id;
     private Order order;
 
@@ -124,7 +85,7 @@ public class OrderInfoBean implements Serializable {
         orderNew.setInstallationFee(installationFee);
         om.createOrder(orderNew);
         order = orderNew;
-        
+
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info", "id", order.getOrderId().toString());
     }
@@ -137,7 +98,7 @@ public class OrderInfoBean implements Serializable {
         }
         order.setInstallationFee(installationFee);
         om.modifyOrder(order);
-        
+
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_info", "id", order.getOrderId().toString());
     }
@@ -146,7 +107,7 @@ public class OrderInfoBean implements Serializable {
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", order.getCustomer().getCustomerId().toString());
     }
-        
+
     public List<String> completeOrder(String order) {
         return pl.completeOrder(order);
     }
@@ -165,8 +126,51 @@ public class OrderInfoBean implements Serializable {
     public void cancelOrder() {
         pl.cancelOrder(order);
     }
-    
-    public Boolean testOrderType() {
+
+    public Boolean isConnect() {
         return ov.getType() == OrderType.CONNECT;
+    }
+
+    public OrderSummBean getOs() {
+        return os;
+    }
+
+    public void syncOS() {
+        String product = ov.getProduct();
+        if (product == null || "Name".equals(product)) {
+            os.setProduct("Product");
+            os.setMonthlyPrice(null);
+            os.setOnetimePrice(null);
+        } else {
+            os.setProduct(product.substring(product.indexOf(' ') + 1));
+            os.setOnetimePrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getOnetimePayment()));
+            os.setMonthlyPrice(String.valueOf(ov.getGm().getProduct(ov.getProductId()).getMonthlyPayment()));
+        }
+    }
+
+    public String getTotalCost() {
+        if (os == null) {
+            return "—";
+        }
+        Long installationFee = 0L, onetimePrice = 0L;
+        if (os.getInstallationFee() != null && !"—".equals(os.getInstallationFee())) {
+            installationFee = Long.parseLong(os.getInstallationFee().replace(".00", ""));
+        }
+        if (os.getOnetimePrice() != null && !"—".equals(os.getOnetimePrice())) {
+            onetimePrice = Long.parseLong(os.getOnetimePrice().replace(".00", ""));
+        }
+        Long totalCost = installationFee + onetimePrice;
+        if (totalCost == 0L) {
+            return "—";
+        }
+        return String.valueOf(totalCost) + ".00";
+    }
+
+    public String getTotalMonthly() {
+        if (os == null
+                || os.getMonthlyPrice() == null || "—".equals(os.getMonthlyPrice())) {
+            return "0.00";
+        }
+        return os.getMonthlyPrice();
     }
 }

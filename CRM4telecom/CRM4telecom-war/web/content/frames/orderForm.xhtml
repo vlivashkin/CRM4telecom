@@ -53,7 +53,10 @@
                     <p:column>  
                         #{p.monthlyPayment} rur
                     </p:column>
-                    <p:ajax listener="#{orderInfoBean.syncOS()}" update="h" />
+                    
+                    <c:if test="#{orderInfoBean.isConnect()}">
+                        <p:ajax listener="#{orderInfoBean.syncOS()}" update="h" />
+                    </c:if>
                 </p:selectOneMenu>
             </div>
             <div class="col-sm-4">

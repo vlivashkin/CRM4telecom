@@ -26,18 +26,8 @@ public class OrderValidationBean implements Serializable {
     @EJB
     private GetManagerLocal gm;
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public GetManagerLocal getGm() {
-        return gm;
-    }
-
     private String customer;
-
     private String employee;
-
     private String product;
 
     private Long customerId;
@@ -45,7 +35,7 @@ public class OrderValidationBean implements Serializable {
     private Long productId;
 
     @Enumerated(EnumType.STRING)
-    private OrderType type;
+    private OrderType type = OrderType.CONNECT;
 
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
@@ -53,6 +43,18 @@ public class OrderValidationBean implements Serializable {
     private Boolean technicalSupportFlag;
 
     private Boolean newOrder;
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+    
+    public Long getProductId() {
+        return productId;
+    }
+
+    public GetManagerLocal getGm() {
+        return gm;
+    }
 
     public void init(Order order) {
         if (order != null) {
@@ -142,7 +144,7 @@ public class OrderValidationBean implements Serializable {
     public void setType(OrderType type) {
         this.type = type;
     }
-    
+
     public void setType(String type) {
         this.type = OrderType.valueOf(type);
     }

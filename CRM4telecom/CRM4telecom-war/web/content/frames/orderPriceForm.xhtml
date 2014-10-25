@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <h:form id="h">
+        <p:message for="installation-fee" id="hmsgs" />
+        <p:panelGrid columns="3" styleClass="table" >
+            <h:outputText/>
+            <h:outputText value="onetime" />
+            <h:outputText value="monthly" />
+
+            <h:outputText value="Installation Fee" />
+            <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
+                         required="true" label="Installation Fee" converterMessage="Number required">
+                <f:validateLongRange minimum="0" />
+                <p:ajax update="h hmsgs" />
+            </h:inputText>
+            <h:outputText value="—" />
+
+            <h:outputText value="#{orderInfoBean.os.product}" />
+            <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+            <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+
+            <h:outputText value="Total" />
+            <h:outputText value="#{orderInfoBean.totalCost}" />
+            <h:outputText value="#{orderInfoBean.totalMonthly}" />
+        </p:panelGrid>
+    </h:form>
+</ui:composition>
