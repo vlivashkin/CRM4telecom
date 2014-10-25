@@ -9,6 +9,8 @@ import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
+import com.crm4telecom.billing.BillingWebService;
+import com.crm4telecom.billing.Services;
 import com.crm4telecom.jpa.MarketsCustomersPK;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.web.util.JSFHelper;
@@ -127,12 +129,11 @@ public class CustomerInfoBean implements Serializable {
     }
 
     public void syncBalance() {
-//        Services service = new Services();
-//        Billing port = service.getBillingPort();
-//        Double result = port.getBalance(customer.getCustomerId());
-//
-//        customer.setBalance(result);
-//        cm.modifyCustomer(customer);
+        Services service = new Services();
+        BillingWebService billingWebService = service.getBillingPort();
+        Double result = billingWebService.getBalance(customer.getCustomerId());
+        cv.setBalance(result);
+
     }
 
     public void updBalance() {

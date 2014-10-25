@@ -23,32 +23,32 @@ public class CustomerValidationBean implements Serializable {
 
     @Size(max = 30, message = "This first name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
-    String firstName;
+    private String firstName;
 
     @Size(max = 30, message = "This last name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
-    String lastName;
+    private String lastName;
 
     @Size(max = 30, message = "This email is too long.")
     @Pattern(regexp = "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Invalid email address")
-    String email;
+    private String email;
 
-    String phoneNumber;
+    private String phoneNumber;
 
     @Size(max = 30, message = "This street name is too long.")
     @Pattern(regexp = "^[A-Za-z\\. ']*$", message = "You can use only characters")
-    String street;
+    private String street;
 
-    List<String> markets;
+    private List<String> markets;
 
-    Long building;
+    private Long building;
 
-    Long flat;
+    private Long flat;
 
-    Double balance;
+    private Double balance;
 
     @Enumerated(EnumType.STRING)
-    CustomerStatus status;
+    private CustomerStatus status;
 
     private Boolean newCustomer;
 
@@ -60,7 +60,6 @@ public class CustomerValidationBean implements Serializable {
             street = customer.getStreet();
             building = customer.getBuilding();
             flat = customer.getFlat();
-            balance = customer.getBalance();
             phoneNumber = customer.getPhoneNumber();
             status = customer.getStatus();
 
@@ -80,7 +79,6 @@ public class CustomerValidationBean implements Serializable {
         customer.setStreet(street);
         customer.setBuilding(building);
         customer.setFlat(flat);
-        customer.setBalance(balance);
         customer.setPhoneNumber(phoneNumber);
         customer.setStatus(status);
     }
