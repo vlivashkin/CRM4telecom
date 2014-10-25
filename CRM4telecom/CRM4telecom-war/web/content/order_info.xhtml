@@ -84,16 +84,18 @@
                             <p:column headerText="End Date">
                                 <h:outputText value="#{orderProcessing.endDateShort}"/>
                             </p:column>
+                            <c:if test="#{!orderInfoBean.order.isClosedOrCancelled()}">
 
-                            <f:facet name="footer">
-                                <c:if test="#{!orderInfoBean.order.isError()}">
-                                    <p:commandButton value="To next step" update=" :tabPanel :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
-                                </c:if>
-                                <c:if test="#{orderInfoBean.order.isError()}">
-                                    <p:commandButton value="Try again" update=" :tabPanel :headerstatus " disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
-                                </c:if>
-                                <p:commandButton value="Cancel Order" update=" :tabPanel :headerstatus " action="#{orderInfoBean.cancelOrder}" />
-                            </f:facet>
+                                <f:facet name="footer">
+                                    <c:if test="#{!orderInfoBean.order.isError()}">
+                                        <p:commandButton value="To next step" update=" :tabPanel :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                                    </c:if>
+                                    <c:if test="#{orderInfoBean.order.isError()}">
+                                        <p:commandButton value="Try again" update=" :tabPanel :headerstatus " disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                                    </c:if>
+                                    <p:commandButton value="Cancel Order" update=" :tabPanel :headerstatus " action="#{orderInfoBean.cancelOrder}" />
+                                </f:facet>
+                            </c:if>
                         </p:dataTable>
                     </h:form>
                 </div>

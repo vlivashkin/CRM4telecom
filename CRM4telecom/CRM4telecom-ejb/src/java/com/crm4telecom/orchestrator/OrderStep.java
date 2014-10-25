@@ -46,7 +46,7 @@ public enum OrderStep {
                 OrderManagerRemote om = (OrderManagerRemote) ctx.lookup(RemoteBean.OrderManager.getJndi());
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
-                
+
                 ProductProperties properties = order.getProduct().getProperties();
                 if (properties.equals(ProductProperties.IP)) {
                     IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup(RemoteBean.IpFilling.getJndi());
@@ -92,20 +92,18 @@ public enum OrderStep {
         @Override
         public boolean run() {
             Context ctx;
-            OrderManagerRemote om = null;
             Services service = new Services();
             BillingWebService billingWebService = service.getBillingPort();
-            IpFillingRemote ipFillingRemote = null;
-            PhoneFillingRemote phoneFillingRemote = null;
+
             try {
                 ctx = new InitialContext();
-                om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
                 ctx = new InitialContext();
                 om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
-                ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
-                phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
+                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
+                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
                 ProductProperties properties = order.getProduct().getProperties();
 
                 if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {

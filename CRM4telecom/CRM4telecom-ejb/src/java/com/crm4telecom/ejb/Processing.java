@@ -1,7 +1,11 @@
 package com.crm4telecom.ejb;
 
+import com.crm4telecom.ejb.filling.IpFillingRemote;
+import com.crm4telecom.ejb.filling.PhoneFillingRemote;
 import com.crm4telecom.ejb.filling.ProductFilling;
 import com.crm4telecom.enums.OrderType;
+import com.crm4telecom.enums.ProductProperties;
+import com.crm4telecom.enums.RemoteBean;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import com.crm4telecom.mail.MailManager;
@@ -16,6 +20,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,15 +30,15 @@ import org.apache.log4j.Priority;
 
 @Stateless
 public class Processing implements ProcessingLocal {
-
+    
     @EJB
     private ProductFilling productFilling;
-
+    
     @PersistenceContext
     private EntityManager em;
-
+    
     private final Logger log = Logger.getLogger(getClass().getName());
-
+    
     @Override
     public List<String> completeOrder(String rawOrder) {
         List<String> orders = new ArrayList<>();
@@ -49,20 +55,20 @@ public class Processing implements ProcessingLocal {
                 log.warn("Can't find order by  " + Long.toString(id) + " in Orders table");
             }
         }
-
+        
         return orders;
     }
-
+    
     @Override
     public List<OrderProcessing> getOrderSteps(Order order) {
         String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id ORDER BY o.startDate";
         Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
         return query.getResultList();
     }
-
+    
     @Override
     public void tryNextStep(Order order) {
-
+        
         if (order.getStatus() != OrderStatus.CLOSED && order.getStatus() != OrderStatus.CANCELLED) {
             OrderStep currentStep = order.getProcessStep();
             Task task = currentStep.getTask();
@@ -74,10 +80,10 @@ public class Processing implements ProcessingLocal {
             parameters.put("Customer", order.getCustomerId().toString());
             parameters.put("Order", order.getOrderId().toString());
             task.setParameters(parameters);
-
+            
             if (task.getType().equals(TaskType.AUTO_TASK) && task.run() || task.getType().equals(TaskType.USER_TASK)) {
                 doneCurrentStep(order);
-
+                
                 if (order.getStatus() != OrderStatus.CLOSED) {
                     toNextStep(order);
                     if (order.getProcessStep().getTask().getType().equals(TaskType.AUTO_TASK)) {
@@ -94,19 +100,19 @@ public class Processing implements ProcessingLocal {
             }
         }
     }
-
+    
     private void doneCurrentStep(Order order) {
         String sqlQuery = "SELECT o FROM OrderProcessing o WHERE o.orderId = :id AND o.endDate IS NULL ORDER BY o.startDate DESC";
         Query query = em.createQuery(sqlQuery).setParameter("id", order.getOrderId());
         OrderProcessing oldStep = (OrderProcessing) query.getSingleResult();
         oldStep.setEndDate(new Date());
         em.merge(oldStep);
-
+        
         OrderStep currentStep = order.getProcessStep();
         order.setStatus(currentStep.getStatus());
         em.merge(order);
     }
-
+    
     private void toNextStep(Order order) {
         OrderStep currentStep = order.getProcessStep();
         OrderStep nextStep = currentStep.nextStep(order.getTechSupport());
@@ -122,7 +128,7 @@ public class Processing implements ProcessingLocal {
         order.setProcessStep(nextStep);
         em.merge(order);
     }
-
+    
     private void mailNotification(Order order) {
         try {
             MailManager mm = new MailManager();
@@ -133,9 +139,28 @@ public class Processing implements ProcessingLocal {
             }
         }
     }
-
+    
     @Override
     public void cancelOrder(Order order) {
+        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(getClass().getName());
+        Context ctx;
+        try {
+            ctx = new InitialContext();
+            ProductProperties properties = order.getProduct().getProperties();
+            if (properties.equals(ProductProperties.IP)) {
+                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup(RemoteBean.IpFilling.getJndi());
+                
+                ipFillingRemote.freeItem(order.getCustomer());
+                
+            } else if (properties.equals(ProductProperties.PHONE)) {
+                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup(RemoteBean.PhoneFilling.getJndi());
+                
+                phoneFillingRemote.freeItem(order.getCustomer());
+                
+            }
+        } catch (Throwable e) {
+            logger.warning(e.toString());
+        }
         if (order.getStatus() != OrderStatus.CLOSED
                 && order.getStatus() != OrderStatus.CANCELLED) {
             order.setStatus(OrderStatus.CANCELLED);
