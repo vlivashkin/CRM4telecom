@@ -46,6 +46,7 @@ public class OrderValidationBean implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+        product = gm.getProduct(productId).toString();
     }
     
     public Long getProductId() {
