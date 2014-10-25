@@ -36,8 +36,8 @@ public class WebServiceBilling {
         }
     }
 
-    public Boolean addProduct(java.lang.Long customerID, java.lang.String productName) {
-        return cm.addProduct(customerID, customerID);
+    public Boolean addProduct(java.lang.Long customerID, Long productID) {
+        return cm.addProduct(customerID, productID);
     }
 
     public Map<Long, com.crm4telecom.stub.beans.enums.CustomerStatus> getStatuses() {

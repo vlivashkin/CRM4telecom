@@ -106,7 +106,7 @@ public enum OrderStep {
                 PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
                 ProductProperties properties = order.getProduct().getProperties();
 
-                if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {
+                if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getProductId()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {
                     if (properties.equals(ProductProperties.IP)) {
                         if (order.getOrderType().equals(OrderType.CONNECT)) {
                             ipFillingRemote.activateItem(order.getCustomer());
