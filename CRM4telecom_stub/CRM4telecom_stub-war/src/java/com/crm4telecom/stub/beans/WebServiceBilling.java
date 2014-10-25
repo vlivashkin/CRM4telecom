@@ -23,8 +23,8 @@ public class WebServiceBilling {
         return cm.addCustomer(customerID, balance, status);
     }
 
-    public Boolean removeProduct(java.lang.Long customerID, java.lang.String productName) {
-        return cm.removeProduct(customerID, customerID);
+    public Boolean removeProduct(java.lang.Long customerID, Long productID) {
+        return cm.removeProduct(customerID, productID);
     }
 
     public Boolean withdraw(double cash, long id) {
