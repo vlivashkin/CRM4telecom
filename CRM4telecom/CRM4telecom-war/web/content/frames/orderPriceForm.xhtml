@@ -3,28 +3,26 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html">
-    <h:form id="h">
-        <p:message for="installation-fee" id="hmsgs" />
-        <p:panelGrid columns="3" styleClass="table" >
-            <h:outputText/>
-            <h:outputText value="onetime" />
-            <h:outputText value="monthly" />
+    <p:message for="installation-fee" id="hmsgs" />
+    <p:panelGrid id="h" columns="3" styleClass="table" >
+        <h:outputText/>
+        <h:outputText value="onetime" />
+        <h:outputText value="monthly" />
 
-            <h:outputText value="Installation Fee" />
-            <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
-                         required="true" label="Installation Fee" converterMessage="Number required">
-                <f:validateLongRange minimum="0" />
-                <p:ajax update="h hmsgs" />
-            </h:inputText>
-            <h:outputText value="—" />
+        <h:outputText value="Installation Fee" />
+        <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
+                     required="true" label="Installation Fee" converterMessage="Number required">
+            <f:validateLongRange minimum="0" />
+            <p:ajax update="h hmsgs" />
+        </h:inputText>
+        <h:outputText value="—" />
 
-            <h:outputText value="#{orderInfoBean.os.product}" />
-            <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
-            <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+        <h:outputText value="#{orderInfoBean.os.product}" />
+        <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+        <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
 
-            <h:outputText value="Total" />
-            <h:outputText value="#{orderInfoBean.totalCost}" />
-            <h:outputText value="#{orderInfoBean.totalMonthly}" />
-        </p:panelGrid>
-    </h:form>
+        <h:outputText value="Total" />
+        <h:outputText value="#{orderInfoBean.totalCost}" />
+        <h:outputText value="#{orderInfoBean.totalMonthly}" />
+    </p:panelGrid>
 </ui:composition>
