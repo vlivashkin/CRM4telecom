@@ -31,8 +31,8 @@
 
   <xs:complexType name="addCustomer">
     <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+      <xs:element name="arg0" type="xs:long" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:double" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
