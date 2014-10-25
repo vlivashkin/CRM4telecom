@@ -9,8 +9,8 @@ import javax.jws.WebService;
 public class WebServiceBilling {
 
     @EJB
-    CustomerManagerInterface cm; 
-    
+    CustomerManagerInterface cm;
+
     public Boolean addMoney(double cash, long id) {
         return true;
     }
@@ -19,8 +19,8 @@ public class WebServiceBilling {
         return cm.getBalance(id);
     }
 
-    public Boolean addCustomer(Long lastName, Double name) {
-        return cm.addCustomer();
+    public Boolean addCustomer(Long customerID, Double balance, String status) {
+        return cm.addCustomer(customerID, balance, status);
     }
 
     public Boolean removeProduct(java.lang.Long customerID, java.lang.String productName) {
@@ -28,10 +28,10 @@ public class WebServiceBilling {
     }
 
     public Boolean withdraw(double cash, long id) {
-        try{
+        try {
             cm.withdraw(id, cash);
             return true;
-        } catch (Throwable e){
+        } catch (Throwable e) {
             return false;
         }
     }
@@ -43,5 +43,5 @@ public class WebServiceBilling {
     public Map<Long, com.crm4telecom.stub.beans.enums.CustomerStatus> getStatuses() {
         return cm.getStatuses();
     }
-    
+
 }

@@ -40,12 +40,16 @@ public class CustomerManager implements CustomerManagerInterface {
 
 
     @Override
-    public Boolean addCustomer() {
+    public Boolean addCustomer(Long customerID, Double balance, String status) {
         Customer customer = new Customer();
+        customer.setBalance(balance);
+        customer.setCustomerId(customerID);
+        customer.setStatus(CustomerStatus.valueOf(status));
         try {
             em.merge(customer);
             return true;
         } catch (Exception e){
+            e.printStackTrace();
             return false;
         }    
     }

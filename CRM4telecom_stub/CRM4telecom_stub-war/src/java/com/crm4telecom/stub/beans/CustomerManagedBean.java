@@ -15,36 +15,37 @@ import org.primefaces.event.CellEditEvent;
 @ManagedBean(name = "cmb")
 @ViewScoped
 public class CustomerManagedBean implements Serializable {
+
     @EJB
     private CustomerManagerInterface customerManager;
 
     private List<Customer> customers;
-    
+
     @PostConstruct
     public void init() {
         customers = customerManager.getCustomersList();
     }
-    
+
     public List<Customer> getCustomers() {
         return customers;
     }
-    
+
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
-    
+
     public void update() {
         customerManager.setCustomers(customers);
     }
-    
+
     public CustomerManagedBean() {
     }
 
     public void onCellEdit(CellEditEvent event) {
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
-         
-        if(newValue != null && !newValue.equals(oldValue) || newValue == null && oldValue != null) {
+
+        if (newValue != null && !newValue.equals(oldValue) || newValue == null && oldValue != null) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }

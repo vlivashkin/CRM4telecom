@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class WithdrawManager {
-    
+
     @EJB
     private SchedulerUnitInterface schedulerUnit;
 
@@ -24,9 +24,8 @@ public class WithdrawManager {
             Logger.getLogger(WithdrawManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public WithdrawManager() {
     }
-    
+
 }

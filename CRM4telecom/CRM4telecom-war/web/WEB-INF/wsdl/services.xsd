@@ -69,6 +69,7 @@
     <xs:sequence>
       <xs:element name="lastName" type="xs:long" minOccurs="0"/>
       <xs:element name="name" type="xs:double" minOccurs="0"/>
+      <xs:element name="arg2" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

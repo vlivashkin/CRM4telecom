@@ -1,5 +1,7 @@
 package com.crm4telecom.web.beans;
 
+import com.crm4telecom.billing.BillingWebService;
+import com.crm4telecom.billing.Services;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
@@ -83,6 +85,10 @@ public class CustomerInfoBean implements Serializable {
             cm.addMarket(mc);
         }
 
+        Services service = new Services();
+        BillingWebService billingWebService = service.getBillingPort();
+        billingWebService.addCustomer(customerNew.getCustomerId(), customerNew.getBalance());
+        
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
     }
