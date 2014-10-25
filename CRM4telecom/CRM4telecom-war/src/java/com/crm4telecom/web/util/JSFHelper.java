@@ -81,9 +81,9 @@ public class JSFHelper {
     public void redirect(String nav, String... params) {
         Faces.getFlash().setRedirect(true);
         NavigationHandler handler = getApplication().getNavigationHandler();
-        nav += "?faces-redirect=true&";
+        nav += "?faces-redirect=true";
         for (int i = 0; i < params.length - 1; i += 2) {
-            nav += params[i] + "=" + params[i + 1];
+            nav += "&" + params[i] + "=" + params[i + 1];
         }
         handler.handleNavigation(getFacesContext(), null, nav);
     }

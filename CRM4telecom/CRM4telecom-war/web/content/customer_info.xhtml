@@ -115,9 +115,10 @@
                 <h:outputText value="#{prod.name}"/>
             </p:column>
 
-            
-            <p:column>
-                <p:commandButton value="Disconnect" icon="ui-icon-minus" immediate="true" action="#{customerInfoBean.toDeleteOrder()}" />
+
+            <p:column style="text-align: center">
+                
+                <p:commandButton value="Disconnect" icon="ui-icon-minus" immediate="true" action="#{customerInfoBean.toDeleteOrder(prod.productId)}" />
             </p:column>
 
         </p:dataTable>

@@ -3,6 +3,7 @@ package com.crm4telecom.web.beans;
 import com.crm4telecom.ejb.CustomerManagerLocal;
 import com.crm4telecom.ejb.GetManagerLocal;
 import com.crm4telecom.enums.CustomerStatus;
+import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.jpa.Customer;
 import com.crm4telecom.jpa.Market;
 import com.crm4telecom.jpa.MarketsCustomers;
@@ -105,9 +106,13 @@ public class CustomerInfoBean implements Serializable {
 
     }
 
-    public void toDeleteOrder() {
+    public void toDeleteOrder(Long productId) {
         JSFHelper helper = new JSFHelper();
-        helper.redirect("order_add", "customer", customer.getCustomerId().toString(), "productId",selectedOrder.getProduct().getProductId().toString(), "type",  "DISCONNECT");
+        helper.redirect("order_add",
+                "customer", customer.getCustomerId().toString(),
+                "productId", productId.toString(),
+                "type", OrderType.DISCONNECT.toString()
+        );
 
     }
 

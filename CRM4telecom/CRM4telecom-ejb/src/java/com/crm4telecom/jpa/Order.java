@@ -113,6 +113,10 @@ public class Order implements Serializable {
         return (status == OrderStatus.ERROR);
     }
     
+     public Boolean isClosed() {
+        return (status == OrderStatus.CLOSED);
+    }
+    
      public Boolean isNew() {
         return (status == OrderStatus.NEW);
     }
