@@ -89,7 +89,7 @@ public class CustomerInfoBean implements Serializable {
 
         Services service = new Services();
         BillingWebService billingWebService = service.getBillingPort();
-        billingWebService.addCustomer(customerNew.getCustomerId(), customerNew.getBalance());
+        billingWebService.addCustomer(customerNew.getCustomerId(), cv.getBalance());
         
         JSFHelper helper = new JSFHelper();
         helper.redirect("customer_info", "id", customer.getCustomerId().toString());
