@@ -19,7 +19,7 @@ public class WebServiceBilling {
         return cm.getBalance(id);
     }
 
-    public Boolean addCustomer(java.lang.String lastName, java.lang.String name) {
+    public Boolean addCustomer(Long lastName, Double name) {
         return cm.addCustomer();
     }
 
