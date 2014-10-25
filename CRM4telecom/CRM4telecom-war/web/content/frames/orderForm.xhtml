@@ -20,9 +20,10 @@
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="type" value="Type:" /> 
                 <div class="col-sm-6">
-                    <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}">
+                    <p:selectOneMenu id="type" value="#{orderInfoBean.ov.type}" disabled="true">
                         <f:selectItems value="#{resourcesBean.types}" var="type"
                                        itemValue="#{type}" itemLabel="#{type.label}"/>
+                        
                     </p:selectOneMenu>
                 </div>
                 <div class="col-sm-4">
