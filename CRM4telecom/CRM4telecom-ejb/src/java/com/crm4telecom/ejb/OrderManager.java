@@ -1,33 +1,21 @@
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.ejb.util.SearchQuery;
-import com.crm4telecom.ejb.filling.IpFillingLocal;
-import com.crm4telecom.ejb.filling.PhoneFillingLocal;
-import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.orchestrator.OrderStatus;
 import com.crm4telecom.orchestrator.OrderStep;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
-import com.crm4telecom.jpa.Product;
-import com.crm4telecom.mail.MailManager;
-import com.crm4telecom.orchestrator.Task;
-import com.crm4telecom.orchestrator.TaskType;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 
 @Stateless
-public class OrderManager implements OrderManagerLocal,OrderManagerRemote{
+public class OrderManager implements OrderManagerLocal, OrderManagerRemote {
 
     private final Logger log = Logger.getLogger(getClass().getName());
 

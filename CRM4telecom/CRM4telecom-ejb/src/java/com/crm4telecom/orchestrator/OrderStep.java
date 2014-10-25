@@ -7,7 +7,7 @@ import com.crm4telecom.ejb.filling.IpFillingRemote;
 import com.crm4telecom.ejb.filling.PhoneFillingRemote;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
-import com.crm4telecom.jpa.CustomersProducts;
+import com.crm4telecom.enums.RemoteBean;
 import com.crm4telecom.jpa.Order;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,32 +43,34 @@ public enum OrderStep {
             Context ctx;
             try {
                 ctx = new InitialContext();
-                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup(RemoteBean.OrderManager.getJndi());
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
-                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
-                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
+                
                 ProductProperties properties = order.getProduct().getProperties();
                 if (properties.equals(ProductProperties.IP)) {
+                    IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup(RemoteBean.IpFilling.getJndi());
+
                     if (order.getOrderType().equals(OrderType.CONNECT)) {
                         return ipFillingRemote.allocateItem(order.getCustomer());
                     } else {
                         return ipFillingRemote.freeItem(order.getCustomer());
                     }
                 } else if (properties.equals(ProductProperties.PHONE)) {
+                    PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup(RemoteBean.PhoneFilling.getJndi());
+
                     if (order.getOrderType().equals(OrderType.CONNECT)) {
                         return phoneFillingRemote.allocateItem(order.getCustomer());
                     } else {
                         return phoneFillingRemote.freeItem(order.getCustomer());
                     }
-                } else if (properties.equals(ProductProperties.NONE)) {
-                    return true;
+                } else {
+                    return properties.equals(ProductProperties.NONE);
                 }
             } catch (Throwable ex) {
                 logger.severe(ex.toString());
                 return false;
             }
-            return false;
         }
     }) {
                 @Override

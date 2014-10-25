@@ -5,7 +5,7 @@ public enum OrderType {
     CONNECT("Connect"),
     DISCONNECT("Disconnect");
 
-    private String label;
+    private final String label;
 
     private OrderType(String label) {
         this.label = label;

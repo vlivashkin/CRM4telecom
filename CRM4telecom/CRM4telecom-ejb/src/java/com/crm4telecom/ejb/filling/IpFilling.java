@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 @Stateless
-public class IpFilling extends FillingDatabase implements IpFillingLocal, IpFillingRemote {
+public class IpFilling extends FillingDatabase implements IpFillingRemote {
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
 

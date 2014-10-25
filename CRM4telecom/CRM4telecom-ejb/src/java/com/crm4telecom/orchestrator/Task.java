@@ -4,8 +4,7 @@ import com.crm4telecom.enums.OrderType;
 import java.util.HashMap;
 
 public abstract class Task {
-
-    private String label;
+    private final String label;
     private HashMap<String, String> parameters;
 
     public Task(String label) {
@@ -39,13 +38,13 @@ public abstract class Task {
            return OrderType.DISCONNECT; 
         }
     }
+    
     public TaskType getType(){
         return null;
     }
 
-
     public boolean run() {
-        return false;
+        return true;
     }
 
     public String getLabel() {

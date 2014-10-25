@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 @Stateless
-public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal,PhoneFillingRemote {
+public class PhoneFilling extends FillingDatabase implements PhoneFillingRemote {
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
@@ -43,9 +43,8 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal,P
         }
         return false;
     }
-    
-    
-     @Override
+
+    @Override
     protected Boolean getDataAndActivate(Customer customer) {
         String sqlQuery = "SELECT i FROM PHONE_NUMBERS i WHERE i.customerId IS NULL AND i.status ='RESEREVED' ";
         Query query = em.createQuery(sqlQuery);
