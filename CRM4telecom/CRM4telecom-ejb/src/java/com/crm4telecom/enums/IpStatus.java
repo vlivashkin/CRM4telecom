@@ -3,6 +3,7 @@ package com.crm4telecom.enums;
 public enum IpStatus {
 
     ACTIVE("Active"),
+    RESEREVED("Resereved"),
     BLOCKED("Blocked"),
     UNPLUGGED("Unplugged");
 

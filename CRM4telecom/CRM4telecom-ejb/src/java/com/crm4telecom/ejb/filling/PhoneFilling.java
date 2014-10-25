@@ -27,6 +27,32 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingLocal,P
         if (phoneList.size() > 0) {
             PhoneNumber phoneNumber = phoneList.get(0);
             phoneNumber.setCustomerId(customer);
+            phoneNumber.setStatus(IpStatus.RESEREVED);
+            em.merge(phoneNumber);
+            em.flush();
+
+            if (log.isInfoEnabled()) {
+                log.info("Customer : " + customer + " now resereve phone number : " + phoneNumber.getPhoneNumber());
+                return true;
+            }
+        } else {
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    
+     @Override
+    protected Boolean getDataAndActivate(Customer customer) {
+        String sqlQuery = "SELECT i FROM PHONE_NUMBERS i WHERE i.customerId IS NULL AND i.status ='RESEREVED' ";
+        Query query = em.createQuery(sqlQuery);
+        List<PhoneNumber> phoneList = query.getResultList();
+        if (phoneList.size() > 0) {
+            PhoneNumber phoneNumber = phoneList.get(0);
+            phoneNumber.setCustomerId(customer);
             phoneNumber.setStatus(IpStatus.ACTIVE);
             em.merge(phoneNumber);
             em.flush();

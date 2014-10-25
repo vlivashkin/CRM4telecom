@@ -27,16 +27,6 @@ public class CustomersProducts implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @Column(name = "PRICE")
-    private Long price;
-    
-    @Column(name = "CUSTOMER_ID", nullable = false, precision = 38, scale = 0)
-    private Long customerId;
-    
-    @NotNull
-    @Column(name = "PRODUCT_ID", nullable = false, precision = 22, scale = 0)
-    private Long productId;
-
     public CustomersProducts() {
     }
 
@@ -72,13 +62,6 @@ public class CustomersProducts implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
 
     @Override
     public int hashCode() {

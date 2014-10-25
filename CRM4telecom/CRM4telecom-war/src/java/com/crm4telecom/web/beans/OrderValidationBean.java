@@ -142,6 +142,10 @@ public class OrderValidationBean implements Serializable {
     public void setType(OrderType type) {
         this.type = type;
     }
+    
+    public void setType(String type) {
+        this.type = OrderType.valueOf(type);
+    }
 
     public Boolean getTechnicalSupportFlag() {
         return technicalSupportFlag;

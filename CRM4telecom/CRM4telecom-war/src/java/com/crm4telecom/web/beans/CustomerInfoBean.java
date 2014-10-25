@@ -102,6 +102,13 @@ public class CustomerInfoBean implements Serializable {
     public void toAddOrder() {
         JSFHelper helper = new JSFHelper();
         helper.redirect("order_add", "customer", customer.getCustomerId().toString());
+
+    }
+
+    public void toDeleteOrder() {
+        JSFHelper helper = new JSFHelper();
+        helper.redirect("order_add", "customer", customer.getCustomerId().toString(), "productId",selectedOrder.getProduct().getProductId().toString(), "type",  "DISCONNECT");
+
     }
 
     public CustomerStatus[] getStatus() {

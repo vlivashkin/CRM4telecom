@@ -1,138 +1,141 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://soap.crm4telecom.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soap.crm4telecom.com/">
 
-  <xs:element name="addCustomer" nillable="true" type="tns:addCustomer"/>
+    <xs:element name="addCustomer" nillable="true" type="tns:addCustomer"/>
 
-  <xs:element name="addCustomerResponse" nillable="true" type="tns:addCustomerResponse"/>
+    <xs:element name="addCustomerResponse" nillable="true" type="tns:addCustomerResponse"/>
 
-  <xs:element name="addMoney" nillable="true" type="tns:addMoney"/>
+    <xs:element name="addMoney" nillable="true" type="tns:addMoney"/>
 
-  <xs:element name="addMoneyResponse" nillable="true" type="tns:addMoneyResponse"/>
+    <xs:element name="addMoneyResponse" nillable="true" type="tns:addMoneyResponse"/>
 
-  <xs:element name="addProduct" nillable="true" type="tns:addProduct"/>
+    <xs:element name="addProduct" nillable="true" type="tns:addProduct"/>
 
-  <xs:element name="addProductResponse" nillable="true" type="tns:addProductResponse"/>
+    <xs:element name="addProductResponse" nillable="true" type="tns:addProductResponse"/>
 
-  <xs:element name="getBalance" nillable="true" type="tns:getBalance"/>
+    <xs:element name="getBalance" nillable="true" type="tns:getBalance"/>
 
-  <xs:element name="getBalanceResponse" nillable="true" type="tns:getBalanceResponse"/>
+    <xs:element name="getBalanceResponse" nillable="true" type="tns:getBalanceResponse"/>
 
-  <xs:element name="getStatuses" nillable="true" type="tns:getStatuses"/>
+    <xs:element name="getStatuses" nillable="true" type="tns:getStatuses"/>
 
-  <xs:element name="getStatusesResponse" nillable="true" type="tns:getStatusesResponse"/>
+    <xs:element name="getStatusesResponse" nillable="true" type="tns:getStatusesResponse"/>
 
-  <xs:element name="removeProduct" nillable="true" type="tns:removeProduct"/>
+    <xs:element name="removeProduct" nillable="true" type="tns:removeProduct"/>
 
-  <xs:element name="removeProductResponse" nillable="true" type="tns:removeProductResponse"/>
+    <xs:element name="removeProductResponse" nillable="true" type="tns:removeProductResponse"/>
 
-  <xs:element name="withdraw" nillable="true" type="tns:withdraw"/>
+    <xs:element name="withdraw" nillable="true" type="tns:withdraw"/>
 
-  <xs:element name="withdrawResponse" nillable="true" type="tns:withdrawResponse"/>
+    <xs:element name="withdrawResponse" nillable="true" type="tns:withdrawResponse"/>
 
-  <xs:complexType name="addCustomer">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addCustomer">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="addCustomerResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addCustomerResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="getBalance">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:long"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="getBalance">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="getBalanceResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:double"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="getBalanceResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="removeProduct">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:long" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="removeProduct">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:long" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="removeProductResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="removeProductResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="addProduct">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:long" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addProduct">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:long" minOccurs="0"/>
+            <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="addProductResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addProductResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="getStatuses">
-    <xs:sequence/>
-  </xs:complexType>
+    <xs:complexType name="getStatuses">
+        <xs:sequence/>
+    </xs:complexType>
 
-  <xs:complexType name="getStatusesResponse">
-    <xs:sequence>
-      <xs:element name="return">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="key" minOccurs="0" type="xs:long"/>
-                  <xs:element name="value" minOccurs="0" type="tns:customerStatus"/>
-                </xs:sequence>
-              </xs:complexType>
+    <xs:complexType name="getStatusesResponse">
+        <xs:sequence>
+            <xs:element name="return">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="key" minOccurs="0" type="xs:long"/>
+                                    <xs:element name="value" minOccurs="0" type="tns:customerStatus"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="addMoney">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:double"/>
-      <xs:element name="arg1" type="xs:long"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addMoney">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:double"/>
+            <xs:element name="arg1" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="addMoneyResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="addMoneyResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="withdraw">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:double"/>
-      <xs:element name="arg1" type="xs:long"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="withdraw">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:double"/>
+            <xs:element name="arg1" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="withdrawResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="withdrawResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:simpleType name="customerStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ACTIVE"/>
-      <xs:enumeration value="BLOCKED"/>
-      <xs:enumeration value="UNPLUGGED"/>
-    </xs:restriction>
-  </xs:simpleType>
+    <xs:simpleType name="customerStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ACTIVE"/>
+            <xs:enumeration value="BLOCKED"/>
+            <xs:enumeration value="UNPLUGGED"/>
+            <xs:enumeration value="RESEREVED"/>
+
+
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

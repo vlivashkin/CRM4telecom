@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 @Stateless
-public class IpFilling extends FillingDatabase implements IpFillingLocal,IpFillingRemote {
+public class IpFilling extends FillingDatabase implements IpFillingLocal, IpFillingRemote {
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
 
@@ -27,6 +27,31 @@ public class IpFilling extends FillingDatabase implements IpFillingLocal,IpFilli
         if (ipList.size() > 0) {
             StaticIp ip = ipList.get(0);
             ip.setCustomerId(customer);
+            ip.setStatus(IpStatus.RESEREVED);
+            em.merge(ip);
+            em.flush();
+
+            if (log.isInfoEnabled()) {
+                log.info("Customer : " + customer + " now resereve ip address : " + ip.getIp());
+                return true;
+            }
+        } else {
+            if (log.isEnabledFor(Priority.WARN)) {
+                log.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected Boolean getDataAndActivate(Customer customer) {
+        String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = :customer";
+        Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
+        log.info("Query made for "+customer);
+        List<StaticIp> ipList = query.getResultList();
+        if (ipList.size() > 0) {
+            StaticIp ip = ipList.get(0);
             ip.setStatus(IpStatus.ACTIVE);
             em.merge(ip);
             em.flush();

@@ -7,6 +7,7 @@ import com.crm4telecom.ejb.filling.IpFillingRemote;
 import com.crm4telecom.ejb.filling.PhoneFillingRemote;
 import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
+import com.crm4telecom.jpa.CustomersProducts;
 import com.crm4telecom.jpa.Order;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,11 +32,7 @@ public enum OrderStep {
     }) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-                    if (flag) {
-                        return ALLOCATE_RESOURCE;
-                    } else {
-                        return TECHNITIAN_APPOINT;
-                    }
+                    return ALLOCATE_RESOURCE;
                 }
             },
     ALLOCATE_RESOURCE(OrderStatus.OPENED, new AutoTask("Allocate resource") {
@@ -44,16 +41,13 @@ public enum OrderStep {
         public boolean run() {
             Logger logger = Logger.getLogger(getClass().getName());
             Context ctx;
-            OrderManagerRemote om = null;
-            IpFillingRemote ipFillingRemote = null;
-            PhoneFillingRemote phoneFillingRemote = null;
             try {
                 ctx = new InitialContext();
-                om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
-                ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
-                phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
+                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
+                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
                 ProductProperties properties = order.getProduct().getProperties();
                 if (properties.equals(ProductProperties.IP)) {
                     if (order.getOrderType().equals(OrderType.CONNECT)) {
@@ -67,7 +61,7 @@ public enum OrderStep {
                     } else {
                         return phoneFillingRemote.freeItem(order.getCustomer());
                     }
-                }else if(properties.equals(ProductProperties.NONE)){
+                } else if (properties.equals(ProductProperties.NONE)) {
                     return true;
                 }
             } catch (Throwable ex) {
@@ -79,7 +73,11 @@ public enum OrderStep {
     }) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-                    return BILLING;
+                    if (flag) {
+                        return BILLING;
+                    } else {
+                        return TECHNITIAN_APPOINT;
+                    }
                 }
             },
     TECHNITIAN_APPOINT(OrderStatus.OPENED, new UserTask("Technitian appoint")) {
@@ -95,12 +93,31 @@ public enum OrderStep {
             OrderManagerRemote om = null;
             Services service = new Services();
             BillingWebService billingWebService = service.getBillingPort();
+            IpFillingRemote ipFillingRemote = null;
+            PhoneFillingRemote phoneFillingRemote = null;
             try {
                 ctx = new InitialContext();
                 om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
+                ctx = new InitialContext();
+                om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
+                phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
+                ProductProperties properties = order.getProduct().getProperties();
+
                 if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getName()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {
+                    if (properties.equals(ProductProperties.IP)) {
+                        if (order.getOrderType().equals(OrderType.CONNECT)) {
+                            ipFillingRemote.activateItem(order.getCustomer());
+                        }
+
+                    } else if (properties.equals(ProductProperties.PHONE)) {
+                        if (order.getOrderType().equals(OrderType.CONNECT)) {
+                            phoneFillingRemote.activateItem(order.getCustomer());
+                        }
+                    } else if (properties.equals(ProductProperties.NONE)) {
+                    }
                     return true;
                 }
             } catch (NamingException ex) {
@@ -118,6 +135,10 @@ public enum OrderStep {
     POST_CONFIRM(OrderStatus.CLOSED, new UserTask("Post-confirm")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
+                    Logger logger = Logger.getLogger(getClass().getName());
+                    Context ctx;
+                    OrderManagerRemote om = null;
+
                     return POST_CONFIRM;
                 }
             };

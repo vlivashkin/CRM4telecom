@@ -7,6 +7,8 @@ import javax.ejb.Remote;
 @Remote
 public interface PhoneFillingRemote {
 
+    public Boolean activateItem(Customer customer);
+
     public Boolean allocateItem(Customer customer);
 
     public Boolean freeItem(Customer customer);

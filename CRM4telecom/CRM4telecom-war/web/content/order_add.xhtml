@@ -8,6 +8,8 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="customer" value="#{orderInfoBean.ov.customerId}" />
+            <f:viewParam name="productId" value="#{orderInfoBean.ov.productId}"/>
+            <f:viewParam name="type" value="#{orderInfoBean.ov.type}"/>
         </f:metadata>
     </ui:define>
 
@@ -30,42 +32,42 @@
     </ui:define>
 
     <ui:define name="content">
-            <h:form id="editform">
-                <div class="col-sm-8" >
-                    <ui:include src="./frames/orderForm.xhtml" />
+        <h:form id="editform">
+            <div class="col-sm-8" >
+                <ui:include src="./frames/orderForm.xhtml" />
 
-                    <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{orderInfoBean.create()}" />
-                    <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
-                </div>
-                <div class="col-sm-4">
-                    <c:if test="#{orderInfoBean.testOrderType()}">
-                        <p:message for="installation-fee" id="hmsgs" />
-                        <p:panelGrid id="h" columns="3" styleClass="table" >
-                            <h:outputText/>
-                            <h:outputText value="onetime" />
-                            <h:outputText value="monthly" />
+                <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{orderInfoBean.create()}" />
+                <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="order_list?faces-redirect=true" />
+            </div>
+            <div class="col-sm-4">
+                <c:if test="#{orderInfoBean.testOrderType()}">
+                    <p:message for="installation-fee" id="hmsgs" />
+                    <p:panelGrid id="h" columns="3" styleClass="table" >
+                        <h:outputText/>
+                        <h:outputText value="onetime" />
+                        <h:outputText value="monthly" />
 
-                            <h:outputText value="Installation Fee" />
-                            <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
-                                         required="true" label="Installation Fee" converterMessage="Number required">
-                                <f:validateLongRange minimum="0" />
-                                <p:ajax update="h hmsgs" />
-                            </h:inputText>
-                            <h:outputText value="—" />
+                        <h:outputText value="Installation Fee" />
+                        <h:inputText id="installation-fee" value="#{orderInfoBean.os.installationFee}"
+                                     required="true" label="Installation Fee" converterMessage="Number required">
+                            <f:validateLongRange minimum="0" />
+                            <p:ajax update="h hmsgs" />
+                        </h:inputText>
+                        <h:outputText value="—" />
 
-                            <h:outputText value="#{orderInfoBean.os.product}" />
-                            <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
-                            <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
+                        <h:outputText value="#{orderInfoBean.os.product}" />
+                        <h:outputText value="#{orderInfoBean.os.onetimePrice}" />
+                        <h:outputText value="#{orderInfoBean.os.monthlyPrice}" />
 
-                            <h:outputText value="Total" />
-                            <h:outputText value="#{orderInfoBean.totalCost}" />
-                            <h:outputText value="#{orderInfoBean.totalMonthly}" />
-                        </p:panelGrid>
-                    </c:if>
-                    <c:if test="#{!orderInfoBean.testOrderType()}" >
-                        <ui:fragment id="h" />
-                    </c:if>
-                </div>
-            </h:form>
+                        <h:outputText value="Total" />
+                        <h:outputText value="#{orderInfoBean.totalCost}" />
+                        <h:outputText value="#{orderInfoBean.totalMonthly}" />
+                    </p:panelGrid>
+                </c:if>
+                <c:if test="#{!orderInfoBean.testOrderType()}" >
+                    <ui:fragment id="h" />
+                </c:if>
+            </div>
+        </h:form>
     </ui:define>
 </ui:composition>

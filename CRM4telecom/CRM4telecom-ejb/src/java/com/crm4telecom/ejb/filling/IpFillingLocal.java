@@ -8,5 +8,7 @@ public interface IpFillingLocal {
 
     public Boolean allocateItem(Customer customer);
 
+    public Boolean activateItem(Customer customer);
+
     public Boolean freeItem(Customer customer);
 }
