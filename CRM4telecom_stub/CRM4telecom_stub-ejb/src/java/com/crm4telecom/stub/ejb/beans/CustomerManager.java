@@ -64,9 +64,13 @@ public class CustomerManager implements CustomerManagerInterface {
         List newList = c.getProductsList();
         for(Product p : this.getProductsList()){
             if (p.getProductId().equals(productID)){
-                newList.add(p);
-                em.merge(c);
-                return true;
+                if (newList.contains(p)) {
+                    return false;
+                } else {
+                    newList.add(p);
+                    em.merge(c);
+                    return true;
+                }
             }
         }
         return false;
