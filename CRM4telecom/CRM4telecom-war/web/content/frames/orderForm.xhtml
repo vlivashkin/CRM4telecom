@@ -32,7 +32,8 @@
             </div>
         </c:if>
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" />  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="product" value="Product ID:" > 
+            </h:outputLabel>
             <div class="col-sm-6">
                 <p:selectOneMenu id="product" value="#{orderInfoBean.ov.product}" 
                        var="p" required="true" requiredMessage="You can't leave this empty.">

@@ -31,4 +31,13 @@ public class ProductFilling {
         return true;
     }
 
+    public boolean removeProduct(Order order) {
+        
+        String sqlQuery = "DELETE FROM Customers_Products c WHERE c.customerProductsPK.customerId=:id AND c.customerProductsPK.productId=:productId";
+        Query query = em.createQuery(sqlQuery, Order.class).setParameter("id",order.getCustomerId() ).setParameter("productId", order.getProduct().getProductId());
+        query.executeUpdate();
+        
+        return true;
+    }
+
 }

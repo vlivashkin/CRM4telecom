@@ -98,8 +98,13 @@ public class Processing implements ProcessingLocal {
                         BillingWebService billingWebService = service.getBillingPort();
                         billingWebService.addProduct(order.getCustomerId(), order.getProduct().getProductId());
                         mailNotification(order);
+                    } else {
+                        productFilling.removeProduct(order);
+                        Services service = new Services();
+                        BillingWebService billingWebService = service.getBillingPort();
+                        billingWebService.removeProduct(order.getCustomerId(), order.getProduct().getProductId());
+                        mailNotification(order);
                     }
-                    // Insert here, Anton
                 }
             } else {
                 order.setStatus(OrderStatus.ERROR);

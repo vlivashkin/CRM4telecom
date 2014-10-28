@@ -36,7 +36,7 @@ public class WebServiceBilling {
         }
     }
 
-    public Boolean addProduct(java.lang.Long customerID, Long productID) {
+    public Boolean addProduct(Long customerID, Long productID) {
         return cm.addProduct(customerID, productID);
     }
 
