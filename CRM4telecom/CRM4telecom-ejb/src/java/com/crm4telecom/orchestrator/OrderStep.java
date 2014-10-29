@@ -105,19 +105,21 @@ public enum OrderStep {
                 IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
                 PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
                 ProductProperties properties = order.getProduct().getProperties();
+                if (order.getOrderType().equals(OrderType.CONNECT)) {
+                    if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getProductId()) && billingWebService.withdraw((order.getProduct().getOnetimePayment()+order.getInstallationFee()), order.getCustomerId())) {
+                        if (properties.equals(ProductProperties.IP)) {
 
-                if (billingWebService.addProduct(order.getCustomerId(), order.getProduct().getProductId()) || billingWebService.withdraw(order.getProduct().getOnetimePayment(), order.getCustomerId())) {
-                    if (properties.equals(ProductProperties.IP)) {
-                        if (order.getOrderType().equals(OrderType.CONNECT)) {
                             ipFillingRemote.activateItem(order.getCustomer());
-                        }
 
-                    } else if (properties.equals(ProductProperties.PHONE)) {
-                        if (order.getOrderType().equals(OrderType.CONNECT)) {
+                        } else if (properties.equals(ProductProperties.PHONE)) {
+
                             phoneFillingRemote.activateItem(order.getCustomer());
+
+                        } else if (properties.equals(ProductProperties.NONE)) {
                         }
-                    } else if (properties.equals(ProductProperties.NONE)) {
+                        return true;
                     }
+                }else{
                     return true;
                 }
             } catch (NamingException ex) {
