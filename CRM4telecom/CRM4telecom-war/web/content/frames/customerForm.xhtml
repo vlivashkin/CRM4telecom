@@ -93,8 +93,10 @@
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label" for="balance" value="Balance:" />  
                 <div class="col-sm-6">
-                    <p:inputText id="balance" value="#{customerInfoBean.cv.balance}" label="Balance" required="true"/>  
-                </div>
+                    <p:inputText id="balance" value="#{customerInfoBean.cv.balance}" label="Balance" required="true" >
+                        <f:validateDoubleRange minimum="0" />
+                    </p:inputText>
+                </div>                
                 <div class="col-sm-4">
                     <p:message for="balance" />
                 </div>
