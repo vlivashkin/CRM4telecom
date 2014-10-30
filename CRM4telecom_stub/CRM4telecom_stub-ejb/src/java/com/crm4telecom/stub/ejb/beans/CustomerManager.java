@@ -148,7 +148,15 @@ public class CustomerManager implements CustomerManagerInterface {
         try {
             Customer target = getCustomer(customerID);
             if (target.getStatus().equals(CustomerStatus.ACTIVE)) {
-                target.setBalance(target.getBalance() - cash);
+                if (target.getBalance() <= 0.0) {
+                    target.setStatus(CustomerStatus.BLOCKED);
+                    return false;
+                }
+                if (target.getBalance() > cash) {
+                    target.setBalance(target.getBalance() - cash);
+                } else {
+                    return false;
+                }
                 em.merge(target);
                 em.flush();
                 return true;
