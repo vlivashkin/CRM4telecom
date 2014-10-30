@@ -154,12 +154,12 @@ public class CustomerManager implements CustomerManagerInterface {
                 }
                 if (target.getBalance() > cash) {
                     target.setBalance(target.getBalance() - cash);
+                    em.merge(target);
+                    em.flush();
+                    return true;
                 } else {
                     return false;
                 }
-                em.merge(target);
-                em.flush();
-                return true;
             } else {
                 return false;
             }

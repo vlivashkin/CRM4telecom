@@ -70,7 +70,7 @@ public class Processing implements ProcessingLocal {
 
     @Override
     public void tryNextStep(Order order) {
-
+        System.out.println("Try next step");
         if (order.getStatus() != OrderStatus.CLOSED && order.getStatus() != OrderStatus.CANCELLED) {
             OrderStep currentStep = order.getProcessStep();
             Task task = currentStep.getTask();

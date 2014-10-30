@@ -29,8 +29,8 @@ public class WebServiceBilling {
 
     public Boolean withdraw(double cash, long id) {
         try {
-            cm.withdraw(id, cash);
-            return true;
+            System.out.println("Withdraw in stub");
+            return cm.withdraw(id, cash);
         } catch (Throwable e) {
             return false;
         }
