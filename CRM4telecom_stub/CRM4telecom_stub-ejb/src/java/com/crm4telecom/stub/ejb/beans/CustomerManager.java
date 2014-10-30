@@ -26,18 +26,16 @@ public class CustomerManager implements CustomerManagerInterface {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     //Names of Entities
     private final String customersEntity = "Customer";
     private final String productsEntity = "Product";
     //
-    
-    
+
     @Override
     public List<Object> getItems(String databaseName) {
         return em.createQuery("SELECT c FROM " + databaseName + " c").getResultList();
     }
-
 
     @Override
     public Boolean addCustomer(Long customerID, Double balance, String status) {
@@ -48,22 +46,22 @@ public class CustomerManager implements CustomerManagerInterface {
         try {
             em.merge(customer);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }    
+        }
     }
 
     @Override
     public Boolean addProduct(Long customerID, Long productID) {
         Customer c = this.getCustomer(customerID);
-        if (c == null){
+        if (c == null) {
             return false;
         }
-        
+
         List newList = c.getProductsList();
-        for(Product p : this.getProductsList()){
-            if (p.getProductId().equals(productID)){
+        for (Product p : this.getProductsList()) {
+            if (p.getProductId().equals(productID)) {
                 if (newList.contains(p)) {
                     return false;
                 } else {
@@ -79,13 +77,13 @@ public class CustomerManager implements CustomerManagerInterface {
     @Override
     public Boolean removeProduct(Long customerID, Long productID) {
         Customer c = this.getCustomer(customerID);
-        if (c == null){
+        if (c == null) {
             return false;
         }
-        
+
         List newList = c.getProductsList();
-        for(Product p : this.getProductsList()){
-            if (p.getProductId().equals(productID)){
+        for (Product p : this.getProductsList()) {
+            if (p.getProductId().equals(productID)) {
                 newList.remove(p);
                 em.merge(c);
                 return false;
@@ -106,8 +104,8 @@ public class CustomerManager implements CustomerManagerInterface {
     public Map<Long, CustomerStatus> getStatuses() {
         List<Customer> list = this.getCustomersList();
         Map<Long, CustomerStatus> resultMap = new HashMap<>();
-        
-        for(Customer c : list){
+
+        for (Customer c : list) {
             resultMap.put(c.getCustomerId(), c.getStatus());
         }
         return resultMap;
@@ -125,48 +123,53 @@ public class CustomerManager implements CustomerManagerInterface {
 
     @Override
     public Customer getCustomer(Long customerID) {
-        for (Customer c : this.getCustomersList()){
-            if (c.getCustomerId().equals(customerID))
+        for (Customer c : this.getCustomersList()) {
+            if (c.getCustomerId().equals(customerID)) {
                 return c;
+            }
         }
         return null;
-    }   
+    }
 
     @Override
     public Boolean setCustomers(List<Customer> customers) {
-        try{
+        try {
             for (Customer c : customers) {
                 em.merge(c);
             }
             return true;
-        } catch (Throwable e){
+        } catch (Throwable e) {
             return false;
         }
     }
 
     @Override
     public Boolean withdraw(Long customerID, Double cash) {
-        try{
+        try {
             Customer target = getCustomer(customerID);
-            target.setBalance(target.getBalance() - cash);
-            em.merge(target);
-            em.flush();
-            return true;
-        } catch (Throwable e){
+            if (target.getStatus().equals(CustomerStatus.ACTIVE)) {
+                target.setBalance(target.getBalance() - cash);
+                em.merge(target);
+                em.flush();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Throwable e) {
             return false;
         }
     }
 
     @Override
     public Boolean setStatus(Long customerID, CustomerStatus status) {
-        try{
+        try {
             Customer target = getCustomer(customerID);
             target.setStatus(status);
             em.merge(target);
             return true;
-        } catch (Throwable e){
+        } catch (Throwable e) {
             return false;
         }
     }
-    
+
 }
