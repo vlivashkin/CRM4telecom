@@ -147,22 +147,18 @@ public class CustomerManager implements CustomerManagerInterface {
     public Boolean withdraw(Long customerID, Double cash) {
         try {
             Customer target = getCustomer(customerID);
-            if (target.getStatus().equals(CustomerStatus.ACTIVE)) {
-                if (target.getBalance() <= 0.0) {
-                    target.setStatus(CustomerStatus.BLOCKED);
-                    return false;
-                }
-                if (target.getBalance() > cash) {
-                    target.setBalance(target.getBalance() - cash);
-                    em.merge(target);
-                    em.flush();
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
+            if (target.getBalance() <= 0.0) {
+                target.setStatus(CustomerStatus.BLOCKED);
                 return false;
             }
+
+            target.setBalance(target.getBalance() - cash);
+            if (target.getBalance() < 0) {
+                target.setStatus(CustomerStatus.BLOCKED);
+            }
+            em.merge(target);
+            em.flush();
+            return true;
         } catch (Throwable e) {
             return false;
         }
