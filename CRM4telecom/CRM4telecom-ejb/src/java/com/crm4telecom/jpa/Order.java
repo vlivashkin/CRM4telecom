@@ -50,7 +50,7 @@ public class Order implements Serializable {
     @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private OrderPriority priority;
-    
+
     @NotNull
     @Column(name = "INSTALLATION_FEE")
     private Long installationFee;
@@ -112,15 +112,14 @@ public class Order implements Serializable {
     public Boolean isError() {
         return (status == OrderStatus.ERROR);
     }
-    
-     public Boolean isClosedOrCancelled() {
-        return (status == OrderStatus.CLOSED)||(status == OrderStatus.CANCELLED);
+
+    public Boolean isClosedOrCancelled() {
+        return (status == OrderStatus.CLOSED) || (status == OrderStatus.CANCELLED);
     }
-    
-     public Boolean isNew() {
+
+    public Boolean isNew() {
         return (status == OrderStatus.NEW);
     }
-    
 
     public void setStatus(OrderStatus status) {
         this.status = status;
@@ -195,7 +194,7 @@ public class Order implements Serializable {
     public void setInstallationFee(Long installationFee) {
         this.installationFee = installationFee;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
