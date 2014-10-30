@@ -39,23 +39,23 @@ public final class AuthenticationFilter implements Filter {
 
         if (path.contains("login")) {
             if (login != null && um.getLogins().contains(login)) {
-                res.sendRedirect("/CRM4telecom/content/index.xhtml");
+                res.sendRedirect("/content/index.xhtml");
             } else {
                 chain.doFilter(request, response);
             }
         } else {
             if (login != null) {
                 if (path.contains("user") && !userType.equals("ADMIN")) {
-                    res.sendRedirect("/CRM4telecom/signin.xhtml");
+                    res.sendRedirect("/signin.xhtml");
                 } else {
                     if (um.getLogins().contains(login)) {
                         chain.doFilter(request, response);
                     } else {
-                        res.sendRedirect("/CRM4telecom/signin.xhtml");
+                        res.sendRedirect("/signin.xhtml");
                     }
                 }
             } else {
-                res.sendRedirect("/CRM4telecom/signin.xhtml");
+                res.sendRedirect("/signin.xhtml");
             }
         }
     }

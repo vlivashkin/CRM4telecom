@@ -26,8 +26,8 @@
     </target>
     <target name="wsimport-client-services" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/services"/>
-        <property name="wsdl-services" location="${meta.inf}/xml-resources/web-service-references/services/wsdl/localhost_8080/CRM4telecom_stub-war/services.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/services" destdir="${build.generated.dir}/jax-wsCache/services" wsdl="${wsdl-services}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/CRM4telecom_stub-war/services?wsdl" xnocompile="true" xendorsed="true" package="com.crm4telecom.billing">
+        <property name="wsdl-services" location="${meta.inf}/xml-resources/web-service-references/services/wsdl/localhost_8080/stub/services.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/services" destdir="${build.generated.dir}/jax-wsCache/services" wsdl="${wsdl-services}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/stub/services?wsdl" xnocompile="true" xendorsed="true" package="com.crm4telecom.billing">
             <depends file="${wsdl-services}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/services"/>
         </wsimport>

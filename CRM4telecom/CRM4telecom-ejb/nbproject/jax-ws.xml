@@ -3,8 +3,8 @@
   <services/>
   <clients>
     <client name="services">
-      <wsdl-url>http://localhost:8080/CRM4telecom_stub-war/services?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8080/CRM4telecom_stub-war/services.wsdl</local-wsdl-file>
+      <wsdl-url>http://localhost:8080/stub/services?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_8080/stub/services.wsdl</local-wsdl-file>
       <package-name forceReplace="true">com.crm4telecom.billing</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -22,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/CRM4telecom_stub-war/services?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/stub/services?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
