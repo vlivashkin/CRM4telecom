@@ -7,8 +7,8 @@ public abstract class FillingDatabase {
     public final Boolean allocateItem(Customer customer) {
         return getDataAndAlloc(customer);
     }
-    
-     public final Boolean activateItem(Customer customer) {
+
+    public final Boolean activateItem(Customer customer) {
         return getDataAndActivate(customer);
     }
 

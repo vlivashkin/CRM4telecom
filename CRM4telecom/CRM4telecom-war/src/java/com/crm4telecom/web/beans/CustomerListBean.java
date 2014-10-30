@@ -17,18 +17,18 @@ import org.primefaces.model.LazyDataModel;
 public class CustomerListBean implements Serializable, IListBean<Customer> {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private CustomerManagerLocal cm;
 
     private LazyCustomerDataModel lazyModel;
     private List<Customer> customers;
     private Customer selected;
-   
+
     List<String> selectedStatuses;
     private String fromID;
     private String toID;
-    
+
     private String firstName;
     private String lastName;
     private String email;
@@ -76,7 +76,7 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
     public void setToID(String toID) {
         this.toID = toID;
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -164,7 +164,7 @@ public class CustomerListBean implements Serializable, IListBean<Customer> {
     public List<Customer> getCustomers() {
         return customers;
     }
-    
+
     @Override
     public void onRowSelect() {
         JSFHelper helper = new JSFHelper();

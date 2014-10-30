@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name="Markets_Customers")
+@Entity(name = "Markets_Customers")
 @Table(catalog = "")
 public class MarketsCustomers implements Serializable {
 

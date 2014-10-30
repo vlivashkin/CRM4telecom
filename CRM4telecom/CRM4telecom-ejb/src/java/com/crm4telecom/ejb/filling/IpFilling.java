@@ -48,7 +48,7 @@ public class IpFilling extends FillingDatabase implements IpFillingRemote {
     protected Boolean getDataAndActivate(Customer customer) {
         String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = :customer";
         Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
-        log.info("Query made for "+customer);
+        log.info("Query made for " + customer);
         List<StaticIp> ipList = query.getResultList();
         if (ipList.size() > 0) {
             StaticIp ip = ipList.get(0);

@@ -1,4 +1,3 @@
-
 package com.crm4telecom.ejb;
 
 import com.crm4telecom.jpa.Order;
@@ -8,7 +7,7 @@ import javax.ejb.Remote;
 
 @Remote
 public interface OrderManagerRemote {
-    
+
     Order createOrder(Order order);
 
     void modifyOrder(Order order);
@@ -18,7 +17,7 @@ public interface OrderManagerRemote {
     List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs);
 
     Long getOrdersCount();
-            
+
     Long getOrdersCount(Map<String, Object> filters, Map<String, List<String>> parametrs);
 
 }

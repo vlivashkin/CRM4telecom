@@ -61,7 +61,7 @@
                 <p:commandButton value="Synchronize" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
                     <f:ajax event="click" render="leftcolumn" />
                 </p:commandButton>
-                
+
             </h:panelGroup>
         </p:panelGrid>
 
@@ -115,7 +115,7 @@
 
 
             <p:column style="text-align: center">
-                
+
                 <p:commandButton value="Disconnect" icon="ui-icon-minus" immediate="true" action="#{customerInfoBean.toDeleteOrder(prod.productId)}" />
             </p:column>
 

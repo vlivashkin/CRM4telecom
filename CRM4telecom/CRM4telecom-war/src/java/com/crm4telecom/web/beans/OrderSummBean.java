@@ -9,13 +9,14 @@ import javax.inject.Named;
 @Named
 @Dependent
 public class OrderSummBean implements Serializable {
+
     @EJB
     private GetManagerLocal gm;
-    
+
     private String installationFee;
 
     private String product = "Product";
-    
+
     private String onetimePrice = "0";
     private String monthlyPrice = "0";
 
@@ -28,9 +29,13 @@ public class OrderSummBean implements Serializable {
     }
 
     public String getOnetimePrice() {
-        if (onetimePrice == null) return "—";
+        if (onetimePrice == null) {
+            return "—";
+        }
         Long value = Long.parseLong(onetimePrice);
-        if (value == 0) return "—";
+        if (value == 0) {
+            return "—";
+        }
         return String.valueOf(value) + ".00";
     }
 
@@ -39,16 +44,20 @@ public class OrderSummBean implements Serializable {
     }
 
     public String getMonthlyPrice() {
-        if (onetimePrice == null) return "—";
+        if (onetimePrice == null) {
+            return "—";
+        }
         Long value = Long.parseLong(monthlyPrice);
-        if (value == 0L) return "—";
+        if (value == 0L) {
+            return "—";
+        }
         return String.valueOf(value) + ".00";
     }
 
     public void setMonthlyPrice(String monthlyPrice) {
         this.monthlyPrice = monthlyPrice;
     }
-    
+
     public GetManagerLocal getGm() {
         return gm;
     }
@@ -60,5 +69,5 @@ public class OrderSummBean implements Serializable {
     public void setInstallationFee(String installationFee) {
         this.installationFee = installationFee;
     }
-    
+
 }

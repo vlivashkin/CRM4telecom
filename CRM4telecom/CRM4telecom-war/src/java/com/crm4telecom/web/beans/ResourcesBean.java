@@ -32,10 +32,11 @@ public class ResourcesBean implements Serializable {
 
     @EJB
     private GetManagerLocal gm;
-    
+
     private SelectItem headerProductItem;
-    
+
     public class ProductHeader {
+
         private String description = "Description";
         private String onetimePayment = "Onetime payment";
         private String monthlyPayment = "Montlhy payment";
@@ -57,10 +58,10 @@ public class ResourcesBean implements Serializable {
             return monthlyPayment;
         }
     }
-    
+
     {
         headerProductItem = new ExtendedSelectItem();
-        headerProductItem.setValue(new ProductHeader());        
+        headerProductItem.setValue(new ProductHeader());
     }
 
     public SelectItem getHeaderProductItem() {

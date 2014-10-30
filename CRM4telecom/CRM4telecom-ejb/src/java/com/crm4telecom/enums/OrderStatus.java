@@ -6,7 +6,7 @@ public enum OrderStatus {
     OPENED("In work", "bg-success"),
     CLOSED("Closed", "bg-info"),
     CANCELLED("Cancelled", "bg-danger");
-              
+
     private final String label;
     private final String style;
 

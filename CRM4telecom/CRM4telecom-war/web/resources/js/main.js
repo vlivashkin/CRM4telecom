@@ -1,8 +1,8 @@
-$(document).keydown(function(event) {
+$(document).keydown(function (event) {
     if (event.which == "17")
         cntrlIsPressed = true;
 });
-$(document).keyup(function() {
+$(document).keyup(function () {
     cntrlIsPressed = false;
 });
 var cntrlIsPressed = false;

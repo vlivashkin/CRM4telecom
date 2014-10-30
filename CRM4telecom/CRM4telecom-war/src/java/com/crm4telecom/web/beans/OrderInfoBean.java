@@ -52,9 +52,9 @@ public class OrderInfoBean implements Serializable {
     public Order getOrder() {
         return order;
     }
-    
-    public Long getCost(){
-        return this.getOrder().getInstallationFee()+this.getOrder().getProduct().getOnetimePayment();
+
+    public Long getCost() {
+        return this.getOrder().getInstallationFee() + this.getOrder().getProduct().getOnetimePayment();
     }
 
     public void setOrder(Order order) {

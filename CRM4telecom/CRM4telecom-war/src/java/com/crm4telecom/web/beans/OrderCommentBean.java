@@ -26,7 +26,7 @@ public class OrderCommentBean implements Serializable {
     private String text;
 
     private transient final Logger log = Logger.getLogger(getClass().getName());
-    
+
     public void init(Order order) {
         this.order = order;
         if (order != null && order.getComments() != null) {
@@ -61,7 +61,7 @@ public class OrderCommentBean implements Serializable {
             json = gson.toJson(comments);
             order.setComments(json);
             if (log.isInfoEnabled()) {
-                log.info("Add comment : " + comments + " to order : "+ order);
+                log.info("Add comment : " + comments + " to order : " + order);
             }
             om.modifyOrder(order);
             text = "";

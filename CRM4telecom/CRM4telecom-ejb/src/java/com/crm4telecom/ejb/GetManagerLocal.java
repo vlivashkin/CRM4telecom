@@ -10,22 +10,22 @@ import javax.ejb.Local;
 public interface GetManagerLocal {
 
     public Product getProduct(Long productId);
-    
+
     public Product getProduct(String product);
 
     public List<Product> getProductList();
 
     public Market getMarket(String market);
-    
+
     public List<String> getMarketList();
-            
+
     public Employee getEmployee(Long employeeId);
 
     public List<String> completeCustomer(String rawCustomer);
 
     public List<String> completeEmployee(String rawEmployee);
-    
-    Product create(String sqlQuery,String product);
-    
+
+    Product create(String sqlQuery, String product);
+
     Employee find(long employeeId);
 }

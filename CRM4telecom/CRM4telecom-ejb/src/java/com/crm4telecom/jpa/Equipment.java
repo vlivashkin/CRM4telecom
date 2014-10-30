@@ -107,8 +107,6 @@ public class Equipment implements Serializable {
         this.orderProcessingList = orderProcessingList;
     }
 
-    
-
     @Override
     public int hashCode() {
         int hash = 0;

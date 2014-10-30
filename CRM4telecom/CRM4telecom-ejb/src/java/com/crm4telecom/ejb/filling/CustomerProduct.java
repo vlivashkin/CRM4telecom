@@ -10,5 +10,5 @@ package com.crm4telecom.ejb.filling;
  * @author Anton Permenev
  */
 class CustomerProduct {
-    
+
 }

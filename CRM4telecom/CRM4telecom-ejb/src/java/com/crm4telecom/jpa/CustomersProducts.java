@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-@Entity(name="Customers_Products")
+@Entity(name = "Customers_Products")
 @Table(catalog = "")
 public class CustomersProducts implements Serializable {
 
@@ -61,7 +61,6 @@ public class CustomersProducts implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
 
     @Override
     public int hashCode() {

@@ -61,7 +61,7 @@ public class Customer implements Serializable {
     @Size(max = 20)
     @Column(name = "PHONE_NUMBER", length = 20)
     private String phoneNumber;
-    
+
     @Column(length = 30)
     private String email;
 
@@ -189,7 +189,6 @@ public class Customer implements Serializable {
     public void setStatusUpdateDate(Date statusUpdateDate) {
         this.statusUpdateDate = statusUpdateDate;
     }
-
 
     public List<PhoneNumber> getPhoneNumbers() {
         return phoneNumberList;

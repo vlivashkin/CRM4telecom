@@ -82,7 +82,7 @@ public class UserBean implements Serializable {
         JSFHelper helper = new JSFHelper();
         HttpSession session = helper.getSession(false);
         session.invalidate();
-        
+
         helper.redirect("index");
     }
 }

@@ -32,7 +32,7 @@ public class User implements Serializable {
     @Size(max = 50)
     @Column(name = "SALT", length = 50)
     private String salt;
-    
+
     @Enumerated(EnumType.STRING)
     private UserType type;
 

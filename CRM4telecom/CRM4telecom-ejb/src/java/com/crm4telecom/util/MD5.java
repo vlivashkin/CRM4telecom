@@ -10,7 +10,8 @@ import org.apache.log4j.Priority;
 
 public class MD5 {
 
-     private static final Logger log = Logger.getLogger (MD5.class) ;
+    private static final Logger log = Logger.getLogger(MD5.class);
+
     public static String getHash(String password, String salt) {
         MessageDigest md5;
         StringBuffer hexString = new StringBuffer();

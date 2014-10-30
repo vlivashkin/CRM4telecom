@@ -13,7 +13,7 @@ import org.omnifaces.cdi.ViewScoped;
 public class UserListBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     private UserManagerLocal um;
 

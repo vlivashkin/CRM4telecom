@@ -10,7 +10,7 @@ public interface UserManagerLocal {
     User login(String login, String password);
 
     List<String> getLogins();
-    
+
     List<User> getUsers();
 
     void create(User u);

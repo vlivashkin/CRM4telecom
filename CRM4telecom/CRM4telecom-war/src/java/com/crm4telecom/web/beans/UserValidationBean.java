@@ -18,7 +18,7 @@ import org.omnifaces.cdi.ViewScoped;
 public class UserValidationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @EJB
     UserManagerLocal um;
 
@@ -82,7 +82,7 @@ public class UserValidationBean implements Serializable {
         u.setLogin(login);
         u.setPassword(password);
         u.setType(type);
-        System.err.println("employeeId: " +  employeeId);
+        System.err.println("employeeId: " + employeeId);
         u.setEmployeeId(gm.getEmployee(employeeId));
         um.create(u);
         return "index?faces-redirect=true";
