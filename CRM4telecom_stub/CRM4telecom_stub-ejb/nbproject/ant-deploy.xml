@@ -78,7 +78,7 @@
         <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
         <property name="full.deploy.ant.archive" location="${deploy.ant.archive}"/>
         <get src="${gfv3.admin.url}/__asadmin/deploy?path=${full.deploy.ant.archive}${deploy.context.root.argument}&amp;force=true&amp;name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
+             dest="${gfv3.results.file}"/>
         <delete file="${gfv3.results.file}"/>    
     </target>
     <target name="-deploy-with-pw" if="gfv3.password">
@@ -86,7 +86,7 @@
         <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
         <property name="full.deploy.ant.archive" location="${deploy.ant.archive}"/>
         <get username="${gfv3.username}" password="${gfv3.password}" src="${gfv3.admin.url}/__asadmin/deploy?path=${full.deploy.ant.archive}${deploy.context.root.argument}&amp;force=true&amp;name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
+             dest="${gfv3.results.file}"/>
         <delete file="${gfv3.results.file}"/>
     </target>
     <target name="-undeploy-ant" depends="-init-cl-deployment-env" if="deploy.ant.enabled">
@@ -98,14 +98,14 @@
         <echo message="Undeploying ${deploy.ant.archive}"/>
         <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
         <get src="${gfv3.admin.url}/__asadmin/undeploy?name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
+             dest="${gfv3.results.file}"/>
         <delete file="${gfv3.results.file}"/>    
     </target>
     <target name="-undeploy-with-pw" if="gfv3.password">
         <echo message="Undeploying ${deploy.ant.archive}"/>
         <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
         <get username="${gfv3.username}" password="${gfv3.password}" src="${gfv3.admin.url}/__asadmin/undeploy?name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
+             dest="${gfv3.results.file}"/>
         <delete file="${gfv3.results.file}"/>
     </target>
 </project>

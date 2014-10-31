@@ -8,13 +8,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class PhoneFilling extends FillingDatabase implements PhoneFillingRemote {
 
-    private transient final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(PhoneFilling.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -31,17 +31,12 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingRemote 
             em.merge(phoneNumber);
             em.flush();
 
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now resereve phone number : " + phoneNumber.getPhoneNumber());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now resereve phone number : " + phoneNumber.getPhoneNumber());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
-            }
+            logger.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
             return false;
         }
-        return false;
     }
 
     @Override
@@ -55,18 +50,12 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingRemote 
             phoneNumber.setStatus(IpStatus.ACTIVE);
             em.merge(phoneNumber);
             em.flush();
-
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now get phone number : " + phoneNumber.getPhoneNumber());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now get phone number : " + phoneNumber.getPhoneNumber());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
-            }
+            logger.warn("All phone numbers is locked, so customer : " + customer + " can't get new phone number");
             return false;
         }
-        return false;
     }
 
     @Override
@@ -80,17 +69,11 @@ public class PhoneFilling extends FillingDatabase implements PhoneFillingRemote 
             phoneNumber.setStatus(IpStatus.UNPLUGGED);
             em.merge(phoneNumber);
             em.flush();
-
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now get out phone number: " + phoneNumber.getPhoneNumber());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now get out phone number: " + phoneNumber.getPhoneNumber());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("No phone numbers of " + customer);
-            }
+            logger.warn("No phone numbers of " + customer);
             return false;
         }
-        return false;
     }
 }

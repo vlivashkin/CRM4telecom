@@ -13,18 +13,19 @@ import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 @SessionScoped
 public class UserBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private final Logger logger = LoggerFactory.getLogger(UserBean.class);
 
     @EJB
     private UserManagerLocal um;
 
-    private transient final Logger log = Logger.getLogger(getClass().getName());
     private String uname;
     private String password;
 
@@ -48,9 +49,7 @@ public class UserBean implements Serializable {
 
     public String login() throws ServletException {
         user = um.login(uname, password);
-        if (log.isInfoEnabled()) {
-            log.info("Login to system by login : " + uname);
-        }
+        logger.info("Login to system by login : " + uname);
         if (user != null) {
             JSFHelper helper = new JSFHelper();
             HttpSession session = helper.getSession(false);

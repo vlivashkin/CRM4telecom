@@ -10,13 +10,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 @Dependent
 public class OrderCommentBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private final Logger logger = LoggerFactory.getLogger(OrderCommentBean.class);
 
     @EJB
     private OrderManagerLocal om;
@@ -25,8 +27,6 @@ public class OrderCommentBean implements Serializable {
     private List<Comment> comments;
     private String text;
 
-    private transient final Logger log = Logger.getLogger(getClass().getName());
-
     public void init(Order order) {
         this.order = order;
         if (order != null && order.getComments() != null) {
@@ -34,7 +34,7 @@ public class OrderCommentBean implements Serializable {
             String json = order.getComments().replace("\'", "\"");
             comments = gson.fromJson(json, List.class);
         } else {
-            comments = new ArrayList<Comment>();
+            comments = new ArrayList<>();
         }
     }
 
@@ -60,9 +60,7 @@ public class OrderCommentBean implements Serializable {
             comments.add(comment);
             json = gson.toJson(comments);
             order.setComments(json);
-            if (log.isInfoEnabled()) {
-                log.info("Add comment : " + comments + " to order : " + order);
-            }
+            logger.info("Add comment : " + comments + " to order : " + order);
             om.modifyOrder(order);
             text = "";
         }

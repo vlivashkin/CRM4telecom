@@ -1,20 +1,20 @@
 package com.crm4telecom.util;
 
+import com.crm4telecom.mail.MailManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.LoggerFactory;
 
 public class MD5 {
 
-    private static final Logger log = Logger.getLogger(MD5.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MD5.class);
 
     public static String getHash(String password, String salt) {
         MessageDigest md5;
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
         try {
             md5 = MessageDigest.getInstance("md5");
             Date d = new Date();
@@ -27,9 +27,7 @@ public class MD5 {
                 hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
             }
         } catch (NoSuchAlgorithmException e) {
-            if (log.isEnabledFor(Priority.ERROR)) {
-                log.error("Can't find md5 algoritm , so ", e);
-            }
+                logger.error("Can't find md5 algoritm , so ", e);
         }
         return hexString.toString();
     }
@@ -37,7 +35,7 @@ public class MD5 {
     public static List<String> getSaltPassword(String password, String login) throws NoSuchAlgorithmException {
 
         MessageDigest md5;
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
 
         List<String> l = new ArrayList();
         md5 = MessageDigest.getInstance("md5");
@@ -45,7 +43,7 @@ public class MD5 {
 
         md5.reset();
         String salt = Long.toString(d.getTime()) + "!SD@#$D@XC" + password;
-        StringBuffer salthash = new StringBuffer();
+        StringBuilder salthash = new StringBuilder();
         md5.update(salt.getBytes());
         byte saltDigest[] = md5.digest();
 

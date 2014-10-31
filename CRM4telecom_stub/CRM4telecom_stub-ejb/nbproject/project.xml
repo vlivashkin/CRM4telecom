@@ -6,6 +6,8 @@
             <name>CRM4telecom_stub-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <included-library dirs="200">libs.javaee-api-7.0.classpath</included-library>
+            <included-library dirs="200">file.reference.slf4j-api-1.7.7.jar</included-library>
+            <included-library dirs="200">file.reference.slf4j-simple-1.7.7.jar</included-library>
             <source-roots>
                 <root id="src.dir" name="Source Packages"/>
             </source-roots>

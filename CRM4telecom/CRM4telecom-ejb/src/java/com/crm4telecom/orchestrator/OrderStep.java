@@ -9,11 +9,12 @@ import com.crm4telecom.enums.OrderType;
 import com.crm4telecom.enums.ProductProperties;
 import com.crm4telecom.enums.RemoteBean;
 import com.crm4telecom.jpa.Order;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.crm4telecom.mail.MailManager;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum OrderStep {
 
@@ -39,7 +40,6 @@ public enum OrderStep {
 
         @Override
         public boolean run() {
-            Logger logger = Logger.getLogger(getClass().getName());
             Context ctx;
             try {
                 ctx = new InitialContext();
@@ -68,7 +68,7 @@ public enum OrderStep {
                     return properties.equals(ProductProperties.NONE);
                 }
             } catch (Throwable ex) {
-                logger.severe(ex.toString());
+                logger.warn(ex.toString());
                 return false;
             }
         }
@@ -97,26 +97,21 @@ public enum OrderStep {
 
             try {
                 ctx = new InitialContext();
-                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
+                OrderManagerRemote om = (OrderManagerRemote) ctx.lookup(RemoteBean.OrderManager.getJndi());
                 Long orderId = this.getOrderId();
                 Order order = om.getOrder(orderId);
                 ctx = new InitialContext();
-                om = (OrderManagerRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/OrderManager!com.crm4telecom.ejb.OrderManagerRemote");
-                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/IpFilling!com.crm4telecom.ejb.filling.IpFillingRemote");
-                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup("java:global/CRM4telecom/CRM4telecom-ejb/PhoneFilling!com.crm4telecom.ejb.filling.PhoneFillingRemote");
+                IpFillingRemote ipFillingRemote = (IpFillingRemote) ctx.lookup(RemoteBean.IpFilling.getJndi());
+                PhoneFillingRemote phoneFillingRemote = (PhoneFillingRemote) ctx.lookup(RemoteBean.PhoneFilling.getJndi());
                 ProductProperties properties = order.getProduct().getProperties();
                 if (order.getOrderType().equals(OrderType.CONNECT)) {
-                    System.out.println("Here");
+                    logger.info("Here");
                     if (billingWebService.withdraw((order.getProduct().getOnetimePayment() + order.getInstallationFee()), order.getCustomerId()) && billingWebService.addProduct(order.getCustomerId(), order.getProduct().getProductId())) {
-                        System.out.println("Withdraw in main proj");
+                        logger.info("Withdraw in main proj");
                         if (properties.equals(ProductProperties.IP)) {
-
                             ipFillingRemote.activateItem(order.getCustomer());
-
                         } else if (properties.equals(ProductProperties.PHONE)) {
-
                             phoneFillingRemote.activateItem(order.getCustomer());
-
                         } else if (properties.equals(ProductProperties.NONE)) {
                         }
                         return true;
@@ -125,7 +120,7 @@ public enum OrderStep {
                     return true;
                 }
             } catch (NamingException ex) {
-                Logger.getLogger(OrderStep.class.getName()).log(Level.SEVERE, null, ex);
+                logger.warn("NamingException", ex);
                 return false;
             }
             return false;
@@ -139,13 +134,12 @@ public enum OrderStep {
     POST_CONFIRM(OrderStatus.CLOSED, new UserTask("Post-confirm")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-                    Logger logger = Logger.getLogger(getClass().getName());
-                    Context ctx;
-                    OrderManagerRemote om = null;
-
                     return POST_CONFIRM;
                 }
             };
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderStep.class);
+
     public OrderStatus doneStatus;
     public Task task;
 

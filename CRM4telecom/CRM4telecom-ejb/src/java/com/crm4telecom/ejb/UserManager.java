@@ -8,13 +8,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class UserManager implements UserManagerLocal {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -27,9 +27,7 @@ public class UserManager implements UserManagerLocal {
             u.setSalt(l.get(0));
             em.persist(u);
         } catch (NoSuchAlgorithmException ex) {
-            if (log.isEnabledFor(Priority.ERROR)) {
-                log.error("NO MD5 algoritm  ", ex);
-            }
+                logger.error("NO MD5 algoritm  ", ex);
         }
     }
 

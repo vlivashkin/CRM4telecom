@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByOnetimePrice", query = "SELECT p FROM Product p WHERE p.onetimePrice = :onetimePrice"),
     @NamedQuery(name = "Products.findByMonthlyPrice", query = "SELECT p FROM Product p WHERE p.monthlyPrice = :monthlyPrice")})
 public class Product implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -102,5 +103,5 @@ public class Product implements Serializable {
     public String toString() {
         return "com.crm4telecom.stub.jpa.Products[ productId=" + productId + " ]";
     }
-    
+
 }

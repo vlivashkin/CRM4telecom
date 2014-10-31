@@ -15,7 +15,8 @@ is divided into following sections:
   - cleanup
 
 -->
-<project xmlns:ejbjarproject1="http://www.netbeans.org/ns/j2ee-ejbjarproject/1" xmlns:ejbjarproject2="http://www.netbeans.org/ns/j2ee-ejbjarproject/2" xmlns:ejbjarproject3="http://www.netbeans.org/ns/j2ee-ejbjarproject/3" basedir=".." default="default" name="CRM4telecom_stub-ejb-impl">
+<project xmlns:ejbjarproject1="http://www.netbeans.org/ns/j2ee-ejbjarproject/1" xmlns:ejbjarproject2="http://www.netbeans.org/ns/j2ee-ejbjarproject/2" xmlns:ejbjarproject3="http://www.netbeans.org/ns/j2ee-ejbjarproject/3" basedir=".." default="default" name="CRM4telecom-ejb-impl">
+    <import file="jaxws-build.xml"/>
     <import file="ant-deploy.xml"/>
     <fail message="Please build using Ant 1.7.1 or higher.">
         <condition>
@@ -408,7 +409,7 @@ is divided into following sections:
                     </fileset>
                 </union>
                 <taskdef classname="org.testng.TestNGAntTask" classpath="${run.test.classpath}" name="testng"/>
-                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="CRM4telecom_stub-ejb" testname="TestNG tests" workingDir="${basedir}">
+                <testng classfilesetref="test.set" failureProperty="tests.failed" listeners="org.testng.reporters.VerboseReporter" methods="${testng.methods.arg}" mode="${testng.mode}" outputdir="${build.test.results.dir}" suitename="CRM4telecom-ejb" testname="TestNG tests" workingDir="${basedir}">
                     <xmlfileset dir="${build.test.classes.dir}" includes="@{testincludes}"/>
                     <propertyset>
                         <propertyref prefix="test-sys-prop."/>
@@ -560,7 +561,7 @@ is divided into following sections:
                 <condition else="-testclass @{testClass}" property="test.class.or.method" value="-methods @{testClass}.@{testMethod}">
                     <isset property="test.method"/>
                 </condition>
-                <condition else="-suitename CRM4telecom_stub-ejb -testname @{testClass} ${test.class.or.method}" property="testng.cmd.args" value="@{testClass}">
+                <condition else="-suitename CRM4telecom-ejb -testname @{testClass} ${test.class.or.method}" property="testng.cmd.args" value="@{testClass}">
                     <matches pattern=".*\.xml" string="@{testClass}"/>
                 </condition>
                 <delete dir="${build.test.results.dir}" quiet="true"/>
@@ -783,7 +784,7 @@ is divided into following sections:
     <target depends="init" if="no.dist.ear.dir" name="-deps-module-jar" unless="no.deps"/>
     <target depends="init" if="dist.ear.dir" name="-deps-ear-jar" unless="no.deps"/>
     <target depends="init, -deps-module-jar, -deps-ear-jar" name="deps-jar"/>
-    <target depends="init,deps-jar" name="-pre-pre-compile">
+    <target depends="init,deps-jar,wsimport-client-generate" name="-pre-pre-compile">
         <mkdir dir="${build.classes.dir}"/>
         <mkdir dir="${build.ear.classes.dir}"/>
     </target>
@@ -793,25 +794,33 @@ is divided into following sections:
     </target>
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
-        <copyfiles files="${libs.javaee-api-7.0.classpath}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.slf4j-api-1.7.7.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.slf4j-simple-1.7.7.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.log4j-1.2.17.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.velocity-1.7.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.commons-lang-2.4.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.oro-2.0.8.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
-        <basename file="${libs.javaee-api-7.0.classpath}" property="manifest.libs.javaee-api-7.0.classpath"/>
-        <basename file="${file.reference.slf4j-api-1.7.7.jar}" property="manifest.file.reference.slf4j-api-1.7.7.jar"/>
-        <basename file="${file.reference.slf4j-simple-1.7.7.jar}" property="manifest.file.reference.slf4j-simple-1.7.7.jar"/>
+        <basename file="${file.reference.log4j-1.2.17.jar}" property="manifest.file.reference.log4j-1.2.17.jar"/>
+        <basename file="${file.reference.velocity-1.7.jar}" property="manifest.file.reference.velocity-1.7.jar"/>
+        <basename file="${file.reference.commons-collections-3.2.1.jar}" property="manifest.file.reference.commons-collections-3.2.1.jar"/>
+        <basename file="${file.reference.commons-lang-2.4.jar}" property="manifest.file.reference.commons-lang-2.4.jar"/>
+        <basename file="${file.reference.oro-2.0.8.jar}" property="manifest.file.reference.oro-2.0.8.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.libs.javaee-api-7.0.classpath}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.slf4j-api-1.7.7.jar}"/>
-            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.slf4j-simple-1.7.7.jar}"/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 "/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.log4j-1.2.17.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.velocity-1.7.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.commons-collections-3.2.1.jar}"/>
+            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.commons-lang-2.4.jar}"/>
+            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.oro-2.0.8.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
-        <copyfiles files="${libs.javaee-api-7.0.classpath}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.slf4j-api-1.7.7.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.slf4j-simple-1.7.7.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.log4j-1.2.17.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.velocity-1.7.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.commons-collections-3.2.1.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.commons-lang-2.4.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.oro-2.0.8.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

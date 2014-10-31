@@ -11,12 +11,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class GetManager implements GetManagerLocal {
-
-    private transient final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(GetManager.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -101,7 +101,7 @@ public class GetManager implements GetManagerLocal {
         String raw = rawString.trim();
 
         if (raw.matches("^#?\\d+")) {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             if (raw.startsWith("#")) {
                 raw = raw.substring(1);
             }
@@ -115,9 +115,9 @@ public class GetManager implements GetManagerLocal {
             String sqlQuery = SearchQuery.getCompleteQuery(clazz, rawString);
             Query query = em.createQuery(sqlQuery);
             query.setMaxResults(10);
-            if (log.isInfoEnabled()) {
-                log.info("Make query for autocomlete : " + sqlQuery);
-            }
+            
+            logger.info("Make query for autocomlete : " + sqlQuery);
+            
             return query.getResultList();
         }
     }

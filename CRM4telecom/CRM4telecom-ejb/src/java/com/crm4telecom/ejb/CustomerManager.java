@@ -9,12 +9,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class CustomerManager implements CustomerManagerLocal {
-
-    private transient final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(CustomerManager.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -51,11 +51,7 @@ public class CustomerManager implements CustomerManagerLocal {
     @Override
     public List<Customer> getCustomersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = SearchQuery.getSearchQuery("c FROM Customers c", parametrs, sortField, sortOrder);
-
-        if (log.isInfoEnabled()) {
-            log.info("Make query in Customers table " + sqlQuery);
-        }
-
+        logger.info("Make query in Customers table " + sqlQuery);
         Query query = em.createQuery(sqlQuery, Customer.class);
         query.setFirstResult(first);
         query.setMaxResults(pageSize);

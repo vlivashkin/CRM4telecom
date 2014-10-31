@@ -12,12 +12,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class OrderManager implements OrderManagerLocal, OrderManagerRemote {
-
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(OrderManager.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -59,9 +59,7 @@ public class OrderManager implements OrderManagerLocal, OrderManagerRemote {
     public List<Order> getOrdersList(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = SearchQuery.getSearchQuery("c FROM Orders c", parametrs, sortField, sortOrder);
 
-        if (log.isInfoEnabled()) {
-            log.info("Make query in Order table " + sqlQuery);
-        }
+        logger.info("Make query in Order table " + sqlQuery);
 
         Query query = em.createQuery(sqlQuery, Order.class);
         query.setFirstResult(first);
@@ -80,9 +78,7 @@ public class OrderManager implements OrderManagerLocal, OrderManagerRemote {
     public Long getOrdersCount(Map<String, Object> filters, Map<String, List<String>> parametrs) {
         String sqlQuery = SearchQuery.getSearchQuery("COUNT(c) FROM Orders c", parametrs);
 
-        if (log.isInfoEnabled()) {
-            log.info("Make query in Order table " + sqlQuery);
-        }
+        logger.info("Make query in Order table " + sqlQuery);
 
         Query query = em.createQuery(sqlQuery, Order.class);
         return (Long) query.getSingleResult();

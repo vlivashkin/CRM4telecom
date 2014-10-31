@@ -75,8 +75,8 @@ is divided into following sections:
         </condition>
         <available file="${meta.inf}/MANIFEST.MF" property="has.custom.manifest"/>
         <!--
-                    Variables needed to support directory deployment.
-                -->
+            Variables needed to support directory deployment.
+        -->
         <condition property="do.package.with.custom.manifest.not.directory.deploy">
             <and>
                 <isset property="has.custom.manifest"/>
@@ -154,20 +154,20 @@ is divided into following sections:
     </target>
     <target name="-init-taskdefs">
         <fail unless="libs.CopyLibs.classpath">
-The libs.CopyLibs.classpath property is not set up.
-This property must point to 
-org-netbeans-modules-java-j2seproject-copylibstask.jar file which is part
-of NetBeans IDE installation and is usually located at 
+            The libs.CopyLibs.classpath property is not set up.
+            This property must point to 
+            org-netbeans-modules-java-j2seproject-copylibstask.jar file which is part
+            of NetBeans IDE installation and is usually located at 
 &lt;netbeans_installation&gt;/java&lt;version&gt;/ant/extra folder.
-Either open the project in the IDE and make sure CopyLibs library
-exists or setup the property manually. For example like this:
- ant -Dlibs.CopyLibs.classpath=a/path/to/org-netbeans-modules-java-j2seproject-copylibstask.jar
-                </fail>
+            Either open the project in the IDE and make sure CopyLibs library
+            exists or setup the property manually. For example like this:
+            ant -Dlibs.CopyLibs.classpath=a/path/to/org-netbeans-modules-java-j2seproject-copylibstask.jar
+        </fail>
         <taskdef classpath="${libs.CopyLibs.classpath}" resource="org/netbeans/modules/java/j2seproject/copylibstask/antlib.xml"/>
     </target>
     <!--
-                pre NB7.2 profiling section; consider it deprecated
-            -->
+        pre NB7.2 profiling section; consider it deprecated
+    -->
     <target depends="-profile-pre-init, init, -profile-post-init, -profile-init-check" if="profiler.info.jvmargs.agent" name="profile-init"/>
     <target if="profiler.info.jvmargs.agent" name="-profile-pre-init">
         <!-- Empty placeholder for easier customization. -->
@@ -182,8 +182,8 @@ exists or setup the property manually. For example like this:
         <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
     </target>
     <!--
-                end of pre NB7.2 profiling section
-            -->
+        end of pre NB7.2 profiling section
+    -->
     <target depends="pre-init,init-private,init-userdir,init-user,init-project,do-init,post-init,init-check,-init-taskdefs" name="init"/>
     <!--
     COMPILATION SECTION
@@ -230,8 +230,8 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="init,deps-jar,pre-pre-compile,pre-compile,do-compile,post-compile" description="Compile project." name="compile"/>
     <!--
-                DIST BUILDING SECTION
-            -->
+        DIST BUILDING SECTION
+    -->
     <target name="pre-dist">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
@@ -251,8 +251,8 @@ exists or setup the property manually. For example like this:
         </jar>
     </target>
     <!--
-                TARGETS NEEDED TO SUPPORT DIRECTORY DEPLOYMENT
-            -->
+        TARGETS NEEDED TO SUPPORT DIRECTORY DEPLOYMENT
+    -->
     <target depends="init,compile,pre-dist" if="do.package.without.custom.manifest.not.directory.deploy" name="-do-tmp-dist-without-manifest">
         <dirname file="${dist.jar}" property="dist.jar.dir"/>
         <mkdir dir="${dist.jar.dir}"/>
@@ -270,8 +270,8 @@ exists or setup the property manually. For example like this:
     <target depends="init,compile,pre-dist,-do-tmp-dist-without-manifest,-do-tmp-dist-with-manifest" name="-do-dist-directory-deploy"/>
     <target depends="init,compile,pre-dist,-do-dist-directory-deploy,post-dist" description="Build distribution (JAR) - if directory deployment is not supported." name="dist-directory-deploy"/>
     <!--
-                END TARGETS NEEDED TO SUPPORT DIRECTORY DEPLOYMENT
-            -->
+        END TARGETS NEEDED TO SUPPORT DIRECTORY DEPLOYMENT
+    -->
     <target name="post-dist">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->

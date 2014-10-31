@@ -1,5 +1,6 @@
 package com.crm4telecom.mail;
 
+import com.crm4telecom.ejb.filling.PhoneFilling;
 import com.crm4telecom.jpa.Order;
 import com.crm4telecom.jpa.OrderProcessing;
 import java.io.StringWriter;
@@ -14,19 +15,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import javax.mail.*;
 import javax.mail.internet.*;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MailManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(MailManager.class);
+
     private final static int poolSize = 10;
     private final static ScheduledExecutorService service = Executors.newScheduledThreadPool(poolSize);
-    private final static Logger log = Logger.getLogger(MailManager.class);
     private final static String from = "crm4telecom@gmail.com";
     private final static String password = "crm4telecom2Q";
     private final static Boolean auth = true;
@@ -106,9 +108,7 @@ public class MailManager {
             if (attemp >= maxAttemp) {
                 throw new RuntimeException("Amount of attemps more than maxAttemp");
             }
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("Can't send email attemp : " + (attemp + 1));
-            }
+            logger.warn("Can't send email attemp : " + (attemp + 1));
             return service.schedule(new SendChecker(
                     service.schedule(new EmailSender(this.attemp + 1, this.email, this.subject, this.text), 100, TimeUnit.MILLISECONDS), this.email, this.subject, this.text),
                     3000, TimeUnit.MILLISECONDS);
@@ -133,18 +133,12 @@ public class MailManager {
         public void run() {
             try {
                 if (itemToCheck.get(1000, TimeUnit.MILLISECONDS) == null) {
-                    if (log.isInfoEnabled()) {
-                        log.info("Send message because changing order : " + this.subject + " to " + this.email);
-                    }
+                    logger.info("Send message because changing order : " + this.subject + " to " + this.email);
                 }
             } catch (InterruptedException ex) {
-                if (log.isEnabledFor(Priority.ERROR)) {
-                    log.error("Can't check sending email because process was interrupted", ex);
-                }
+                logger.error("Can't check sending email because process was interrupted", ex);
             } catch (ExecutionException ex) {
-                if (log.isEnabledFor(Priority.ERROR)) {
-                    log.error("Cant send email.", ex);
-                }
+                logger.error("Cant send email.", ex);
             } catch (TimeoutException ex) {
                 service.schedule(new SendChecker(this.itemToCheck, this.email, this.subject, this.text), 300, TimeUnit.MILLISECONDS);
             }

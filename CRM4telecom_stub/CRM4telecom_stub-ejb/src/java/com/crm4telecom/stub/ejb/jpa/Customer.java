@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customers.findByBalance", query = "SELECT c FROM Customer c WHERE c.balance = :balance"),
     @NamedQuery(name = "Customers.findByStatus", query = "SELECT c FROM Customer c WHERE c.status = :status")})
 public class Customer implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -37,10 +38,10 @@ public class Customer implements Serializable {
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
     private Double balance;
-    
+
     @Enumerated(EnumType.STRING)
     private CustomerStatus status;
-    
+
     @JoinTable(name = "CUSTOMERS_PRODUCTS", joinColumns = {
         @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")})
@@ -111,5 +112,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "com.crm4telecom.stub.jpa.Customers[ customerId=" + customerId + " ]";
     }
-    
+
 }

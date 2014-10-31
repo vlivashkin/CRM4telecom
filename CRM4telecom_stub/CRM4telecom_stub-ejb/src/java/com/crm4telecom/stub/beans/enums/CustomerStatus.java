@@ -26,7 +26,7 @@ public enum CustomerStatus {
     public String getLabel() {
         return label;
     }
-    
+
     public String getColor() {
         return color;
     }

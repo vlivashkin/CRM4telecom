@@ -6,15 +6,15 @@
 
         --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:webproject2="http://www.netbeans.org/ns/web-project/2" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
     <!--
-                ===================
-                JAX-WS WSGEN SECTION
-                ===================
-            -->
+        ===================
+        JAX-WS WSGEN SECTION
+        ===================
+    -->
     <!--
-                ===================
-                JAX-WS WSIMPORT SECTION
-                ===================
-            -->
+        ===================
+        JAX-WS WSIMPORT SECTION
+        ===================
+    -->
     <target name="wsimport-init" depends="init">
         <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
         <mkdir dir="${build.generated.sources.dir}/jax-ws"/>

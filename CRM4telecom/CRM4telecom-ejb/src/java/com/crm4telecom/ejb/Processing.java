@@ -27,19 +27,18 @@ import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class Processing implements ProcessingLocal {
-
+    private final Logger logger = LoggerFactory.getLogger(Processing.class);
+    
     @EJB
     private ProductFilling productFilling;
 
     @PersistenceContext
     private EntityManager em;
-
-    private final Logger log = Logger.getLogger(getClass().getName());
 
     @Override
     public List<String> completeOrder(String rawOrder) {
@@ -53,9 +52,7 @@ public class Processing implements ProcessingLocal {
                 orders.add(ord.toString());
             }
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("Can't find order by  " + Long.toString(id) + " in Orders table");
-            }
+            logger.warn("Can't find order by  " + Long.toString(id) + " in Orders table");
         }
 
         return orders;
@@ -70,7 +67,7 @@ public class Processing implements ProcessingLocal {
 
     @Override
     public void tryNextStep(Order order) {
-        System.out.println("Try next step");
+        logger.info("Try next step");
         if (order.getStatus() != OrderStatus.CLOSED && order.getStatus() != OrderStatus.CANCELLED) {
             OrderStep currentStep = order.getProcessStep();
             Task task = currentStep.getTask();
@@ -147,15 +144,12 @@ public class Processing implements ProcessingLocal {
             MailManager mm = new MailManager();
             mm.statusChangedEmail(order, getOrderSteps(order));
         } catch (MessagingException e) {
-            if (log.isEnabledFor(Priority.ERROR)) {
-                log.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
-            }
+            logger.warn("Cant send email for orderId " + order.getOrderId() + " at order step " + getOrderSteps(order) + " at address " + order.getCustomer().getEmail(), e);
         }
     }
 
     @Override
     public void cancelOrder(Order order) {
-        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(getClass().getName());
         Context ctx;
         try {
             ctx = new InitialContext();
@@ -172,7 +166,7 @@ public class Processing implements ProcessingLocal {
 
             }
         } catch (Throwable e) {
-            logger.warning(e.toString());
+            logger.warn(e.toString());
         }
         if (order.getStatus() != OrderStatus.CLOSED
                 && order.getStatus() != OrderStatus.CANCELLED) {

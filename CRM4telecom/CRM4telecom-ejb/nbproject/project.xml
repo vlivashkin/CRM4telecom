@@ -10,11 +10,12 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>CRM4telecom-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">file.reference.log4j-1.2.17.jar</included-library>
             <included-library dirs="200">file.reference.velocity-1.7.jar</included-library>
             <included-library dirs="200">file.reference.commons-collections-3.2.1.jar</included-library>
             <included-library dirs="200">file.reference.commons-lang-2.4.jar</included-library>
             <included-library dirs="200">file.reference.oro-2.0.8.jar</included-library>
+            <included-library dirs="200">file.reference.slf4j-api-1.7.7.jar</included-library>
+            <included-library dirs="200">file.reference.slf4j-simple-1.7.7.jar</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

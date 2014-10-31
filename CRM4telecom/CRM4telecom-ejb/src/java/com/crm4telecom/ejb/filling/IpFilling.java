@@ -8,13 +8,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 public class IpFilling extends FillingDatabase implements IpFillingRemote {
 
-    private transient final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(IpFilling.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -30,43 +30,31 @@ public class IpFilling extends FillingDatabase implements IpFillingRemote {
             ip.setStatus(IpStatus.RESEREVED);
             em.merge(ip);
             em.flush();
-
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now resereve ip address : " + ip.getIp());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now resereve ip address : " + ip.getIp());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
-                return false;
-            }
+            logger.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
+            return false;
         }
-        return false;
     }
 
     @Override
     protected Boolean getDataAndActivate(Customer customer) {
         String sqlQuery = "SELECT i FROM StaticIp i WHERE i.customerId = :customer";
         Query query = em.createQuery(sqlQuery).setParameter("customer", customer);
-        log.info("Query made for " + customer);
+        logger.info("Query made for " + customer);
         List<StaticIp> ipList = query.getResultList();
         if (ipList.size() > 0) {
             StaticIp ip = ipList.get(0);
             ip.setStatus(IpStatus.ACTIVE);
             em.merge(ip);
             em.flush();
-
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now get ip address : " + ip.getIp());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now get ip address : " + ip.getIp());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
-                return false;
-            }
+            logger.warn("All ip adresses is locked, so customer : " + customer + " can't get new ip address");
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -80,17 +68,11 @@ public class IpFilling extends FillingDatabase implements IpFillingRemote {
             ip.setStatus(IpStatus.UNPLUGGED);
             em.merge(ip);
             em.flush();
-
-            if (log.isInfoEnabled()) {
-                log.info("Customer : " + customer + " now free ip address : " + ip.getIp());
-                return true;
-            }
+            logger.info("Customer : " + customer + " now free ip address : " + ip.getIp());
+            return true;
         } else {
-            if (log.isEnabledFor(Priority.WARN)) {
-                log.warn("No ip of " + customer);
-                return false;
-            }
+            logger.warn("No ip of " + customer);
+            return false;
         }
-        return false;
     }
 }
