@@ -78,11 +78,11 @@ public enum OrderStep {
                     if (flag) {
                         return BILLING;
                     } else {
-                        return TECHNITIAN_APPOINT;
+                        return TECHNICIAN_APPOINT;
                     }
                 }
             },
-    TECHNITIAN_APPOINT(OrderStatus.OPENED, new UserTask("Technitian appoint")) {
+    TECHNICIAN_APPOINT(OrderStatus.OPENED, new UserTask("Technician appoint")) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
                     return BILLING;
