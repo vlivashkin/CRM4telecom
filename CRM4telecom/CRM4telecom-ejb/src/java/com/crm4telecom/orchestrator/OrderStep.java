@@ -75,7 +75,7 @@ public enum OrderStep {
     }) {
                 @Override
                 public OrderStep nextStep(Boolean flag) {
-                    if (flag) {
+                    if (!flag) {
                         return BILLING;
                     } else {
                         return TECHNICIAN_APPOINT;
