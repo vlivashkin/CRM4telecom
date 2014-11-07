@@ -50,6 +50,7 @@
                                             <p:menuitem value="Add user" onclick="clk('user_add', event)" immediate="true" icon="ui-icon-plus"/>
                                             <p:separator />  
                                         </c:if>
+                                        <p:menuitem value="About" onclick="clk('about', event)" icon="ui-icon-info"/>
                                         <p:menuitem value="Main Page" onclick="clk('index', event)" icon="ui-icon-home"/>  
                                     </p:menuButton>
                                     <p:commandButton value="Logout #{userBean.uname}" rendered="#{userBean.isLogged()}" icon="ui-icon-extlink" immediate="true" action="#{userBean.logout}" style="margin-right: -1px" />  

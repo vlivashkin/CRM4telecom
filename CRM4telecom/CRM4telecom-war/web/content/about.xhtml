@@ -1,0 +1,85 @@
+<ui:composition template="./templates/mainTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="title">
+        CRM4Telecom | About
+    </ui:define>
+
+    <ui:define name="navbar">
+        <p:menuitem value="About" immediate="true" onclick="clk('this', event)" />
+    </ui:define>
+
+
+    <ui:define name="header">
+        <h:outputText value="About" />
+    </ui:define> 
+
+    <ui:define name="content">
+        <div class="row" >
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+            <h:form class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+        </div>
+        <div class="row">
+            <p:spacer  height="10" />                        
+        </div>
+
+
+        <div class="row" >
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+        </div>
+        <div class="row">
+            <p:spacer  height="10" />                        
+        </div>
+
+
+        <div class="row" >
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="nick.png" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-4">
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:form>
+        </div>
+        <div class="row">
+            <p:spacer  height="10" />                        
+        </div>
+
+        <div class="row text-center">
+                <p:commandButton value="Back" styleClass="index-button" onclick="clk('index', event)" />
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>
