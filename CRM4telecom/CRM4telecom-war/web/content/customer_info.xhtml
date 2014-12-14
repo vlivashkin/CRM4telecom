@@ -58,7 +58,7 @@
             <h:outputText value="Balance:" styleClass="leftcolumn"/>
             <h:panelGroup>
                 <h:outputText value="#{customerInfoBean.cv.balance}"/>
-                <p:commandButton value="Synchronize" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
+                <p:commandButton styleClass="btn" value="Synchronize" style="float: right; margin-top: -5px; margin-bottom: -10px" icon="ui-icon-arrowrefresh-1-s" action="#{customerInfoBean.syncBalance()}"> 
                     <f:ajax event="click" render="leftcolumn" />
                 </p:commandButton>
 
@@ -116,7 +116,7 @@
 
             <p:column style="text-align: center">
 
-                <p:commandButton value="Disconnect" icon="ui-icon-minus" immediate="true" action="#{customerInfoBean.toDeleteOrder(prod.productId)}" />
+                <p:commandButton value="Disconnect" styleClass="btn" icon="ui-icon-minus" immediate="true" action="#{customerInfoBean.toDeleteOrder(prod.productId)}" />
             </p:column>
 
         </p:dataTable>
@@ -160,7 +160,7 @@
             </p:column>
 
             <f:facet name="footer">  
-                <p:commandButton value="Add Order" icon="ui-icon-plus" immediate="true" action="#{customerInfoBean.toAddOrder}" />
+                <p:commandButton value="Add Order" styleClass="btn" icon="ui-icon-plus" immediate="true" action="#{customerInfoBean.toAddOrder}" />
             </f:facet>
         </p:dataTable>
     </ui:define>
@@ -168,8 +168,8 @@
     <ui:define name="editform">
         <ui:include src="./frames/customerForm.xhtml" />
 
-        <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{customerInfoBean.modify()}" />
-        <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+        <p:commandButton value="Save"  styleClass="btn" update="editform" icon="ui-icon-check" action="#{customerInfoBean.modify()}" />
+        <p:commandButton value="Reset" styleClass="btn" icon="ui-icon-cancel" immediate="true" >
             <f:ajax render="editform" />
         </p:commandButton>
     </ui:define>

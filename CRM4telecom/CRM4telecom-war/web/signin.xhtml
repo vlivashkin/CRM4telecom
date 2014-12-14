@@ -61,7 +61,8 @@
                       <div class="col-md-8 col-md-offset-0">
                           <h1 style="margin: 0px"><span style="color: white; font-size: 50px">CRM4telecom</span></h1>
                           <p><span style="color: lightgray">CRM System for a small Telecommunication provider</span></p>
-                        <p><a class="btn btn-primary btn-lg" href="https://github.com/illusionww/CRM4telecom/wiki" role="button">Learn more &raquo;</a></p>
+                          
+                        <p><a class="btn btn-primary btn-lg" style="padding:5px 22px  !important;"  href="https://github.com/illusionww/CRM4telecom/wiki" role="button">Learn more &raquo;</a></p>
                       </div>
                       <div class="container col-md-4">
                             <h:form id="loginForm" class="form-signin">
@@ -69,7 +70,7 @@
                                 <p:messages />
                                 <p:inputText styleClass="form-control username" id="username" value="#{userBean.uname}" required="true" requiredMessage="Please enter your username" />
                                 <p:password styleClass="form-control password" id="password" value="#{userBean.password}" required="true" requiredMessage="Please enter your password" />
-                                <p:commandButton value="Sign in" update="loginForm" action="#{userBean.login}" />
+                                <p:commandButton value="Sign in" styleClass="btn btn-primary btn-lg" update="loginForm" action="#{userBean.login}" />
 
                                 <script type="text/javascript">
                                     $('#loginForm\\:username').attr('placeholder', 'Username');
@@ -113,7 +114,7 @@
         <hr></hr>
 
         <footer>
-          <p>&copy; 2014 NCEdu. &middot; <a class="btn btn-link" href="about.xhtml" role="button">About us</a> &middot; <a href="https://github.com/illusionww/CRM4telecom/releases">Release</a></p>
+          <p>&copy; 2014 NCEdu. &middot; <a class="btn btn-link" style="padding:4px 22px  !important;" href="about.xhtml" role="button">About us</a> &middot; <a href="https://github.com/illusionww/CRM4telecom/releases">Release</a></p>
         </footer>
         </div>
 

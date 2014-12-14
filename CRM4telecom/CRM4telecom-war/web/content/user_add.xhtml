@@ -29,8 +29,8 @@
 
             <ui:include src="./frames/userForm.xhtml" />
 
-            <p:commandButton value="Save" icon="ui-icon-check" action="#{userValidationBean.create()}" />
-            <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />
+            <p:commandButton value="Save" styleClass="btn" icon="ui-icon-check" action="#{userValidationBean.create()}" />
+            <p:commandButton value="Cancel" styleClass="btn" icon="ui-icon-cancel" immediate="true" action="index?faces-redirect=true" />
         </h:form>
     </ui:define>
 </ui:composition>

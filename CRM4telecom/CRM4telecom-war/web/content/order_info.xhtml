@@ -91,12 +91,12 @@
 
                                 <f:facet name="footer">
                                     <c:if test="#{!orderInfoBean.order.isError()}">
-                                        <p:commandButton value="To next step" update=" :tabPanel :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                                        <p:commandButton  styleClass="btn" value="To next step" update=" :tabPanel :headerstatus" disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
                                     </c:if>
                                     <c:if test="#{orderInfoBean.order.isError()}">
-                                        <p:commandButton value="Try again" update=" :tabPanel :headerstatus " disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
+                                        <p:commandButton styleClass="btn" value="Try again" update=" :tabPanel :headerstatus " disabled="#{orderInfoBean.closed}" action="#{orderInfoBean.nextStep}" />
                                     </c:if>
-                                    <p:commandButton value="Cancel Order" update=" :tabPanel :headerstatus " action="#{orderInfoBean.cancelOrder}" />
+                                    <p:commandButton styleClass="btn" value="Cancel Order" update=" :tabPanel :headerstatus " action="#{orderInfoBean.cancelOrder}" />
                                 </f:facet>
                             </c:if>
                         </p:dataTable>
@@ -114,8 +114,8 @@
                     <h:form id="editform">
                         <ui:include src="./frames/orderForm.xhtml" />
                         <h:outputText id="h" />
-                        <p:commandButton value="Save" icon="ui-icon-check" action="#{orderInfoBean.modify()}" />
-                        <p:commandButton value="Reset" icon="ui-icon-cancel" immediate="true" >
+                        <p:commandButton value="Save" styleClass="btn" icon="ui-icon-check" action="#{orderInfoBean.modify()}" />
+                        <p:commandButton value="Reset" styleClass="btn" icon="ui-icon-cancel" immediate="true" >
                             <f:ajax render="editform" />
                         </p:commandButton>
 
@@ -133,7 +133,7 @@
 
                 <f:facet name="footer">  
                     <p:inputTextarea id="commentinput" rows="2" cols="33" value="#{orderInfoBean.comment.text}" style="width: calc(100% - 110px)"/> 
-                    <p:commandButton value="Comment" action="#{orderInfoBean.comment.addComment}" update=":footer" style="float: right"/>
+                    <p:commandButton value="Comment" styleClass="btn" action="#{orderInfoBean.comment.addComment}" update=":footer" style="float: right"/>
                 </f:facet>
             </p:dataGrid>  
 

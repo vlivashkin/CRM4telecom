@@ -29,8 +29,8 @@
         <h:form id="editform">
             <ui:include src="./frames/customerForm.xhtml" />
 
-            <p:commandButton value="Save" update="editform" icon="ui-icon-check" action="#{customerInfoBean.create()}"/>
-            <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true" action="customer_list?faces-redirect=true" />
+            <p:commandButton value="Save" styleClass="btn" update="editform" icon="ui-icon-check" action="#{customerInfoBean.create()}"/>
+            <p:commandButton value="Cancel" styleClass="btn" icon="ui-icon-cancel" immediate="true" action="customer_list?faces-redirect=true" />
         </h:form>
     </ui:define>
 </ui:composition>
