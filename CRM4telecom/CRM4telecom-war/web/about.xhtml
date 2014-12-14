@@ -1,0 +1,118 @@
+<ui:composition template="./resources/mainTemplateCopy.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <ui:define name="title">
+        CRM4Telecom | About
+    </ui:define>
+
+    <ui:define name="navbar">
+        <p:menuitem value="About" immediate="true" onclick="clk('this', event)" />
+    </ui:define>
+
+
+    <ui:define name="header">
+        <h:outputText value="About" />
+    </ui:define> 
+
+    <ui:define name="content">
+        <div class="row" >
+
+            <h:form class="col-md-2">
+                <p:graphicImage  library="img" name="evdokimov.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-2">
+                <h4>Alexey Evdokimov</h4>
+                <h:outputText value="QA (Manager of Education Centers)" />
+            </h:form>
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="Vladimir Ivashkin.JPG" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-2">
+                <h4>Vladimir Ivashkin</h4>
+                <h:outputText value="Lead.Developer" />
+            </h:form>
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="Sergey Pankratov.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-2">
+                <h4>Sergey Pankratov</h4>
+                <h:outputText value="Lead" />
+            </h:form>
+
+        </div>
+        <div class="row">
+            <p:spacer  height="10" />                        
+        </div>
+
+
+        <div class="row" >
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="Valerii Ovchinnikov.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-2">
+                <h4>Valerii Ovchinnikov</h4>
+                <h:outputText value="Lead" />
+            </h:form>
+
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="Videneeva_AS.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-2">
+                <h4>Anastasiya Videneeva</h4>
+                <h:outputText value="Analyst" />
+            </h:form>
+
+            <h:form class="col-md-2">
+                <p:graphicImage  library="img" name="Aleksandr Patushin.JPG" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-2">
+                <h4>Aleksandr Patushin</h4>
+                <h:outputText value="Developer" />
+            </h:form>
+
+        </div>
+        <div class="row">
+            <p:spacer  height="10" />                        
+        </div>
+
+
+        <div class="row" >
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="permenev.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form class="col-md-2">
+                <h4>Anton Permenev</h4>
+                <h:outputText value="Developer" />
+            </h:form>
+            <h:form  class="col-md-2">
+                <p:graphicImage  library="img" name="urusov.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-2">
+                <h4>Vasilyi Urusov</h4>
+                <h:outputText value="Developer" />
+            </h:form>
+            <h:form class="col-md-2">
+                <p:graphicImage  library="img" name="vasilyev.jpg" width="100" height="100"/>
+            </h:form>
+            <h:form  class="col-md-2">
+                <h4>Ilya Vasilyev</h4>
+                <h:outputText value="Developer" />
+            </h:form>
+        </div>
+
+
+
+        <div class="row">
+            <p:spacer  height="40" />                        
+        </div>
+
+        <div class="row text-center">
+            <p:commandButton value="Back" styleClass="index-button" onclick="clk('signin', event)" />
+        </div>
+    </ui:define>
+
+</ui:composition>
