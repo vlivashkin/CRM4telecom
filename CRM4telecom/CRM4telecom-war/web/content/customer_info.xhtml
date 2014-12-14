@@ -37,7 +37,7 @@
             <h:outputText value="Last name:" styleClass="leftcolumn"/>
             <h:outputText value="#{customerInfoBean.customer.lastName}"/>
 
-            <h:outputText value="Markets:" styleClass="leftcolumn"/>
+            <h:outputText value="Customer Category:" styleClass="leftcolumn"/>
             <p:dataList id="marketsList" value="#{customerInfoBean.customer.markets}" var="market" > 
                 <h:outputText value="#{market.marketId}, #{market.name}" style="font-weight: bold"/><br/>
                 <h:outputText value="#{market.description}"/>

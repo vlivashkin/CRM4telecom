@@ -6,7 +6,8 @@
                 xmlns:h="http://java.sun.com/jsf/html">
     <div class="form-horizontal">
         <div class="form-group ">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="firstName" value="First Name:" />
+            <h:outputLabel styleClass="col-sm-2 control-label" for="firstName" value="First Name: *" />
+            
             <div class="col-sm-6">
                 <p:inputText id="firstName" value="#{customerInfoBean.cv.firstName}" label="First Name" required="true"/>  
             </div>
@@ -16,7 +17,7 @@
         </div>
 
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="lastName" value="Last Name:" />  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="lastName" value="Last Name: *" />  
             <div class="col-sm-6">
                 <p:inputText id="lastName" value="#{customerInfoBean.cv.lastName}" label="Last Name" required="true"/>  
             </div>
@@ -26,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            <h:outputLabel styleClass="col-sm-2 control-label" for="street" value="Street:" />  
+            <h:outputLabel styleClass="col-sm-2 control-label" for="street" value="Street: *" />  
             <div class="col-sm-6">
                 <p:inputText id="street" value="#{customerInfoBean.cv.street}" label="Street" required="true"/>  
             </div>
@@ -39,10 +40,10 @@
             <h:outputLabel styleClass="col-sm-2 control-label" for="building" value="Building/Flat:" />  
             <div class="col-sm-6">
                 <div class="input-group">
-                    <h:outputLabel styleClass="control-label input-group-addon" for="building" value="Building:" />  
+                    <h:outputLabel styleClass="control-label input-group-addon" for="building" value="Building: *" />  
                     <p:inputText id="building" value="#{customerInfoBean.cv.building}" label="Building"
                                  required="true" requiredMessage="Building: required"/>  
-                    <h:outputLabel styleClass="control-label input-group-addon" for="flat" value="Flat:" />  
+                    <h:outputLabel styleClass="control-label input-group-addon" for="flat" value="Flat: *" />  
                     <p:inputText id="flat" value="#{customerInfoBean.cv.flat}" label="Flat"
                                  required="true" requiredMessage="Flat: required"/>  
                 </div>
@@ -91,7 +92,7 @@
         </div>
         <c:if test="#{customerInfoBean.cv.isNewCustomer()}">
             <div class="form-group">
-                <h:outputLabel styleClass="col-sm-2 control-label" for="balance" value="Balance:" />  
+                <h:outputLabel styleClass="col-sm-2 control-label" for="balance" value="Balance: *" />  
                 <div class="col-sm-6">
                     <p:inputText id="balance" value="#{customerInfoBean.cv.balance}" label="Balance" required="true" >
                         <f:validateDoubleRange minimum="0" />
@@ -103,7 +104,7 @@
             </div>
 
             <div class="form-group">
-                <h:outputLabel styleClass="col-sm-2 control-label" for="markets" value="Markets:" />  
+                <h:outputLabel styleClass="col-sm-2 control-label" for="markets" value="Customer Category:" />  
                 <div class="col-sm-4">
                     <p:selectManyMenu id="markets" value="#{customerInfoBean.cv.markets}" showCheckbox="true">  
                         <f:selectItems value="#{resourcesBean.markets}" var="market"

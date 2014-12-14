@@ -135,6 +135,32 @@ table div.ui-selectcheckboxmenu {
     color: black;
 }
 
+.btn {
+    background: none !important;
+    background-color:#3d94f6 !important;
+    border-radius:5px  !important;
+    text-align: center  !important;
+    cursor:pointer  !important;
+    color:#ffffff  !important;
+    font-family:arial  !important;
+    box-shadow: none  !important;
+    font-size:15px  !important;
+    font-weight:normal  !important;
+    padding:7px 22px  !important;
+    text-decoration:none  !important;
+    border: 1px solid transparent  !important;
+}
+.btn :hover {
+    background: none !important;
+
+    background-color:#1e62d0  !important;
+}
+.btn :active {
+    background: none !important;
+    position:relative  !important;
+    top:1px  !important;
+}
+
 .noBorders tr, .noBorders td {
     border: none !important;
 }

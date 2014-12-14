@@ -7,6 +7,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"> 
     <ui:define name="metadata">
 
+
     </ui:define>
 
     <ui:define name="title">
@@ -40,10 +41,10 @@
             <p:tab title="Common actions">
                 <center>
                     <h:form>
-                        <p:commandButton value="Customers" styleClass="index-button" onclick="clk('customer_list', event)" />
-                        <p:commandButton value="Add customer" styleClass="index-button" onclick="clk('customer_add', event)" />
-                        <p:commandButton value="Orders" styleClass="index-button" onclick="clk('order_list', event)" />
-                        <p:commandButton value="Add order" styleClass="index-button" onclick="clk('order_add', event)" />
+                        <p:commandButton value="Customers" styleClass="btn" onclick="clk('customer_list', event)" />
+                        <p:commandButton value="Add customer" styleClass="btn" onclick="clk('customer_add', event)" />
+                        <p:commandButton value="Orders" styleClass="btn" onclick="clk('order_list', event)" />
+                        <p:commandButton value="Add order" styleClass="btn" onclick="clk('order_add', event)" />
                     </h:form>
                 </center>
             </p:tab>
@@ -51,8 +52,8 @@
                 <p:tab title="Admin actions">
                     <center>
                         <h:form>
-                            <p:commandButton value="Users" styleClass="index-button" onclick="clk('user_list', event)" />
-                            <p:commandButton value="Add user" styleClass="index-button" onclick="clk('user_add', event)" />
+                            <p:commandButton value="Users" styleClass="btn" onclick="clk('user_list', event)" />
+                            <p:commandButton value="Add user" styleClass="btn" onclick="clk('user_add', event)" />
                         </h:form>
                     </center> 
                 </p:tab>
