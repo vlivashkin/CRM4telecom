@@ -23,7 +23,8 @@
 
             <br/>
 
-            <p:dataTable id="customers" var="customer" value="#{cmb.customers}" editable="true" editMode="cell" widgetVar="cellCustomers" stickyHeader="true">
+            <p:dataTable id="customers" var="customer" value="#{cmb.customers}" stickyHeader="true"
+                         editable="true" editMode="cell" widgetVar="cellCustomers" selection="single">
                 <p:ajax event="cellEdit" listener="#{cmb.onCellEdit}" update=":form:msgs" />
 
                 <p:column headerText="ID">
