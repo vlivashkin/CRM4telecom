@@ -9,13 +9,18 @@
     background: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    margin-top: -3px !important;
+    margin-top: 0px !important;
     margin-left: -3px;
 }
 
 .ui-menuitem {
     margin-top: 3px !important;
 }
+
+.ui-menubutton{
+    margin-bottom: 3px;
+}
+
 .ui-selectonemenu-trigger{
     background:#3d94f6 !important;
     box-shadow: none  !important;
@@ -31,7 +36,8 @@
     font-size:15px  !important;
     font-weight:normal  !important;
     padding:2px 4px !important;
-    margin-top: 4px;
+    margin-top: 5px;
+    margin-bottom: 2px;
     text-decoration:none  !important;
     border: 1px solid transparent  !important;
 }
@@ -98,6 +104,8 @@ pre{
 }
 
 .ui-menuitem-link {
+    margin-top: 3px;
+    padding: 1px;
     width: 100% !important;
 }
 
