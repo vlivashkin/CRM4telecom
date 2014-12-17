@@ -4,8 +4,10 @@ import com.crm4telecom.stub.beans.enums.CustomerStatus;
 import com.crm4telecom.stub.ejb.jpa.Customer;
 import com.crm4telecom.stub.ejb.jpa.Product;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -66,19 +68,23 @@ public class SchedulerUnit implements SchedulerUnitInterface {
     @Override
     public Map<Long, CustomerStatus> checkStatuses() {
         Map<Long, CustomerStatus> statusMap = cm.getStatuses();
-
+        Set<Long> toBeRemoved = new HashSet<>();
         logger.info("******** checkStatuses has got map");
 
         for (Entry<Long, CustomerStatus> elem : statusMap.entrySet()) {
             if (elem.getValue().equals(CustomerStatus.BLOCKED)) {
-                statusMap.remove(elem.getKey());
+                toBeRemoved.add(elem.getKey());
             }
             if (elem.getValue().equals(CustomerStatus.UNPLUGGED)) {
-                statusMap.remove(elem.getKey());
+                toBeRemoved.add(elem.getKey());
             }
             logger.info("******** Customer " + elem.getKey() + " checked");
         }
-        logger.info("******** Statuses checked");
+        logger.info("******** All customers checked");
+        for (Long id : toBeRemoved) {
+            statusMap.remove(id);
+        }
+        logger.info("******** Statuses are ready");
         return statusMap;
     }
 

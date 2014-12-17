@@ -19,7 +19,7 @@ public class WithdrawManager {
     public void forceWithdraw() {
         schedulerUnit.withdrawMoney(schedulerUnit.checkStatuses());
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("");
         } catch (IOException ex) {
             Logger.getLogger(WithdrawManager.class.getName()).log(Level.SEVERE, null, ex);
         }
